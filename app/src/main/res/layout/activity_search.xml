@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.SearchActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/colorWhite" />
+
+
+    <View
+        android:id="@+id/view_search"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/background">
+
+    </View>
+
+
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="3">
+
+      <!--  <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:hint="name"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+
+        <EditText
+            android:id="@+id/et_mname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:hint="middle name"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />-->
+
+
+        <!--<EditText
+            android:id="@+id/et_lname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:hint="last name"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />-->
+
+
+        <EditText
+            android:id="@+id/et_fullName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:hint="Search Name"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_search"
+        android:layout_marginTop="-10dp"
+        android:elevation="10dp"
+        android:padding="5dp"
+        android:weightSum="3">
+
+
+        <EditText
+            android:id="@+id/et_voterID"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:hint="voter ID"
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+
+        <EditText
+            android:id="@+id/adharCard"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:hint="adhar card"
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+
+
+        <ImageView
+            android:id="@+id/iv_search_icon"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@id/ll_search"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:src="@drawable/ic_search" />
+    </LinearLayout>
+
+    <!--    <HorizontalScrollView-->
+    <!--        android:id="@+id/horizontal1"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/view_search"-->
+    <!--        android:scrollbars="horizontal">-->
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/ll"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        >-->
+
+    <!--        <TextView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:fontFamily="@font/roboto_regular"-->
+    <!--            android:gravity="center"-->
+    <!--            android:padding="5dp"-->
+    <!--            android:text="Sr_No."-->
+    <!--            android:textColor="@color/colorBlack"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--        <TextView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:fontFamily="@font/roboto_regular"-->
+    <!--            android:gravity="center"-->
+    <!--            android:padding="5dp"-->
+    <!--            android:text="Name"-->
+    <!--            android:textColor="@color/colorBlack"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--        <TextView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:fontFamily="@font/roboto_regular"-->
+    <!--            android:gravity="center"-->
+    <!--            android:padding="5dp"-->
+    <!--            android:text="VoterID"-->
+    <!--            android:textColor="@color/colorBlack"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--        <TextView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:fontFamily="@font/roboto_regular"-->
+    <!--            android:gravity="center"-->
+    <!--            android:padding="5dp"-->
+    <!--            android:text="Adhar Card"-->
+    <!--            android:textColor="@color/colorBlack"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold" />-->
+
+
+    <!--    </LinearLayout>-->
+    <!--    </HorizontalScrollView>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnview"
+        android:layout_below="@id/ll"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+
+        <!--we are adding progress bar
+            for the purpose of loading-->
+        <TextView
+            android:id="@+id/tv_empty_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/empty_icon"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="@string/type_search"
+            android:textColor="@color/colorAccent"
+            android:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loading_app.json"
+            app:lottie_loop="true"
+            />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/empty_icon"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="empty.json"
+            app:lottie_loop="true"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="10dp"
+        android:text="view more"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+
+</RelativeLayout>

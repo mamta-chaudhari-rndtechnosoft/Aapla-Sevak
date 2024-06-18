@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".Activity.LoginActivity">
+
+
+    <View
+        android:id="@+id/view_search"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/header_bg"></View>
+
+
+    <TextView
+        android:id="@+id/tv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"
+        android:fontFamily="sans-serif"
+        android:gravity="end|center"
+        android:padding="20dp"
+        android:text="Login"
+        android:textColor="#ffffff"
+        android:textSize="44sp"
+        android:textStyle="bold"
+         />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/tvusername"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:drawableLeft="@drawable/ic_user"
+            android:drawablePadding="@dimen/_10sdp"
+            android:hint="@string/UserName"
+            android:padding="@dimen/_10sdp" />
+
+        <EditText
+            android:id="@+id/tvpassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/ic_passlock"
+            android:drawablePadding="@dimen/_10sdp"
+            android:hint="@string/Password"
+            android:inputType="textPassword"
+            android:padding="@dimen/_10sdp" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/login_button"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Login"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/btnLogin"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom"
+        tools:ignore="NotSibling"></View>
+
+
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/progress_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="BallSpinFadeLoaderIndicator"
+        android:visibility="gone"/>
+</RelativeLayout>

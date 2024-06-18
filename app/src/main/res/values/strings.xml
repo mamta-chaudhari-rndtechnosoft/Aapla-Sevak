@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Aapla Sevak</string>
+    <string name="Name">Name</string>
+    <string name="UserName">Username</string>
+    <string name="Password">Password</string>
+    <string name="house_number"> house number</string>
+    <string name="colony"> colony</string>
+    <string name="row"> row</string>
+    <string name="Gender"> gender</string>
+    <string name="name"> name</string>
+    <string name="dob"> DOB</string>
+    <string name="middle_name"> middle name</string>
+    <string name="surname"> surname</string>
+    <string name="Mobile_No1"> mobile No1</string>
+    <string name="Mobile_No2"> mobile No2</string>
+    <string name="Qualification"> qualification</string>
+    <string name="caste"> caste</string>
+    <string name="Relation"> relation</string>
+    <string name="event"> event</string>
+    <string name="Notifications">Notifications</string>
+    <string name="voterID"> voter ID</string>
+    <string name="adharcard"> adharcard number</string>
+    <string name="votingCenter"> voting center</string>
+    <string name="License_Number">License Number</string>
+    <string name="New_Password">New Password</string>
+    <string name="submit">Submit</string>
+    <string name="powered_by">Powered by</string>
+    <string name="setting">settings</string>
+    <string name="logout">logout</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="home">Home</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="cannot_use_save_permission">Can not use location further</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="action_gallery">Choose from gallery</string>
+    <string name="action_camera">Camera</string>
+
+
+    <string name="notification">Notification</string>
+    <string name="search_hint">Search your favourite food</string>
+    <string name="isRTL">false</string>
+    <string name="internet_connection">Internet connection not available</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="error_field_empty">Required Field is Empty</string>
+    <string name="wrong_format">Invalid Mobile Number</string>
+    <string name="internet_connection_message">Internet connection not available check your internet connection</string>
+    <string name="exit">Exit</string>
+
+    <!--About Us string-->
+    <string name="app_name_about_us">@string/app_name</string>
+    <string name="about_us_version">Version</string>
+    <string name="about_us_version_text">1.0</string>
+    <string name="about_us_author">Author</string>
+    <string name="about_us_Company">Company</string>
+    <string name="about_us_company_name">RnD Technosoft</string>
+    <string name="about_us_email">Email</string>
+    <string name="about_us_email_text">hello@rndtechnosoft.com</string>
+    <string name="about_us_website">Website</string>
+    <string name="about_us_website_text">www.rndtechnosoft.com</string>
+    <string name="about_us_contact">Contact</string>
+    <string name="about_us_contact_text">+91 7304945823</string>
+    <string name="about_us_about">About</string>
+
+
+    <string name="type_search">Type to Search</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>
