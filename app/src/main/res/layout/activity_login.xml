@@ -13,7 +13,9 @@
         android:id="@+id/view_search"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@drawable/header_bg"></View>
+        android:background="@drawable/header_bg">
+
+    </View>
 
 
     <TextView
@@ -92,7 +94,9 @@
         android:layout_below="@id/btnLogin"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom"
-        tools:ignore="NotSibling"></View>
+        tools:ignore="NotSibling">
+
+    </View>
 
 
 

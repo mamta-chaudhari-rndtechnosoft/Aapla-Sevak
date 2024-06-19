@@ -75,7 +75,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
 
-        //Toast.makeText(this, "Hello...", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "Hello...", Toast.LENGTH_SHORT).show();
 
         house_number = findViewById(R.id.house_number);
         dob = findViewById(R.id.dob);
@@ -122,11 +122,11 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         adapter = new CustomAdapter(UserSurveyActivity.this, colonies);
 
 
-        spinner_series.setTitle("select series");
-        spinner_status.setTitle("select status");
-        spinner_colony.setTitle("select colony");
-        spinner_row.setTitle("select row");
-        spinner_water_Supply.setTitle("select watersupply slot");
+        spinner_series.setTitle("Select Series");
+        spinner_status.setTitle("Select Status");
+        spinner_colony.setTitle("Select Colony");
+        spinner_row.setTitle("Select Row");
+        spinner_water_Supply.setTitle("Select Water Supply Slot");
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
         swipe_refresh.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorWhite));
@@ -242,8 +242,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                 String calling_no = mob1.getText().toString();
                 String wp_no = mob2.getText().toString();
-
-
                 String house_no = house_number.getText().toString();
                 String user_name = name.getText().toString();
                 String user_middle_name = middle_name.getText().toString();

@@ -1,7 +1,6 @@
 package com.vinodmapari.aaplasevak.Activity;
 
-import static com.vinodmapari.aaplasevak.Model.Constants.relation_name;
-import static com.vinodmapari.aaplasevak.Model.Constants.series;
+
 import static com.vinodmapari.aaplasevak.Model.Constants.status_name;
 
 import android.app.DatePickerDialog;
@@ -17,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +31,6 @@ import com.android.volley.toolbox.Volley;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.MainMemberDetail;
-import com.vinodmapari.aaplasevak.Model.Relations;
-import com.vinodmapari.aaplasevak.Model.SliderModel;
 import com.vinodmapari.aaplasevak.Model.Status;
 import com.vinodmapari.aaplasevak.R;
 

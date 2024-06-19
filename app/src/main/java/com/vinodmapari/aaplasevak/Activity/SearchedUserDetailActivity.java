@@ -223,7 +223,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(SearchedUserDetailActivity.this, EditMemberActivity.class);
-
+                intent.putExtra("house_no", houseNo);
                 startActivity(intent);
 
             }
@@ -456,6 +456,8 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                             JSONArray houseDetailArray = jsonObject.getJSONArray("HOUSE_DETAIL");
 
                             List<HouseDetail> houseDetails = new ArrayList<>();
+                            StringBuilder allDetails = new StringBuilder();
+
                             for (int i = 0; i < houseDetailArray.length(); i++) {
                                 JSONObject houseDetailObject = houseDetailArray.getJSONObject(i);
                                 String name = houseDetailObject.getString("name");
@@ -469,7 +471,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                 HouseDetail houseDetail = new HouseDetail(name, middleName, surname, votingCenter, boothNo, votingSrNo, voterId);
                                 houseDetails.add(houseDetail);
 
-                                if (!houseDetails.isEmpty()) {
+                                /*if (!houseDetails.isEmpty()) {
                                     HouseDetail firstHouseDetail = houseDetails.get(i);
                                     Log.d("TAG", "Name: " + firstHouseDetail.getName() + " " +
                                             "Voting Center: " + firstHouseDetail.getVotingCenter());
@@ -483,8 +485,19 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                     Details = Data;
 
                                     // You can update UI or perform other actions here
-                                }
+                                }*/
+
+                                String data = "Name: " + name + " " + middleName + " " + surname +
+                                        "\nVoter ID: " + voterId +
+                                        "\nBooth No: " + boothNo +
+                                        "\nSr. No: " + votingSrNo +
+                                        "\nVoting Center: " + votingCenter + "\n\n";
+
+                                allDetails.append(data);
+
                             }
+
+                             Details = allDetails.toString();
 
                             // Example: Log the first item in the list
                            /* if (!houseDetails.isEmpty()) {

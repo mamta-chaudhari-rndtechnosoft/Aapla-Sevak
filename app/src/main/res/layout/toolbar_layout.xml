@@ -6,7 +6,7 @@
         android:id="@+id/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorToolbar">
+        android:background="@drawable/toolbar_gradient">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -19,7 +19,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/noti_lay"
                 android:text="title"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_20ssp"
                 android:textStyle="bold" />
 

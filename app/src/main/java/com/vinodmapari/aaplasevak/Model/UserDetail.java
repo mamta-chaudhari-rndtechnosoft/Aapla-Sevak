@@ -1,6 +1,7 @@
 package com.vinodmapari.aaplasevak.Model;
 
-public class HouseDetail {
+public class UserDetail {
+
     private int id;
     private String name;
     private String middleName;
@@ -24,21 +25,11 @@ public class HouseDetail {
     private int memberId;
     private String voterId;
 
-    public HouseDetail(String name, String middleName, String surname, String votingCenter, String boothNo, int votingSrNo, String voterId) {
-        this.name = name;
-        this.middleName = middleName;
-        this.surname = surname;
-        this.votingCenter = votingCenter;
-        this.boothNo = boothNo;
-        this.votingSrNo = votingSrNo;
-        this.voterId = voterId;
-    }
 
-
-    public HouseDetail(int id, String name, String middleName, String surname, String votingCenter, String boothNo,
-                       int votingSrNo, String seriesId, int colonyId, int rowId, String gender, String mobile1, String mobile2,
-                       String dob, String qualification, String caste, String relation, String event, String adharCard,
-                       int watersupplyId, int memberId, String voterId) {
+    public UserDetail(int id, String name, String middleName, String surname, String votingCenter, String boothNo, int votingSrNo,
+                      String seriesId, int colonyId, int rowId, String gender, String mobile1, String mobile2,
+                      String dob, String qualification, String caste, String relation, String event,
+                      String adharCard, int watersupplyId, int memberId, String voterId) {
         this.id = id;
         this.name = name;
         this.middleName = middleName;
@@ -239,4 +230,6 @@ public class HouseDetail {
         this.voterId = voterId;
     }
 }
+
+
 

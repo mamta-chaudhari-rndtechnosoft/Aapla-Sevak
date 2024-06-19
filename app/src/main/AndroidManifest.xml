@@ -30,6 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AaplaSevak">
         <activity
+            android:name=".Activity.UpdateMemberActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.EditMemberActivity"
             android:exported="false" />
         <activity

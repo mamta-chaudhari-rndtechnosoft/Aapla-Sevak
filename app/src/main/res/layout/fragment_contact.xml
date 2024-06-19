@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.ContactFragment">
 
 
@@ -16,280 +16,331 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-          >
-
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/about_us_linearlayout_background"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    app:cardElevation="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/app_logo_about_us"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <TextView
-                            android:id="@+id/textView_app_name_about_us"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginStart="10dp"
-                            android:text="@string/app_name"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginTop="6dp"
-                            android:src="@drawable/ic_about" />
-
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginStart="15dp"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/app_logo_about_us"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@mipmap/ic_launcher" />
 
                             <TextView
-                                android:id="@+id/textView_TitleVersion_about_us"
+                                android:id="@+id/textView_app_name_about_us"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/about_us_version"
-                                android:textColor="@color/colorGreyDark"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/app_name"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp"
                                 android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textView_app_version_about_us"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="@string/about_us_version_text"
-                                android:textColor="@color/colorBlack" />
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginTop="6dp"
+                                android:src="@drawable/ic_about" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginLeft="15dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/textView_TitleVersion_about_us"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/about_us_version"
+                                    android:textColor="@color/colorGreyDark"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView_app_version_about_us"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="@string/about_us_version_text"
+                                    android:textColor="@color/colorBlack" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
                     </LinearLayout>
 
+                </com.google.android.material.card.MaterialCardView>
 
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textView_TitleAuthore_about_us"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/about_us_linearlayout_background"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:text="@string/about_us_author"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#7E7D7D" />
 
-                        <TextView
-                            android:id="@+id/textView_TitleAuthore_about_us"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/about_us_author"
-                            android:textColor="@color/colorGreyDark"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
 
-                    </LinearLayout>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginTop="4dp"
-                                android:src="@drawable/ic_user" />
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:layout_marginStart="15dp"
-                                android:orientation="vertical">
+                                android:layout_marginTop="3dp"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
 
-                                <TextView
-                                    android:id="@+id/textView_TitleCompany_about_us"
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/about_us_Company"
-                                    android:textColor="@color/colorGreyDark"
-                                    android:textStyle="bold" />
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/textView_app_author_about_us"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="1dp"
-                                    android:text="@string/about_us_company_name"
-                                    android:textColor="@color/colorBlack" />
+                                    <TextView
+                                        android:id="@+id/textView_TitleCompany_about_us"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/about_us_Company"
+                                        android:textColor="@color/colorGreyDark"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textView_app_author_about_us"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="1dp"
+                                        android:text="@string/about_us_company_name"
+                                        android:textColor="@color/colorBlack" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity=""
+                                    android:layout_marginTop="4dp"
+                                    android:src="@drawable/ic_user" />
 
                             </LinearLayout>
-                        </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginTop="4dp"
-                                android:src="@drawable/ic_email" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:layout_marginHorizontal="8dp"
+                                android:background="@color/colorGreyDark" />
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:layout_marginStart="15dp"
-                                android:orientation="vertical">
+                                android:layout_marginTop="3dp"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
 
-                                <TextView
-                                    android:id="@+id/textView_TitleEmail_about_us"
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/about_us_email"
-                                    android:textColor="@color/colorGreyDark"
-                                    android:textStyle="bold" />
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/textView_app_email_about_us"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="1dp"
-                                    android:text="@string/about_us_email_text"
-                                    android:textColor="@color/colorBlack" />
+                                    <TextView
+                                        android:id="@+id/textView_TitleEmail_about_us"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/about_us_email"
+                                        android:textColor="@color/colorGreyDark"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textView_app_email_about_us"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="1dp"
+                                        android:text="@string/about_us_email_text"
+                                        android:textColor="@color/colorBlack" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="4dp"
+                                    android:src="@drawable/ic_email" />
 
                             </LinearLayout>
-                        </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginTop="4dp"
-                                android:src="@drawable/ic_website" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:layout_marginHorizontal="8dp"
+                                android:background="@color/colorGreyDark" />
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:layout_marginStart="15dp"
-                                android:orientation="vertical">
+                                android:layout_marginTop="3dp"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
 
-                                <TextView
-                                    android:id="@+id/textView_TitleWebsite_about_us"
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/about_us_website"
-                                    android:textColor="@color/colorGreyDark"
-                                    android:textStyle="bold" />
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/textView_app_website_about_us"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="1dp"
-                                    android:text="@string/about_us_website_text"
-                                    android:textColor="@color/colorBlack" />
+                                    <TextView
+                                        android:id="@+id/textView_TitleWebsite_about_us"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/about_us_website"
+                                        android:textColor="@color/colorGreyDark"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textView_app_website_about_us"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="1dp"
+                                        android:text="@string/about_us_website_text"
+                                        android:textColor="@color/colorBlack" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="4dp"
+                                    android:src="@drawable/ic_website" />
 
                             </LinearLayout>
-                        </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginTop="4dp"
-                                android:src="@drawable/ic_call" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:layout_marginHorizontal="8dp"
+                                android:background="@color/colorGreyDark" />
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:layout_marginStart="15dp"
-                                android:orientation="vertical">
+                                android:layout_marginTop="3dp"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
 
-                                <TextView
-                                    android:id="@+id/textView_TitleContact_about_us"
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/about_us_contact"
-                                    android:textColor="@color/colorGreyDark"
-                                    android:textStyle="bold" />
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/textView_app_contact_about_us"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="1dp"
-                                    android:text="@string/about_us_contact_text"
-                                    android:textColor="@color/colorBlack" />
+                                    <TextView
+                                        android:id="@+id/textView_TitleContact_about_us"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/about_us_contact"
+                                        android:textColor="@color/colorGreyDark"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textView_app_contact_about_us"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="1dp"
+                                        android:text="@string/about_us_contact_text"
+                                        android:textColor="@color/colorBlack" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="4dp"
+                                    android:src="@drawable/ic_call" />
 
                             </LinearLayout>
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:layout_marginHorizontal="8dp"
+                                android:background="@color/colorGreyDark" />
+
                         </LinearLayout>
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>
