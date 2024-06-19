@@ -16,6 +16,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -41,5 +42,6 @@ public interface ApiInterface {
 
     @GET("api.php?user_detail_by_id")
     Call<UserDetailResponse> getUserDetail(@Query("id") int id);
+
 
 }

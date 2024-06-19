@@ -189,8 +189,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                         + "Voting-Center : " + votingCenter;*/
 
 
-
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -457,6 +455,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
                             List<HouseDetail> houseDetails = new ArrayList<>();
                             StringBuilder allDetails = new StringBuilder();
+                            int counter = 1;
 
                             for (int i = 0; i < houseDetailArray.length(); i++) {
                                 JSONObject houseDetailObject = houseDetailArray.getJSONObject(i);
@@ -487,17 +486,18 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                     // You can update UI or perform other actions here
                                 }*/
 
-                                String data = "Name: " + name + " " + middleName + " " + surname +
+                                String data = counter + ". Name: " + name + " " + middleName + " " + surname +
                                         "\nVoter ID: " + voterId +
                                         "\nBooth No: " + boothNo +
-                                        "\nSr. No: " + votingSrNo +
+                                        "\nSr.No: " + votingSrNo +
                                         "\nVoting Center: " + votingCenter + "\n\n";
 
                                 allDetails.append(data);
+                                counter++;
 
                             }
 
-                             Details = allDetails.toString();
+                            Details = allDetails.toString() + "\n*Aapla Sevak - Vinod Mapari*";
 
                             // Example: Log the first item in the list
                            /* if (!houseDetails.isEmpty()) {

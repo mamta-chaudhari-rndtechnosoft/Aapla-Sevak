@@ -300,6 +300,8 @@ public class GetWhatsappContactsActivity extends AppCompatActivity implements Po
             holder.tvName.setText(getContact.getSurname() + " " + getContact.getName() + " " + getContact.getMiddle_name());
             holder.tvMob.setText("+91"+getContact.getMobile1());
 
+            //holder.tvMob.setText(getContact.getMobile1());
+
             holder.ivImage.setOnClickListener(new View.OnClickListener()
             {
                 @SuppressLint("ResourceAsColor")

@@ -229,7 +229,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="whatsapp number">
+                    android:hint="Whatsapp Number">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/mobile1"
@@ -255,7 +255,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="calling number">
+                    android:hint="Calling Number">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/mobile2"
@@ -301,7 +301,6 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/qualification"
                     android:layout_width="match_parent"
-
                     android:layout_height="match_parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -447,7 +446,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:fontFamily="@font/roboto_regular"
-                android:hint="enter booth no">
+                android:hint="Booth No">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etBoothNum"
@@ -467,7 +466,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:fontFamily="@font/roboto_regular"
-                android:hint="enter Serial no">
+                android:hint="Serial No">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSerialNum"

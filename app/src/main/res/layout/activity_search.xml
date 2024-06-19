@@ -38,7 +38,7 @@
         android:padding="5dp"
         android:weightSum="3">
 
-      <!--  <EditText
+        <!--<EditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -65,10 +65,10 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />-->
+            android:textColorHint="@color/colorWhite" />
 
 
-        <!--<EditText
+        <EditText
             android:id="@+id/et_lname"
             android:layout_width="match_parent"
             android:layout_height="50dp"

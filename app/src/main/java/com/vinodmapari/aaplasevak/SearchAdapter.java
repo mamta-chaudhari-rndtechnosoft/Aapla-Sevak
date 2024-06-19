@@ -48,7 +48,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         SearchList searchList=searchLists.get(position);
         holder.adhar.setText(searchList.getAdhar_card());
-        holder.tvName.setText(searchList.getSurname()+" "+searchList.getName()+" "+searchList.getMiddle_name());
+        //holder.tvName.setText(searchList.getSurname()+" "+searchList.getName()+" "+searchList.getMiddle_name());
+        holder.tvName.setText(searchList.getName()+" "+searchList.getMiddle_name()+" "+searchList.getSurname());
         holder.voterId.setText(searchList.getVoter_id());
 
         holder.itemView.setOnClickListener(new View.OnClickListener()

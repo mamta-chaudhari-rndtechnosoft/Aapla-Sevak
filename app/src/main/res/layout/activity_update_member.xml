@@ -19,9 +19,7 @@
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:outlineAmbientShadowColor="@color/colorAccent"
-        android:outlineSpotShadowColor="@color/colorAccent">
+        android:layout_below="@+id/toolbar">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/main_scroll"
@@ -39,7 +37,6 @@
                     android:id="@+id/spinnerSeries"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_alignParentBottom="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginLeft="15dp"
@@ -63,10 +60,10 @@
                         android:id="@+id/house_number"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/colorPrimaryDark" />
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_colony"
@@ -75,7 +72,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_height="@dimen/_40sdp"
                     android:visibility="visible"
-                    android:layout_alignParentBottom="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:background="@drawable/border"
@@ -88,7 +84,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_alignParentBottom="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:background="@drawable/border"
@@ -101,11 +96,6 @@
                     android:background="@drawable/border"
                     android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageView"
-                    android:layout_alignStart="@+id/textView2"
-                    android:layout_alignLeft="@+id/textView2"
-                    android:layout_alignEnd="@+id/textView3"
-                    android:layout_alignRight="@+id/textView3"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
@@ -290,7 +280,6 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/qualification"
                         android:layout_width="match_parent"
-
                         android:layout_height="match_parent" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -322,7 +311,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_alignParentBottom="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:background="@drawable/border"
@@ -473,7 +461,6 @@
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_alignParentBottom="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:background="@drawable/border"

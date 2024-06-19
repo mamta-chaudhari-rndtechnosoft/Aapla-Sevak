@@ -3,15 +3,16 @@ package com.vinodmapari.aaplasevak.Model;
 public class UserDetail {
 
     private int id;
+    private String house_no;
     private String name;
-    private String middleName;
+    private String middle_name;
     private String surname;
-    private String votingCenter;
-    private String boothNo;
-    private int votingSrNo;
-    private String seriesId;
-    private int colonyId;
-    private int rowId;
+    private String voting_center;
+    private String booth_No;
+    private int voting_sr_no;
+    private String series_id;
+    private int colony_id;
+    private int row_id;
     private String gender;
     private String mobile1;
     private String mobile2;
@@ -20,26 +21,27 @@ public class UserDetail {
     private String caste;
     private String relation;
     private String event;
-    private String adharCard;
-    private int watersupplyId;
-    private int memberId;
-    private String voterId;
+    private int adhar_card;
+    private int watersupply_id;
+    private int member_id;
+    private String voter_id;
 
 
-    public UserDetail(int id, String name, String middleName, String surname, String votingCenter, String boothNo, int votingSrNo,
-                      String seriesId, int colonyId, int rowId, String gender, String mobile1, String mobile2,
-                      String dob, String qualification, String caste, String relation, String event,
-                      String adharCard, int watersupplyId, int memberId, String voterId) {
+    public UserDetail(int id, String house_no, String name, String middle_name, String surname, String voting_center,
+                      String booth_No, int voting_sr_no, String series_id, int colony_id, int row_id, String gender,
+                      String mobile1, String mobile2, String dob, String qualification, String caste, String relation,
+                      String event, int adhar_card, int watersupply_id, int member_id, String voter_id) {
         this.id = id;
+        this.house_no = house_no;
         this.name = name;
-        this.middleName = middleName;
+        this.middle_name = middle_name;
         this.surname = surname;
-        this.votingCenter = votingCenter;
-        this.boothNo = boothNo;
-        this.votingSrNo = votingSrNo;
-        this.seriesId = seriesId;
-        this.colonyId = colonyId;
-        this.rowId = rowId;
+        this.voting_center = voting_center;
+        this.booth_No = booth_No;
+        this.voting_sr_no = voting_sr_no;
+        this.series_id = series_id;
+        this.colony_id = colony_id;
+        this.row_id = row_id;
         this.gender = gender;
         this.mobile1 = mobile1;
         this.mobile2 = mobile2;
@@ -48,11 +50,12 @@ public class UserDetail {
         this.caste = caste;
         this.relation = relation;
         this.event = event;
-        this.adharCard = adharCard;
-        this.watersupplyId = watersupplyId;
-        this.memberId = memberId;
-        this.voterId = voterId;
+        this.adhar_card = adhar_card;
+        this.watersupply_id = watersupply_id;
+        this.member_id = member_id;
+        this.voter_id = voter_id;
     }
+
 
     public int getId() {
         return id;
@@ -60,6 +63,14 @@ public class UserDetail {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getHouse_no() {
+        return house_no;
+    }
+
+    public void setHouse_no(String house_no) {
+        this.house_no = house_no;
     }
 
     public String getName() {
@@ -70,12 +81,12 @@ public class UserDetail {
         this.name = name;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getMiddle_name() {
+        return middle_name;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setMiddle_name(String middle_name) {
+        this.middle_name = middle_name;
     }
 
     public String getSurname() {
@@ -86,52 +97,52 @@ public class UserDetail {
         this.surname = surname;
     }
 
-    public String getVotingCenter() {
-        return votingCenter;
+    public String getVoting_center() {
+        return voting_center;
     }
 
-    public void setVotingCenter(String votingCenter) {
-        this.votingCenter = votingCenter;
+    public void setVoting_center(String voting_center) {
+        this.voting_center = voting_center;
     }
 
-    public String getBoothNo() {
-        return boothNo;
+    public String getBooth_No() {
+        return booth_No;
     }
 
-    public void setBoothNo(String boothNo) {
-        this.boothNo = boothNo;
+    public void setBooth_No(String booth_No) {
+        this.booth_No = booth_No;
     }
 
-    public int getVotingSrNo() {
-        return votingSrNo;
+    public int getVoting_sr_no() {
+        return voting_sr_no;
     }
 
-    public void setVotingSrNo(int votingSrNo) {
-        this.votingSrNo = votingSrNo;
+    public void setVoting_sr_no(int voting_sr_no) {
+        this.voting_sr_no = voting_sr_no;
     }
 
-    public String getSeriesId() {
-        return seriesId;
+    public String getSeries_id() {
+        return series_id;
     }
 
-    public void setSeriesId(String seriesId) {
-        this.seriesId = seriesId;
+    public void setSeries_id(String series_id) {
+        this.series_id = series_id;
     }
 
-    public int getColonyId() {
-        return colonyId;
+    public int getColony_id() {
+        return colony_id;
     }
 
-    public void setColonyId(int colonyId) {
-        this.colonyId = colonyId;
+    public void setColony_id(int colony_id) {
+        this.colony_id = colony_id;
     }
 
-    public int getRowId() {
-        return rowId;
+    public int getRow_id() {
+        return row_id;
     }
 
-    public void setRowId(int rowId) {
-        this.rowId = rowId;
+    public void setRow_id(int row_id) {
+        this.row_id = row_id;
     }
 
     public String getGender() {
@@ -198,36 +209,36 @@ public class UserDetail {
         this.event = event;
     }
 
-    public String getAdharCard() {
-        return adharCard;
+    public int getAdhar_card() {
+        return adhar_card;
     }
 
-    public void setAdharCard(String adharCard) {
-        this.adharCard = adharCard;
+    public void setAdhar_card(int adhar_card) {
+        this.adhar_card = adhar_card;
     }
 
-    public int getWatersupplyId() {
-        return watersupplyId;
+    public int getWatersupply_id() {
+        return watersupply_id;
     }
 
-    public void setWatersupplyId(int watersupplyId) {
-        this.watersupplyId = watersupplyId;
+    public void setWatersupply_id(int watersupply_id) {
+        this.watersupply_id = watersupply_id;
     }
 
-    public int getMemberId() {
-        return memberId;
+    public int getMember_id() {
+        return member_id;
     }
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public void setMember_id(int member_id) {
+        this.member_id = member_id;
     }
 
-    public String getVoterId() {
-        return voterId;
+    public String getVoter_id() {
+        return voter_id;
     }
 
-    public void setVoterId(String voterId) {
-        this.voterId = voterId;
+    public void setVoter_id(String voter_id) {
+        this.voter_id = voter_id;
     }
 }
 

@@ -1,11 +1,13 @@
 package com.vinodmapari.aaplasevak.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class HouseDetail {
     private int id;
     private String name;
-    private String middleName;
+    private String middle_Name;
     private String surname;
-    private String votingCenter;
+    private String voting_Center;
     private String boothNo;
     private int votingSrNo;
     private String seriesId;
@@ -19,31 +21,33 @@ public class HouseDetail {
     private String caste;
     private String relation;
     private String event;
+    @SerializedName("adhar_card")
     private String adharCard;
     private int watersupplyId;
     private int memberId;
+    @SerializedName("voter_id")
     private String voterId;
 
-    public HouseDetail(String name, String middleName, String surname, String votingCenter, String boothNo, int votingSrNo, String voterId) {
+    public HouseDetail(String name, String middle_Name, String surname, String voting_Center, String boothNo, int votingSrNo, String voterId) {
         this.name = name;
-        this.middleName = middleName;
+        this.middle_Name = middle_Name;
         this.surname = surname;
-        this.votingCenter = votingCenter;
+        this.voting_Center = voting_Center;
         this.boothNo = boothNo;
         this.votingSrNo = votingSrNo;
         this.voterId = voterId;
     }
 
 
-    public HouseDetail(int id, String name, String middleName, String surname, String votingCenter, String boothNo,
+    public HouseDetail(int id, String name, String middle_Name, String surname, String voting_Center, String boothNo,
                        int votingSrNo, String seriesId, int colonyId, int rowId, String gender, String mobile1, String mobile2,
                        String dob, String qualification, String caste, String relation, String event, String adharCard,
                        int watersupplyId, int memberId, String voterId) {
         this.id = id;
         this.name = name;
-        this.middleName = middleName;
+        this.middle_Name = middle_Name;
         this.surname = surname;
-        this.votingCenter = votingCenter;
+        this.voting_Center = voting_Center;
         this.boothNo = boothNo;
         this.votingSrNo = votingSrNo;
         this.seriesId = seriesId;
@@ -80,11 +84,11 @@ public class HouseDetail {
     }
 
     public String getMiddleName() {
-        return middleName;
+        return middle_Name;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setMiddleName(String middle_Name) {
+        this.middle_Name = middle_Name;
     }
 
     public String getSurname() {
@@ -96,11 +100,11 @@ public class HouseDetail {
     }
 
     public String getVotingCenter() {
-        return votingCenter;
+        return voting_Center;
     }
 
-    public void setVotingCenter(String votingCenter) {
-        this.votingCenter = votingCenter;
+    public void setVotingCenter(String voting_Center) {
+        this.voting_Center = voting_Center;
     }
 
     public String getBoothNo() {

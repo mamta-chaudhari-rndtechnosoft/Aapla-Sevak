@@ -64,10 +64,10 @@ public class SearchActivity extends AppCompatActivity {
         etAdharCard = findViewById(R.id.adharCard);
         etVoterId = findViewById(R.id.et_voterID);
         etFullName = findViewById(R.id.et_fullName);
-        /*etName = findViewById(R.id.et_name);
+      /*  etName = findViewById(R.id.et_name);
         etMname = findViewById(R.id.et_mname);
-        etLname = findViewById(R.id.et_lname);*/
-
+        etLname = findViewById(R.id.et_lname);
+*/
         btn = findViewById(R.id.btnview);
 
         pageNo = 0;
@@ -119,9 +119,9 @@ public class SearchActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //name = etName.getText().toString();
-                //mname = etMname.getText().toString();
-                //lname = etLname.getText().toString();
+               /* name = etName.getText().toString();
+                mname = etMname.getText().toString();
+                lname = etLname.getText().toString();*/
                 fullName = etFullName.getText().toString();
                 voterId = etVoterId.getText().toString();
                 adharcard = etAdharCard.getText().toString();
@@ -133,9 +133,9 @@ public class SearchActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //name = etName.getText().toString();
-                //mname = etMname.getText().toString();
-                //lname = etLname.getText().toString();
+               /* name = etName.getText().toString();
+                mname = etMname.getText().toString();
+                lname = etLname.getText().toString();*/
                 fullName = etFullName.getText().toString();
                 voterId = etVoterId.getText().toString();
                 adharcard = etAdharCard.getText().toString();
@@ -146,9 +146,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void addTextWatchers() {
-        //etName.addTextChangedListener(textWatcher);
-        //etMname.addTextChangedListener(textWatcher);
-        //etLname.addTextChangedListener(textWatcher);
+       /* etName.addTextChangedListener(textWatcher);
+        etMname.addTextChangedListener(textWatcher);
+        etLname.addTextChangedListener(textWatcher);*/
         etFullName.addTextChangedListener(textWatcher);
         etVoterId.addTextChangedListener(textWatcher);
         etAdharCard.addTextChangedListener(textWatcher);
@@ -161,13 +161,12 @@ public class SearchActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            //name = etName.getText().toString();
-            //mname = etMname.getText().toString();
-            //lname = etLname.getText().toString();
+            /*name = etName.getText().toString();
+            mname = etMname.getText().toString();
+            lname = etLname.getText().toString();*/
             fullName = etFullName.getText().toString();
             voterId = etVoterId.getText().toString();
             adharcard = etAdharCard.getText().toString();
-
             pageNo = 0; // Reset to the first page for new search
             getSearchList();
         }
@@ -368,7 +367,6 @@ public class SearchActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
     }
-
 
 
     @Override

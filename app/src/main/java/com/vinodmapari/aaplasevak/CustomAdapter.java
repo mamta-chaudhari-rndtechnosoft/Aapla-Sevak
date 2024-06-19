@@ -19,7 +19,8 @@ public class CustomAdapter implements SpinnerAdapter {
         this.colonyList = colonyList;
     }
 
-    /*@Override
+    /*
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(activity).inflate(R.layout.list_items, parent, false);
@@ -30,15 +31,13 @@ public class CustomAdapter implements SpinnerAdapter {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position)
     {
-
-
-
     }
 
     @Override
     public int getItemCount() {
         return colonyList.size();
-    }*/
+    }
+    */
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {

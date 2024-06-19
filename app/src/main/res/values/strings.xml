@@ -19,7 +19,7 @@
     <string name="event"> Event</string>
     <string name="Notifications">Notifications</string>
     <string name="voterID"> Voter ID</string>
-    <string name="adharcard"> Adharcard number</string>
+    <string name="adharcard"> Adharcard Number</string>
     <string name="votingCenter"> Voting Center</string>
     <string name="License_Number">License Number</string>
     <string name="New_Password">New Password</string>
