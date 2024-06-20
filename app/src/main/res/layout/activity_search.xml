@@ -23,9 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_below="@id/toolbar"
-        android:background="@drawable/background">
+        android:background="@color/colorWhite"
+        android:elevation="0dp">
 
     </View>
+
 
 
     <LinearLayout
@@ -33,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         android:padding="5dp"
         android:weightSum="3">
@@ -91,14 +93,13 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:background="@drawable/border"
+            android:background="@drawable/border_search"
             android:elevation="10dp"
             android:gravity="center"
             android:hint="Search Name"
             android:padding="10dp"
             android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:textColor="@color/colorBlack"/>
 
 
 
@@ -121,36 +122,36 @@
             android:layout_height="50dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@drawable/border"
+            android:background="@drawable/border_search"
             android:elevation="10dp"
             android:gravity="center"
-            android:hint="voter ID"
+            android:hint="Voter ID"
             android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:textColor="@color/colorBlack"
+           />
 
         <EditText
             android:id="@+id/adharCard"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@drawable/border"
+            android:background="@drawable/border_search"
             android:gravity="center"
-            android:hint="adhar card"
+            android:hint="Adhar Card"
             android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:textColor="@color/colorBlack"
+             />
 
 
         <ImageView
             android:id="@+id/iv_search_icon"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_below="@id/ll_search"
-            android:layout_alignParentEnd="true"
+            android:layout_height="50dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:padding="10dp"
+            android:background="@drawable/border_search"
             android:src="@drawable/ic_search" />
     </LinearLayout>
 
@@ -229,7 +230,9 @@
             android:id="@+id/rv_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            tools:listitem="@layout/search_item"
+            />
 
 
         <!--we are adding progress bar

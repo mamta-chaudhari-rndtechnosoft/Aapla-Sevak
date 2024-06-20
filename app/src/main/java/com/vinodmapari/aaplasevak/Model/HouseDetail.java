@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class HouseDetail {
     private int id;
     private String name;
+    @SerializedName("middle_name")
     private String middle_Name;
     private String surname;
     private String voting_Center;

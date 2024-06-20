@@ -26,6 +26,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -64,29 +65,31 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
     ArrayList<Colony> colonies;
     CustomAdapter adapter;
     int selected_series, selected_status, selected_colony, selected_row, selected_water_supply;
-    String series_id, status_id, colony_id, row_id, water_supply_id, boothNo, serialNo;
+    String series_id, status_id, colony_id, row_id, water_supply_id;
     Button btnSubmit;
     long selected_series_id, selected_colony_id;
     String gender;
-    RadioButton selectedRadioButton;
+    RadioButton radioButton1, radioButton2, radioButton3;
     RadioGroup radioGroup;
     TextView tv1, tv2;
     SwipeRefreshLayout swipe_refresh;
     SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row, spinner_water_Supply;
-    EditText etHouseNumber, etVotingCenter, etDob, etName, etMiddleName, etSurname, etMob1, etMob2, etQualification, etCaste, etRelation, etVoterId, etEvent, etAadharCard, etBooth, etSerial;
+    EditText etHouseNumber, etVotingCenter, etDob, etName, etMiddleName, etSurname, etMob1, etMob2,
+            etQualification, etCaste, etRelation, etVoterId, etEvent, etAadharCard, etBooth, etSerial;
     private String colonyName;
     int id;
     String colony, row, waterSupply, series, status;
     //Field Entry
-    String HouseNo, Name, MiddleName, Surname, VotingCenter, BoothNo, VotingSrNo, SeriesId, Gender, Mobile1, Mobile2, Dob, Qualification, Caste, Relation, Event, VoterId;
+    String HouseNo, Name, MiddleName, Surname, VotingCenter, BoothNo, SeriesId, Gender,
+            Mobile1, Mobile2, Dob, Qualification, Caste, Relation, Event, VoterId, AadharCard;
 
-    int ColonyId,RowId,WaterSupplyId,MemberId,AadharCard;
+    int ColonyId, RowId, WaterSupplyId, MemberId, VotingSrNo;
+    LottieAnimationView loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_member);
-
 
         id = getIntent().getIntExtra("id", 0);
 
@@ -110,6 +113,10 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
         //radio
         radioGroup = findViewById(R.id.radioGroup);
+        radioButton1 = findViewById(R.id.radioButton1);
+        radioButton2 = findViewById(R.id.radioButton2);
+        radioButton3 = findViewById(R.id.radioButton3);
+
 
         //Spinner
         spinner_series = findViewById(R.id.spinnerSeries);
@@ -117,6 +124,12 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         spinner_row = findViewById(R.id.spinner_row);
         spinner_status = findViewById(R.id.spinner_status);
         spinner_water_Supply = findViewById(R.id.spinner_water_supply);
+
+        //loader
+        loader = findViewById(R.id.loaderUpdate);
+
+        //btn
+        btnSubmit = findViewById(R.id.btn_submit_update);
 
 
         //Toolbar
@@ -245,7 +258,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         spinner_water_Supply.setAdapter(dataAdapter_water_supply);
         spinner_water_Supply.setSelection(selected_water_supply);
 
-
+        loader.setVisibility(View.VISIBLE);
         getUserDetail();
 
 
@@ -331,6 +344,37 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             }
         });
 
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                HouseNo = etHouseNumber.getText().toString();
+                Name = etName.getText().toString();
+                MiddleName = etMiddleName.getText().toString();
+                Surname = etSurname.getText().toString();
+                VotingCenter = etVotingCenter.getText().toString();
+                BoothNo = etBooth.getText().toString();
+                VotingSrNo = Integer.parseInt(etSerial.getText().toString());
+                SeriesId = String.valueOf(spinner_series.getSelectedItemPosition());
+                ColonyId = spinner_colony.getSelectedItemPosition();
+                RowId = spinner_row.getSelectedItemPosition();
+                Gender = gender;
+                Mobile1 = etMob1.getText().toString();
+                Mobile2 = etMob2.getText().toString();
+                Qualification = etQualification.getText().toString();
+                Caste = etCaste.getText().toString();
+                Relation = etRelation.getText().toString();
+                Event = etEvent.getText().toString();
+                AadharCard = etAadharCard.getText().toString();
+                WaterSupplyId = spinner_water_Supply.getSelectedItemPosition();
+                VoterId = etVoterId.getText().toString();
+
+                loader.setVisibility(View.VISIBLE);
+                updateMemberData();
+
+            }
+        });
+
 
     }
 
@@ -350,6 +394,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                     Log.d("mamta", String.valueOf(userDetails));
 
+                    loader.setVisibility(View.GONE);
+
                     int id = userDetails.get(0).getId();
                     String name = userDetails.get(0).getName();
                     String middleName = userDetails.get(0).getMiddle_name();
@@ -364,7 +410,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     String relation = userDetails.get(0).getRelation();
                     String event = userDetails.get(0).getEvent();
                     String voterId = userDetails.get(0).getVoter_id();
-                    int adharCard = userDetails.get(0).getAdhar_card();
+                    String adharCard = userDetails.get(0).getAdhar_card();
                     String houseNo = userDetails.get(0).getHouse_no();
                     String gender = userDetails.get(0).getGender();
                     String seriesId = userDetails.get(0).getSeries_id();
@@ -372,8 +418,10 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     int colonyId = userDetails.get(0).getColony_id();
                     int rowId = userDetails.get(0).getRow_id();
                     int waterSupplyId = userDetails.get(0).getWatersupply_id();
+                    String statusId = userDetails.get(0).getStatus_id();
                     int memberId = userDetails.get(0).getMember_id();
 
+                    //Toast.makeText(UpdateMemberActivity.this, "c: " + colonyId + "R: " + rowId + "W: " + waterSupplyId + "S: " + seriesId, Toast.LENGTH_SHORT).show();
 
                     etHouseNumber.setText(houseNo);
                     etName.setText(name);
@@ -388,11 +436,63 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     etCaste.setText(caste);
                     etRelation.setText(relation);
                     etEvent.setText(event);
-                    //etAadharCard.setText(adharCard);
+                    etAadharCard.setText(adharCard);
                     etVoterId.setText(voterId);
+                    etSerial.setText(String.valueOf(votingSrNo));
+
+                    spinner_series.setSelection(Integer.parseInt(seriesId));
+                    spinner_colony.setSelection(colonyId);
+                    spinner_row.setSelection(rowId);
+                    spinner_status.setSelection(Integer.parseInt(statusId));
+                    spinner_water_Supply.setSelection(waterSupplyId);
+
+
+                    /*//if (seriesId != null) spinner_series.setSelection(Integer.parseInt(seriesId));
+                    if (colonyId != null) spinner_colony.setSelection(colonyId);
+                    if (rowId != null) spinner_row.setSelection(rowId);
+                    if (statusId != null) spinner_status.setSelection(statusId);
+                   // if (waterSupplyId != null) spinner_water_Supply.setSelection(waterSupplyId);
+
+                    if(waterSupplyId != null) {
+                        spinner_water_Supply.setSelection(waterSupplyId);
+                    }
+                    else{
+                        Toast.makeText(UpdateMemberActivity.this, "water supply Id is null", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if(seriesId != null) {
+                        spinner_series.setSelection(Integer.parseInt(seriesId));
+                    }
+                    else{
+                        Toast.makeText(UpdateMemberActivity.this, "Series Id is null", Toast.LENGTH_SHORT).show();
+                    }*/
+
+
+                    /*if (statusId != null) {
+                        spinner_status.setSelection(Integer.parseInt(statusId));
+                    } else {
+                        Toast.makeText(UpdateMemberActivity.this, "status Id is null", Toast.LENGTH_SHORT).show();
+                    }*/
+
+
+                    //radioGroup.setSelected(true);
+                    if (gender.equals("Male") || gender.equalsIgnoreCase("male")) {
+                        radioButton1.setChecked(true);
+                    } else if (gender.equals("Female") || gender.equalsIgnoreCase("female")) {
+                        radioButton2.setChecked(true);
+                    } else if (gender.equalsIgnoreCase("others")) {
+                        radioButton3.setChecked(true);
+                    } else {
+                        if (gender == null) {
+                            Log.d("Tag", "Gender is null");
+                        } else {
+                            Log.d("Tag", "Gender is not recognized: " + gender);
+                        }
+                    }
 
 
                 } else {
+                    loader.setVisibility(View.GONE);
                     Toast.makeText(UpdateMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
                     Log.e("Tag", "Response Error..");
                 }
@@ -400,6 +500,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
             @Override
             public void onFailure(Call<UserDetailResponse> call, Throwable throwable) {
+                loader.setVisibility(View.GONE);
                 Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
                 Toast.makeText(UpdateMemberActivity.this, "Error..", Toast.LENGTH_SHORT).show();
             }
@@ -412,14 +513,35 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
         //VotingSrNo and Aadhar card in Int or long
 
-        /*
-        EditFamilyMemberBody editFamilyMemberBody = new EditFamilyMemberBody
-                (id, Name, MiddleName, Surname, VotingCenter,
-                        boothNo, VotingSrNo, SeriesId, ColonyId, RowId, Gender, Mobile1, Mobile2, Qualification,
-                        Dob, Caste, Relation, Event, AadharCard, WaterSupplyId, MemberId, VoterId);
+
+        EditFamilyMemberBody editFamilyMemberBody = new EditFamilyMemberBody(id, Name, MiddleName, Surname, VotingCenter, BoothNo, VotingSrNo, SeriesId, ColonyId, RowId, Gender, Mobile1, Mobile2, Qualification,
+                Caste, Relation, Event, AadharCard, WaterSupplyId, VoterId);
+        Log.d("Api Response", editFamilyMemberBody.toString());
 
         Call<ResponseBody> call = apiInterface.updateFamilyDetails(editFamilyMemberBody);
-        */
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    loader.setVisibility(View.GONE);
+                    Toast.makeText(UpdateMemberActivity.this, "Success..!!", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    loader.setVisibility(View.GONE);
+                    Toast.makeText(UpdateMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Tag", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                loader.setVisibility(View.GONE);
+                Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(UpdateMemberActivity.this, "Error..", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 

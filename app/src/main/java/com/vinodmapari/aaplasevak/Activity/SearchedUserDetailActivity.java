@@ -219,7 +219,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(SearchedUserDetailActivity.this, EditMemberActivity.class);
                 intent.putExtra("house_no", houseNo);
                 startActivity(intent);
@@ -235,7 +234,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_SUBJECT, "My application");
-                    String sAux = "\n" + "User Details" + "\n\n";
+                    String sAux = "\n" + "User Details:" + "\n\n";
                     sAux = sAux + Details;
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(i, "choose one"));
@@ -486,7 +485,8 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                     // You can update UI or perform other actions here
                                 }*/
 
-                                String data = counter + ". Name: " + name + " " + middleName + " " + surname +
+                                String data =
+                                        counter + ")" + " Name: " + name + " " + middleName + " " + surname +
                                         "\nVoter ID: " + voterId +
                                         "\nBooth No: " + boothNo +
                                         "\nSr.No: " + votingSrNo +
@@ -497,7 +497,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
                             }
 
-                            Details = allDetails.toString() + "\n*Aapla Sevak - Vinod Mapari*";
+                            Details = allDetails.toString() + "*Aapla Sevak - Vinod Mapari*";
 
                             // Example: Log the first item in the list
                            /* if (!houseDetails.isEmpty()) {

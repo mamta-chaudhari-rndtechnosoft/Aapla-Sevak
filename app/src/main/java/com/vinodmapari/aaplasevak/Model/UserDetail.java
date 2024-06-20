@@ -1,5 +1,7 @@
 package com.vinodmapari.aaplasevak.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UserDetail {
 
     private int id;
@@ -8,6 +10,7 @@ public class UserDetail {
     private String middle_name;
     private String surname;
     private String voting_center;
+    @SerializedName("booth_no")
     private String booth_No;
     private int voting_sr_no;
     private String series_id;
@@ -21,16 +24,17 @@ public class UserDetail {
     private String caste;
     private String relation;
     private String event;
-    private int adhar_card;
+    private String adhar_card;
     private int watersupply_id;
     private int member_id;
     private String voter_id;
+    private String status_id;
 
 
     public UserDetail(int id, String house_no, String name, String middle_name, String surname, String voting_center,
                       String booth_No, int voting_sr_no, String series_id, int colony_id, int row_id, String gender,
                       String mobile1, String mobile2, String dob, String qualification, String caste, String relation,
-                      String event, int adhar_card, int watersupply_id, int member_id, String voter_id) {
+                      String event, String adhar_card, int watersupply_id, int member_id, String voter_id, String status_id) {
         this.id = id;
         this.house_no = house_no;
         this.name = name;
@@ -54,8 +58,8 @@ public class UserDetail {
         this.watersupply_id = watersupply_id;
         this.member_id = member_id;
         this.voter_id = voter_id;
+        this.status_id = status_id;
     }
-
 
     public int getId() {
         return id;
@@ -209,11 +213,11 @@ public class UserDetail {
         this.event = event;
     }
 
-    public int getAdhar_card() {
+    public String getAdhar_card() {
         return adhar_card;
     }
 
-    public void setAdhar_card(int adhar_card) {
+    public void setAdhar_card(String adhar_card) {
         this.adhar_card = adhar_card;
     }
 
@@ -239,6 +243,14 @@ public class UserDetail {
 
     public void setVoter_id(String voter_id) {
         this.voter_id = voter_id;
+    }
+
+    public String getStatus_id() {
+        return status_id;
+    }
+
+    public void setStatus_id(String status_id) {
+        this.status_id = status_id;
     }
 }
 

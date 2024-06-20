@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_gradient"
         android:textStyle="bold"
-        app:titleTextColor="@color/colorWhite"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/colorWhite" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
@@ -38,8 +38,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginRight="15dp"
                     android:background="@drawable/border"
                     android:gravity="center" />
@@ -47,11 +47,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/house_number">
@@ -60,50 +60,49 @@
                         android:id="@+id/house_number"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/colorPrimaryDark"
-                        />
+                        android:backgroundTint="@color/colorPrimaryDark" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_colony"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="@dimen/_40sdp"
-                    android:visibility="visible"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
                     android:background="@drawable/border"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:visibility="visible" />
 
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_row"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
                     android:background="@drawable/border"
                     android:gravity="center" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/border"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/border"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:padding="10dp"
                     android:weightSum="1">
 
                     <RadioButton
-                        android:id="@+id/radioButton"
+                        android:id="@+id/radioButton1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -143,11 +142,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/name">
@@ -163,11 +162,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/middle_name">
 
@@ -181,11 +180,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/surname">
@@ -198,15 +197,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="whatsapp number">
@@ -221,15 +219,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="calling number">
@@ -244,15 +241,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/dob">
@@ -268,11 +264,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/Qualification">
@@ -288,11 +284,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/caste">
@@ -308,25 +304,26 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_status"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
                     android:background="@drawable/border"
                     android:gravity="center" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="@string/Relation">
+                    android:hint="@string/Relation"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/relation"
@@ -339,14 +336,15 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="@string/event">
+                    android:hint="@string/event"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/event"
@@ -359,11 +357,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/voterID">
@@ -379,11 +377,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/adharcard">
@@ -399,14 +397,14 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="enter booth no">
+                    android:hint="Booth No">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etBoothNo"
@@ -419,14 +417,14 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="enter Serial no">
+                    android:hint="Serial no">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etSerialNo"
@@ -439,11 +437,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/votingCenter">
@@ -459,21 +457,21 @@
                     android:id="@+id/spinner_water_supply"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
                     android:background="@drawable/border"
                     android:gravity="center" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_submit"
+                    android:id="@+id/btn_submit_update"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="30dp"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:elevation="10dp"
@@ -484,11 +482,24 @@
                     android:textStyle="bold"
                     app:rippleColor="@color/colorWhite" />
 
-
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loaderUpdate"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_app.json"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        />
+
 
 </RelativeLayout>

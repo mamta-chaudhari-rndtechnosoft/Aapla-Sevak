@@ -45,46 +45,46 @@ import java.util.Map;
 
 public class SubMemberActivity extends AppCompatActivity {
 
-    int selected_relation,selected_status;
-    String relation_id,status_id;
+    int selected_relation, selected_status;
+    String relation_id, status_id;
     Button btnSubmit;
-    SearchableSpinner spinner_relation,spinner_status;
-    String gender, boothNo, serialNo;;
+    SearchableSpinner spinner_relation, spinner_status;
+    String gender, boothNo, serialNo;
+    ;
     String survey_id;
-    TextView tv1, tv2,member_colony, series,member_row,member_watersupply,member_caste,house_number,surname;
+    TextView tv1, tv2, member_colony, series, member_row, member_watersupply, member_caste, house_number, surname;
     ArrayList<MainMemberDetail> mainMemberDetails;
     RadioButton selectedRadioButton;
     RadioGroup radioGroup;
-    EditText votingcenter,dob, name,middle_name ,relation,mob1, mob2,qualification,voterID,edevent,adharcard, etBoothNo, etSerialNo;
+    EditText votingcenter, dob, name, middle_name, relation, mob1, mob2, qualification, voterID, edevent, adharcard, etBoothNo, etSerialNo;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_member);
 
-        house_number=findViewById(R.id.house_number);
-        dob=findViewById(R.id.dob);
-        votingcenter=findViewById(R.id.voting_center);
-        name=findViewById(R.id.name);
-        middle_name=findViewById(R.id.middle_name);
-        surname=findViewById(R.id.surname);
-        mob1=findViewById(R.id.mobile1);
-        mob2=findViewById(R.id.mobile2);
-        qualification=findViewById(R.id.qualification);
-        member_caste=findViewById(R.id.caste);
-        voterID=findViewById(R.id.voterID);
-        edevent=findViewById(R.id.event);
-        adharcard=findViewById(R.id.adharCard);
-        btnSubmit=findViewById(R.id.btn_submit);
-        series=findViewById(R.id.spinnerSeries);
-        member_colony=findViewById(R.id.spinner_colony);
-        member_row=findViewById(R.id.spinner_row);
-        member_watersupply=findViewById(R.id.spinner_water_supply);
-       // spinner_relation=(SearchableSpinner)findViewById(R.id.spinnerRelation);
-        spinner_status=(SearchableSpinner)findViewById(R.id.spinner_status);
-        radioGroup=findViewById(R.id.radioGroup);
-        relation=findViewById(R.id.relation);
+        house_number = findViewById(R.id.house_number);
+        dob = findViewById(R.id.dob);
+        votingcenter = findViewById(R.id.voting_center);
+        name = findViewById(R.id.name);
+        middle_name = findViewById(R.id.middle_name);
+        surname = findViewById(R.id.surname);
+        mob1 = findViewById(R.id.mobile1);
+        mob2 = findViewById(R.id.mobile2);
+        qualification = findViewById(R.id.qualification);
+        member_caste = findViewById(R.id.caste);
+        voterID = findViewById(R.id.voterID);
+        edevent = findViewById(R.id.event);
+        adharcard = findViewById(R.id.adharCard);
+        btnSubmit = findViewById(R.id.btn_submit);
+        series = findViewById(R.id.spinnerSeries);
+        member_colony = findViewById(R.id.spinner_colony);
+        member_row = findViewById(R.id.spinner_row);
+        member_watersupply = findViewById(R.id.spinner_water_supply);
+        // spinner_relation=(SearchableSpinner)findViewById(R.id.spinnerRelation);
+        spinner_status = (SearchableSpinner) findViewById(R.id.spinner_status);
+        radioGroup = findViewById(R.id.radioGroup);
+        relation = findViewById(R.id.relation);
         etBoothNo = findViewById(R.id.etBoothNum);
         etSerialNo = findViewById(R.id.etSerialNum);
 
@@ -103,21 +103,20 @@ public class SubMemberActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        mainMemberDetails=new ArrayList<>();
-       // spinner_relation.setTitle("select relation");
+        mainMemberDetails = new ArrayList<>();
+        // spinner_relation.setTitle("select relation");
         spinner_status.setTitle("select status");
 
-        Intent intent=getIntent();
-        String user_surname=intent.getStringExtra("surname");
-        String user_series=intent.getStringExtra("series");
-        String house_no=intent.getStringExtra("house_no");
-        String colony=intent.getStringExtra("colony");
-        String row=intent.getStringExtra("row");
-        String caste=intent.getStringExtra("caste");
-        String watersupply=intent.getStringExtra("watersupply");
-        String id=intent.getStringExtra("id");
-        String member_id=intent.getStringExtra("member_id");
-
+        Intent intent = getIntent();
+        String user_surname = intent.getStringExtra("surname");
+        String user_series = intent.getStringExtra("series");
+        String house_no = intent.getStringExtra("house_no");
+        String colony = intent.getStringExtra("colony");
+        String row = intent.getStringExtra("row");
+        String caste = intent.getStringExtra("caste");
+        String watersupply = intent.getStringExtra("watersupply");
+        String id = intent.getStringExtra("id");
+        String member_id = intent.getStringExtra("member_id");
 
 
 //        Toast.makeText(getApplicationContext(), ""+series, Toast.LENGTH_SHORT).show();
@@ -131,8 +130,7 @@ public class SubMemberActivity extends AppCompatActivity {
         member_caste.setText(caste);
 
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             public void onCheckedChanged(RadioGroup rg, int checkedId) {
                 for (int i = 0; i < rg.getChildCount(); i++) {
@@ -152,13 +150,11 @@ public class SubMemberActivity extends AppCompatActivity {
 
 
         status_name.clear();
-        status_name=new ArrayList<>();
+        status_name = new ArrayList<>();
 
-        for (int i=0; i<Constants.statuses.size(); i++)
-        {
+        for (int i = 0; i < Constants.statuses.size(); i++) {
             Constants.status_name.add(Constants.statuses.get(i).getStatus_name());
-            if (status_name!=null && status_name.equals(Constants.statuses.get(i).getStatus_name()))
-            {
+            if (status_name != null && status_name.equals(Constants.statuses.get(i).getStatus_name())) {
                 selected_status = i;
             }
         }
@@ -169,8 +165,7 @@ public class SubMemberActivity extends AppCompatActivity {
         spinner_status.setSelection(selected_status);
 
 
-
-       // getRelationList();
+        // getRelationList();
 
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +183,7 @@ public class SubMemberActivity extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                               dob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                dob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                             }
                         }, mYear, mMonth, mDay);
@@ -202,54 +197,46 @@ public class SubMemberActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                String calling_no=mob1.getText().toString();
-                String wp_no=mob2.getText().toString();
+                String calling_no = mob1.getText().toString();
+                String wp_no = mob2.getText().toString();
 
 
-                String house_no=house_number.getText().toString();
-                String user_name=name.getText().toString();
-                String user_middle_name=middle_name.getText().toString();
-                String user_surname=surname.getText().toString();
-                String mobile_no1=calling_no;
-                String mobile_no2=wp_no;
-                String user_dob=dob.getText().toString();
-                String user_qualification=qualification.getText().toString();
-                String event=edevent.getText().toString();
-                String voterId=voterID.getText().toString();
-                String user_adharcard=adharcard.getText().toString();
-                String voting_center=votingcenter.getText().toString();
-                String user_relation=relation.getText().toString();
-                String series_id=user_series;
-                String row_id=row;
-                String colony_id=colony;
-                String watersupply_id=watersupply;
-                String user_caste=caste;
+                String house_no = house_number.getText().toString();
+                String user_name = name.getText().toString();
+                String user_middle_name = middle_name.getText().toString();
+                String user_surname = surname.getText().toString();
+                String mobile_no1 = calling_no;
+                String mobile_no2 = wp_no;
+                String user_dob = dob.getText().toString();
+                String user_qualification = qualification.getText().toString();
+                String event = edevent.getText().toString();
+                String voterId = voterID.getText().toString();
+                String user_adharcard = adharcard.getText().toString();
+                String voting_center = votingcenter.getText().toString();
+                String user_relation = relation.getText().toString();
+                String series_id = user_series;
+                String row_id = row;
+                String colony_id = colony;
+                String watersupply_id = watersupply;
+                String user_caste = caste;
 
                 String BoothNo = etBoothNo.getText().toString();
                 String SerialNo = etSerialNo.getText().toString();
 
 
-
-
-
-                if(house_no.equals("")||user_name.equals("")||user_middle_name.equals("")||user_surname.equals("")||mobile_no1.length()==0||mobile_no2.length()==0||user_relation.equals("")
-                        ||user_dob.isEmpty()||user_qualification.equals("")||caste.equals("")||event.equals("")||voterId.equals("")||user_adharcard.equals("") ||voting_center.equals("") || BoothNo.equals("") || SerialNo.equals(""))
-                {
+                if (house_no.equals("") || user_name.equals("") || user_middle_name.equals("") || user_surname.equals("") || mobile_no1.length() == 0 || mobile_no2.length() == 0 || user_relation.equals("")
+                        || user_dob.isEmpty() || user_qualification.equals("") || caste.equals("") || event.equals("") || voterId.equals("") || user_adharcard.equals("") || voting_center.equals("") || BoothNo.equals("") || SerialNo.equals("")) {
                     Toast.makeText(SubMemberActivity.this, "some fields are empty", Toast.LENGTH_SHORT).show();
-                }
-                else
-                    {
+                } else {
 
-                        addMember(id,gender,user_name,user_middle_name,user_surname,mobile_no1,mobile_no2,user_dob,user_qualification,status_id, user_relation,event,voterId,user_adharcard,voting_center,house_no,row_id,series_id,colony_id,watersupply_id,user_caste,member_id, BoothNo,SerialNo);
+                    addMember(id, gender, user_name, user_middle_name, user_surname, mobile_no1, mobile_no2, user_dob, user_qualification, status_id, user_relation, event, voterId, user_adharcard, voting_center, house_no, row_id, series_id, colony_id, watersupply_id, user_caste, member_id, BoothNo, SerialNo);
 
-                        Toast.makeText(SubMemberActivity.this, "family member added successfully", Toast.LENGTH_SHORT).show();
-                        finish();
+                    Toast.makeText(SubMemberActivity.this, "family member added successfully", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
 
             }
         });
-
-
 
 
 //        spinner_relation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -269,71 +256,61 @@ public class SubMemberActivity extends AppCompatActivity {
 
         spinner_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 status_id = Constants.statuses.get(position).getId();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
     }
 
-    private void addMember(String survey_id,String gender,String user_name,String user_middle_name,String user_surname,String mobile_no1,String mobile_no2,String user_dob,String user_qualification,String status_id,String relation,String event,String voterId,String adharCard,String voting_center,String house_no,String row_id,String series_id,String colony_id,String watersupply_id,String caste,String member_id, String BoothNo, String SerialNo)
-    {
+    private void addMember(String survey_id, String gender, String user_name, String user_middle_name, String user_surname, String mobile_no1, String mobile_no2, String user_dob, String user_qualification, String status_id, String relation, String event, String voterId, String adharCard, String voting_center, String house_no, String row_id, String series_id, String colony_id, String watersupply_id, String caste, String member_id, String BoothNo, String SerialNo) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.add_member,
-                new Response.Listener<String>()
-                {
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response)
-                    {
+                    public void onResponse(String response) {
                         //Response
-                            Log.d("TAG", "onResponse: "+response);
+                        Log.d("TAG", "onResponse: " + response);
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("TAG1", "onResponse: "+response);
+                            Log.d("TAG1", "onResponse: " + response);
 
                             JSONObject jsonObject1 = jsonObject.getJSONObject("ADD_MEMBER");
 
                             String message = jsonObject1.getString("message");
 
-                           // Toast.makeText(SubMemberActivity.this, message, Toast.LENGTH_SHORT).show();
-                        }
-                        catch (JSONException e)
-                        {
+                            // Toast.makeText(SubMemberActivity.this, message, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
                             e.printStackTrace();
                             //Toast.makeText(SubMemberActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
+                    public void onErrorResponse(VolleyError error) {
                         //Error
-                     //   Log.d("AddToCart->",error.toString());
-                       // Toast.makeText(SubMemberActivity.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
+                        //   Log.d("AddToCart->",error.toString());
+                        // Toast.makeText(SubMemberActivity.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
-            public Map<String, String> getParams()
-            {
+            public Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
 
-                params.put("survey_id",survey_id);
+                params.put("survey_id", survey_id);
                 params.put("gender", gender);
                 params.put("name", user_name);
                 params.put("middle_name", user_middle_name);
-               //params.put("surname", user_surname);
+                //params.put("surname", user_surname);
                 params.put("mobile1", mobile_no1);
                 params.put("mobile2", mobile_no2);
                 params.put("dob", user_dob);
@@ -341,12 +318,12 @@ public class SubMemberActivity extends AppCompatActivity {
                 params.put("status_id", status_id);
                 params.put("relation", relation);
                 params.put("event", event);
-                params.put("voter_id",voterId);
-                params.put("adhar_card",adharCard);
+                params.put("voter_id", voterId);
+                params.put("adhar_card", adharCard);
                 params.put("voting_center", voting_center);
-                params.put("member_id",member_id);
-                params.put("booth_no",BoothNo);
-                params.put("voting_sr_no",SerialNo);
+                params.put("member_id", member_id);
+                params.put("booth_no", BoothNo);
+                params.put("voting_sr_no", SerialNo);
 
 
                 return params;
@@ -361,36 +338,31 @@ public class SubMemberActivity extends AppCompatActivity {
     }
 
 
-
-
-    public void getStatusList()
-    {
+    public void getStatusList() {
         final RequestQueue requestQueue = Volley.newRequestQueue(SubMemberActivity.this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.status_list, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Constants.statuses.clear();
-                Constants.statuses=new ArrayList<>();
+                Constants.statuses = new ArrayList<>();
 
-                Constants.statuses.add(new Status("0","select status"));
+                Constants.statuses.add(new Status("0", "select status"));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("STATUS");
-                    for(int i = 0; i < jsonArray.length(); i++)
-                    {
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         String id = jsonObject1.getString("id");
                         String status_name = jsonObject1.getString("status_name");
 
-                        Constants.statuses.add(new Status(id,status_name));
+                        Constants.statuses.add(new Status(id, status_name));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
-        }, new Response.ErrorListener()
-        {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 requestQueue.stop();

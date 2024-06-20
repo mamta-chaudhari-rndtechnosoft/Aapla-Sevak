@@ -31,10 +31,8 @@ import retrofit2.Response;
 
 public class EditMemberActivity extends AppCompatActivity implements EditFamilyAdapter.OnDeleteClickListener{
 
-
     ArrayList<HouseDetail> houseDetailArrayList;
     RecyclerView rvFamilyMember;
-
     EditFamilyAdapter editFamilyAdapter;
     String houseNo;
     LinearLayout layoutNoData;
@@ -69,10 +67,8 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
         getFamilyMember();
 
         editFamilyAdapter = new EditFamilyAdapter(EditMemberActivity.this, houseDetailArrayList);
-
         editFamilyAdapter.setOnDeleteClickListener(EditMemberActivity.this);
         rvFamilyMember.setAdapter(editFamilyAdapter);
-
 
     }
 

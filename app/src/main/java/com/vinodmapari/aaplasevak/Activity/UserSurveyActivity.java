@@ -139,7 +139,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         getSeriesList();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
             public void onCheckedChanged(RadioGroup rg, int checkedId) {
                 for (int i = 0; i < rg.getChildCount(); i++) {
                     RadioButton btn = (RadioButton) rg.getChildAt(i);
@@ -260,10 +259,14 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 String SerialNo = etSerial.getText().toString();
 
 
-                if (house_no.equals("") || user_name.equals("") || user_middle_name.equals("") || user_surname.equals("") || mobile_no1.length() == 0 || mobile_no2.length() == 0
+                if (house_no.equals("") || user_name.equals("")
+                        || user_middle_name.equals("") || user_surname.equals("")
+                        || mobile_no1.length() == 0 || mobile_no2.length() == 0
                         || user_dob.isEmpty() || user_qualification.equals("") || user_caste.equals("")
-                        || user_relation.equals("") || event.equals("")
-                        || votingcenter.equals("") || voterId.equals("")
+                        || user_relation.equals("")
+                        || event.equals("")
+                        || votingcenter.equals("")
+                        || voterId.equals("")
                         || user_adharcard.equals("")
                         || gender.equals("")
                         || BoothNo.equals("")
