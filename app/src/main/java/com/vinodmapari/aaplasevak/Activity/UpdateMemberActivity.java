@@ -443,7 +443,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     spinner_series.setSelection(Integer.parseInt(seriesId));
                     spinner_colony.setSelection(colonyId);
                     spinner_row.setSelection(rowId);
-                    spinner_status.setSelection(Integer.parseInt(statusId));
+                    //spinner_status.setSelection(Integer.parseInt(statusId));
                     spinner_water_Supply.setSelection(waterSupplyId);
 
 
@@ -451,6 +451,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     if (colonyId != null) spinner_colony.setSelection(colonyId);
                     if (rowId != null) spinner_row.setSelection(rowId);
                     if (statusId != null) spinner_status.setSelection(statusId);
+
                    // if (waterSupplyId != null) spinner_water_Supply.setSelection(waterSupplyId);
 
                     if(waterSupplyId != null) {
@@ -513,7 +514,6 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
         //VotingSrNo and Aadhar card in Int or long
 
-
         EditFamilyMemberBody editFamilyMemberBody = new EditFamilyMemberBody(id, Name, MiddleName, Surname, VotingCenter, BoothNo, VotingSrNo, SeriesId, ColonyId, RowId, Gender, Mobile1, Mobile2, Qualification,
                 Caste, Relation, Event, AadharCard, WaterSupplyId, VoterId);
         Log.d("Api Response", editFamilyMemberBody.toString());
@@ -541,8 +541,6 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                 Toast.makeText(UpdateMemberActivity.this, "Error..", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
 
@@ -597,7 +595,6 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                 Constants.row_name.clear();
                 Constants.row_name = new ArrayList<>();
                 Constants.rows = new ArrayList<>();
-
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);

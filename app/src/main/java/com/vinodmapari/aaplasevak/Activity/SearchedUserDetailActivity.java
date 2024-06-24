@@ -50,12 +50,10 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
     ArrayList<SearchList> searchLists;
 
-    String id, member_id, name, series, middle_name, surname, gender, phone, dob, phone2, caste, houseNo, status, relation, watersupply, voterID, adhar, votingCenter, event, row, colony, qualification;
-    String srNo;
+    String id, member_id, name, series, middle_name, surname, gender, phone, dob, phone2, caste, houseNo, status, relation, watersupply, voterID, adhar, votingCenter, event, row, colony, qualification, boothNo, srNo;
     String Details;
-
     TextView tv_Name, tv_Gender, tv_Mob, tv_Series, tv_mob2, tv_houseNo, tv_colony, tv_whatsapp_no, tv_dob, tv_qualificatoon, tv_caste, tv_status, tv_relation, tv_event, tv_voterID,
-            tv_adhar, tv_watersupply, tv_voting_center, tv_row;
+            tv_adhar, tv_watersupply, tv_voting_center, tv_row, tvBoothNo, tvSrNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +85,8 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         tv_row = findViewById(R.id.tv_row);
         tv_qualificatoon = findViewById(R.id.tv_qualification);
         tv_Gender = findViewById(R.id.gender);
+        tvBoothNo = findViewById(R.id.tvBoothNo);
+        tvSrNo = findViewById(R.id.tvSrNo);
 
         searchLists = new ArrayList<>();
 
@@ -117,6 +117,9 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         caste = in.getStringExtra("caste");
         watersupply = in.getStringExtra("water_Supply_id");
         member_id = in.getStringExtra("member_id");
+        boothNo = in.getStringExtra("booth_no");
+        srNo = in.getStringExtra("voting_sr_no");
+
 
 
         //Toast.makeText(SearchedUserDetailActivity.this, "member-id= "+member_id, Toast.LENGTH_SHORT).show();
@@ -144,6 +147,8 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         tv_event.setText(event);
         tv_Mob.setText("+91" + phone);
         tv_mob2.setText("+91" + phone2);
+        tvBoothNo.setText(boothNo);
+        tvSrNo.setText(srNo);
 
 
 
@@ -409,9 +414,13 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                         String caste = object.getString("caste");
                         String voting_center = object.getString("voting_center");
                         String member_id = object.getString("member_id");
+                        String boothNo = object.getString("booth_no");
+                        String srNo = object.getString("voting_sr_no");
 
 
-                        searchLists.add(new SearchList(id, house_no, series_name, colony_name, row_name, gender, name, middle_name, surname, mobile1, mobile2, dob, qualification, caste, status_name, relation, event, voterId, adhar_card, slot_name, voting_center, member_id));
+                        searchLists.add(new SearchList(id, house_no, series_name, colony_name, row_name, gender, name, middle_name,
+                                surname, mobile1, mobile2, dob, qualification, caste, status_name, relation, event, voterId, adhar_card,
+                                slot_name, voting_center, member_id));
 
 
                         tv_houseNo.setText(house_no);

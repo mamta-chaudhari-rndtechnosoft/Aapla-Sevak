@@ -224,8 +224,8 @@ public class SubMemberActivity extends AppCompatActivity {
                 String SerialNo = etSerialNo.getText().toString();
 
 
-                if (house_no.equals("") || user_name.equals("") || user_middle_name.equals("") || user_surname.equals("") || mobile_no1.length() == 0 || mobile_no2.length() == 0 || user_relation.equals("")
-                        || user_dob.isEmpty() || user_qualification.equals("") || caste.equals("") || event.equals("") || voterId.equals("") || user_adharcard.equals("") || voting_center.equals("") || BoothNo.equals("") || SerialNo.equals("")) {
+                if (house_no.equals("") || user_name.equals("") || user_middle_name.equals("") || user_surname.equals("") || mobile_no1.length() == 0 || mobile_no2.length() == 0
+                        || user_dob.isEmpty() || user_qualification.equals("") || caste.equals("")  || voterId.equals("") || user_adharcard.equals("") || voting_center.equals("") || BoothNo.equals("") || SerialNo.equals("")) {
                     Toast.makeText(SubMemberActivity.this, "some fields are empty", Toast.LENGTH_SHORT).show();
                 } else {
 

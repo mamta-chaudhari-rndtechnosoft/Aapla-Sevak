@@ -1,10 +1,9 @@
 package com.vinodmapari.aaplasevak.Model;
 
-public class SearchList
-{
-    String id,house_no,series_name,colony_name,row_name,gender,name,middle_name, surname,mobile1,mobile2,dob,qualification,caste,status_name,relation,event, voter_id,adhar_card,slot_name,voting_center,member_id,page;
+public class SearchList {
+    String id, house_no, series_name, colony_name, row_name, gender, name, middle_name, surname, mobile1, mobile2, dob, qualification, caste, status_name, relation, event, voter_id, adhar_card, slot_name, voting_center, member_id, page;
 
-    public SearchList(String id, String house_no, String series_name, String colony_name, String row_name, String gender, String name, String middle_name, String surname, String mobile1, String mobile2, String dob, String qualification, String caste, String status_name, String relation, String event, String voter_id, String adhar_card, String slot_name, String voting_center,String member_id) {
+    public SearchList(String id, String house_no, String series_name, String colony_name, String row_name, String gender, String name, String middle_name, String surname, String mobile1, String mobile2, String dob, String qualification, String caste, String status_name, String relation, String event, String voter_id, String adhar_card, String slot_name, String voting_center, String member_id) {
         this.id = id;
         this.house_no = house_no;
         this.series_name = series_name;
@@ -26,7 +25,7 @@ public class SearchList
         this.adhar_card = adhar_card;
         this.slot_name = slot_name;
         this.voting_center = voting_center;
-          this.member_id = member_id;
+        this.member_id = member_id;
     }
 
     public String getMember_id() {

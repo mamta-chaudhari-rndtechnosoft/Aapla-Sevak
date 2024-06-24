@@ -34,7 +34,7 @@ public interface ApiInterface {
     @GET("api.php?survey_detail_by_house_no")
     Call<HouseResponse> getHouseDetails(@Query("house_no") String house_no);
 
-    @GET("api.php?update_survey_detail")
+    @POST("api.php?update_survey_detail")
     Call<ResponseBody> updateFamilyDetails(@Body EditFamilyMemberBody editFamilyMemberBody);
 
     @GET("api.php?delete_survey_detail")
@@ -42,6 +42,5 @@ public interface ApiInterface {
 
     @GET("api.php?user_detail_by_id")
     Call<UserDetailResponse> getUserDetail(@Query("id") int id);
-
 
 }

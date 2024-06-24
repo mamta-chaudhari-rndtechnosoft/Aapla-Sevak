@@ -514,40 +514,6 @@ public class SendSmsActivity extends AppCompatActivity {
     }
 
 
-    /*private void templateDescription() {
-        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
-
-        //Call<List<List<Product>>> call = apiInterface.getAllProducts();
-        Call<TemplateResponse> call = apiInterface.getTemplateData(template_id);
-        call.enqueue(new Callback<TemplateResponse>() {
-            @Override
-            public void onResponse(Call<TemplateResponse> call, retrofit2.Response<TemplateResponse> response) {
-                if (response.isSuccessful()) {
-
-                    TemplateResponse templateResponse = response.body();
-                    String templateDesc = templateResponse.getTEMPLATE_DESC().toString();
-                    etTemplateText.setText(templateDesc);
-                    Toast.makeText(SendSmsActivity.this, "Temp: " + templateDesc, Toast.LENGTH_SHORT).show();
-
-                } else {
-                    //mProgress.dismiss();
-                    // Handle the case where the response body is null
-                    Log.e("Tag", "Response is not get");
-                    Toast.makeText(SendSmsActivity.this, "Response body is null.", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<TemplateResponse> call, Throwable throwable) {
-                Log.e("Tag", "Error : " + throwable.getLocalizedMessage());
-                Toast.makeText(SendSmsActivity.this, " Server Taking Too much Time to load ...", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-    }
-*/
 
     private void fetchTemplateDescription() {
         RequestQueue requestQueue = Volley.newRequestQueue(SendSmsActivity.this);
