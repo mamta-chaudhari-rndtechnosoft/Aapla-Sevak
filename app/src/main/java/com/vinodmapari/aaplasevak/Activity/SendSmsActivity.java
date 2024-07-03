@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -40,6 +41,7 @@ import com.vinodmapari.aaplasevak.Model.Colony;
 import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.GetContact;
 import com.vinodmapari.aaplasevak.Model.Row;
+import com.vinodmapari.aaplasevak.Model.SendSmsBody;
 import com.vinodmapari.aaplasevak.Model.Series;
 import com.vinodmapari.aaplasevak.Model.Template;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
@@ -102,7 +104,6 @@ public class SendSmsActivity extends AppCompatActivity {
         colonies = new ArrayList<>();
         getSeriesList();
 
-
         series_name.clear();
         series_name = new ArrayList<>();
 
@@ -156,7 +157,6 @@ public class SendSmsActivity extends AppCompatActivity {
             if (template_name != null && template_name.equals(Constants.templates.get(i).getTemplate())) {
                 selected_template = i;
             }
-
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Constants.series_name);
@@ -230,7 +230,7 @@ public class SendSmsActivity extends AppCompatActivity {
         spinner_colony.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
+
                 colonyName = String.valueOf(spinner_colony.getSelectedItem());
                 for (int i = 0; i < colonies.size(); i++) {
 
@@ -243,7 +243,7 @@ public class SendSmsActivity extends AppCompatActivity {
 
 
                     if (selected_colony_id != 0) {
-//
+
 
                     }
                 }
@@ -289,8 +289,8 @@ public class SendSmsActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                getSMSList();
-
+                //getSMSList();
+                    sendSms();
             }
         });
 
@@ -514,7 +514,6 @@ public class SendSmsActivity extends AppCompatActivity {
     }
 
 
-
     private void fetchTemplateDescription() {
         RequestQueue requestQueue = Volley.newRequestQueue(SendSmsActivity.this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.templateDec + "&template_id=" + template_id ,
@@ -565,8 +564,39 @@ public class SendSmsActivity extends AppCompatActivity {
     }
 
 
+    public void sendSms(){
+
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        SendSmsBody sendSmsBody = new SendSmsBody(selected_series,selected_row,selected_colony,selected_water_supply,templateText);
+
+        Log.d("Api Response",sendSmsBody.toString());
 
 
+        Call<ResponseBody> call  = apiInterface.sendSms(sendSmsBody);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+
+                    Toast.makeText(SendSmsActivity.this, "Success!!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else{
+                    Toast.makeText(SendSmsActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Tag", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(SendSmsActivity.this, "Error..", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
 
 

@@ -474,8 +474,9 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                 String boothNo = houseDetailObject.getString("booth_no");
                                 int votingSrNo = houseDetailObject.getInt("voting_sr_no");
                                 String voterId = houseDetailObject.getString("voter_id");
+                                String seriesId = (String) houseDetailObject.get("series_id");
 
-                                HouseDetail houseDetail = new HouseDetail(name, middleName, surname, votingCenter, boothNo, votingSrNo, voterId);
+                                HouseDetail houseDetail = new HouseDetail(name, middleName, surname, votingCenter, boothNo, votingSrNo, voterId,seriesId);
                                 houseDetails.add(houseDetail);
 
                                 /*if (!houseDetails.isEmpty()) {
@@ -498,7 +499,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                         counter + ")" + " Name: " + name + " " + middleName + " " + surname +
                                         "\nVoter ID: " + voterId +
                                         "\nBooth No: " + boothNo +
-                                        "\nSr.No: " + votingSrNo +
+                                        "\nSr.No: " + seriesId +
                                         "\nVoting Center: " + votingCenter + "\n\n";
 
                                 allDetails.append(data);

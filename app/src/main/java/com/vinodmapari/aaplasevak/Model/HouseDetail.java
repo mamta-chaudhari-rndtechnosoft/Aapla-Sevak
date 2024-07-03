@@ -11,6 +11,7 @@ public class HouseDetail {
     private String voting_Center;
     private String boothNo;
     private int votingSrNo;
+    @SerializedName("series_id")
     private String seriesId;
     private int colonyId;
     private int rowId;
@@ -25,11 +26,12 @@ public class HouseDetail {
     @SerializedName("adhar_card")
     private String adharCard;
     private int watersupplyId;
+
     private int memberId;
     @SerializedName("voter_id")
     private String voterId;
 
-    public HouseDetail(String name, String middle_Name, String surname, String voting_Center, String boothNo, int votingSrNo, String voterId) {
+    public HouseDetail(String name, String middle_Name, String surname, String voting_Center, String boothNo, int votingSrNo, String voterId, String seriesId) {
         this.name = name;
         this.middle_Name = middle_Name;
         this.surname = surname;
@@ -37,6 +39,7 @@ public class HouseDetail {
         this.boothNo = boothNo;
         this.votingSrNo = votingSrNo;
         this.voterId = voterId;
+        this.seriesId = seriesId;
     }
 
 

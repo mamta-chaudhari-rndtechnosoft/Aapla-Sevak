@@ -2,11 +2,13 @@ package com.vinodmapari.aaplasevak.ApiConfig;
 
 import com.vinodmapari.aaplasevak.Model.DeleteMemberResponseData;
 import com.vinodmapari.aaplasevak.Model.EditFamilyMemberBody;
+import com.vinodmapari.aaplasevak.Model.EditMemberRespponseData;
 import com.vinodmapari.aaplasevak.Model.HomeOptionsResponseData;
 import com.vinodmapari.aaplasevak.Model.HomeSplashItem;
 import com.vinodmapari.aaplasevak.Model.HomeSplashResponse;
 import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.HouseResponse;
+import com.vinodmapari.aaplasevak.Model.SendSmsBody;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
 
@@ -34,8 +36,10 @@ public interface ApiInterface {
     @GET("api.php?survey_detail_by_house_no")
     Call<HouseResponse> getHouseDetails(@Query("house_no") String house_no);
 
-    @POST("api.php?update_survey_detail")
-    Call<ResponseBody> updateFamilyDetails(@Body EditFamilyMemberBody editFamilyMemberBody);
+    /*@POST("api.php?update_survey_detail")
+    Call<ResponseBody> updateFamilyDetails(@Body EditFamilyMemberBody editFamilyMemberBody);*/
+    @POST("surveyedit_api.php")
+    Call<EditMemberRespponseData> updateFamilyDetails(@Body EditFamilyMemberBody editFamilyMemberBody);
 
     @GET("api.php?delete_survey_detail")
     Call<DeleteMemberResponseData> deleteFamilyMember(@Query("id") int id);
@@ -43,4 +47,6 @@ public interface ApiInterface {
     @GET("api.php?user_detail_by_id")
     Call<UserDetailResponse> getUserDetail(@Query("id") int id);
 
+    @POST("api.php?sms_send_new")
+    Call<ResponseBody> sendSms(@Body SendSmsBody sendSmsBody);
 }

@@ -165,4 +165,11 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
         //Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
         deleteMember(position,memberId);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getFamilyMember();
+    }
 }

@@ -38,6 +38,7 @@ import com.vinodmapari.aaplasevak.CustomAdapter;
 import com.vinodmapari.aaplasevak.Model.Colony;
 import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.EditFamilyMemberBody;
+import com.vinodmapari.aaplasevak.Model.EditMemberRespponseData;
 import com.vinodmapari.aaplasevak.Model.Method;
 import com.vinodmapari.aaplasevak.Model.Row;
 import com.vinodmapari.aaplasevak.Model.Series;
@@ -110,6 +111,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         etAadharCard = findViewById(R.id.adharCard);
         etBooth = findViewById(R.id.etBoothNo);
         etSerial = findViewById(R.id.etSerialNo);
+
 
         //radio
         radioGroup = findViewById(R.id.radioGroup);
@@ -368,6 +370,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                 AadharCard = etAadharCard.getText().toString();
                 WaterSupplyId = spinner_water_Supply.getSelectedItemPosition();
                 VoterId = etVoterId.getText().toString();
+                Dob = etDob.getText().toString();
 
                 loader.setVisibility(View.VISIBLE);
                 updateMemberData();
@@ -375,6 +378,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             }
         });
 
+        //Toast.makeText(this, "SeriesId: " + spinner_series.getSelectedItemPosition(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -421,7 +425,14 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     String statusId = userDetails.get(0).getStatus_id();
                     int memberId = userDetails.get(0).getMember_id();
 
+
                     //Toast.makeText(UpdateMemberActivity.this, "c: " + colonyId + "R: " + rowId + "W: " + waterSupplyId + "S: " + seriesId, Toast.LENGTH_SHORT).show();
+
+                    //passing the house no in global String
+                    //HouseNo = houseNo;
+
+
+
 
                     etHouseNumber.setText(houseNo);
                     etName.setText(name);
@@ -443,8 +454,10 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     spinner_series.setSelection(Integer.parseInt(seriesId));
                     spinner_colony.setSelection(colonyId);
                     spinner_row.setSelection(rowId);
-                    //spinner_status.setSelection(Integer.parseInt(statusId));
+                    spinner_status.setSelection(Integer.parseInt(statusId));
                     spinner_water_Supply.setSelection(waterSupplyId);
+
+                    MemberId = memberId;
 
 
                     /*//if (seriesId != null) spinner_series.setSelection(Integer.parseInt(seriesId));
@@ -514,18 +527,29 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
         //VotingSrNo and Aadhar card in Int or long
 
-        EditFamilyMemberBody editFamilyMemberBody = new EditFamilyMemberBody(id, Name, MiddleName, Surname, VotingCenter, BoothNo, VotingSrNo, SeriesId, ColonyId, RowId, Gender, Mobile1, Mobile2, Qualification,
-                Caste, Relation, Event, AadharCard, WaterSupplyId, VoterId);
+
+
+        EditFamilyMemberBody editFamilyMemberBody = new EditFamilyMemberBody(id, Name, MiddleName, Surname, VotingCenter, BoothNo, VotingSrNo, selected_series, ColonyId, RowId, Gender, Mobile1, Mobile2, Qualification,
+                Caste, Relation, Event, AadharCard, WaterSupplyId, VoterId,selected_status,HouseNo,Dob,MemberId);
         Log.d("Api Response", editFamilyMemberBody.toString());
 
-        Call<ResponseBody> call = apiInterface.updateFamilyDetails(editFamilyMemberBody);
+        //Toast.makeText(this, "Data: " + editFamilyMemberBody.toString(), Toast.LENGTH_SHORT).show();
 
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<EditMemberRespponseData> call = apiInterface.updateFamilyDetails(editFamilyMemberBody);
+
+        call.enqueue(new Callback<EditMemberRespponseData>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<EditMemberRespponseData> call, Response<EditMemberRespponseData> response) {
                 if (response.isSuccessful()) {
                     loader.setVisibility(View.GONE);
-                    Toast.makeText(UpdateMemberActivity.this, "Success..!!", Toast.LENGTH_SHORT).show();
+
+                    EditMemberRespponseData responseData = response.body();
+                    String status = responseData.getStatus();
+                    String message = responseData.getMessage();
+
+                    Toast.makeText(UpdateMemberActivity.this, "Message: " + message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateMemberActivity.this, "Status: " + status, Toast.LENGTH_SHORT).show();
+
                     finish();
                 } else {
                     loader.setVisibility(View.GONE);
@@ -535,7 +559,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<EditMemberRespponseData> call, Throwable throwable) {
                 loader.setVisibility(View.GONE);
                 Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
                 Toast.makeText(UpdateMemberActivity.this, "Error..", Toast.LENGTH_SHORT).show();

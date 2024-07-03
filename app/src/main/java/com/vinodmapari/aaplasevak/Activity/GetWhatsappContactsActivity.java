@@ -318,24 +318,14 @@ public class GetWhatsappContactsActivity extends AppCompatActivity implements Po
 
                         //holder.cd.setBackgroundColor(R.color.colorGrey);
 
-
-
                         holder.cd.setCardBackgroundColor(Color.parseColor("#cccccc"));
 
                         holder.ivImage.setEnabled(false);
                         holder.ivImage.setVisibility(GONE);
                         holder.send.setVisibility(View.VISIBLE);
 
-
-
                 }
             });
-
-
-
-
-
-
 
         }
 
@@ -378,7 +368,6 @@ public class GetWhatsappContactsActivity extends AppCompatActivity implements Po
             @Override
             public void onResponse(String response) {
 
-
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     //    Log.d("TAG", "onResponse: " + response);
@@ -391,8 +380,6 @@ public class GetWhatsappContactsActivity extends AppCompatActivity implements Po
 
                         imgs.add(new Wp_Img(id, image));
                         Glide.with(GetWhatsappContactsActivity.this).load(image).thumbnail(Glide.with(GetWhatsappContactsActivity.this).load(R.drawable.loading)).into(iv);
-
-
 
                     }
 
