@@ -67,7 +67,8 @@ public class EditFamilyAdapter extends RecyclerView.Adapter<EditFamilyAdapter.Vi
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, UpdateMemberActivity.class);
-                intent.putExtra("id",houseDetailData.getId());
+                //intent.putExtra("id",houseDetailData.getId());
+                intent.putExtra("id",familyMemberList.get(holder.getAdapterPosition()).getId());
                 context.startActivity(intent);
             }
         });

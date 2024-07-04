@@ -20,4 +20,14 @@ public class SendSmsBody {
         this.watersupply_id = watersupply_id;
         this.template_desc = template_desc;
     }
+
+    @Override
+    public String toString() {
+        return "SendSmsBody{" +
+                "series_id='" + series_id + '\'' +
+                ", row_id='" + row_id + '\'' +
+                ", colony_id='" + colony_id + '\'' +
+                ", watersupply_id='" + watersupply_id + '\'' +
+                ", template_desc=" + template_desc + '\'' + '}';
+    }
 }

@@ -190,7 +190,9 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             if (series_name != null && series_name.equals(Constants.series.get(i).getSeries_name())) {
                 selected_series = i;
             }
-
+            else{
+                Toast.makeText(UpdateMemberActivity.this, "Series name: " + selected_series_id, Toast.LENGTH_SHORT).show();
+            }
         }
 
         status_name.clear();
@@ -201,6 +203,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             if (status_name != null && status_name.equals(Constants.statuses.get(i).getStatus_name())) {
                 selected_status = i;
             }
+
         }
 
         Constants.colony_name.clear();
@@ -272,13 +275,14 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                 if (selected_series_id != 0) {
                     getColonyList(selected_series_id);
-
+                }
+                else{
+                    Toast.makeText(UpdateMemberActivity.this, "Series Is: " + selected_series_id, Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
-
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
@@ -431,6 +435,13 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     //passing the house no in global String
                     //HouseNo = houseNo;
 
+                    if(seriesId  == null){
+                        seriesId = "0";
+                    }
+
+                    if(statusId == null){
+                        statusId = "0";
+                    }
 
 
 
@@ -460,7 +471,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     MemberId = memberId;
 
 
-                    /*//if (seriesId != null) spinner_series.setSelection(Integer.parseInt(seriesId));
+                    /*
+                    //if (seriesId != null) spinner_series.setSelection(Integer.parseInt(seriesId));
                     if (colonyId != null) spinner_colony.setSelection(colonyId);
                     if (rowId != null) spinner_row.setSelection(rowId);
                     if (statusId != null) spinner_status.setSelection(statusId);
@@ -490,19 +502,28 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
 
                     //radioGroup.setSelected(true);
-                    if (gender.equals("Male") || gender.equalsIgnoreCase("male")) {
-                        radioButton1.setChecked(true);
-                    } else if (gender.equals("Female") || gender.equalsIgnoreCase("female")) {
-                        radioButton2.setChecked(true);
-                    } else if (gender.equalsIgnoreCase("others")) {
-                        radioButton3.setChecked(true);
-                    } else {
+                    if(gender!= null) {
+                        if (gender.equals("Male") || gender.equalsIgnoreCase("male")) {
+                            radioButton1.setChecked(true);
+                        } else if (gender.equals("Female") || gender.equalsIgnoreCase("female")) {
+                            radioButton2.setChecked(true);
+                        } else if (gender.equalsIgnoreCase("others")) {
+                            radioButton3.setChecked(true);
+                        }
+                         /*else {
                         if (gender == null) {
                             Log.d("Tag", "Gender is null");
                         } else {
                             Log.d("Tag", "Gender is not recognized: " + gender);
                         }
+                    }*/
                     }
+                    else{
+                        Toast.makeText(UpdateMemberActivity.this, "Gender is null", Toast.LENGTH_SHORT).show();
+                        Log.d("Tag", "Gender is null");
+
+                    }
+
 
 
                 } else {

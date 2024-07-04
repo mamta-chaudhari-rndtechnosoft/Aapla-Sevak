@@ -1,12 +1,11 @@
 package com.vinodmapari.aaplasevak.Activity;
 
-import static android.view.View.GONE;
+
 import static com.vinodmapari.aaplasevak.ApiConfig.ApiHandler.getRetrofitInstance;
 import static com.vinodmapari.aaplasevak.Model.Constants.colony_name;
 import static com.vinodmapari.aaplasevak.Model.Constants.row_name;
 import static com.vinodmapari.aaplasevak.Model.Constants.series_name;
 import static com.vinodmapari.aaplasevak.Model.Constants.template_name;
-import static com.vinodmapari.aaplasevak.Model.Constants.templates;
 import static com.vinodmapari.aaplasevak.Model.Constants.water_supply_slots;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,10 +24,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,11 +36,11 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.Model.Colony;
 import com.vinodmapari.aaplasevak.Model.Constants;
-import com.vinodmapari.aaplasevak.Model.GetContact;
+
 import com.vinodmapari.aaplasevak.Model.Row;
 import com.vinodmapari.aaplasevak.Model.SendSmsBody;
+import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
 import com.vinodmapari.aaplasevak.Model.Series;
-import com.vinodmapari.aaplasevak.Model.Template;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.R;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -243,7 +240,6 @@ public class SendSmsActivity extends AppCompatActivity {
 
 
                     if (selected_colony_id != 0) {
-
 
                     }
                 }
@@ -568,19 +564,23 @@ public class SendSmsActivity extends AppCompatActivity {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        SendSmsBody sendSmsBody = new SendSmsBody(selected_series,selected_row,selected_colony,selected_water_supply,templateText);
+        //SendSmsBody sendSmsBody = new SendSmsBody(selected_series,selected_row,selected_colony,selected_water_supply,etTemplateText.getText().toString());
+        SendSmsBody sendSmsBody = new SendSmsBody(spinner_series.getSelectedItemPosition(),spinner_row.getSelectedItemPosition() + 1,spinner_colony.getSelectedItemPosition() + 1,spinner_water_Supply.getSelectedItemPosition(),etTemplateText.getText().toString());
 
         Log.d("Api Response",sendSmsBody.toString());
 
+        Call<SendSmsResponseData> call  = apiInterface.sendSms(sendSmsBody);
+        //Toast.makeText(this, "Body: " + sendSmsBody.toString(), Toast.LENGTH_SHORT).show();
 
-        Call<ResponseBody> call  = apiInterface.sendSms(sendSmsBody);
-
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<SendSmsResponseData>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+            public void onResponse(Call<SendSmsResponseData> call, retrofit2.Response<SendSmsResponseData> response) {
                 if(response.isSuccessful()){
 
-                    Toast.makeText(SendSmsActivity.this, "Success!!", Toast.LENGTH_SHORT).show();
+                    SendSmsResponseData responseData = response.body();
+                    String status = responseData.getStatus();
+
+                    Toast.makeText(SendSmsActivity.this, "status: " + status, Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else{
@@ -590,14 +590,13 @@ public class SendSmsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<SendSmsResponseData> call, Throwable throwable) {
                 Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
                 Toast.makeText(SendSmsActivity.this, "Error..", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
-
 
 
     @Override

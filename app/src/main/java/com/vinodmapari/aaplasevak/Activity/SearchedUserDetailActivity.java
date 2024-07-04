@@ -55,6 +55,8 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
     TextView tv_Name, tv_Gender, tv_Mob, tv_Series, tv_mob2, tv_houseNo, tv_colony, tv_whatsapp_no, tv_dob, tv_qualificatoon, tv_caste, tv_status, tv_relation, tv_event, tv_voterID,
             tv_adhar, tv_watersupply, tv_voting_center, tv_row, tvBoothNo, tvSrNo;
 
+    int SeriesId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,8 +178,15 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 //        gender=tv_Gender.getText().toString();
 //        series=tv_Series.getText().toString();
 
+        if(series.equalsIgnoreCase("A")){
+            SeriesId = 1;
+        } else if (series.equalsIgnoreCase("B")) {
+            SeriesId = 2;
+        } else if (series.equalsIgnoreCase("C")) {
+            SeriesId = 3;
+        }
 
-        fetchHouseDetails(houseNo);
+        fetchHouseDetails(houseNo,SeriesId);
 
         mainMemberDetails = new ArrayList<>();
 
@@ -226,10 +235,13 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SearchedUserDetailActivity.this, EditMemberActivity.class);
                 intent.putExtra("house_no", houseNo);
+                intent.putExtra("series_id",series);
                 startActivity(intent);
 
             }
         });
+
+
 
 
         ivShare.setOnClickListener(new View.OnClickListener() {
@@ -424,7 +436,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
 
                         tv_houseNo.setText(house_no);
-                        Toast.makeText(SearchedUserDetailActivity.this, "" + tv_houseNo.getText().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SearchedUserDetailActivity.this, "Hy:" + tv_houseNo.getText().toString(), Toast.LENGTH_SHORT).show();
                         tv_dob.setText(dob);
 
 
@@ -449,11 +461,11 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
     }
 
 
-    private void fetchHouseDetails(String houseNo) {
+    private void fetchHouseDetails(String houseNo, int seriesID) {
         //String url = API_URL + "?" + HOUSE_NO_PARAM + "=" + houseNo;
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.houseDetail + "&house_no=" + houseNo,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.houseDetail + "&house_no=" + houseNo +  "&series_id=" + seriesID ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -499,7 +511,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                         counter + ")" + " Name: " + name + " " + middleName + " " + surname +
                                         "\nVoter ID: " + voterId +
                                         "\nBooth No: " + boothNo +
-                                        "\nSr.No: " + seriesId +
+                                        "\nSr.No: " + votingSrNo +
                                         "\nVoting Center: " + votingCenter + "\n\n";
 
                                 allDetails.append(data);

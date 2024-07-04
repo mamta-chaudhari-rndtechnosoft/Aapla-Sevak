@@ -9,6 +9,7 @@ import com.vinodmapari.aaplasevak.Model.HomeSplashResponse;
 import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.HouseResponse;
 import com.vinodmapari.aaplasevak.Model.SendSmsBody;
+import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
 
@@ -34,7 +35,7 @@ public interface ApiInterface {
 
     //Family Member list
     @GET("api.php?survey_detail_by_house_no")
-    Call<HouseResponse> getHouseDetails(@Query("house_no") String house_no);
+    Call<HouseResponse> getHouseDetails(@Query("house_no") String house_no, @Query("series_id") int series_id);
 
     /*@POST("api.php?update_survey_detail")
     Call<ResponseBody> updateFamilyDetails(@Body EditFamilyMemberBody editFamilyMemberBody);*/
@@ -47,6 +48,8 @@ public interface ApiInterface {
     @GET("api.php?user_detail_by_id")
     Call<UserDetailResponse> getUserDetail(@Query("id") int id);
 
-    @POST("api.php?sms_send_new")
-    Call<ResponseBody> sendSms(@Body SendSmsBody sendSmsBody);
+    /*@POST("api.php?sms_send_new")
+    Call<ResponseBody> sendSms(@Body SendSmsBody sendSmsBody);*/
+    @POST("sendsms_api.php")
+    Call<SendSmsResponseData> sendSms(@Body SendSmsBody sendSmsBody);
 }

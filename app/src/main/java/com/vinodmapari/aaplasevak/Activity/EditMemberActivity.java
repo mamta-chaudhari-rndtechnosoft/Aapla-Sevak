@@ -34,7 +34,8 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
     ArrayList<HouseDetail> houseDetailArrayList;
     RecyclerView rvFamilyMember;
     EditFamilyAdapter editFamilyAdapter;
-    String houseNo;
+    String houseNo,seriesId;
+    int SeriesId;
     LinearLayout layoutNoData;
 
     @Override
@@ -55,6 +56,15 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
 
 
         houseNo = getIntent().getStringExtra("house_no");
+        seriesId = getIntent().getStringExtra("series_id");
+
+       if(seriesId.equalsIgnoreCase("A")){
+           SeriesId = 1;
+       } else if (seriesId.equalsIgnoreCase("B")) {
+           SeriesId = 2;
+       } else if (seriesId.equalsIgnoreCase("C")) {
+           SeriesId = 3;
+       }
 
 
         layoutNoData = findViewById(R.id.layoutNoData);
@@ -76,7 +86,7 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        Call<HouseResponse> call = apiInterface.getHouseDetails(houseNo);
+        Call<HouseResponse> call = apiInterface.getHouseDetails(houseNo,SeriesId);
 
         call.enqueue(new Callback<HouseResponse>() {
             @Override
@@ -122,6 +132,7 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
 
 
     public void deleteMember( int position,int memberId){
+
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         Call<DeleteMemberResponseData> call = apiInterface.deleteFamilyMember(memberId);
