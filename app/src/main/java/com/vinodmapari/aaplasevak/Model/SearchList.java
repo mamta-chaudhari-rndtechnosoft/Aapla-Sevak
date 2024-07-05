@@ -1,9 +1,16 @@
 package com.vinodmapari.aaplasevak.Model;
 
 public class SearchList {
-    String id, house_no, series_name, colony_name, row_name, gender, name, middle_name, surname, mobile1, mobile2, dob, qualification, caste, status_name, relation, event, voter_id, adhar_card, slot_name, voting_center, member_id, page;
+    String id, house_no, series_name, colony_name, row_name, gender, name, middle_name, surname,
+            mobile1, mobile2, dob, qualification, caste, status_name, voter_id, adhar_card,
+            slot_name, voting_center, member_id,  booth_no, voting_sr_no;
 
-    public SearchList(String id, String house_no, String series_name, String colony_name, String row_name, String gender, String name, String middle_name, String surname, String mobile1, String mobile2, String dob, String qualification, String caste, String status_name, String relation, String event, String voter_id, String adhar_card, String slot_name, String voting_center, String member_id) {
+
+    public SearchList(String id, String house_no, String series_name, String colony_name, String row_name,
+                      String gender, String name, String middle_name, String surname, String mobile1,
+                      String mobile2, String dob, String qualification, String caste, String status_name,
+                      String voter_id, String adhar_card, String slot_name, String voting_center,
+                      String member_id,  String booth_no, String voting_sr_no) {
         this.id = id;
         this.house_no = house_no;
         this.series_name = series_name;
@@ -19,13 +26,13 @@ public class SearchList {
         this.qualification = qualification;
         this.caste = caste;
         this.status_name = status_name;
-        this.relation = relation;
-        this.event = event;
         this.voter_id = voter_id;
         this.adhar_card = adhar_card;
         this.slot_name = slot_name;
         this.voting_center = voting_center;
         this.member_id = member_id;
+        this.booth_no = booth_no;
+        this.voting_sr_no = voting_sr_no;
     }
 
     public String getMember_id() {
@@ -124,21 +131,6 @@ public class SearchList {
         this.status_name = status_name;
     }
 
-    public String getRelation() {
-        return relation;
-    }
-
-    public void setRelation(String relation) {
-        this.relation = relation;
-    }
-
-    public String getEvent() {
-        return event;
-    }
-
-    public void setEvent(String event) {
-        this.event = event;
-    }
 
     public String getWatersupply_id() {
         return slot_name;
@@ -202,5 +194,21 @@ public class SearchList {
 
     public void setAdhar_card(String adhar_card) {
         this.adhar_card = adhar_card;
+    }
+
+    public String getBooth_no() {
+        return booth_no;
+    }
+
+    public void setBooth_no(String booth_no) {
+        this.booth_no = booth_no;
+    }
+
+    public String getVoting_sr_no() {
+        return voting_sr_no;
+    }
+
+    public void setVoting_sr_no(String voting_sr_no) {
+        this.voting_sr_no = voting_sr_no;
     }
 }

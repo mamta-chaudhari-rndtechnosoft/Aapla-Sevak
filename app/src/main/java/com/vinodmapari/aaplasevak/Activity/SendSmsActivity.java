@@ -55,6 +55,8 @@ import java.util.List;
 public class SendSmsActivity extends AppCompatActivity {
 
     SearchableSpinner spinner_series, spinner_colony, spinner_row, spinner_water_Supply, spinner_template;
+
+    SearchableSpinner spinner_constituency, spinner_city_village, spinner_zone, spinner_ward;
     int selected_series, selected_colony, selected_row, selected_water_supply, selected_template;
     String series_id, colony_id, row_id, water_supply_id, template_id;
     String series, colony, row, templateText;
@@ -81,6 +83,12 @@ public class SendSmsActivity extends AppCompatActivity {
         progress = findViewById(R.id.progress);
         progress.hide();
 
+        spinner_constituency = findViewById(R.id.spinner_constituency);
+        spinner_city_village = findViewById(R.id.spinner_city_village);
+        spinner_zone = findViewById(R.id.spinner_zone);
+        spinner_ward = findViewById(R.id.spinner_ward_prabhag);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
@@ -97,6 +105,11 @@ public class SendSmsActivity extends AppCompatActivity {
         spinner_row.setTitle("select row");
         spinner_template.setTitle("select template");
         spinner_water_Supply.setTitle("select watersupply slot");
+
+        spinner_constituency.setTitle("Select Constituency");
+        spinner_city_village.setTitle("Select City/Village");
+        spinner_zone.setTitle("Select Zone");
+        spinner_ward.setTitle("Select Ward/Prabhag");
 
         colonies = new ArrayList<>();
         getSeriesList();

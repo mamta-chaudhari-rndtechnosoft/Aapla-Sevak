@@ -176,98 +176,6 @@ public class SearchActivity extends AppCompatActivity {
         }
     };
 
-    /*private void getSearchList() {
-        loader.setVisibility(View.VISIBLE);
-        empty_icon.setVisibility(View.GONE);
-
-        final RequestQueue requestQueue = Volley.newRequestQueue(SearchActivity.this);
-        String url = Constants.search_list + "&name=" + name + "&middle_name=" + mname + "&surname=" + lname + "&voter_id=" + voterId + "&adharcard=" + adharcard + "&page=" + pageNo;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (pageNo == 0) {
-                    searchLists.clear();
-                }
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    Log.d("search", response);
-
-                    JSONArray jsonArray = json.getJSONArray("SEARCH");
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String id = object.getString("id");
-                        String name = object.getString("name");
-                        String middle_name = object.getString("middle_name");
-                        String surname = object.getString("surname");
-                        String voterId = object.getString("voter_id");
-                        String adhar_card = object.getString("adhar_card");
-                        String dob = object.getString("dob");
-                        String event = object.getString("event");
-                        String qualification = object.getString("qualification");
-                        String relation = object.getString("relation");
-                        String mobile1 = object.getString("mobile1");
-                        String mobile2 = object.getString("mobile2");
-                        String row_name = object.getString("row_name");
-                        String gender = object.getString("gender");
-                        String house_no = object.getString("house_no");
-                        String series_name = object.getString("series_name");
-                        String status_name = object.getString("status_name");
-                        String colony_name = object.getString("colony_name");
-                        String slot_name = object.getString("slot_name");
-                        String caste = object.getString("caste");
-                        String voting_center = object.getString("voting_center");
-                        String member_id = object.getString("member_id");
-
-                        searchLists.add(new SearchList(id, house_no, series_name, colony_name, row_name, gender, name, middle_name, surname, mobile1, mobile2, dob, qualification, caste, status_name, relation, event, voterId, adhar_card, slot_name, voting_center, member_id));
-                    }
-
-                    viewMore = jsonArray.length() == pageLimit;
-                    loadingMore = false;
-                    if (searchLists.size() > 0) {
-                        loader.setVisibility(View.GONE);
-                        textView_empty.setVisibility(View.GONE);
-                        empty_icon.setVisibility(View.GONE);
-                        rv.setVisibility(View.VISIBLE);
-                        if (searchAdapter == null) {
-                            searchAdapter = new SearchAdapter(SearchActivity.this, searchLists);
-                            rv.setAdapter(searchAdapter);
-                        } else {
-                            searchAdapter.notifyDataSetChanged();
-                        }
-                        rv.scrollToPosition(0);
-                    } else {
-                        loader.setVisibility(View.GONE);
-                        rv.setVisibility(View.GONE);
-                        textView_empty.setText("No matches found");
-                        textView_empty.setVisibility(View.VISIBLE);
-                        empty_icon.setVisibility(View.VISIBLE);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    loader.setVisibility(View.GONE);
-                    rv.setVisibility(View.GONE);
-                    textView_empty.setVisibility(View.VISIBLE);
-                    textView_empty.setText("No matches found");
-                    empty_icon.setVisibility(View.VISIBLE);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
-                loader.setVisibility(View.GONE);
-                rv.setVisibility(View.GONE);
-                textView_empty.setVisibility(View.VISIBLE);
-            }
-        });
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(stringRequest);
-    }*/
 
     private void getSearchList() {
         loader.setVisibility(View.VISIBLE);
@@ -303,9 +211,9 @@ public class SearchActivity extends AppCompatActivity {
                         String voterId = object.getString("voter_id");
                         String adhar_card = object.getString("adhar_card");
                         String dob = object.getString("dob");
-                        String event = object.getString("event");
                         String qualification = object.getString("qualification");
-                        String relation = object.getString("relation");
+                        //String event = object.getString("event");
+                        //String relation = object.getString("relation");
                         String mobile1 = object.getString("mobile1");
                         String mobile2 = object.getString("mobile2");
                         String row_name = object.getString("row_name");
@@ -318,8 +226,13 @@ public class SearchActivity extends AppCompatActivity {
                         String caste = object.getString("caste");
                         String voting_center = object.getString("voting_center");
                         String member_id = object.getString("member_id");
+                        String boothNo = object.getString("booth_no");
+                        String srNo = object.getString("voting_sr_no");
 
-                        searchLists.add(new SearchList(id, house_no, series_name, colony_name, row_name, gender, name, middle_name, surname, mobile1, mobile2, dob, qualification, caste, status_name, relation, event, voterId, adhar_card, slot_name, voting_center, member_id));
+                        searchLists.add(new SearchList(id, house_no, series_name, colony_name,
+                                row_name, gender, name, middle_name, surname, mobile1, mobile2,
+                                dob, qualification, caste, status_name, voterId,
+                                adhar_card, slot_name, voting_center, member_id,boothNo,srNo));
                     }
 
                     viewMore = jsonArray.length() == pageLimit;

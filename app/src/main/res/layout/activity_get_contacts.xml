@@ -125,7 +125,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_contacts"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
         <!--we are adding progress bar
             for the purpose of loading-->
@@ -156,6 +156,7 @@
             app:lottie_autoPlay="true"
             app:lottie_fileName="empty.json"
             app:lottie_loop="true" />
+
     </LinearLayout>
 
 

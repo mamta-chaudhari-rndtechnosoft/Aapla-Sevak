@@ -76,13 +76,13 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         tv_Series = findViewById(R.id.series);
         tv_colony = findViewById(R.id.tv_colony);
         tv_dob = findViewById(R.id.tv_dob);
-        tv_relation = findViewById(R.id.tv_relation);
+        //tv_relation = findViewById(R.id.tv_relation);
         tv_caste = findViewById(R.id.tv_caste);
         tv_adhar = findViewById(R.id.tv_adhar);
         tv_watersupply = findViewById(R.id.tv_waterSupply);
         tv_voterID = findViewById(R.id.tv_voterID);
         tv_voting_center = findViewById(R.id.tv_voting_center);
-        tv_event = findViewById(R.id.tv_event);
+        //tv_event = findViewById(R.id.tv_event);
         tv_status = findViewById(R.id.tv_status);
         tv_row = findViewById(R.id.tv_row);
         tv_qualificatoon = findViewById(R.id.tv_qualification);
@@ -95,6 +95,8 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         getSearchList();
 
         ////////////////////////////////////////////////////////////////////////////////////////////
+
+        //From Search Adapter
 
         Intent in = getIntent();
         name = in.getStringExtra("name");
@@ -114,14 +116,13 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         votingCenter = in.getStringExtra("voting_center");
         series = in.getStringExtra("series_no");
         row = in.getStringExtra("row_id");
-        event = in.getStringExtra("event");
-        relation = in.getStringExtra("relation");
+        //event = in.getStringExtra("event");
+        //relation = in.getStringExtra("relation");
         caste = in.getStringExtra("caste");
         watersupply = in.getStringExtra("water_Supply_id");
         member_id = in.getStringExtra("member_id");
         boothNo = in.getStringExtra("booth_no");
         srNo = in.getStringExtra("voting_sr_no");
-
 
 
         //Toast.makeText(SearchedUserDetailActivity.this, "member-id= "+member_id, Toast.LENGTH_SHORT).show();
@@ -136,7 +137,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         tv_houseNo.setText(houseNo);
         tv_Gender.setText(gender);
         tv_qualificatoon.setText(qualification);
-        tv_relation.setText(relation);
         tv_Series.setText(series);
         tv_colony.setText(colony);
         tv_row.setText(row);
@@ -146,7 +146,8 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         tv_voting_center.setText(votingCenter);
         tv_caste.setText(caste);
         tv_dob.setText(dob);
-        tv_event.setText(event);
+        //tv_event.setText(event);
+        //tv_relation.setText(relation);
         tv_Mob.setText("+91" + phone);
         tv_mob2.setText("+91" + phone2);
         tvBoothNo.setText(boothNo);
@@ -178,7 +179,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 //        gender=tv_Gender.getText().toString();
 //        series=tv_Series.getText().toString();
 
-        if(series.equalsIgnoreCase("A")){
+        if (series.equalsIgnoreCase("A")) {
             SeriesId = 1;
         } else if (series.equalsIgnoreCase("B")) {
             SeriesId = 2;
@@ -186,7 +187,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
             SeriesId = 3;
         }
 
-        fetchHouseDetails(houseNo,SeriesId);
+        fetchHouseDetails(houseNo, SeriesId);
 
         mainMemberDetails = new ArrayList<>();
 
@@ -235,13 +236,11 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SearchedUserDetailActivity.this, EditMemberActivity.class);
                 intent.putExtra("house_no", houseNo);
-                intent.putExtra("series_id",series);
+                intent.putExtra("series_id", series);
                 startActivity(intent);
 
             }
         });
-
-
 
 
         ivShare.setOnClickListener(new View.OnClickListener() {
@@ -264,6 +263,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         ivWhatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 //                Intent intent = new Intent(Intent.ACTION_SEND);
 //
 //                intent.setType("text/plain");
@@ -347,7 +347,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 makeCall();
             } else {
-                Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -358,7 +358,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         Intent contactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
         contactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
         contactIntent.putExtra(ContactsContract.Intents.Insert.NAME, name).putExtra(ContactsContract.Intents.Insert.PHONE, phone);
-
         startActivityForResult(contactIntent, 1);
     }
 
@@ -387,6 +386,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
     public void getSearchList() {
 
+        //Toast.makeText(this, "Inside Function", Toast.LENGTH_SHORT).show();
 
         final RequestQueue requestQueue = Volley.newRequestQueue(SearchedUserDetailActivity.this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.search_list + "&name=" + name + "&middle_name=" + middle_name + "&surname=" + surname + "&voter_id=" + voterID + "&adhar_card=" + adhar, new Response.Listener<String>() {
@@ -411,9 +411,9 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                         String voterId = object.getString("voter_id");
                         String adhar_card = object.getString("adhar_card");
                         String dob = object.getString("dob");
-                        String event = object.getString("event");
+                        //String event = object.getString("event");
+                        //String relation = object.getString("relation");
                         String qualification = object.getString("qualification");
-                        String relation = object.getString("relation");
                         String mobile1 = object.getString("mobile1");
                         String mobile2 = object.getString("mobile2");
                         String row_name = object.getString("row_name");
@@ -430,23 +430,28 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                         String srNo = object.getString("voting_sr_no");
 
 
-                        searchLists.add(new SearchList(id, house_no, series_name, colony_name, row_name, gender, name, middle_name,
+                       /* searchLists.add(new SearchList(id, house_no, series_name, colony_name, row_name, gender, name, middle_name,
                                 surname, mobile1, mobile2, dob, qualification, caste, status_name, relation, event, voterId, adhar_card,
-                                slot_name, voting_center, member_id));
+                                slot_name, voting_center, member_id));*/
+
+                        searchLists.add(new SearchList(id, house_no, series_name, colony_name, row_name, gender, name, middle_name,
+                                surname, mobile1, mobile2, dob, qualification, caste, status_name, voterId, adhar_card,
+                                slot_name, voting_center, member_id, boothNo, srNo));
 
 
                         tv_houseNo.setText(house_no);
-                        Toast.makeText(SearchedUserDetailActivity.this, "Hy:" + tv_houseNo.getText().toString(), Toast.LENGTH_SHORT).show();
                         tv_dob.setText(dob);
-
+                        tvBoothNo.setText(boothNo);
+                        tvSrNo.setText(srNo);
 
                     }
+                    //Toast.makeText(SearchedUserDetailActivity.this, "Hy:" + tv_houseNo.getText().toString(), Toast.LENGTH_SHORT).show();
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
 
-                    //Toast.makeText(SearchActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchedUserDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -463,9 +468,10 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
     private void fetchHouseDetails(String houseNo, int seriesID) {
         //String url = API_URL + "?" + HOUSE_NO_PARAM + "=" + houseNo;
+        //Toast.makeText(this, "Inside House Function", Toast.LENGTH_SHORT).show();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.houseDetail + "&house_no=" + houseNo +  "&series_id=" + seriesID ,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.houseDetail + "&house_no=" + houseNo + "&series_id=" + seriesID,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -488,7 +494,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                 String voterId = houseDetailObject.getString("voter_id");
                                 String seriesId = (String) houseDetailObject.get("series_id");
 
-                                HouseDetail houseDetail = new HouseDetail(name, middleName, surname, votingCenter, boothNo, votingSrNo, voterId,seriesId);
+                                HouseDetail houseDetail = new HouseDetail(name, middleName, surname, votingCenter, boothNo, votingSrNo, voterId, seriesId);
                                 houseDetails.add(houseDetail);
 
                                 /*if (!houseDetails.isEmpty()) {
@@ -509,10 +515,10 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
                                 String data =
                                         counter + ")" + " Name: " + name + " " + middleName + " " + surname +
-                                        "\nVoter ID: " + voterId +
-                                        "\nBooth No: " + boothNo +
-                                        "\nSr.No: " + votingSrNo +
-                                        "\nVoting Center: " + votingCenter + "\n\n";
+                                                "\nVoter ID: " + voterId +
+                                                "\nBooth No: " + boothNo +
+                                                "\nSr.No: " + votingSrNo +
+                                                "\nVoting Center: " + votingCenter + "\n\n";
 
                                 allDetails.append(data);
                                 counter++;
@@ -548,7 +554,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         super.onBackPressed();
     }
 

@@ -12,6 +12,7 @@ import com.vinodmapari.aaplasevak.Model.SendSmsBody;
 import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
+import com.vinodmapari.aaplasevak.Model.WhatsAppNumberResponseData;
 
 import java.util.List;
 
@@ -48,8 +49,19 @@ public interface ApiInterface {
     @GET("api.php?user_detail_by_id")
     Call<UserDetailResponse> getUserDetail(@Query("id") int id);
 
-    /*@POST("api.php?sms_send_new")
-    Call<ResponseBody> sendSms(@Body SendSmsBody sendSmsBody);*/
+    /*
+    @POST("api.php?sms_send_new")
+    Call<ResponseBody> sendSms(@Body SendSmsBody sendSmsBody);
+    */
     @POST("sendsms_api.php")
     Call<SendSmsResponseData> sendSms(@Body SendSmsBody sendSmsBody);
+
+    @GET("api.php?wts_no")
+    Call<WhatsAppNumberResponseData> getWhatsAppContact(
+            @Query("watersupply_id") String waterSupplyId,
+            @Query("row_id") String rowId,
+            @Query("colony_id") String colonyId,
+            @Query("series_id") String seriesId
+    );
+
 }

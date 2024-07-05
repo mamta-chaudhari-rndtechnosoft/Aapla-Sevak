@@ -53,21 +53,20 @@ import java.util.Map;
 
 public class UserSurveyActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     String colony, row, watersupply, series;
+    RadioButton selectedRadioButton;
+    TextView tv1, tv2;
     ArrayList<SurveyList> surveyLists;
     ArrayList<Colony> colonies;
-
     CustomAdapter adapter;
     int selected_series, selected_status, selected_colony, selected_row, selected_water_supply;
     String series_id, status_id, colony_id, row_id, water_supply_id, boothNo, serialNo;
     Button btnSubmit;
     long selected_series_id, selected_colony_id;
     String gender;
-    RadioButton selectedRadioButton;
     RadioGroup radioGroup;
-    TextView tv1, tv2;
     SwipeRefreshLayout swipe_refresh;
     SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row, spinner_water_Supply;
-    EditText house_number, voting_center, dob, name, middle_name, surname, mob1, mob2, qualification, caste, relation, voterID, edevent, adharcard, etBooth, etSerial;
+    EditText house_number, voting_center, dob, name, middle_name, surname, mob1, mob2, qualification, caste, voterID, adharcard, etBooth, etSerial;
     private String colonyName;
 
     @Override
@@ -86,9 +85,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         mob2 = findViewById(R.id.mobile2);
         qualification = findViewById(R.id.qualification);
         caste = findViewById(R.id.caste);
-        relation = findViewById(R.id.relation);
         voterID = findViewById(R.id.voterID);
-        edevent = findViewById(R.id.event);
         adharcard = findViewById(R.id.adharCard);
         btnSubmit = findViewById(R.id.btn_submit);
         spinner_series = findViewById(R.id.spinnerSeries);
@@ -250,8 +247,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 String user_dob = dob.getText().toString();
                 String user_qualification = qualification.getText().toString();
                 String user_caste = caste.getText().toString();
-                String user_relation = relation.getText().toString();
-                String event = edevent.getText().toString();
                 String voterId = voterID.getText().toString();
                 String user_adharcard = adharcard.getText().toString();
                 String votingcenter = voting_center.getText().toString();
@@ -263,8 +258,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         || user_middle_name.equals("") || user_surname.equals("")
                         || mobile_no1.length() == 0 || mobile_no2.length() == 0
                         || user_dob.isEmpty() || user_qualification.equals("") || user_caste.equals("")
-                        || user_relation.equals("")
-                        || event.equals("")
                         || votingcenter.equals("")
                         || voterId.equals("")
                         || user_adharcard.equals("")
@@ -284,8 +277,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 } else if (water_supply_id == null && water_supply_id.equalsIgnoreCase("")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Status", Toast.LENGTH_SHORT).show();
                 } else {
-                    addSurvey(house_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname, mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, user_relation, event, voterId, user_adharcard, water_supply_id, votingcenter, BoothNo, SerialNo);
-                    Toast.makeText(UserSurveyActivity.this, "new family added succesfully", Toast.LENGTH_SHORT).show();
+                    addSurvey(house_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname, mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, water_supply_id, votingcenter, BoothNo, SerialNo);
+                    Toast.makeText(UserSurveyActivity.this, "new family added successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
@@ -385,7 +378,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
 
         dob.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
@@ -396,21 +388,16 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(UserSurveyActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
-
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-
                                 dob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
             }
-
-
         });
-
     }
 
     public void addSurvey(String house_no,
@@ -427,8 +414,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                           String qualification,
                           String caste,
                           String status_id,
-                          String relation,
-                          String event,
                           String voter_id,
                           String adhar_card,
                           String watersupply_id,
@@ -485,8 +470,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 params.put("qualification", qualification);
                 params.put("caste", caste);
                 params.put("status_id", status_id);
-                params.put("relation", relation);
-                params.put("event", event);
                 params.put("voter_id", voter_id);
                 params.put("adhar_card", adhar_card);
                 params.put("watersupply_id", watersupply_id);
@@ -526,7 +509,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 Constants.colonies = new ArrayList<>();
                 spinner_colony.setAdapter(null);
 
-                Constants.colonies.add(new Colony("0", "select colony"));
+                Constants.colonies.add(new Colony("0", "Select Colony"));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     Log.d("TAG", "onResponse: " + response);
@@ -567,7 +550,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     private void getRowList(long series_id, long colony_id) {
         //
         //
-        Constants.rows.add(new Row("0", "select row"));
+        Constants.rows.add(new Row("0", "Select Row"));
         //Toast.makeText(UserSurveyActivity.this, "colony_id= "+colony_id, Toast.LENGTH_SHORT).show();
         final RequestQueue requestQueue = Volley.newRequestQueue(UserSurveyActivity.this);
 
@@ -628,7 +611,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 Constants.series.clear();
                 Constants.series = new ArrayList<>();
 
-                Constants.series.add(new Series("0", "select series"));
+                Constants.series.add(new Series("0", "Select Series"));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     //  Log.d("TAG", "onResponse: "+response);
@@ -693,7 +676,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 getSeriesList();
                 //getColonyList(series_id);
             } else {
-
 
                 swipe_refresh.setRefreshing(false);
             }

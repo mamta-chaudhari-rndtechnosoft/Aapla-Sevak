@@ -30,6 +30,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AaplaSevak">
         <activity
+            android:name=".Activity.WhatsAppApiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ApiWhatsAppActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.UpdateMemberActivity"
             android:exported="false" />
         <activity
