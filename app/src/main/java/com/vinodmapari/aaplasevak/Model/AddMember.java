@@ -2,9 +2,55 @@ package com.vinodmapari.aaplasevak.Model;
 
 public class AddMember
 {
-    String survey_id,gender,name,middle_name,surname,mobile1,mobile2,dob,qualification,status_id,relation_id,event,voter_id,adhar_card,voting_center,house_no,row_id,series_id,colony_id,watersupply_id,caste,member_id;
+    String survey_id,gender,name,middle_name,surname,mobile1,mobile2,dob,
+            qualification,status_id,relation_id,event,voter_id,
+            adhar_card,voting_center,house_no,row_id,series_id,
+            colony_id,watersupply_id,caste,member_id,
+            constituency,city_village,zone,prabhag_ward,apartment,flat_no;
 
-    public AddMember(String survey_id, String gender, String name, String middle_name, String surname, String mobile1, String mobile2, String dob, String qualification, String status_id, String relation_id, String event, String voter_id, String adhar_card, String voting_center, String house_no, String row_id, String series_id, String colony_id, String watersupply_id, String caste,String member_id) {
+
+    public AddMember(String survey_id, String gender, String name, String middle_name, String surname,
+                     String mobile1, String mobile2, String dob, String qualification, String status_id,
+                     String relation_id, String event, String voter_id, String adhar_card,
+                     String voting_center, String house_no, String row_id, String series_id,
+                     String colony_id, String watersupply_id, String caste, String member_id,
+                     String constituency, String city_village, String zone, String prabhag_ward,
+                     String apartment, String flat_no) {
+        this.survey_id = survey_id;
+        this.gender = gender;
+        this.name = name;
+        this.middle_name = middle_name;
+        this.surname = surname;
+        this.mobile1 = mobile1;
+        this.mobile2 = mobile2;
+        this.dob = dob;
+        this.qualification = qualification;
+        this.status_id = status_id;
+        this.relation_id = relation_id;
+        this.event = event;
+        this.voter_id = voter_id;
+        this.adhar_card = adhar_card;
+        this.voting_center = voting_center;
+        this.house_no = house_no;
+        this.row_id = row_id;
+        this.series_id = series_id;
+        this.colony_id = colony_id;
+        this.watersupply_id = watersupply_id;
+        this.caste = caste;
+        this.member_id = member_id;
+        this.constituency = constituency;
+        this.city_village = city_village;
+        this.zone = zone;
+        this.prabhag_ward = prabhag_ward;
+        this.apartment = apartment;
+        this.flat_no = flat_no;
+    }
+
+    public AddMember(String survey_id, String gender, String name, String middle_name, String surname,
+                     String mobile1, String mobile2, String dob, String qualification, String status_id,
+                     String relation_id, String event, String voter_id, String adhar_card,
+                     String voting_center, String house_no, String row_id, String series_id,
+                     String colony_id, String watersupply_id, String caste, String member_id) {
         this.survey_id = survey_id;
         this.gender = gender;
         this.name = name;
@@ -203,5 +249,53 @@ public class AddMember
 
     public void setAdhar_card(String adhar_card) {
         this.adhar_card = adhar_card;
+    }
+
+    public String getConstituency() {
+        return constituency;
+    }
+
+    public void setConstituency(String constituency) {
+        this.constituency = constituency;
+    }
+
+    public String getCity_village() {
+        return city_village;
+    }
+
+    public void setCity_village(String city_village) {
+        this.city_village = city_village;
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public String getPrabhag_ward() {
+        return prabhag_ward;
+    }
+
+    public void setPrabhag_ward(String prabhag_ward) {
+        this.prabhag_ward = prabhag_ward;
+    }
+
+    public String getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
+    }
+
+    public String getFlat_no() {
+        return flat_no;
+    }
+
+    public void setFlat_no(String flat_no) {
+        this.flat_no = flat_no;
     }
 }

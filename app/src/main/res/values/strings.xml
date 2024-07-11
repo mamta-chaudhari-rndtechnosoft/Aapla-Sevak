@@ -20,8 +20,8 @@
     <string name="Relation"> Relation</string>
     <string name="event"> Event</string>
     <string name="Notifications">Notifications</string>
-    <string name="voterID"> Voter ID</string>
-    <string name="adharcard"> Adhar Card Number</string>
+    <string name="voterID"> EPIC No.</string>
+    <string name="adharcard"> Adhar Card No. </string>
     <string name="votingCenter"> Voting Center</string>
     <string name="License_Number">License Number</string>
     <string name="New_Password">New Password</string>

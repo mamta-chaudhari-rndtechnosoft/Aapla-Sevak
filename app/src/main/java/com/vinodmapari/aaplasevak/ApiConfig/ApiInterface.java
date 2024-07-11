@@ -1,5 +1,7 @@
 package com.vinodmapari.aaplasevak.ApiConfig;
 
+import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
+import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
 import com.vinodmapari.aaplasevak.Model.DeleteMemberResponseData;
 import com.vinodmapari.aaplasevak.Model.EditFamilyMemberBody;
 import com.vinodmapari.aaplasevak.Model.EditMemberRespponseData;
@@ -8,11 +10,13 @@ import com.vinodmapari.aaplasevak.Model.HomeSplashItem;
 import com.vinodmapari.aaplasevak.Model.HomeSplashResponse;
 import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.HouseResponse;
+import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.SendSmsBody;
 import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
 import com.vinodmapari.aaplasevak.Model.WhatsAppNumberResponseData;
+import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 
 import java.util.List;
 
@@ -64,4 +68,15 @@ public interface ApiInterface {
             @Query("series_id") String seriesId
     );
 
+    @GET("api.php?constituency")
+    Call<ConstituencyResponse> getConstituencyList();
+
+    @GET("api.php?city_village")
+    Call<CityVillageResponse> getCityVillage();
+
+    @GET("api.php?zone")
+    Call<ZoneResponse> getZoneList();
+
+    @GET("api.php?prabhag_ward")
+    Call<PrabhagWardResponse> getPrabhagWardList();
 }
