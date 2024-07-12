@@ -2,28 +2,67 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
     tools:context=".Activity.SearchSurveyMemberActivity">
 
-    <EditText
-        android:id="@+id/etSearchFullName"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Name to Search"
-        android:background="@drawable/border"
-        android:padding="10dp"
+        android:background="@color/colorPrimary"
+        app:title="Search Voter"
+        app:titleTextColor="@color/colorWhite"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_back"
+
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSearch"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        tools:listitem="@layout/item_search_survey_member"
-        />
+        android:padding="8dp"
+        android:orientation="vertical">
 
+
+        <EditText
+            android:id="@+id/etSearchFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name to Search"
+            android:background="@drawable/border"
+            android:padding="10dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="visible"
+            tools:listitem="@layout/item_search_survey_member" />
+
+        <LinearLayout
+            android:id="@+id/layoutNoDataSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/no_member_found" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Member Found"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

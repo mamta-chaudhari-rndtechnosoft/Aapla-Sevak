@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -73,7 +74,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class UserSurveyActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
-    String colony, row, watersupply, series;
+    Boolean isDataHave;
+    String colony, row, waterSupply, series;
     RadioButton selectedRadioButton;
     TextView tv1, tv2;
     ArrayList<SurveyList> surveyLists;
@@ -89,7 +91,9 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row, spinner_water_Supply, spinner_constituency, spinner_zone, spinner_ward, spinner_city;
     EditText house_number, voting_center, dob, name, middle_name, surname, mob1, mob2, qualification, caste, voterID, adharcard, etBooth, etSerial, etApartment, etFlateNumber;
     private String colonyName;
-    ImageView imgSearch;
+    ImageButton imgSearch;
+
+    String nameAdapter,surnameAdapter,middleNameAdapter,voterIdAdapter,boothAdapter,sNoAdapter,votingCenterAdapter,genderAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,10 +123,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         radioGroup = findViewById(R.id.radioGroup);
         etBooth = findViewById(R.id.etBoothNo);
         etSerial = findViewById(R.id.etSerialNo);
-
         etApartment = findViewById(R.id.etApartment);
         etFlateNumber = findViewById(R.id.etFlatNo);
-
         imgSearch = findViewById(R.id.imgSearch);
 
         //Spinners
@@ -130,10 +132,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         spinner_city = findViewById(R.id.spinnerCity_Village);
         spinner_zone = findViewById(R.id.spinnerZone);
         spinner_ward = findViewById(R.id.spinnerPrabhag_Ward);
-
-
-//        tv1=findViewById(R.id.tv1);
-//        tv2=findViewById(R.id.tv2);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -145,7 +143,61 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        // -------------------------------------------------------
 
+        //isDataHave = false;
+        //Here get the data
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            isDataHave = intent.getBooleanExtra("isDataHave", true);
+            if (isDataHave) {
+                 nameAdapter = intent.getStringExtra("name");
+                 surnameAdapter = intent.getStringExtra("surname");
+                 middleNameAdapter = intent.getStringExtra("middlename");
+                 voterIdAdapter = intent.getStringExtra("voterId");
+                 boothAdapter = intent.getStringExtra("boothNo");
+                 sNoAdapter = intent.getStringExtra("sNo");
+                 votingCenterAdapter = intent.getStringExtra("votingCenter");
+                 genderAdapter = intent.getStringExtra("gender");
+
+                //Toast.makeText(this, "Data: " + nameAdapter + " " + surnameAdapter + " " + middleNameAdapter, Toast.LENGTH_SHORT).show();
+
+                // Use the data as needed
+                /*nameAdapter = name;
+                surnameAdapter = surname;
+                middleNameAdapter = middleName;
+                voterIdAdapter = voterId;
+                boothAdapter = boothNo;
+                sNoAdapter = sNo;
+                votingCenterAdapter = votingCenter;
+                genderAdapter = gender;*/
+
+                // Set the retrieved values to your UI elements if needed
+                name.setText(nameAdapter);
+                middle_name.setText(middleNameAdapter);
+                surname.setText(surnameAdapter);
+                voterID.setText(voterIdAdapter);
+                etBooth.setText(boothAdapter);
+                etSerial.setText(sNoAdapter);
+                voting_center.setText(votingCenterAdapter);
+
+                // Handle gender radio button selection if needed
+                if (genderAdapter != null && !genderAdapter.isEmpty()) {
+                    if (genderAdapter.equalsIgnoreCase("Male")) {
+                        radioGroup.check(R.id.radioButton);
+                    } else if (genderAdapter.equalsIgnoreCase("Female")) {
+                        radioGroup.check(R.id.radioButton2);
+                    } else {
+                       radioGroup.check(R.id.radioButton3);
+                    }
+                }
+            }
+        }
+
+
+
+        //----------------------------------------------------
 
         surveyLists = new ArrayList<>();
         colonies = new ArrayList<>();
@@ -153,15 +205,9 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         adapter = new CustomAdapter(UserSurveyActivity.this, colonies);
 
 
-        spinner_series.setTitle("Select Series");
-        spinner_status.setTitle("Select Status");
-        spinner_colony.setTitle("Select Colony");
-        spinner_row.setTitle("Select Row");
-        spinner_water_Supply.setTitle("Select Water Supply Slot");
-
         spinner_constituency.setTitle("Select Constituency");
         spinner_zone.setTitle("Select Zone");
-        spinner_ward.setTitle("Select Prabhag/Ward");
+        spinner_ward.setTitle("Select Prabhag /Ward");
         spinner_city.setTitle("Select City/Village");
 
 
@@ -178,13 +224,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         fetchZones();
         fetchPrabhagWards();
 
-        imgSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserSurveyActivity.this,SearchSurveyMemberActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup rg, int checkedId) {
@@ -209,7 +249,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         for (int i = 0; i < Constants.series.size(); i++) {
             Constants.series_name.add(Constants.series.get(i).getSeries_name());
             if (series_name != null && series_name.equals(Constants.series.get(i).getSeries_name())) {
-                selected_series = i;
+                //here add 1
+                selected_series = i ;
             }
 
         }
@@ -262,6 +303,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         spinner_series.setAdapter(dataAdapter);
         spinner_series.setSelection(selected_series);
 
+
         ArrayAdapter<String> dataAdapter_Status = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Constants.status_name);
         dataAdapter_Status.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_status.setAdapter(dataAdapter_Status);
@@ -282,27 +324,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         spinner_water_Supply.setAdapter(dataAdapter_water_supply);
         spinner_water_Supply.setSelection(selected_water_supply);
 
-       /* ArrayAdapter<String> dataAdapter_constituency = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, constituency_name);
-        dataAdapter_water_supply.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_constituency.setAdapter(dataAdapter_constituency);
-        spinner_constituency.setSelection(selected_constituency);
 
-        ArrayAdapter<String> dataAdapter_zone = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, zone_name);
-        dataAdapter_zone.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_zone.setAdapter(dataAdapter_zone);
-        spinner_zone.setSelection(selected_zone);
-
-        ArrayAdapter<String> dataAdapter_ward = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, prabhag_ward_name);
-        dataAdapter_ward.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_ward.setAdapter(dataAdapter_ward);
-        spinner_ward.setSelection(selected_ward);
-
-
-        ArrayAdapter<String> dataAdapter_city_village = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, city_village_name);
-        dataAdapter_city_village.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_city.setAdapter(dataAdapter_city_village);
-        spinner_city.setSelection(selected_city_village);
-        */
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -385,7 +407,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         spinner_series.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                series_id = Constants.series.get(position).getId();
+                series_id = Constants.series.get(position).getId() ;
                 selected_series_id = spinner_series.getSelectedItemId();
 
                 if (selected_series_id != 0) {
@@ -496,7 +518,21 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 datePickerDialog.show();
             }
         });
+
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserSurveyActivity.this,SearchSurveyMemberActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
+
+
+
 
     // ---------------------------------------------------------------------------------- on Create end here --------------------------------------------------------------------------------
 
@@ -522,8 +558,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         constituencyName.add(constituency.getConstituencyName());
                     }
 
-                    Toast.makeText(UserSurveyActivity.this, "Names: " + constituencyName, Toast.LENGTH_SHORT).show();
-                    Log.d("Api Response","Names: " + constituencyName);
+                    //Toast.makeText(UserSurveyActivity.this, "Names: " + constituencyName, Toast.LENGTH_SHORT).show();
+                    //Log.d("Api Response","Names: " + constituencyName);
 
                     // Populate the spinner
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(UserSurveyActivity.this, android.R.layout.simple_spinner_item, constituencyName);
@@ -536,7 +572,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedConstituency = (String) parent.getItemAtPosition(position);
                             if (!selectedConstituency.equals("Select Constituency")) {
-                                Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedConstituency, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedConstituency, Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -594,7 +630,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedCityVillage = (String) parent.getItemAtPosition(position);
                             if (!selectedCityVillage.equals("Select City or Village")) {
-                                Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
                                 // Perform any other actions based on selection
                             }
                         }
@@ -652,7 +688,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedZone = (String) parent.getItemAtPosition(position);
                             if (!selectedZone.equals("Select Zone")) {
-                                Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedZone, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedZone, Toast.LENGTH_SHORT).show();
                                 // Perform any other actions based on selection
                             }
                         }
@@ -709,7 +745,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
                             if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
-                                Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
                                 // Perform any other actions based on selection
                             }
                         }
@@ -825,7 +861,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 params.put("prabhag_ward",ward);
                 params.put("apartment",apartment);
                 params.put("flat_no",flate);
-
                 return params;
             }
         };

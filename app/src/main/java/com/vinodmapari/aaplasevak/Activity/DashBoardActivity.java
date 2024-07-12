@@ -318,7 +318,7 @@ public class DashBoardActivity extends AppCompatActivity {
                 Constants.series.clear();
                 Constants.series=new ArrayList<>();
 
-                Constants.series.add(new Series("0","select series"));
+                Constants.series.add(new Series("0","Select Series"));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                   //  Log.d("TAG", "onResponse: "+response);
@@ -360,7 +360,7 @@ public class DashBoardActivity extends AppCompatActivity {
                 Constants.statuses.clear();
                 Constants.statuses=new ArrayList<>();
 
-                Constants.statuses.add(new Status("0","select status"));
+                Constants.statuses.add(new Status("0","Select Status"));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("STATUS");
@@ -402,7 +402,7 @@ public class DashBoardActivity extends AppCompatActivity {
                 Constants.colonies.clear();
                 Constants.colonies=new ArrayList<>();
 
-                Constants.colonies.add(new Colony("0","select colony"));
+                Constants.colonies.add(new Colony("0","Select Colony"));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 //                    Log.d("TAG", "onResponse: "+response);
@@ -443,7 +443,7 @@ public class DashBoardActivity extends AppCompatActivity {
                 Constants.rows.clear();
                 Constants.rows=new ArrayList<>();
 
-                Constants.rows.add(new Row("0","select row"));
+                Constants.rows.add(new Row("0","Select Row"));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 //                    Log.d("TAG", "onResponse: "+response);
@@ -484,8 +484,7 @@ public class DashBoardActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Constants.waterSupplies.clear();
                 Constants.waterSupplies=new ArrayList<>();
-
-                Constants.waterSupplies.add(new WaterSupply("0","select watersupply slot"));
+                Constants.waterSupplies.add(new WaterSupply("0","Select Watersupply Slot"));
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);

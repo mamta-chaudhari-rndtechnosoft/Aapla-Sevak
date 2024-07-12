@@ -11,6 +11,7 @@ import static com.vinodmapari.aaplasevak.Model.Constants.water_supply_slots;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import okhttp3.ResponseBody;
@@ -34,14 +35,22 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
+import com.vinodmapari.aaplasevak.Model.CityVillageItem;
+import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.Colony;
 import com.vinodmapari.aaplasevak.Model.Constants;
 
+import com.vinodmapari.aaplasevak.Model.ConstituencyItem;
+import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
+import com.vinodmapari.aaplasevak.Model.PrabhagWardItem;
+import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.Row;
 import com.vinodmapari.aaplasevak.Model.SendSmsBody;
 import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
 import com.vinodmapari.aaplasevak.Model.Series;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
+import com.vinodmapari.aaplasevak.Model.ZoneItem;
+import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 import com.vinodmapari.aaplasevak.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -55,7 +64,6 @@ import java.util.List;
 public class SendSmsActivity extends AppCompatActivity {
 
     SearchableSpinner spinner_series, spinner_colony, spinner_row, spinner_water_Supply, spinner_template;
-
     SearchableSpinner spinner_constituency, spinner_city_village, spinner_zone, spinner_ward;
     int selected_series, selected_colony, selected_row, selected_water_supply, selected_template;
     String series_id, colony_id, row_id, water_supply_id, template_id;
@@ -110,6 +118,14 @@ public class SendSmsActivity extends AppCompatActivity {
         spinner_city_village.setTitle("Select City/Village");
         spinner_zone.setTitle("Select Zone");
         spinner_ward.setTitle("Select Ward/Prabhag");
+
+
+        //spinner function called
+        fetchConstituencies();
+        fetchZones();
+        fetchCityVillages();
+        fetchPrabhagWards();
+
 
         colonies = new ArrayList<>();
         getSeriesList();
@@ -296,12 +312,20 @@ public class SendSmsActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 //getSMSList();
-                    sendSms();
+                sendSms();
             }
         });
+
+
+        /* btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SendSmsActivity.this,SearchVoterMemberActivity.class);
+                startActivity(intent);
+            }
+        });
+        */
 
     }
 
@@ -525,7 +549,7 @@ public class SendSmsActivity extends AppCompatActivity {
 
     private void fetchTemplateDescription() {
         RequestQueue requestQueue = Volley.newRequestQueue(SendSmsActivity.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.templateDec + "&template_id=" + template_id ,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.templateDec + "&template_id=" + template_id,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -550,7 +574,7 @@ public class SendSmsActivity extends AppCompatActivity {
                                 // Optionally, load an image using Picasso if there's an image URL
                                 // For example: Picasso.get().load(imageUrl).into(imgLogo);
 
-                               // templateDescItems.add(new TemplateResponse(error, id, template, templateDesc));
+                                // templateDescItems.add(new TemplateResponse(error, id, template, templateDesc));
                             }
 
                         } catch (JSONException e) {
@@ -573,30 +597,38 @@ public class SendSmsActivity extends AppCompatActivity {
     }
 
 
-    public void sendSms(){
+    public void sendSms() {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         //SendSmsBody sendSmsBody = new SendSmsBody(selected_series,selected_row,selected_colony,selected_water_supply,etTemplateText.getText().toString());
-        SendSmsBody sendSmsBody = new SendSmsBody(spinner_series.getSelectedItemPosition(),spinner_row.getSelectedItemPosition() + 1,spinner_colony.getSelectedItemPosition() + 1,spinner_water_Supply.getSelectedItemPosition(),etTemplateText.getText().toString());
+        SendSmsBody sendSmsBody = new SendSmsBody(spinner_series.getSelectedItemPosition(),
+                spinner_row.getSelectedItemPosition() + 1,
+                spinner_colony.getSelectedItemPosition() + 1,
+                spinner_water_Supply.getSelectedItemPosition(),
+                spinner_constituency.getSelectedItemPosition(),
+                spinner_city_village.getSelectedItemPosition(),
+                spinner_zone.getSelectedItemPosition(),
+                spinner_ward.getSelectedItemPosition(),
+                etTemplateText.getText().toString()
+        );
 
-        Log.d("Api Response",sendSmsBody.toString());
+        Log.d("Api Response", sendSmsBody.toString());
 
-        Call<SendSmsResponseData> call  = apiInterface.sendSms(sendSmsBody);
+        Call<SendSmsResponseData> call = apiInterface.sendSms(sendSmsBody);
         //Toast.makeText(this, "Body: " + sendSmsBody.toString(), Toast.LENGTH_SHORT).show();
 
         call.enqueue(new Callback<SendSmsResponseData>() {
             @Override
             public void onResponse(Call<SendSmsResponseData> call, retrofit2.Response<SendSmsResponseData> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
                     SendSmsResponseData responseData = response.body();
                     String status = responseData.getStatus();
 
                     Toast.makeText(SendSmsActivity.this, "status: " + status, Toast.LENGTH_SHORT).show();
                     finish();
-                }
-                else{
+                } else {
                     Toast.makeText(SendSmsActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
                     Log.e("Tag", "Response Error..");
                 }
@@ -606,6 +638,238 @@ public class SendSmsActivity extends AppCompatActivity {
             public void onFailure(Call<SendSmsResponseData> call, Throwable throwable) {
                 Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
                 Toast.makeText(SendSmsActivity.this, "Error..", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    private void fetchConstituencies() {
+        // Clear the list and add the title
+        //Constants.constituency_name.clear();
+        //Constants.constituency_name.add("Select a Constituency");
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<ConstituencyResponse> call = apiInterface.getConstituencyList();
+        call.enqueue(new Callback<ConstituencyResponse>() {
+            @Override
+            public void onResponse(Call<ConstituencyResponse> call, retrofit2.Response<ConstituencyResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<ConstituencyItem> constituencies = response.body().getConstituency();
+
+                    // Create a list of constituency names
+                    List<String> constituencyName = new ArrayList<>();
+                    constituencyName.add("Select Constituency");
+
+                    for (ConstituencyItem constituency : constituencies) {
+                        constituencyName.add(constituency.getConstituencyName());
+                    }
+
+                    //Toast.makeText(UserSurveyActivity.this, "Names: " + constituencyName, Toast.LENGTH_SHORT).show();
+                    //Log.d("Api Response","Names: " + constituencyName);
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SendSmsActivity.this, android.R.layout.simple_spinner_item, constituencyName);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_constituency.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_constituency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedConstituency = (String) parent.getItemAtPosition(position);
+                            if (!selectedConstituency.equals("Select Constituency")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedConstituency, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("API Error", "Failed to fetch constituencies");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ConstituencyResponse> call, Throwable throwable) {
+                //Toast.makeText(UserSurveyActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SendSmsActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+    }
+
+    private void fetchCityVillages() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<CityVillageResponse> call = apiInterface.getCityVillage();
+
+        call.enqueue(new Callback<CityVillageResponse>() {
+            @Override
+            public void onResponse(Call<CityVillageResponse> call, retrofit2.Response<CityVillageResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<CityVillageItem> cityVillages = response.body().getCityVillage();
+
+                    // Create a list of city or village names
+                    List<String> cityVillageNames = new ArrayList<>();
+                    cityVillageNames.add("Select City/Village");
+
+                    for (CityVillageItem item : cityVillages) {
+                        cityVillageNames.add(item.getCityVillageName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SendSmsActivity.this, android.R.layout.simple_spinner_item, cityVillageNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_city_village.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_city_village.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedCityVillage = (String) parent.getItemAtPosition(position);
+                            if (!selectedCityVillage.equals("Select City or Village")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("API Error", "Failed to fetch city or village data");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CityVillageResponse> call, Throwable throwable) {
+                Toast.makeText(SendSmsActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+
+    }
+
+    private void fetchZones() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<ZoneResponse> call = apiInterface.getZoneList();
+
+        call.enqueue(new Callback<ZoneResponse>() {
+            @Override
+            public void onResponse(Call<ZoneResponse> call, retrofit2.Response<ZoneResponse> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+                    List<ZoneItem> zones = response.body().getZone();
+
+                    // Create a list of zone names
+                    List<String> zoneNames = new ArrayList<>();
+                    zoneNames.add("Select Zone");
+
+                    for (ZoneItem zone : zones) {
+                        zoneNames.add(zone.getZoneName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SendSmsActivity.this, android.R.layout.simple_spinner_item, zoneNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_zone.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_zone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedZone = (String) parent.getItemAtPosition(position);
+                            if (!selectedZone.equals("Select Zone")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedZone, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("API Error", "Failed to fetch zones");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ZoneResponse> call, Throwable throwable) {
+                Toast.makeText(SendSmsActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+
+    }
+
+    private void fetchPrabhagWards() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<PrabhagWardResponse> call = apiInterface.getPrabhagWardList();
+
+        call.enqueue(new Callback<PrabhagWardResponse>() {
+            @Override
+            public void onResponse(Call<PrabhagWardResponse> call, retrofit2.Response<PrabhagWardResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<PrabhagWardItem> prabhagWards = response.body().getPrabhagWard();
+
+                    // Create a list of prabhag ward names
+                    List<String> prabhagWardNames = new ArrayList<>();
+                    prabhagWardNames.add("Select Prabhag Ward");
+
+                    for (PrabhagWardItem prabhagWard : prabhagWards) {
+                        prabhagWardNames.add(prabhagWard.getPrabhagWardName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SendSmsActivity.this, android.R.layout.simple_spinner_item, prabhagWardNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_ward.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_ward.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
+                            if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("API Error", "Failed to fetch prabhag wards");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PrabhagWardResponse> call, Throwable throwable) {
+                Toast.makeText(SendSmsActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
             }
         });
 

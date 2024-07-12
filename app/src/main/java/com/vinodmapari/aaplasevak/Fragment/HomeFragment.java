@@ -35,6 +35,7 @@ import com.smarteist.autoimageslider.SliderView;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.squareup.picasso.Picasso;
 import com.vinodmapari.aaplasevak.Activity.SearchActivity;
+import com.vinodmapari.aaplasevak.Activity.SearchSurveyMemberActivity;
 import com.vinodmapari.aaplasevak.Activity.SendSmsActivity;
 import com.vinodmapari.aaplasevak.Activity.UserSurveyActivity;
 import com.vinodmapari.aaplasevak.Activity.WhatsappActivity;
@@ -56,7 +57,7 @@ import retrofit2.Retrofit;
 
 public class HomeFragment extends Fragment {
 
-    CardView cdSurvey, cdSearch, cdSms, cdWhatsApp;
+    CardView cdSurvey, cdSearch, cdSms, cdWhatsApp,cd_msg_member;
     LinearLayout sliderDotspanel;
     private int dotscount;
     private ViewPager viewPager;
@@ -76,6 +77,7 @@ public class HomeFragment extends Fragment {
         cdSearch = v.findViewById(R.id.cd_search);
         cdSms = v.findViewById(R.id.cd_msg);
         cdWhatsApp = v.findViewById(R.id.cd_whatsapp);
+        cd_msg_member = v.findViewById(R.id.cd_msg_member);
         slider_home = (SliderView) v.findViewById(R.id.slider_home);
 
         tvSurvey = v.findViewById(R.id.tv_survey);
@@ -126,6 +128,15 @@ public class HomeFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        cd_msg_member.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), SearchSurveyMemberActivity.class);
+                startActivity(i);
+            }
+        });
+
         return v;
     }
 

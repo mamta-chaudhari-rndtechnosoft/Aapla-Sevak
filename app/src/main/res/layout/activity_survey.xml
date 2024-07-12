@@ -291,6 +291,18 @@
 
                 </RadioGroup>
 
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_search"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:padding="13dp"
+                    android:layout_margin="8dp"
+                    android:visibility="gone"
+                    android:background="@drawable/border_search"
+                    android:layout_gravity="center_vertical"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -317,7 +329,7 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <ImageView
+                    <ImageButton
                         android:id="@+id/imgSearch"
                         android:layout_width="50dp"
                         android:layout_height="53dp"
@@ -326,7 +338,8 @@
                         android:layout_marginStart="8dp"
                         android:padding="13dp"
                         android:background="@drawable/border_search"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone"/>
 
 
                 </LinearLayout>

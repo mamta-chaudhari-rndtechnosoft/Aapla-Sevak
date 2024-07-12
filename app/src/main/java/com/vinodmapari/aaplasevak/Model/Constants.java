@@ -10,6 +10,7 @@ public class Constants {
     public static boolean flag = true;
     public static String Base_Url = "https://aaplasevak.com/";
     public static String url = Base_Url + "api.php?";
+    public static String addSurveyUrl = Base_Url + "add_survey_api.php";
 
     public static ArrayList<Series> series = new ArrayList<>();
     public static ArrayList<String> series_name = new ArrayList<>();
@@ -76,7 +77,7 @@ public class Constants {
     public static String water_Supply_list = url + "watersupply";
 
     //add_Survey Api
-    public static String add_survey = url + "add_survey";
+    public static String add_survey = addSurveyUrl + "add_survey";
 
     //add_member Api
     public static String add_member = url + "add_member";

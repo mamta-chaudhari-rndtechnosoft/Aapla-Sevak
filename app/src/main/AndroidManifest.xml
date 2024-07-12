@@ -30,6 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AaplaSevak">
         <activity
+            android:name=".Activity.SearchVoterMemberActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.SearchSurveyMemberActivity"
             android:exported="false" />
         <activity

@@ -11,10 +11,14 @@ import com.vinodmapari.aaplasevak.Model.HomeSplashResponse;
 import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.HouseResponse;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
+import com.vinodmapari.aaplasevak.Model.SearchBody;
+import com.vinodmapari.aaplasevak.Model.SearchResponse;
 import com.vinodmapari.aaplasevak.Model.SendSmsBody;
 import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
+import com.vinodmapari.aaplasevak.Model.WhatsAppApiBody;
+import com.vinodmapari.aaplasevak.Model.WhatsAppApiResponseData;
 import com.vinodmapari.aaplasevak.Model.WhatsAppNumberResponseData;
 import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 
@@ -79,4 +83,10 @@ public interface ApiInterface {
 
     @GET("api.php?prabhag_ward")
     Call<PrabhagWardResponse> getPrabhagWardList();
+
+    @POST("search_voting_list.php")
+    Call<SearchResponse> getVoterSearchList(@Body SearchBody searchBody);
+
+    @POST("whatsapp_api.php")
+    Call<WhatsAppApiResponseData> sentWhatsAppMessage(@Body WhatsAppApiBody whatsAppApiBody);
 }

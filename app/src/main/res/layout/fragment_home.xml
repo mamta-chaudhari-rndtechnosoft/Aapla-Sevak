@@ -49,15 +49,6 @@
                     app:sliderScrollTimeInSec="1"
                     app:sliderStartAutoCycle="true" />
 
-                <!--                            <LinearLayout-->
-                <!--                            android:id="@+id/layout_dots"-->
-                <!--                            android:layout_width="match_parent"-->
-                <!--                            android:layout_height="30dp"-->
-                <!--                            android:layout_alignParentBottom="true"-->
-                <!--                            android:layout_centerHorizontal="true"-->
-                <!--                            android:gravity="center"-->
-                <!--                            android:orientation="horizontal"-->
-                <!--                            android:visibility="visible" />-->
 
             </RelativeLayout>
 
@@ -84,6 +75,12 @@
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:background="@color/colorDarkBlue"
             android:visibility="gone" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvChoose">
+
 
 
         <LinearLayout
@@ -311,8 +308,64 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10sdp">
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cd_msg_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_margin="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/iv_search_icon"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/search"
+                            android:layout_gravity="center"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_msg_member"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Search Voter"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
 
         </LinearLayout>
+
+        </ScrollView>
 
 
     </RelativeLayout>
