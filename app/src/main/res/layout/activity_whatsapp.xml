@@ -179,24 +179,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
+                android:layout_marginHorizontal="20dp"
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imgCamera"
+                    android:id="@+id/btnImgCamera"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_margin="12dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_baseline_call_24" />
+                    android:src="@drawable/baseline_image_24" />
 
                 <ImageButton
-                    android:id="@+id/imgVideo"
+                    android:id="@+id/btnVideoPick"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_margin="12dp"
                     android:layout_weight="1"
-                    android:src="@drawable/baseline_edit" />
+                    android:src="@drawable/baseline_video_call_24" />
 
                 <ImageButton
                     android:id="@+id/imgFile"
@@ -204,13 +205,14 @@
                     android:layout_height="55dp"
                     android:layout_margin="12dp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:src="@drawable/ic_baseline_email_24"
                     />
 
             </LinearLayout>
 
 
-            <!--    </com.google.android.material.card.MaterialCardView>-->
+            <!-- </com.google.android.material.card.MaterialCardView> -->
 
 
             <com.google.android.material.button.MaterialButton

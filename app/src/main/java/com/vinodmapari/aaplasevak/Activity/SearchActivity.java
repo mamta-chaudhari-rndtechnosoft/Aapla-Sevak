@@ -1,5 +1,7 @@
 package com.vinodmapari.aaplasevak.Activity;
 
+import static com.vinodmapari.aaplasevak.ApiConfig.ApiHandler.getRetrofitInstance;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,17 +17,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.Model.Constants;
+import com.vinodmapari.aaplasevak.Model.SearchBody;
 import com.vinodmapari.aaplasevak.Model.SearchList;
+import com.vinodmapari.aaplasevak.Model.SearchListBody;
+import com.vinodmapari.aaplasevak.Model.SearchListResponseData;
+import com.vinodmapari.aaplasevak.Model.SearchResponse;
 import com.vinodmapari.aaplasevak.R;
 import com.vinodmapari.aaplasevak.SearchAdapter;
 
@@ -34,6 +42,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -178,108 +190,34 @@ public class SearchActivity extends AppCompatActivity {
 
 
     private void getSearchList() {
-        loader.setVisibility(View.VISIBLE);
-        empty_icon.setVisibility(View.GONE);
 
-        final RequestQueue requestQueue = Volley.newRequestQueue(SearchActivity.this);
-        // Construct the search query URL dynamically
-        String url = Constants.search_list +
-                "&fullname=" + etFullName.getText().toString().trim() +
-                "&voter_id=" + etVoterId.getText().toString().trim() +
-                "&adharcard=" + etAdharCard.getText().toString().trim() +
-                "&page=" + pageNo;
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        SearchListBody searchListBody = new SearchListBody(fullName);
+
+        Call<SearchListResponseData> call = apiInterface.searchList(searchListBody);
+
+        call.enqueue(new Callback<SearchListResponseData>() {
             @Override
-            public void onResponse(String response) {
-                if (pageNo == 0) {
-                    searchLists.clear();
+            public void onResponse(Call<SearchListResponseData> call, Response<SearchListResponseData> response) {
+                if(response.isSuccessful()){
+
                 }
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    Log.d("search", response);
-
-                    JSONArray jsonArray = json.getJSONArray("SEARCH");
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String id = object.getString("id");
-                        String name = object.getString("name");
-                        String middle_name = object.getString("middle_name");
-                        String surname = object.getString("surname");
-                        String voterId = object.getString("voter_id");
-                        String adhar_card = object.getString("adhar_card");
-                        String dob = object.getString("dob");
-                        String qualification = object.getString("qualification");
-                        //String event = object.getString("event");
-                        //String relation = object.getString("relation");
-                        String mobile1 = object.getString("mobile1");
-                        String mobile2 = object.getString("mobile2");
-                        String row_name = object.getString("row_name");
-                        String gender = object.getString("gender");
-                        String house_no = object.getString("house_no");
-                        String series_name = object.getString("series_name");
-                        String status_name = object.getString("status_name");
-                        String colony_name = object.getString("colony_name");
-                        String slot_name = object.getString("slot_name");
-                        String caste = object.getString("caste");
-                        String voting_center = object.getString("voting_center");
-                        String member_id = object.getString("member_id");
-                        String boothNo = object.getString("booth_no");
-                        String srNo = object.getString("voting_sr_no");
-
-                        searchLists.add(new SearchList(id, house_no, series_name, colony_name,
-                                row_name, gender, name, middle_name, surname, mobile1, mobile2,
-                                dob, qualification, caste, status_name, voterId,
-                                adhar_card, slot_name, voting_center, member_id,boothNo,srNo));
-                    }
-
-                    viewMore = jsonArray.length() == pageLimit;
-                    loadingMore = false;
-                    if (searchLists.size() > 0) {
-                        loader.setVisibility(View.GONE);
-                        textView_empty.setVisibility(View.GONE);
-                        empty_icon.setVisibility(View.GONE);
-                        rv.setVisibility(View.VISIBLE);
-                        if (searchAdapter == null) {
-                            searchAdapter = new SearchAdapter(SearchActivity.this, searchLists);
-                            rv.setAdapter(searchAdapter);
-                        } else {
-                            searchAdapter.notifyDataSetChanged();
-                        }
-                        rv.scrollToPosition(0);
-                    } else {
-                        loader.setVisibility(View.GONE);
-                        rv.setVisibility(View.GONE);
-                        textView_empty.setText("No matches found");
-                        textView_empty.setVisibility(View.VISIBLE);
-                        empty_icon.setVisibility(View.VISIBLE);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    loader.setVisibility(View.GONE);
-                    rv.setVisibility(View.GONE);
-                    textView_empty.setVisibility(View.VISIBLE);
-                    textView_empty.setText("No matches found");
-                    empty_icon.setVisibility(View.VISIBLE);
+                else{
+                    Toast.makeText(SearchActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Tag", "Response Error..");
                 }
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
-                loader.setVisibility(View.GONE);
-                rv.setVisibility(View.GONE);
-                textView_empty.setVisibility(View.VISIBLE);
+            public void onFailure(Call<SearchListResponseData> call, Throwable throwable) {
+                Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(SearchActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(stringRequest);
+
     }
+
 
 
     @Override

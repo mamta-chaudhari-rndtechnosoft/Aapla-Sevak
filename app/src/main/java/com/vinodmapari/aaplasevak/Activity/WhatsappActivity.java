@@ -8,9 +8,14 @@ import static com.vinodmapari.aaplasevak.Model.Constants.water_supply_slots;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,7 +43,6 @@ import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardItem;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.Row;
-import com.vinodmapari.aaplasevak.Model.SearchResponse;
 import com.vinodmapari.aaplasevak.Model.Series;
 import com.vinodmapari.aaplasevak.Model.WhatsAppApiBody;
 import com.vinodmapari.aaplasevak.Model.WhatsAppApiResponseData;
@@ -49,11 +54,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+//import retrofit2.Response;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
+
 
 public class WhatsappActivity extends AppCompatActivity {
     SearchableSpinner spinner_series, spinner_colony, spinner_row, spinner_water_Supply;
@@ -65,13 +90,16 @@ public class WhatsappActivity extends AppCompatActivity {
     long selected_series_id, selected_colony_id;
     ArrayList<Colony> colonies;
     EditText house_number, text;
-
-    // EditText etMessage;
-
-    //CheckBox checkBox;
-
     private String colonyName;
     EditText etMessage;
+    ImageButton btnImageCamera, btnVideoPick;
+    private static final int PERMISSION_REQUEST_CODE = 100;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int PICK_VIDEO_REQUEST = 2;
+    String base64Image, base64Video;
+    RequestBody requestImageFile, requestVideoFile;
+    private Uri selectedImageUri, selectedVideuri, selectedUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +121,9 @@ public class WhatsappActivity extends AppCompatActivity {
         spinner_zone = findViewById(R.id.spinner_zone);
         spinner_ward = findViewById(R.id.spinner_ward);
         etMessage = findViewById(R.id.etTemplate);
+
+        btnImageCamera = findViewById(R.id.btnImgCamera);
+        btnVideoPick = findViewById(R.id.btnVideoPick);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -309,6 +340,37 @@ public class WhatsappActivity extends AppCompatActivity {
             }
         });
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+
+
+        btnImageCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(WhatsappActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    openImageChooser();
+                } else {
+                    ActivityCompat.requestPermissions(WhatsappActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+                }
+            }
+        });
+
+        btnVideoPick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(WhatsappActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    openVideoChooser();
+                } else {
+                    ActivityCompat.requestPermissions(WhatsappActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+                }
+            }
+        });
 
     }
 
@@ -706,35 +768,242 @@ public class WhatsappActivity extends AppCompatActivity {
     private void sentWhatsAppMessage() {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        //getSelectedItemPosition = is for id of position
+        //WhatsAppApiBody whatsAppApiBody;
+        // Determine if there is media to send
+        /*if (base64Image != null && !base64Image.isEmpty()) {
+            // Sending image
+            whatsAppApiBody = new WhatsAppApiBody(
+                    spinner_series.getSelectedItemPosition(),
+                    spinner_colony.getSelectedItemPosition() + 1,
+                    spinner_row.getSelectedItemPosition() + 1,
+                    spinner_water_Supply.getSelectedItemPosition(),
+                    spinner_zone.getSelectedItemPosition(),
+                    spinner_ward.getSelectedItemPosition(),
+                    spinner_constituency.getSelectedItemPosition(),
+                    spinner_city_village.getSelectedItemPosition(),
+                    etMessage.getText().toString(),
+                    base64Image
+            );
+        } else if (base64Video != null && !base64Video.isEmpty()) {
+            // Sending video
+            whatsAppApiBody = new WhatsAppApiBody(spinner_series.getSelectedItemPosition(),
+                    spinner_colony.getSelectedItemPosition() + 1,
+                    spinner_row.getSelectedItemPosition() + 1,
+                    spinner_water_Supply.getSelectedItemPosition(),
+                    spinner_zone.getSelectedItemPosition(),
+                    spinner_ward.getSelectedItemPosition(),
+                    spinner_constituency.getSelectedItemPosition(),
+                    spinner_city_village.getSelectedItemPosition(),
+                    etMessage.getText().toString(),
+                    base64Video
+            );
+        } else {
+            // No media to send
+            whatsAppApiBody = new WhatsAppApiBody(spinner_series.getSelectedItemPosition(),
+                    spinner_colony.getSelectedItemPosition() + 1,
+                    spinner_row.getSelectedItemPosition() + 1,
+                    spinner_water_Supply.getSelectedItemPosition(),
+                    spinner_zone.getSelectedItemPosition(),
+                    spinner_ward.getSelectedItemPosition(),
+                    spinner_constituency.getSelectedItemPosition(),
+                    spinner_city_village.getSelectedItemPosition(),
+                    etMessage.getText().toString());
+        }*/
 
-        //WhatsAppApiBody whatsAppApiBody = new WhatsAppApiBody(series_id, colony_id, row_id, water_supply_id,etMessage.getText().toString());
-        WhatsAppApiBody whatsAppApiBody = new WhatsAppApiBody(spinner_series.getSelectedItemPosition(), spinner_colony.getSelectedItemPosition() + 1, spinner_row.getSelectedItemPosition() + 1, spinner_water_Supply.getSelectedItemPosition(), spinner_zone.getSelectedItemPosition(), spinner_ward.getSelectedItemPosition(), spinner_constituency.getSelectedItemPosition(), spinner_city_village.getSelectedItemPosition(), etMessage.getText().toString());
+        RequestBody seriesId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_series.getSelectedItemPosition()));
+        RequestBody colonyId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_colony.getSelectedItemPosition() + 1));
+        RequestBody rowId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_row.getSelectedItemPosition() + 1));
+        RequestBody waterSupplyId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_water_Supply.getSelectedItemPosition()));
+        RequestBody zoneId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_zone.getSelectedItemPosition()));
+        RequestBody wardId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_ward.getSelectedItemPosition()));
+        RequestBody constituencyId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_constituency.getSelectedItemPosition()));
+        RequestBody cityVillageId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_city_village.getSelectedItemPosition()));
+        RequestBody message = RequestBody.create(MediaType.parse("multipart/form-data"),  etMessage.getText().toString());
 
-        Call<WhatsAppApiResponseData> call = apiInterface.sentWhatsAppMessage(whatsAppApiBody);
-        Log.d("Api Response", "WhatsApp: " + whatsAppApiBody.toString());
+        /*File file = null;
+        //file = uriToFile(selectedUri);
+        file = new File(getRealPathFromURI(selectedUri));
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file_url", file.getName(), requestFile);*/
+
+       /* MultipartBody.Part body = null;
+        if (selectedUri != null) {
+            File file = null;
+            file = new File(getRealPathFromURI(selectedUri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        }*/
+
+        File file = new File(getRealPathFromURI(selectedUri));
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+
+        Call<WhatsAppApiResponseData> call = apiInterface.sentWhatsAppMessage(seriesId,colonyId,rowId,waterSupplyId,constituencyId,cityVillageId,zoneId,wardId,message,body);
+        //Log.d("Api Response", "WhatsApp: " + whatsAppApiBody.toString());
 
 
         call.enqueue(new Callback<WhatsAppApiResponseData>() {
             @Override
             public void onResponse(Call<WhatsAppApiResponseData> call, retrofit2.Response<WhatsAppApiResponseData> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(WhatsappActivity.this, "Success!!", Toast.LENGTH_SHORT).show();
+                    WhatsAppApiResponseData responseData = response.body();
+                    String status = responseData.toString();
+                    Toast.makeText(WhatsappActivity.this, "Success!! " + status, Toast.LENGTH_SHORT).show();
+                    Log.d("Api Response","data: " + status);
                     finish();
                 } else {
                     Toast.makeText(WhatsappActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
-                    Log.e("Tag", "Response Error..");
+                    Log.e("Api Response", "Response Error..");
                 }
             }
 
             @Override
             public void onFailure(Call<WhatsAppApiResponseData> call, Throwable throwable) {
-                Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
                 Toast.makeText(WhatsappActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                throwable.printStackTrace();
             }
         });
 
     }
 
+    private void openImageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    private void openVideoChooser() {
+        Intent intent = new Intent();
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Video"), PICK_VIDEO_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedMediaUri = data.getData();
+            if (requestCode == PICK_IMAGE_REQUEST) {
+                // Handle the image chosen from gallery
+                //handleImage(selectedMediaUri);
+                selectedUri = selectedMediaUri;
+                //Toast.makeText(this, "uri: " + selectedUri, Toast.LENGTH_SHORT).show();
+
+            } else if (requestCode == PICK_VIDEO_REQUEST) {
+                // Handle the video chosen from gallery
+                //handleVideo(selectedMediaUri);
+                selectedUri = selectedMediaUri;
+                //Toast.makeText(this, "uri: " + selectedUri, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    private String getRealPathFromURI(Uri contentUri) {
+
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String filePath = cursor.getString(column_index);
+        cursor.close();
+        return filePath;
+
+    }
+
+  /*  private String getRealPathFromURI(Uri contentUri) {
+        String[] projection;
+        Uri queryUri;
+
+        if (contentUri.toString().contains("video")) {
+            // For videos
+            projection = new String[]{MediaStore.Video.Media.DATA};
+            queryUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+        } else {
+            // For images
+            projection = new String[]{MediaStore.Images.Media.DATA};
+            queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        }
+
+        Cursor cursor = getContentResolver().query(queryUri, projection, MediaStore.Images.Media._ID + "=?",
+                new String[]{contentUri.getLastPathSegment()}, null);
+
+        if (cursor != null) {
+            try {
+                int columnIndex = cursor.getColumnIndexOrThrow(projection[0]);
+                cursor.moveToFirst();
+                String filePath = cursor.getString(columnIndex);
+                return filePath;
+            } finally {
+                cursor.close();
+            }
+        }
+        return null;
+    }*/
+
+
+    private File uriToFile(Uri uri) throws IOException {
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        File file = new File(getCacheDir(), "tempFile");
+        try (OutputStream outputStream = new FileOutputStream(file)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+        }
+        return file;
+    }
+
+
+    // ------------------------------------------- for base 64 ------------------------------------
+
+    /*private void handleImage(Uri imageUri) {
+
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            base64Image = convertBitmapToBase64(bitmap);
+            Log.d("Api Response",base64Image);
+            // Use the base64Image string as needed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void handleVideo(Uri videoUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(videoUri);
+            byte[] videoBytes = getBytes(inputStream);
+            base64Video = Base64.encodeToString(videoBytes, Base64.DEFAULT);
+            // Use the base64Video string as needed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    /* private String convertBitmapToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+    private byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+        int len;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }*/
 
 }

@@ -31,7 +31,6 @@ import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.MainMemberDetail;
 import com.vinodmapari.aaplasevak.Model.SearchList;
 import com.vinodmapari.aaplasevak.R;
-import com.vinodmapari.aaplasevak.SearchAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

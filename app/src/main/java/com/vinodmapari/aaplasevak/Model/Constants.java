@@ -71,7 +71,8 @@ public class Constants {
     public static String banner = url + "banner";
 
     //search Api
-    public static String search_list = url + "search_survey_detail";
+    //public static String search_list = url + "search_survey_detail";
+    public static String search_list = Base_Url + "search_survey_detail.php";
 
     //WaterSupply Api
     public static String water_Supply_list = url + "watersupply";

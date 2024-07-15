@@ -12,6 +12,8 @@ import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.HouseResponse;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
+import com.vinodmapari.aaplasevak.Model.SearchListBody;
+import com.vinodmapari.aaplasevak.Model.SearchListResponseData;
 import com.vinodmapari.aaplasevak.Model.SearchResponse;
 import com.vinodmapari.aaplasevak.Model.SendSmsBody;
 import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
@@ -24,11 +26,15 @@ import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -87,6 +93,39 @@ public interface ApiInterface {
     @POST("search_voting_list.php")
     Call<SearchResponse> getVoterSearchList(@Body SearchBody searchBody);
 
+   /* @POST("whatsapp_api.php")
+    Call<WhatsAppApiResponseData> sentWhatsAppMessage(@Body WhatsAppApiBody whatsAppApiBody);*/
+
+    @Multipart
     @POST("whatsapp_api.php")
-    Call<WhatsAppApiResponseData> sentWhatsAppMessage(@Body WhatsAppApiBody whatsAppApiBody);
+    Call<WhatsAppApiResponseData> sentWhatsAppMessage(
+            @Part("series_id") RequestBody seriesId,
+            @Part("colony_id") RequestBody  colonyId,
+            @Part("row_id") RequestBody  rowId,
+            @Part("watersupply_id") RequestBody  waterSupplyId,
+            @Part("constituency") RequestBody  constituency,
+            @Part("city_village") RequestBody  cityVillage,
+            @Part("zone") RequestBody  zone,
+            @Part("prabhag_ward") RequestBody  prabhagWard,
+            @Part("template_desc") RequestBody  templateDesc,
+            @Part MultipartBody.Part file
+    );
+
+    @Multipart
+    @POST("whatsapp_api.php")
+    Call<WhatsAppApiResponseData> sentWhatsAppMessage(
+            @Part("series_id") RequestBody seriesId,
+            @Part("colony_id") RequestBody  colonyId,
+            @Part("row_id") RequestBody  rowId,
+            @Part("watersupply_id") RequestBody  waterSupplyId,
+            @Part("constituency") RequestBody  constituency,
+            @Part("city_village") RequestBody  cityVillage,
+            @Part("zone") RequestBody  zone,
+            @Part("prabhag_ward") RequestBody  prabhagWard,
+            @Part("template_desc") RequestBody  templateDesc
+    );
+
+    @POST("search_survey_details.php")
+    Call<SearchListResponseData> searchList(@Body SearchListBody searchListBody);
+
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.vinodmapari.aaplasevak.Activity.SearchedUserDetailActivity;
 import com.vinodmapari.aaplasevak.Model.SearchList;
+import com.vinodmapari.aaplasevak.Model.SearchListItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     //private Activity activity;
     //ArrayList<SearchList> searchLists;
-    List<SearchList> searchLists;
+    List<SearchListItem> searchLists;
     //private List<SearchList> searchList;
     private final Context context;
 
@@ -31,7 +32,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         this.searchLists = searchLists;
     }*/
 
-    public SearchAdapter(Context context, List<SearchList> searchLists) {
+    public SearchAdapter(Context context, List<SearchListItem> searchLists) {
         this.context = context;
         this.searchLists = searchLists;
     }
@@ -46,11 +47,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder holder, int position) {
 
-        SearchList searchList = searchLists.get(position);
-        holder.adhar.setText(searchList.getAdhar_card());
+        //SearchList searchList = searchLists.get(position);
+        SearchListItem searchList = searchLists.get(position);
+        holder.adhar.setText(searchList.getAdharCard());
         //holder.tvName.setText(searchList.getSurname()+" "+searchList.getName()+" "+searchList.getMiddle_name());
-        holder.tvName.setText(searchList.getName() + " " + searchList.getMiddle_name() + " " + searchList.getSurname());
-        holder.voterId.setText(searchList.getVoter_id());
+        holder.tvName.setText(searchList.getName() + " " + searchList.getMiddleName() + " " + searchList.getSurname());
+        holder.voterId.setText(searchList.getVoterId());
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,29 +62,29 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 Intent intent = new Intent(context, SearchedUserDetailActivity.class);
 
                 intent.putExtra("name", searchLists.get(position).getName());
-                intent.putExtra("middle_name", searchLists.get(position).getMiddle_name());
+                intent.putExtra("middle_name", searchLists.get(position).getMiddleName());
                 intent.putExtra("surname", searchLists.get(position).getSurname());
-                intent.putExtra("voter_id", searchLists.get(position).getVoter_id());
-                intent.putExtra("adhar_card", searchLists.get(position).getAdhar_card());
-                intent.putExtra("house_no", searchLists.get(position).getHouse_n0());
-                intent.putExtra("series_no", searchLists.get(position).getSeries_id());
-                intent.putExtra("row_id", searchLists.get(position).getRow_id());
-                intent.putExtra("water_Supply_id", searchLists.get(position).getWatersupply_id());
+                intent.putExtra("voter_id", searchLists.get(position).getVoterId());
+                intent.putExtra("adhar_card", searchLists.get(position).getAdharCard());
+                intent.putExtra("house_no", searchLists.get(position).getHouseNo());
+                intent.putExtra("series_no", searchLists.get(position).getSeriesId());
+                intent.putExtra("row_id", searchLists.get(position).getRowId());
+                intent.putExtra("water_Supply_id", searchLists.get(position).getWaterSupplyId());
                 intent.putExtra("dob", searchLists.get(position).getDob());
                 intent.putExtra("caste", searchLists.get(position).getCaste());
-                intent.putExtra("colony_id", searchLists.get(position).getColony_id());
+                intent.putExtra("colony_id", searchLists.get(position).getColonyId());
                 intent.putExtra("mobile1", searchLists.get(position).getMobile1());
                 intent.putExtra("mobile2", searchLists.get(position).getMobile2());
                 intent.putExtra("gender", searchLists.get(position).getGender());
                 intent.putExtra("qualification", searchLists.get(position).getQualification());
                 intent.putExtra("id", searchLists.get(position).getId());
-                intent.putExtra("status_id", searchLists.get(position).getStatus_id());
-                intent.putExtra("voting_center", searchLists.get(position).getVoting_center());
+                intent.putExtra("status_id", searchLists.get(position).getStatusId());
+                intent.putExtra("voting_center", searchLists.get(position).getVotingCenter());
                 //intent.putExtra("event",searchLists.get(position).getEvent());
                 //intent.putExtra("relation",searchLists.get(position).getRelation());
-                intent.putExtra("booth_no", searchLists.get(position).getBooth_no());
-                intent.putExtra("voting_sr_no",searchLists.get(position).getVoting_sr_no());
-                intent.putExtra("member_id", searchLists.get(position).getMember_id());
+                intent.putExtra("booth_no", searchLists.get(position).getBoothNo());
+                intent.putExtra("voting_sr_no",searchLists.get(position).getVotingSrNo());
+                intent.putExtra("member_id", searchLists.get(position).getMemberId());
 
 
                 context.startActivity(intent);
@@ -99,7 +103,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         return searchLists.size();
     }
 
-    public void filterList(List<SearchList> filteredList) {
+    public void filterList(List<SearchListItem> filteredList) {
         this.searchLists = filteredList;
         notifyDataSetChanged();
     }

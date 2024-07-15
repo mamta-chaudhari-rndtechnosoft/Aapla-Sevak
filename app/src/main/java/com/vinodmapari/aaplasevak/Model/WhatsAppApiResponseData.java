@@ -3,14 +3,13 @@ package com.vinodmapari.aaplasevak.Model;
 public class WhatsAppApiResponseData {
 
     String status;
-    String message;
+   // String message;
 
     public WhatsAppApiResponseData() {
     }
 
-    public WhatsAppApiResponseData(String status, String message) {
+    public WhatsAppApiResponseData(String status) {
         this.status = status;
-        this.message = message;
     }
 
     public String getStatus() {
@@ -21,11 +20,5 @@ public class WhatsAppApiResponseData {
         this.status = status;
     }
 
-    public String getMessage() {
-        return message;
-    }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
