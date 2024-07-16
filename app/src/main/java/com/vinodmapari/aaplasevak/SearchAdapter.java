@@ -20,10 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
-    //private Activity activity;
-    //ArrayList<SearchList> searchLists;
+
     List<SearchListItem> searchLists;
-    //private List<SearchList> searchList;
     private final Context context;
 
 
@@ -55,7 +53,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.voterId.setText(searchList.getVoterId());
 
 
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,22 +77,25 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 intent.putExtra("id", searchLists.get(position).getId());
                 intent.putExtra("status_id", searchLists.get(position).getStatusId());
                 intent.putExtra("voting_center", searchLists.get(position).getVotingCenter());
-                //intent.putExtra("event",searchLists.get(position).getEvent());
-                //intent.putExtra("relation",searchLists.get(position).getRelation());
                 intent.putExtra("booth_no", searchLists.get(position).getBoothNo());
-                intent.putExtra("voting_sr_no",searchLists.get(position).getVotingSrNo());
+                intent.putExtra("voting_sr_no", searchLists.get(position).getVotingSrNo());
                 intent.putExtra("member_id", searchLists.get(position).getMemberId());
-
-
+                intent.putExtra("apartment", searchLists.get(position).getApartment());
+                intent.putExtra("flate_no", searchLists.get(position).getFlatNo());
+                intent.putExtra("constituency", searchLists.get(position).getConstituency());
+                intent.putExtra("city_village", searchLists.get(position).getCityVillage());
+                intent.putExtra("zone", searchLists.get(position).getZone());
+                intent.putExtra("prabhag_ward", searchLists.get(position).getPrabhagWard());
+                intent.putExtra("s_no", searchLists.get(position).getsNo());
+                intent.putExtra("fullname",searchLists.get(position).getFullName());
                 context.startActivity(intent);
 
 //                SearchedUserDetailActivity userDetailActivity=(SearchedUserDetailActivity) activity;
+
 //                userDetailActivity.getSearchList();
 
             }
         });
-
-
     }
 
     @Override

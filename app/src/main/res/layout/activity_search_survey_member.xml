@@ -16,7 +16,6 @@
         app:titleTextColor="@color/colorWhite"
         app:titleCentered="true"
         app:navigationIcon="@drawable/ic_back"
-
         />
 
     <LinearLayout

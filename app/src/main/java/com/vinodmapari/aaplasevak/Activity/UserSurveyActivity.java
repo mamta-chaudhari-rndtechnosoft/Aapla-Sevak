@@ -88,12 +88,18 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     String gender;
     RadioGroup radioGroup;
     SwipeRefreshLayout swipe_refresh;
-    SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row, spinner_water_Supply, spinner_constituency, spinner_zone, spinner_ward, spinner_city;
-    EditText house_number, voting_center, dob, name, middle_name, surname, mob1, mob2, qualification, caste, voterID, adharcard, etBooth, etSerial, etApartment, etFlateNumber;
+    SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row,
+            spinner_water_Supply, spinner_constituency, spinner_zone, spinner_ward,
+            spinner_city;
+    EditText house_number, voting_center, dob, name, middle_name, surname, mob1, mob2,
+            qualification, caste, voterID, adharcard, etBooth, etSerial, etApartment,
+            etFlateNumber;
     private String colonyName;
     ImageButton imgSearch;
 
-    String nameAdapter,surnameAdapter,middleNameAdapter,voterIdAdapter,boothAdapter,sNoAdapter,votingCenterAdapter,genderAdapter;
+    String nameAdapter,surnameAdapter,middleNameAdapter,
+            voterIdAdapter,boothAdapter,sNoAdapter,
+            votingCenterAdapter,genderAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +170,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 //Toast.makeText(this, "Data: " + nameAdapter + " " + surnameAdapter + " " + middleNameAdapter, Toast.LENGTH_SHORT).show();
 
                 // Use the data as needed
+
                 /*nameAdapter = name;
                 surnameAdapter = surname;
                 middleNameAdapter = middleName;
@@ -218,8 +225,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         swipe_refresh.setOnRefreshListener(this);
 
 
-        fetchConstituencies();
         getSeriesList();
+        fetchConstituencies();
         fetchCityVillages();
         fetchZones();
         fetchPrabhagWards();
@@ -333,7 +340,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                 String calling_no = mob1.getText().toString();
                 String wp_no = mob2.getText().toString();
-                String house_no = house_number.getText().toString();
+                String House_no = house_number.getText().toString();
                 String user_name = name.getText().toString();
                 String user_middle_name = middle_name.getText().toString();
                 String user_surname = surname.getText().toString();
@@ -356,7 +363,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
 
 
-                if (house_no.equals("") || user_name.equals("")
+                if (House_no.equals("") || user_name.equals("")
                         || user_middle_name.equals("") || user_surname.equals("")
                         || mobile_no1.length() == 0 || mobile_no2.length() == 0
                         || user_dob.isEmpty() || user_qualification.equals("") || user_caste.equals("")
@@ -395,8 +402,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 }
 
                 else {
-                    addSurvey(house_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname, mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, water_supply_id, votingcenter, BoothNo, SerialNo,constituency,city,zone,ward,apartment,flateNo);
-                    Toast.makeText(UserSurveyActivity.this, "new family added successfully", Toast.LENGTH_SHORT).show();
+                    addSurvey(House_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname, mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, water_supply_id, votingcenter, BoothNo, SerialNo,constituency,city,zone,ward,apartment,flateNo);
+                    //Toast.makeText(UserSurveyActivity.this, "new family added successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
@@ -813,14 +820,15 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                             Log.d("TAG", "onResponse1: " + response);
                             // Toast.makeText(UserSurveyActivity.this, "onResponse: ."+response, Toast.LENGTH_SHORT).show();
 
-                            JSONObject jsonObject1 = jsonObject.getJSONObject("SURVEY");
+                            //JSONObject jsonObject1 = jsonObject.getJSONObject("SURVEY");
 
-                            String message = jsonObject1.getString("message");
+                            String message = jsonObject.getString("message");
+                            String status = jsonObject.getString("status");
 
-                            Toast.makeText(UserSurveyActivity.this, message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserSurveyActivity.this, "status: " + status + " mess: " + message, Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            //Toast.makeText(activity, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserSurveyActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -828,7 +836,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //Error
-                        // Log.d("AddToCart->",error.toString());
+                         Log.d("Api Response", "E: " + error.toString());
+                        Toast.makeText(UserSurveyActivity.this, "E: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -911,8 +920,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         colonies.add(new Colony(id, colony_name));
                         Constants.colony_name.add(colony_name);
                         spinner_colony.setAdapter(new ArrayAdapter<String>(UserSurveyActivity.this, android.R.layout.simple_spinner_item, Constants.colony_name));
-//                        adapter = new CustomAdapter(UserSurveyActivity.this,colonies);
-//                        spinner_colony.setAdapter(adapter);
+                       // adapter = new CustomAdapter(UserSurveyActivity.this,colonies);
+                        //spinner_colony.setAdapter(adapter);
                     }
 
 
@@ -932,8 +941,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     }
 
     private void getRowList(long series_id, long colony_id) {
-        //
-        //
+
         Constants.rows.add(new Row("0", "Select Row"));
         //Toast.makeText(UserSurveyActivity.this, "colony_id= "+colony_id, Toast.LENGTH_SHORT).show();
         final RequestQueue requestQueue = Volley.newRequestQueue(UserSurveyActivity.this);
@@ -948,7 +956,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 Constants.row_name = new ArrayList<>();
                 Constants.rows = new ArrayList<>();
 
-
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     Log.d("TAG", "onResponse: " + response);
@@ -958,7 +965,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         String id = jsonObject1.getString("id");
                         String row_name = jsonObject1.getString("row_name");
-
 
                         Constants.rows.add(new Row(id, row_name));
 

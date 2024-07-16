@@ -94,7 +94,8 @@ public interface ApiInterface {
     Call<SearchResponse> getVoterSearchList(@Body SearchBody searchBody);
 
    /* @POST("whatsapp_api.php")
-    Call<WhatsAppApiResponseData> sentWhatsAppMessage(@Body WhatsAppApiBody whatsAppApiBody);*/
+    Call<WhatsAppApiResponseData> sentWhatsAppMessage(@Body WhatsAppApiBody whatsAppApiBody);
+    */
 
     @Multipart
     @POST("whatsapp_api.php")

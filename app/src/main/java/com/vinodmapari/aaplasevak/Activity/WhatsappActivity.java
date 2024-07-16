@@ -377,6 +377,7 @@ public class WhatsappActivity extends AppCompatActivity {
 
     private void getSeriesList() {
         spinner_series.setTitle("select series");
+
 //        Constants.series.clear();
 //        Constants.series=new ArrayList<>();
 
@@ -405,7 +406,6 @@ public class WhatsappActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -422,8 +422,6 @@ public class WhatsappActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getSeriesList();
-
-
     }
 
     @Override
@@ -819,6 +817,18 @@ public class WhatsappActivity extends AppCompatActivity {
         RequestBody constituencyId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_constituency.getSelectedItemPosition()));
         RequestBody cityVillageId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_city_village.getSelectedItemPosition()));
         RequestBody message = RequestBody.create(MediaType.parse("multipart/form-data"),  etMessage.getText().toString());
+
+
+        Log.d("Api Response", "seriesId: " + seriesId);
+        Log.d("Api Response", "colonyId: " + colonyId);
+        Log.d("Api Response", "rowId: " + rowId);
+        Log.d("Api Response", "waterSupplyId: " + waterSupplyId);
+        Log.d("Api Response", "zoneId: " + zoneId);
+        Log.d("Api Response", "wardId: " + wardId);
+        Log.d("Api Response", "constituencyId: " + constituencyId);
+        Log.d("Api Response", "cityVillageId: " + cityVillageId);
+        Log.d("Api Response", "message: " + message);
+
 
         /*File file = null;
         //file = uriToFile(selectedUri);

@@ -32,6 +32,7 @@ import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
 import com.vinodmapari.aaplasevak.Model.SearchList;
 import com.vinodmapari.aaplasevak.Model.SearchListBody;
+import com.vinodmapari.aaplasevak.Model.SearchListItem;
 import com.vinodmapari.aaplasevak.Model.SearchListResponseData;
 import com.vinodmapari.aaplasevak.Model.SearchResponse;
 import com.vinodmapari.aaplasevak.R;
@@ -42,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,17 +56,17 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView rv;
     TextView textView_empty;
     LottieAnimationView loader, empty_icon;
-    ArrayList<SearchList> searchLists;
+    List<SearchListItem> searchLists;
     EditText etName, etLname, etMname, etVoterId, etAdharCard, etFullName;
     String name, lname, mname, voterId, adharcard, fullName;
     Button btn;
     LinearLayoutManager mLayoutManager;
-    private int positionSelect;
-    private int pageNo = 0;
-    private int pageLimit = 20;
-    private Boolean loadingMore = false;
-    private Boolean viewMore = false;
-    int pastVisiblesItems = 0, visibleItemCount = 0, totalItemCount = 0;
+    //private int positionSelect;
+    // private int pageNo = 0;
+    //private int pageLimit = 20;
+    //private Boolean loadingMore = false;
+    //private Boolean viewMore = false;
+    //int pastVisiblesItems = 0, visibleItemCount = 0, totalItemCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +78,22 @@ public class SearchActivity extends AppCompatActivity {
         etAdharCard = findViewById(R.id.adharCard);
         etVoterId = findViewById(R.id.et_voterID);
         etFullName = findViewById(R.id.et_fullName);
+
+        textView_empty = findViewById(R.id.tv_empty_search);
+        textView_empty.setVisibility(View.VISIBLE);
+        textView_empty.setText(R.string.type_search);
+        loader = findViewById(R.id.loader);
+        empty_icon = findViewById(R.id.empty_icon);
+
+        empty_icon.setVisibility(View.GONE);
+
       /*  etName = findViewById(R.id.et_name);
         etMname = findViewById(R.id.et_mname);
         etLname = findViewById(R.id.et_lname);
 */
         btn = findViewById(R.id.btnview);
 
-        pageNo = 0;
+        //pageNo = 0;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
@@ -96,20 +107,22 @@ public class SearchActivity extends AppCompatActivity {
 
         searchLists = new ArrayList<>();
 
-        textView_empty = findViewById(R.id.tv_empty_search);
-        textView_empty.setVisibility(View.VISIBLE);
-        textView_empty.setText(R.string.type_search);
-        loader = findViewById(R.id.loader);
-        empty_icon = findViewById(R.id.empty_icon);
-        loader.setVisibility(View.GONE);
-        empty_icon.setVisibility(View.GONE);
-
         mLayoutManager = new LinearLayoutManager(SearchActivity.this);
         rv.setLayoutManager(mLayoutManager);
 
+        searchAdapter = new SearchAdapter(this, searchLists);
+        rv.setAdapter(searchAdapter);
+
+        fullName = "";
+        voterId = "";
+        adharcard = "";
+
+        loader.setVisibility(View.VISIBLE);
+        getSearchList();
+
         addTextWatchers();
 
-        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+       /* rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) //check for scroll down
@@ -126,7 +139,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +150,6 @@ public class SearchActivity extends AppCompatActivity {
                 fullName = etFullName.getText().toString();
                 voterId = etVoterId.getText().toString();
                 adharcard = etAdharCard.getText().toString();
-
                 getSearchList();
             }
         });
@@ -151,7 +163,7 @@ public class SearchActivity extends AppCompatActivity {
                 fullName = etFullName.getText().toString();
                 voterId = etVoterId.getText().toString();
                 adharcard = etAdharCard.getText().toString();
-                pageNo = pageNo + 1;
+                //pageNo = pageNo + 1;
                 getSearchList();
             }
         });
@@ -179,7 +191,7 @@ public class SearchActivity extends AppCompatActivity {
             fullName = etFullName.getText().toString();
             voterId = etVoterId.getText().toString();
             adharcard = etAdharCard.getText().toString();
-            pageNo = 0; // Reset to the first page for new search
+            //pageNo = 0; // Reset to the first page for new search
             getSearchList();
         }
 
@@ -200,18 +212,27 @@ public class SearchActivity extends AppCompatActivity {
         call.enqueue(new Callback<SearchListResponseData>() {
             @Override
             public void onResponse(Call<SearchListResponseData> call, Response<SearchListResponseData> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                }
-                else{
+                    SearchListResponseData searchListResponseData = response.body();
+                    List<SearchListItem> list = searchListResponseData.getSearchList();
+                    textView_empty.setVisibility(View.GONE);
+                    searchLists.clear();
+                    searchLists.addAll(list);
+                    searchAdapter.notifyDataSetChanged();
+                    loader.setVisibility(View.GONE);
+
+                } else {
+                    loader.setVisibility(View.GONE);
                     Toast.makeText(SearchActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
-                    Log.e("Tag", "Response Error..");
+                    Log.e("Api Response", "Response Error..");
                 }
             }
 
             @Override
             public void onFailure(Call<SearchListResponseData> call, Throwable throwable) {
-                Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
+                loader.setVisibility(View.GONE);
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
                 Toast.makeText(SearchActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -219,10 +240,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
-        pageNo = 0;
+        //pageNo = 0;
+        loader.setVisibility(View.VISIBLE);
         getSearchList();
         super.onResume();
     }
