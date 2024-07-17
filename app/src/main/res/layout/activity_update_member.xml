@@ -34,6 +34,58 @@
                 android:orientation="vertical">
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnerConstituency"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:gravity="center" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnerCity_Village"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnerZone"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:gravity="center" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnerPrabhag_Ward"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:visibility="visible" />
+
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinnerSeries"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
@@ -87,6 +139,47 @@
                     android:layout_marginRight="15dp"
                     android:background="@drawable/border"
                     android:gravity="center" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="@string/apartment">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etApartment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/colorPrimaryDark" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="15dp"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="@string/flat_number">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etFlatNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/colorPrimaryDark" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <RadioGroup
                     android:id="@+id/radioGroup"

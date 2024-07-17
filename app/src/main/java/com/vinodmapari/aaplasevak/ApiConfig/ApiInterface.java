@@ -1,5 +1,9 @@
 package com.vinodmapari.aaplasevak.ApiConfig;
 
+import com.vinodmapari.aaplasevak.Model.AddMemberBody;
+import com.vinodmapari.aaplasevak.Model.AddMemberResponseData;
+import com.vinodmapari.aaplasevak.Model.AddSurveyBody;
+import com.vinodmapari.aaplasevak.Model.AddSurveyResponseData;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
 import com.vinodmapari.aaplasevak.Model.DeleteMemberResponseData;
@@ -128,5 +132,12 @@ public interface ApiInterface {
 
     @POST("search_survey_details.php")
     Call<SearchListResponseData> searchList(@Body SearchListBody searchListBody);
+
+    @POST("add_survey_api.php")
+    Call<AddSurveyResponseData> addSurvey(@Body AddSurveyBody addSurveyBody);
+
+    // for add member
+    @POST("addMember.php")
+    Call<AddMemberResponseData> addMember(@Body AddMemberBody addMemberBody);
 
 }

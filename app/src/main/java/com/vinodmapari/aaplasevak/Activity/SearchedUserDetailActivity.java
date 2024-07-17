@@ -101,7 +101,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         //From Search Adapter
-
         Intent in = getIntent();
         name = in.getStringExtra("name");
         middle_name = in.getStringExtra("middle_name");

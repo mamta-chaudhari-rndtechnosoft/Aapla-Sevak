@@ -90,9 +90,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 intent.putExtra("fullname",searchLists.get(position).getFullName());
                 context.startActivity(intent);
 
-//                SearchedUserDetailActivity userDetailActivity=(SearchedUserDetailActivity) activity;
-
-//                userDetailActivity.getSearchList();
+ //                SearchedUserDetailActivity userDetailActivity=(SearchedUserDetailActivity) activity;
+ //                userDetailActivity.getSearchList();
 
             }
         });

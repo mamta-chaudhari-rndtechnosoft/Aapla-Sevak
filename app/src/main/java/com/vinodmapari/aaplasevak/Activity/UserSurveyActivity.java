@@ -42,6 +42,8 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiHandler;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.CustomAdapter;
+import com.vinodmapari.aaplasevak.Model.AddSurveyBody;
+import com.vinodmapari.aaplasevak.Model.AddSurveyResponseData;
 import com.vinodmapari.aaplasevak.Model.CityVillageItem;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.Colony;
@@ -81,7 +83,9 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     ArrayList<SurveyList> surveyLists;
     ArrayList<Colony> colonies;
     CustomAdapter adapter;
-    int selected_series, selected_status, selected_colony, selected_row, selected_water_supply, selected_constituency, selected_zone, selected_ward, selected_city_village;
+    int selected_series, selected_status, selected_colony, selected_row,
+            selected_water_supply, selected_constituency, selected_zone,
+            selected_ward, selected_city_village;
     String series_id, status_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id;
     Button btnSubmit;
     long selected_series_id, selected_colony_id;
@@ -97,9 +101,9 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     private String colonyName;
     ImageButton imgSearch;
 
-    String nameAdapter,surnameAdapter,middleNameAdapter,
-            voterIdAdapter,boothAdapter,sNoAdapter,
-            votingCenterAdapter,genderAdapter;
+    String nameAdapter, surnameAdapter, middleNameAdapter,
+            voterIdAdapter, boothAdapter, sNoAdapter,
+            votingCenterAdapter, genderAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,14 +162,14 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         if (intent != null) {
             isDataHave = intent.getBooleanExtra("isDataHave", true);
             if (isDataHave) {
-                 nameAdapter = intent.getStringExtra("name");
-                 surnameAdapter = intent.getStringExtra("surname");
-                 middleNameAdapter = intent.getStringExtra("middlename");
-                 voterIdAdapter = intent.getStringExtra("voterId");
-                 boothAdapter = intent.getStringExtra("boothNo");
-                 sNoAdapter = intent.getStringExtra("sNo");
-                 votingCenterAdapter = intent.getStringExtra("votingCenter");
-                 genderAdapter = intent.getStringExtra("gender");
+                nameAdapter = intent.getStringExtra("name");
+                surnameAdapter = intent.getStringExtra("surname");
+                middleNameAdapter = intent.getStringExtra("middlename");
+                voterIdAdapter = intent.getStringExtra("voterId");
+                boothAdapter = intent.getStringExtra("boothNo");
+                sNoAdapter = intent.getStringExtra("sNo");
+                votingCenterAdapter = intent.getStringExtra("votingCenter");
+                genderAdapter = intent.getStringExtra("gender");
 
                 //Toast.makeText(this, "Data: " + nameAdapter + " " + surnameAdapter + " " + middleNameAdapter, Toast.LENGTH_SHORT).show();
 
@@ -196,12 +200,11 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     } else if (genderAdapter.equalsIgnoreCase("Female")) {
                         radioGroup.check(R.id.radioButton2);
                     } else {
-                       radioGroup.check(R.id.radioButton3);
+                        radioGroup.check(R.id.radioButton3);
                     }
                 }
             }
         }
-
 
 
         //----------------------------------------------------
@@ -232,7 +235,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         fetchPrabhagWards();
 
 
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup rg, int checkedId) {
                 for (int i = 0; i < rg.getChildCount(); i++) {
@@ -257,7 +259,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
             Constants.series_name.add(Constants.series.get(i).getSeries_name());
             if (series_name != null && series_name.equals(Constants.series.get(i).getSeries_name())) {
                 //here add 1
-                selected_series = i ;
+                selected_series = i;
             }
 
         }
@@ -332,8 +334,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         spinner_water_Supply.setSelection(selected_water_supply);
 
 
-
-
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -362,7 +362,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 String flateNo = etFlateNumber.getText().toString();
 
 
-
                 if (House_no.equals("") || user_name.equals("")
                         || user_middle_name.equals("") || user_surname.equals("")
                         || mobile_no1.length() == 0 || mobile_no2.length() == 0
@@ -387,24 +386,18 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     Toast.makeText(UserSurveyActivity.this, "Please Select Status", Toast.LENGTH_SHORT).show();
                 } else if (water_supply_id == null && water_supply_id.equalsIgnoreCase("")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Status", Toast.LENGTH_SHORT).show();
-                }
-                else if(spinner_constituency.getId() == 0){
+                } else if (spinner_constituency.getId() == 0) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Constituency", Toast.LENGTH_SHORT).show();
-                }
-                else if(spinner_city.getId() == 0){
+                } else if (spinner_city.getId() == 0) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select City/Village", Toast.LENGTH_SHORT).show();
-                }
-                else if(spinner_zone.getId() == 0){
+                } else if (spinner_zone.getId() == 0) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Zone", Toast.LENGTH_SHORT).show();
-                }
-                else if(spinner_ward.getId() == 0){
+                } else if (spinner_ward.getId() == 0) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Ward", Toast.LENGTH_SHORT).show();
-                }
-
-                else {
-                    addSurvey(House_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname, mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, water_supply_id, votingcenter, BoothNo, SerialNo,constituency,city,zone,ward,apartment,flateNo);
+                } else {
+                    addSurvey(House_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname, mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, water_supply_id, votingcenter, BoothNo, SerialNo, constituency, city, zone, ward, apartment, flateNo);
                     //Toast.makeText(UserSurveyActivity.this, "new family added successfully", Toast.LENGTH_SHORT).show();
-                    finish();
+                    //finish();
                 }
 
             }
@@ -414,7 +407,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         spinner_series.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                series_id = Constants.series.get(position).getId() ;
+                series_id = Constants.series.get(position).getId();
                 selected_series_id = spinner_series.getSelectedItemId();
 
                 if (selected_series_id != 0) {
@@ -502,8 +495,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         });
 
 
-
-
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -530,15 +521,13 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserSurveyActivity.this,SearchSurveyMemberActivity.class);
+                Intent intent = new Intent(UserSurveyActivity.this, SearchSurveyMemberActivity.class);
                 startActivity(intent);
             }
         });
 
 
     }
-
-
 
 
     // ---------------------------------------------------------------------------------- on Create end here --------------------------------------------------------------------------------
@@ -779,104 +768,51 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     }
 
 
+    public void addSurvey(String house_no, String series_id, String colony_id, String row_id, String gender, String name, String middle_name,
+                          String surname, String mobile1, String mobile2, String dob, String qualification, String caste, String status_id,
+                          String voter_id, String adhar_card, String watersupply_id, String voting_center, String BoothNo, String SerialNo,
+                          String constituency, String city, String zone, String ward, String apartment, String flate) {
 
-    public void addSurvey(String house_no,
-                          String series_id,
-                          String colony_id,
-                          String row_id,
-                          String gender,
-                          String name,
-                          String middle_name,
-                          String surname,
-                          String mobile1,
-                          String mobile2,
-                          String dob,
-                          String qualification,
-                          String caste,
-                          String status_id,
-                          String voter_id,
-                          String adhar_card,
-                          String watersupply_id,
-                          String voting_center,
-                          String BoothNo,
-                          String SerialNo,
-                          String constituency,
-                          String city,
-                          String zone,
-                          String ward,
-                          String apartment,
-                          String flate) {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.add_survey,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //Response
-                        Log.d("TAG", "onResponse: " + response);
+        AddSurveyBody addSurveyBody = new AddSurveyBody(house_no, series_id, colony_id, row_id, gender, name, middle_name, surname, mobile1, mobile2, dob, qualification, caste, status_id, voter_id, adhar_card,
+                watersupply_id, voting_center, BoothNo, SerialNo, apartment, flate, constituency, city, zone, ward, "1");
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("TAG", "onResponse1: " + response);
-                            // Toast.makeText(UserSurveyActivity.this, "onResponse: ."+response, Toast.LENGTH_SHORT).show();
+        Call<AddSurveyResponseData> call = apiInterface.addSurvey(addSurveyBody);
 
-                            //JSONObject jsonObject1 = jsonObject.getJSONObject("SURVEY");
-
-                            String message = jsonObject.getString("message");
-                            String status = jsonObject.getString("status");
-
-                            Toast.makeText(UserSurveyActivity.this, "status: " + status + " mess: " + message, Toast.LENGTH_SHORT).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(UserSurveyActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Error
-                         Log.d("Api Response", "E: " + error.toString());
-                        Toast.makeText(UserSurveyActivity.this, "E: " + error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
+        call.enqueue(new Callback<AddSurveyResponseData>() {
             @Override
-            public Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+            public void onResponse(Call<AddSurveyResponseData> call, retrofit2.Response<AddSurveyResponseData> response) {
+                if (response.isSuccessful()) {
 
-                params.put("house_no", house_no);
-                params.put("series_id", series_id);
-                params.put("colony_id", colony_id);
-                params.put("row_id", row_id);
-                params.put("gender", gender);
-                params.put("name", name);
-                params.put("middle_name", middle_name);
-                params.put("surname", surname);
-                params.put("mobile1", mobile1);
-                params.put("mobile2", mobile2);
-                params.put("dob", dob);
-                params.put("qualification", qualification);
-                params.put("caste", caste);
-                params.put("status_id", status_id);
-                params.put("voter_id", voter_id);
-                params.put("adhar_card", adhar_card);
-                params.put("watersupply_id", watersupply_id);
-                params.put("voting_center", voting_center);
-                params.put("booth_no", BoothNo);
-                params.put("voting_sr_no", SerialNo);
-                params.put("constituency",constituency);
-                params.put("city_village",city);
-                params.put("zone",zone);
-                params.put("prabhag_ward",ward);
-                params.put("apartment",apartment);
-                params.put("flat_no",flate);
-                return params;
+                    AddSurveyResponseData responseData = response.body();
+                    String status = responseData.getStatus();
+                    String message = responseData.getMessage();
+
+                    Toast.makeText(UserSurveyActivity.this, "Message: " + message + " Status: " + status, Toast.LENGTH_SHORT).show();
+                    finish();
+
+                   /* if(status == "error"){
+                        Toast.makeText(UserSurveyActivity.this, "Message: " + message + " Status: " + status, Toast.LENGTH_SHORT).show();
+                    }
+                    else if(status == "success"){
+                        Toast.makeText(UserSurveyActivity.this, "Message: " + message, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }*/
+
+                } else {
+                    Toast.makeText(UserSurveyActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Api Response", "Response Error..");
+                }
             }
-        };
-        //creating a request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(UserSurveyActivity.this);
-        //adding the string request to request queue
-        requestQueue.add(stringRequest);
+
+            @Override
+            public void onFailure(Call<AddSurveyResponseData> call, Throwable throwable) {
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(UserSurveyActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -916,11 +852,10 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                         //  Toast.makeText(UserSurveyActivity.this, "colonyName= "+colony_name, Toast.LENGTH_SHORT).show();
 
-
                         colonies.add(new Colony(id, colony_name));
                         Constants.colony_name.add(colony_name);
                         spinner_colony.setAdapter(new ArrayAdapter<String>(UserSurveyActivity.this, android.R.layout.simple_spinner_item, Constants.colony_name));
-                       // adapter = new CustomAdapter(UserSurveyActivity.this,colonies);
+                        // adapter = new CustomAdapter(UserSurveyActivity.this,colonies);
                         //spinner_colony.setAdapter(adapter);
                     }
 
@@ -1060,13 +995,11 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
     @Override
     public void onRefresh() {
-
         if (Method.haveNetworkConnection(this)) {
             if (SharedPref.getAppStatus(this).equalsIgnoreCase("on")) {
                 getSeriesList();
                 //getColonyList(series_id);
             } else {
-
                 swipe_refresh.setRefreshing(false);
             }
         } else {
@@ -1074,6 +1007,4 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
             swipe_refresh.setRefreshing(false);
         }
     }
-
-
 }

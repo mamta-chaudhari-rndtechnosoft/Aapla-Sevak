@@ -2,6 +2,7 @@ package com.vinodmapari.aaplasevak.Activity;
 
 
 import static com.vinodmapari.aaplasevak.ApiConfig.ApiHandler.getRetrofitInstance;
+import static com.vinodmapari.aaplasevak.Model.Constants.constituency_name;
 import static com.vinodmapari.aaplasevak.Model.Constants.status_name;
 
 import android.app.DatePickerDialog;
@@ -31,6 +32,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
+import com.vinodmapari.aaplasevak.Model.AddMemberBody;
+import com.vinodmapari.aaplasevak.Model.AddMemberResponseData;
 import com.vinodmapari.aaplasevak.Model.CityVillageItem;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.Constants;
@@ -65,7 +68,6 @@ public class SubMemberActivity extends AppCompatActivity {
     SearchableSpinner spinner_relation, spinner_status, spinner_constituency, spinner_zone, spinner_ward,
             spinner_city;
     String gender, boothNo, serialNo;
-
     String survey_id;
     TextView tv1, tv2, member_colony, series, member_row, member_watersupply, member_caste, house_number, surname;
     ArrayList<MainMemberDetail> mainMemberDetails;
@@ -131,13 +133,13 @@ public class SubMemberActivity extends AppCompatActivity {
         mainMemberDetails = new ArrayList<>();
         // spinner_relation.setTitle("select relation");
         spinner_status.setTitle("select status");
-
         spinner_constituency.setTitle("Select Constituency");
         spinner_zone.setTitle("Select Zone");
         spinner_ward.setTitle("Select Prabhag /Ward");
         spinner_city.setTitle("Select City/Village");
 
 
+        // from SearchedUserDetail Activity
         Intent intent = getIntent();
         String user_surname = intent.getStringExtra("surname");
         String user_series = intent.getStringExtra("series");
@@ -146,6 +148,7 @@ public class SubMemberActivity extends AppCompatActivity {
         String row = intent.getStringExtra("row");
         String caste = intent.getStringExtra("caste");
         String watersupply = intent.getStringExtra("watersupply");
+
         String id = intent.getStringExtra("id");
         String member_id = intent.getStringExtra("member_id");
 
@@ -244,15 +247,13 @@ public class SubMemberActivity extends AppCompatActivity {
                 String voterId = voterID.getText().toString();
                 String user_adharcard = adharcard.getText().toString();
                 String voting_center = votingcenter.getText().toString();
-                //String event = edevent.getText().toString();
-                //String user_relation = relation.getText().toString();
                 String series_id = user_series;
                 String row_id = row;
                 String colony_id = colony;
                 String watersupply_id = watersupply;
                 String user_caste = caste;
 
-                String contituency = spinner_constituency.getSelectedItem().toString();
+                String constituency = spinner_constituency.getSelectedItem().toString();
                 String zone = spinner_zone.getSelectedItem().toString();
                 String cityVillage = spinner_city.getSelectedItem().toString();
                 String prabhagWard = spinner_ward.getSelectedItem().toString();
@@ -271,7 +272,6 @@ public class SubMemberActivity extends AppCompatActivity {
 
                 ) {
                     Toast.makeText(SubMemberActivity.this, "some fields are empty", Toast.LENGTH_SHORT).show();
-
                 } else if (spinner_constituency.getId() == 0) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Constituency", Toast.LENGTH_SHORT).show();
                 } else if (spinner_city.getId() == 0) {
@@ -281,29 +281,32 @@ public class SubMemberActivity extends AppCompatActivity {
                 } else if (spinner_ward.getId() == 0) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Ward", Toast.LENGTH_SHORT).show();
                 } else {
-                    addMember(id, gender, user_name, user_middle_name, user_surname, mobile_no1, mobile_no2, user_dob, user_qualification, status_id, voterId, user_adharcard, voting_center, house_no, row_id, series_id, colony_id, watersupply_id, user_caste, member_id, BoothNo, SerialNo);
-                    Toast.makeText(SubMemberActivity.this, "family member added successfully", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+                    // id and member id is missing from here
+                    addMember(house_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname,
+                            mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, watersupply_id,
+                            voting_center, BoothNo, SerialNo, constituency, cityVillage, zone, prabhagWard, apartment, flateNo);
 
+                    Toast.makeText(SubMemberActivity.this, "family member added successfully", Toast.LENGTH_SHORT).show();
+                    //finish();
+                }
             }
         });
 
 
-//        spinner_relation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-//        {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-//            {
-//                relation_id = Constants.relations.get(position).getId();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent)
-//            {
-//
-//            }
-//        });
+       /* spinner_relation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                relation_id = Constants.relations.get(position).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });*/
 
         spinner_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -319,76 +322,39 @@ public class SubMemberActivity extends AppCompatActivity {
 
     }
 
-    private void addMember(String survey_id, String gender, String user_name, String user_middle_name,
-                           String user_surname, String mobile_no1, String mobile_no2, String user_dob,
-                           String user_qualification, String status_id, String voterId, String adharCard,
-                           String voting_center, String house_no, String row_id, String series_id, String colony_id,
-                           String watersupply_id, String caste, String member_id, String BoothNo, String SerialNo) {
+    private void addMember(String house_no, String series_id, String colony_id, String row_id, String gender, String name, String middle_name,
+                           String surname, String mobile1, String mobile2, String dob, String qualification, String caste, String status_id,
+                           String voter_id, String adhar_card, String watersupply_id, String voting_center, String BoothNo, String SerialNo,
+                           String constituency, String city, String zone, String ward, String apartment, String flate) {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.add_member,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //Response
-                        Log.d("TAG", "onResponse: " + response);
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
+        // check for id and member id and also for what is surbey
 
-                            Log.d("TAG1", "onResponse: " + response);
+        AddMemberBody addMemberBody = new AddMemberBody("1", gender, name, middle_name, surname, mobile1, mobile2,
+                dob, qualification, status_id, relation_id, voter_id, adhar_card, voting_center, house_no, row_id,
+                series_id, colony_id, watersupply_id, caste, constituency, city, zone, ward, apartment, flate);
 
-                            JSONObject jsonObject1 = jsonObject.getJSONObject("ADD_MEMBER");
+        Call<AddMemberResponseData> call = apiInterface.addMember(addMemberBody);
 
-                            String message = jsonObject1.getString("message");
-
-                            // Toast.makeText(SubMemberActivity.this, message, Toast.LENGTH_SHORT).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            //Toast.makeText(SubMemberActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Error
-                        //   Log.d("AddToCart->",error.toString());
-                        // Toast.makeText(SubMemberActivity.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
+        call.enqueue(new Callback<AddMemberResponseData>() {
             @Override
-            public Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+            public void onResponse(Call<AddMemberResponseData> call, retrofit2.Response<AddMemberResponseData> response) {
+                if (response.isSuccessful()) {
 
 
-                params.put("survey_id", survey_id);
-                params.put("gender", gender);
-                params.put("name", user_name);
-                params.put("middle_name", user_middle_name);
-                //params.put("surname", user_surname);
-                params.put("mobile1", mobile_no1);
-                params.put("mobile2", mobile_no2);
-                params.put("dob", user_dob);
-                params.put("qualification", user_qualification);
-                params.put("status_id", status_id);
-                //params.put("relation", relation);
-                //params.put("event", event);
-                params.put("voter_id", voterId);
-                params.put("adhar_card", adharCard);
-                params.put("voting_center", voting_center);
-                params.put("member_id", member_id);
-                params.put("booth_no", BoothNo);
-                params.put("voting_sr_no", SerialNo);
-
-
-                return params;
+                } else {
+                    Toast.makeText(SubMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Api Response", "Response Error..");
+                }
             }
-        };
-        //creating a request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(SubMemberActivity.this);
-        //adding the string request to request queue
-        requestQueue.add(stringRequest);
 
+            @Override
+            public void onFailure(Call<AddMemberResponseData> call, Throwable throwable) {
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(SubMemberActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -447,7 +413,6 @@ public class SubMemberActivity extends AppCompatActivity {
 
                     //Toast.makeText(UserSurveyActivity.this, "Names: " + constituencyName, Toast.LENGTH_SHORT).show();
                     //Log.d("Api Response","Names: " + constituencyName);
-
                     // Populate the spinner
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(SubMemberActivity.this, android.R.layout.simple_spinner_item, constituencyName);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -539,7 +504,6 @@ public class SubMemberActivity extends AppCompatActivity {
                 Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
             }
         });
-
     }
 
     private void fetchZones() {

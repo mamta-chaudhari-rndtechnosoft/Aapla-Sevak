@@ -1,21 +1,21 @@
 package com.vinodmapari.aaplasevak.Model;
 
-public class AddMember
-{
-    String survey_id,gender,name,middle_name,surname,mobile1,mobile2,dob,
-            qualification,status_id,relation_id,event,voter_id,
-            adhar_card,voting_center,house_no,row_id,series_id,
-            colony_id,watersupply_id,caste,member_id,
-            constituency,city_village,zone,prabhag_ward,apartment,flat_no;
+public class AddMemberBody {
+    String survey_id, gender, name, middle_name, surname, mobile1, mobile2, dob,
+            qualification, status_id, relation_id, voter_id,
+            adhar_card, voting_center, house_no, row_id, series_id,
+            colony_id, watersupply_id, caste,
+            constituency, city_village, zone, prabhag_ward,
+            apartment, flat_no;
 
 
-    public AddMember(String survey_id, String gender, String name, String middle_name, String surname,
-                     String mobile1, String mobile2, String dob, String qualification, String status_id,
-                     String relation_id, String event, String voter_id, String adhar_card,
-                     String voting_center, String house_no, String row_id, String series_id,
-                     String colony_id, String watersupply_id, String caste, String member_id,
-                     String constituency, String city_village, String zone, String prabhag_ward,
-                     String apartment, String flat_no) {
+    public AddMemberBody(String survey_id, String gender, String name, String middle_name, String surname,
+                         String mobile1, String mobile2, String dob, String qualification, String status_id,
+                         String relation_id, String voter_id, String adhar_card,
+                         String voting_center, String house_no, String row_id, String series_id,
+                         String colony_id, String watersupply_id, String caste,
+                         String constituency, String city_village, String zone, String prabhag_ward,
+                         String apartment, String flat_no) {
         this.survey_id = survey_id;
         this.gender = gender;
         this.name = name;
@@ -27,7 +27,6 @@ public class AddMember
         this.qualification = qualification;
         this.status_id = status_id;
         this.relation_id = relation_id;
-        this.event = event;
         this.voter_id = voter_id;
         this.adhar_card = adhar_card;
         this.voting_center = voting_center;
@@ -37,7 +36,6 @@ public class AddMember
         this.colony_id = colony_id;
         this.watersupply_id = watersupply_id;
         this.caste = caste;
-        this.member_id = member_id;
         this.constituency = constituency;
         this.city_village = city_village;
         this.zone = zone;
@@ -46,11 +44,11 @@ public class AddMember
         this.flat_no = flat_no;
     }
 
-    public AddMember(String survey_id, String gender, String name, String middle_name, String surname,
-                     String mobile1, String mobile2, String dob, String qualification, String status_id,
-                     String relation_id, String event, String voter_id, String adhar_card,
-                     String voting_center, String house_no, String row_id, String series_id,
-                     String colony_id, String watersupply_id, String caste, String member_id) {
+    /*public AddMemberBody(String survey_id, String gender, String name, String middle_name, String surname,
+                         String mobile1, String mobile2, String dob, String qualification, String status_id,
+                         String relation_id, String event, String voter_id, String adhar_card,
+                         String voting_center, String house_no, String row_id, String series_id,
+                         String colony_id, String watersupply_id, String caste, String member_id) {
         this.survey_id = survey_id;
         this.gender = gender;
         this.name = name;
@@ -73,15 +71,9 @@ public class AddMember
         this.watersupply_id = watersupply_id;
         this.caste = caste;
         this.member_id=member_id;
-    }
+    }*/
 
-    public String getMember_id() {
-        return member_id;
-    }
 
-    public void setMember_id(String member_id) {
-        this.member_id = member_id;
-    }
 
     public String getWatersupply_id() {
         return watersupply_id;
@@ -225,14 +217,6 @@ public class AddMember
 
     public void setRelation_id(String relation_id) {
         this.relation_id = relation_id;
-    }
-
-    public String getEvent() {
-        return event;
-    }
-
-    public void setEvent(String event) {
-        this.event = event;
     }
 
     public String getVoter_id() {

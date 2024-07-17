@@ -35,17 +35,25 @@ import com.android.volley.toolbox.Volley;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.CustomAdapter;
+import com.vinodmapari.aaplasevak.Model.CityVillageItem;
+import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.Colony;
 import com.vinodmapari.aaplasevak.Model.Constants;
+import com.vinodmapari.aaplasevak.Model.ConstituencyItem;
+import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
 import com.vinodmapari.aaplasevak.Model.EditFamilyMemberBody;
 import com.vinodmapari.aaplasevak.Model.EditMemberRespponseData;
 import com.vinodmapari.aaplasevak.Model.Method;
+import com.vinodmapari.aaplasevak.Model.PrabhagWardItem;
+import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.Row;
 import com.vinodmapari.aaplasevak.Model.Series;
 import com.vinodmapari.aaplasevak.Model.SharedPref;
 import com.vinodmapari.aaplasevak.Model.SurveyList;
 import com.vinodmapari.aaplasevak.Model.UserDetail;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
+import com.vinodmapari.aaplasevak.Model.ZoneItem;
+import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 import com.vinodmapari.aaplasevak.R;
 
 import org.json.JSONArray;
@@ -53,6 +61,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -74,15 +83,18 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
     RadioGroup radioGroup;
     TextView tv1, tv2;
     SwipeRefreshLayout swipe_refresh;
-    SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row, spinner_water_Supply;
+    SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row,
+            spinner_water_Supply, spinner_constituency, spinner_zone, spinner_ward, spinner_city;
     EditText etHouseNumber, etVotingCenter, etDob, etName, etMiddleName, etSurname, etMob1, etMob2,
-            etQualification, etCaste, etRelation, etVoterId, etEvent, etAadharCard, etBooth, etSerial;
+            etQualification, etCaste, etRelation, etVoterId, etEvent, etAadharCard, etBooth, etSerial,
+            etApartment, etFlateNumber;
     private String colonyName;
     int id;
     String colony, row, waterSupply, series, status;
     //Field Entry
     String HouseNo, Name, MiddleName, Surname, VotingCenter, BoothNo, SeriesId, Gender,
-            Mobile1, Mobile2, Dob, Qualification, Caste, Relation, Event, VoterId, AadharCard;
+            Mobile1, Mobile2, Dob, Qualification, Caste, Relation, Event, VoterId, AadharCard,
+            constituency, zone, cityVillage, prabhagWard, apartment, flateNo;
 
     int ColonyId, RowId, WaterSupplyId, MemberId, VotingSrNo;
     LottieAnimationView loader;
@@ -111,6 +123,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         etAadharCard = findViewById(R.id.adharCard);
         etBooth = findViewById(R.id.etBoothNo);
         etSerial = findViewById(R.id.etSerialNo);
+        etFlateNumber = findViewById(R.id.etFlatNo);
+        etApartment = findViewById(R.id.etApartment);
 
 
         //radio
@@ -126,6 +140,12 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         spinner_row = findViewById(R.id.spinner_row);
         spinner_status = findViewById(R.id.spinner_status);
         spinner_water_Supply = findViewById(R.id.spinner_water_supply);
+
+        spinner_constituency = findViewById(R.id.spinnerConstituency);
+        spinner_city = findViewById(R.id.spinnerCity_Village);
+        spinner_zone = findViewById(R.id.spinnerZone);
+        spinner_ward = findViewById(R.id.spinnerPrabhag_Ward);
+
 
         //loader
         loader = findViewById(R.id.loaderUpdate);
@@ -150,18 +170,21 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
         adapter = new CustomAdapter(UpdateMemberActivity.this, colonies);
 
-
         spinner_series.setTitle("Select Series");
         spinner_status.setTitle("Select Status");
         spinner_colony.setTitle("Select Colony");
         spinner_row.setTitle("Select Row");
         spinner_water_Supply.setTitle("Select Water Supply Slot");
 
+        spinner_constituency.setTitle("Select Constituency");
+        spinner_zone.setTitle("Select Zone");
+        spinner_ward.setTitle("Select Prabhag /Ward");
+        spinner_city.setTitle("Select City/Village");
+
         swipe_refresh = findViewById(R.id.swipe_refresh);
         swipe_refresh.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorWhite));
         int col = getResources().getColor(R.color.colorAccent);
         swipe_refresh.setColorSchemeColors(col, col, col);
-
         swipe_refresh.setOnRefreshListener(UpdateMemberActivity.this);
 
 
@@ -189,8 +212,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             Constants.series_name.add(Constants.series.get(i).getSeries_name());
             if (series_name != null && series_name.equals(Constants.series.get(i).getSeries_name())) {
                 selected_series = i;
-            }
-            else{
+            } else {
                 Toast.makeText(UpdateMemberActivity.this, "Series name: " + selected_series_id, Toast.LENGTH_SHORT).show();
             }
         }
@@ -266,6 +288,11 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         loader.setVisibility(View.VISIBLE);
         getUserDetail();
 
+        fetchConstituencies();
+        fetchZones();
+        fetchPrabhagWards();
+        fetchCityVillages();
+
 
         spinner_series.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -275,8 +302,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                 if (selected_series_id != 0) {
                     getColonyList(selected_series_id);
-                }
-                else{
+                } else {
                     Toast.makeText(UpdateMemberActivity.this, "Series Is: " + selected_series_id, Toast.LENGTH_SHORT).show();
                 }
 
@@ -376,6 +402,14 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                 VoterId = etVoterId.getText().toString();
                 Dob = etDob.getText().toString();
 
+                constituency = spinner_constituency.getSelectedItem().toString();
+                zone = spinner_zone.getSelectedItem().toString();
+                cityVillage = spinner_city.getSelectedItem().toString();
+                prabhagWard = spinner_ward.getSelectedItem().toString();
+
+                apartment = etApartment.getText().toString();
+                flateNo = etFlateNumber.getText().toString();
+
                 loader.setVisibility(View.VISIBLE);
                 updateMemberData();
 
@@ -435,14 +469,13 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     //passing the house no in global String
                     //HouseNo = houseNo;
 
-                    if(seriesId  == null){
+                    if (seriesId == null) {
                         seriesId = "0";
                     }
 
-                    if(statusId == null){
+                    if (statusId == null) {
                         statusId = "0";
                     }
-
 
 
                     etHouseNumber.setText(houseNo);
@@ -502,7 +535,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
 
                     //radioGroup.setSelected(true);
-                    if(gender!= null) {
+                    if (gender != null) {
                         if (gender.equals("Male") || gender.equalsIgnoreCase("male")) {
                             radioButton1.setChecked(true);
                         } else if (gender.equals("Female") || gender.equalsIgnoreCase("female")) {
@@ -517,13 +550,11 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                             Log.d("Tag", "Gender is not recognized: " + gender);
                         }
                     }*/
-                    }
-                    else{
+                    } else {
                         Toast.makeText(UpdateMemberActivity.this, "Gender is null", Toast.LENGTH_SHORT).show();
                         Log.d("Tag", "Gender is null");
 
                     }
-
 
 
                 } else {
@@ -549,9 +580,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         //VotingSrNo and Aadhar card in Int or long
 
 
-
         EditFamilyMemberBody editFamilyMemberBody = new EditFamilyMemberBody(id, Name, MiddleName, Surname, VotingCenter, BoothNo, VotingSrNo, selected_series, ColonyId, RowId, Gender, Mobile1, Mobile2, Qualification,
-                Caste, Relation, Event, AadharCard, WaterSupplyId, VoterId,selected_status,HouseNo,Dob,MemberId);
+                Caste, Relation, Event, AadharCard, WaterSupplyId, VoterId, selected_status, HouseNo, Dob, MemberId);
         Log.d("Api Response", editFamilyMemberBody.toString());
 
         //Toast.makeText(this, "Data: " + editFamilyMemberBody.toString(), Toast.LENGTH_SHORT).show();
@@ -721,6 +751,236 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         requestQueue.add(stringRequest);
 
     }
+
+    private void fetchConstituencies() {
+
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+        Call<ConstituencyResponse> call = apiInterface.getConstituencyList();
+        call.enqueue(new Callback<ConstituencyResponse>() {
+            @Override
+            public void onResponse(Call<ConstituencyResponse> call, retrofit2.Response<ConstituencyResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<ConstituencyItem> constituencies = response.body().getConstituency();
+
+                    // Create a list of constituency names
+                    List<String> constituencyName = new ArrayList<>();
+                    constituencyName.add("Select Constituency");
+
+                    for (ConstituencyItem constituency : constituencies) {
+                        constituencyName.add(constituency.getConstituencyName());
+                    }
+
+                    //Toast.makeText(UserSurveyActivity.this, "Names: " + constituencyName, Toast.LENGTH_SHORT).show();
+                    //Log.d("Api Response","Names: " + constituencyName);
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this, android.R.layout.simple_spinner_item, constituencyName);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_constituency.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_constituency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedConstituency = (String) parent.getItemAtPosition(position);
+                            if (!selectedConstituency.equals("Select Constituency")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedConstituency, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("API Error", "Failed to fetch constituencies");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ConstituencyResponse> call, Throwable throwable) {
+                //Toast.makeText(UserSurveyActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+    }
+
+    private void fetchCityVillages() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<CityVillageResponse> call = apiInterface.getCityVillage();
+
+        call.enqueue(new Callback<CityVillageResponse>() {
+            @Override
+            public void onResponse(Call<CityVillageResponse> call, retrofit2.Response<CityVillageResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<CityVillageItem> cityVillages = response.body().getCityVillage();
+
+                    // Create a list of city or village names
+                    List<String> cityVillageNames = new ArrayList<>();
+                    cityVillageNames.add("Select City/Village");
+
+                    for (CityVillageItem item : cityVillages) {
+                        cityVillageNames.add(item.getCityVillageName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, cityVillageNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_city.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedCityVillage = (String) parent.getItemAtPosition(position);
+                            if (!selectedCityVillage.equals("Select City or Village")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("API Error", "Failed to fetch city or village data");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CityVillageResponse> call, Throwable throwable) {
+                Toast.makeText(UpdateMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+
+    }
+
+    private void fetchZones() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<ZoneResponse> call = apiInterface.getZoneList();
+
+        call.enqueue(new Callback<ZoneResponse>() {
+            @Override
+            public void onResponse(Call<ZoneResponse> call, retrofit2.Response<ZoneResponse> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+                    List<ZoneItem> zones = response.body().getZone();
+
+                    // Create a list of zone names
+                    List<String> zoneNames = new ArrayList<>();
+                    zoneNames.add("Select Zone");
+
+                    for (ZoneItem zone : zones) {
+                        zoneNames.add(zone.getZoneName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, zoneNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_zone.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_zone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedZone = (String) parent.getItemAtPosition(position);
+                            if (!selectedZone.equals("Select Zone")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedZone, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("API Error", "Failed to fetch zones");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ZoneResponse> call, Throwable throwable) {
+                Toast.makeText(UpdateMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+
+    }
+
+    private void fetchPrabhagWards() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<PrabhagWardResponse> call = apiInterface.getPrabhagWardList();
+        call.enqueue(new Callback<PrabhagWardResponse>() {
+            @Override
+            public void onResponse(Call<PrabhagWardResponse> call, retrofit2.Response<PrabhagWardResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<PrabhagWardItem> prabhagWards = response.body().getPrabhagWard();
+
+                    // Create a list of prabhag ward names
+                    List<String> prabhagWardNames = new ArrayList<>();
+                    prabhagWardNames.add("Select Prabhag Ward");
+
+                    for (PrabhagWardItem prabhagWard : prabhagWards) {
+                        prabhagWardNames.add(prabhagWard.getPrabhagWardName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, prabhagWardNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_ward.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_ward.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
+                            if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("API Error", "Failed to fetch prabhag wards");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PrabhagWardResponse> call, Throwable throwable) {
+                Toast.makeText(UpdateMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+
+    }
+
 
     @Override
     public void onRefresh() {
