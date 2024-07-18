@@ -6,6 +6,7 @@ import static com.vinodmapari.aaplasevak.Model.Constants.row_name;
 import static com.vinodmapari.aaplasevak.Model.Constants.series_name;
 import static com.vinodmapari.aaplasevak.Model.Constants.water_supply_slots;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -26,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -98,7 +100,8 @@ public class WhatsappActivity extends AppCompatActivity {
     private static final int PICK_VIDEO_REQUEST = 2;
     String base64Image, base64Video;
     RequestBody requestImageFile, requestVideoFile;
-    private Uri selectedImageUri, selectedVideuri, selectedUri;
+    Uri selectedImageUri, selectedVideuri, selectedUri;
+    LottieAnimationView loader;
 
 
     @Override
@@ -124,6 +127,7 @@ public class WhatsappActivity extends AppCompatActivity {
 
         btnImageCamera = findViewById(R.id.btnImgCamera);
         btnVideoPick = findViewById(R.id.btnVideoPick);
+        loader = findViewById(R.id.loader);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -191,7 +195,6 @@ public class WhatsappActivity extends AppCompatActivity {
                 selected_water_supply = i;
             }
         }
-
 
         getSeriesList();
 
@@ -332,8 +335,13 @@ public class WhatsappActivity extends AppCompatActivity {
                 startActivity(intent);*/
 
                 if (etMessage.getText().toString() == "") {
-
-                } else {
+                    Toast.makeText(WhatsappActivity.this, "PLease Write the Message.", Toast.LENGTH_SHORT).show();
+                }
+                /*else if(selectedImageUri == null || selectedVideuri == null){
+                    Toast.makeText(WhatsappActivity.this, "Please Select the Media.", Toast.LENGTH_SHORT).show();
+                }*/
+                else {
+                    loader.setVisibility(View.VISIBLE);
                     sentWhatsAppMessage();
                 }
 
@@ -377,9 +385,6 @@ public class WhatsappActivity extends AppCompatActivity {
 
     private void getSeriesList() {
         spinner_series.setTitle("select series");
-
-//        Constants.series.clear();
-//        Constants.series=new ArrayList<>();
 
         final RequestQueue requestQueue = Volley.newRequestQueue(WhatsappActivity.this);
 
@@ -459,13 +464,10 @@ public class WhatsappActivity extends AppCompatActivity {
                         String colony_name = jsonObject1.getString("colony_name");
 
                         // Toast.makeText(WhatsappActivity.this, "colonyName= "+colony_name, Toast.LENGTH_SHORT).show();
-
-
                         colonies.add(new Colony(id, colony_name));
                         Constants.colony_name.add(colony_name);
                         spinner_colony.setAdapter(new ArrayAdapter<String>(WhatsappActivity.this, android.R.layout.simple_spinner_item, Constants.colony_name));
-//                        adapter = new CustomAdapter(UserSurveyActivity.this,colonies);
-//                        spinner_colony.setAdapter(adapter);
+
                     }
 
 
@@ -533,11 +535,8 @@ public class WhatsappActivity extends AppCompatActivity {
     }
 
     private void fetchConstituencies() {
-        // Clear the list and add the title
-        //Constants.constituency_name.clear();
-        //Constants.constituency_name.add("Select a Constituency");
-        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
         Call<ConstituencyResponse> call = apiInterface.getConstituencyList();
         call.enqueue(new Callback<ConstituencyResponse>() {
             @Override
@@ -553,9 +552,6 @@ public class WhatsappActivity extends AppCompatActivity {
                         constituencyName.add(constituency.getConstituencyName());
                     }
 
-                    //Toast.makeText(UserSurveyActivity.this, "Names: " + constituencyName, Toast.LENGTH_SHORT).show();
-                    //Log.d("Api Response","Names: " + constituencyName);
-
                     // Populate the spinner
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(WhatsappActivity.this, android.R.layout.simple_spinner_item, constituencyName);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -568,7 +564,6 @@ public class WhatsappActivity extends AppCompatActivity {
                             String selectedConstituency = (String) parent.getItemAtPosition(position);
                             if (!selectedConstituency.equals("Select Constituency")) {
                                 // Toast.makeText(WhatsappActivity.this, "Selected: " + spinner_constituency.getSelectedItemPosition(), Toast.LENGTH_SHORT).show();
-
                             }
                         }
 
@@ -577,8 +572,6 @@ public class WhatsappActivity extends AppCompatActivity {
                             // Handle nothing selected
                         }
                     });
-
-
                 } else {
                     // Handle unsuccessful response
                     Log.e("API Error", "Failed to fetch constituencies");
@@ -720,7 +713,7 @@ public class WhatsappActivity extends AppCompatActivity {
 
                     // Create a list of prabhag ward names
                     List<String> prabhagWardNames = new ArrayList<>();
-                    prabhagWardNames.add("Select Prabhag Ward");
+                    prabhagWardNames.add("Select Prabhag/Ward");
 
                     for (PrabhagWardItem prabhagWard : prabhagWards) {
                         prabhagWardNames.add(prabhagWard.getPrabhagWardName());
@@ -736,7 +729,7 @@ public class WhatsappActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
-                            if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
+                            if (!selectedPrabhagWard.equals("Select Prabhag/Ward")) {
                                 //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
                                 // Perform any other actions based on selection
                             }
@@ -768,101 +761,56 @@ public class WhatsappActivity extends AppCompatActivity {
 
         //WhatsAppApiBody whatsAppApiBody;
         // Determine if there is media to send
-        /*if (base64Image != null && !base64Image.isEmpty()) {
-            // Sending image
-            whatsAppApiBody = new WhatsAppApiBody(
-                    spinner_series.getSelectedItemPosition(),
-                    spinner_colony.getSelectedItemPosition() + 1,
-                    spinner_row.getSelectedItemPosition() + 1,
-                    spinner_water_Supply.getSelectedItemPosition(),
-                    spinner_zone.getSelectedItemPosition(),
-                    spinner_ward.getSelectedItemPosition(),
-                    spinner_constituency.getSelectedItemPosition(),
-                    spinner_city_village.getSelectedItemPosition(),
-                    etMessage.getText().toString(),
-                    base64Image
-            );
-        } else if (base64Video != null && !base64Video.isEmpty()) {
-            // Sending video
-            whatsAppApiBody = new WhatsAppApiBody(spinner_series.getSelectedItemPosition(),
-                    spinner_colony.getSelectedItemPosition() + 1,
-                    spinner_row.getSelectedItemPosition() + 1,
-                    spinner_water_Supply.getSelectedItemPosition(),
-                    spinner_zone.getSelectedItemPosition(),
-                    spinner_ward.getSelectedItemPosition(),
-                    spinner_constituency.getSelectedItemPosition(),
-                    spinner_city_village.getSelectedItemPosition(),
-                    etMessage.getText().toString(),
-                    base64Video
-            );
-        } else {
-            // No media to send
-            whatsAppApiBody = new WhatsAppApiBody(spinner_series.getSelectedItemPosition(),
-                    spinner_colony.getSelectedItemPosition() + 1,
-                    spinner_row.getSelectedItemPosition() + 1,
-                    spinner_water_Supply.getSelectedItemPosition(),
-                    spinner_zone.getSelectedItemPosition(),
-                    spinner_ward.getSelectedItemPosition(),
-                    spinner_constituency.getSelectedItemPosition(),
-                    spinner_city_village.getSelectedItemPosition(),
-                    etMessage.getText().toString());
-        }*/
 
         RequestBody seriesId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_series.getSelectedItemPosition()));
         RequestBody colonyId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_colony.getSelectedItemPosition() + 1));
         RequestBody rowId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_row.getSelectedItemPosition() + 1));
         RequestBody waterSupplyId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_water_Supply.getSelectedItemPosition()));
-        RequestBody zoneId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_zone.getSelectedItemPosition()));
-        RequestBody wardId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_ward.getSelectedItemPosition()));
-        RequestBody constituencyId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_constituency.getSelectedItemPosition()));
-        RequestBody cityVillageId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_city_village.getSelectedItemPosition()));
-        RequestBody message = RequestBody.create(MediaType.parse("multipart/form-data"),  etMessage.getText().toString());
+        RequestBody constituencyId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_zone.getSelectedItemPosition()));
+        RequestBody cityVillageId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_ward.getSelectedItemPosition()));
+        RequestBody zoneId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_constituency.getSelectedItemPosition()));
+        RequestBody wardId = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(spinner_city_village.getSelectedItemPosition()));
+        RequestBody message = RequestBody.create(MediaType.parse("multipart/form-data"), etMessage.getText().toString());
+
+        MultipartBody.Part body = null;
+        Call<WhatsAppApiResponseData> call = null;
 
 
-        Log.d("Api Response", "seriesId: " + seriesId);
-        Log.d("Api Response", "colonyId: " + colonyId);
-        Log.d("Api Response", "rowId: " + rowId);
-        Log.d("Api Response", "waterSupplyId: " + waterSupplyId);
-        Log.d("Api Response", "zoneId: " + zoneId);
-        Log.d("Api Response", "wardId: " + wardId);
-        Log.d("Api Response", "constituencyId: " + constituencyId);
-        Log.d("Api Response", "cityVillageId: " + cityVillageId);
-        Log.d("Api Response", "message: " + message);
-
-
-        /*File file = null;
-        //file = uriToFile(selectedUri);
-        file = new File(getRealPathFromURI(selectedUri));
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file_url", file.getName(), requestFile);*/
-
-       /* MultipartBody.Part body = null;
-        if (selectedUri != null) {
-            File file = null;
-            file = new File(getRealPathFromURI(selectedUri));
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        if (selectedVideuri == null && selectedImageUri != null) {
+            File file = new File(getRealPathFromURI(selectedImageUri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
             body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-        }*/
+            call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
 
-        File file = new File(getRealPathFromURI(selectedUri));
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        } else if (selectedImageUri == null && selectedVideuri != null) {
+            File file = new File(getRealPathFromURI(selectedVideuri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse("video/mp4"), file);
+            body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+            call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
+
+        } else if (selectedImageUri == null && selectedVideuri == null) {
+            call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message);
+        }
 
 
-        Call<WhatsAppApiResponseData> call = apiInterface.sentWhatsAppMessage(seriesId,colonyId,rowId,waterSupplyId,constituencyId,cityVillageId,zoneId,wardId,message,body);
+        //Call<WhatsAppApiResponseData> call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
         //Log.d("Api Response", "WhatsApp: " + whatsAppApiBody.toString());
-
 
         call.enqueue(new Callback<WhatsAppApiResponseData>() {
             @Override
             public void onResponse(Call<WhatsAppApiResponseData> call, retrofit2.Response<WhatsAppApiResponseData> response) {
                 if (response.isSuccessful()) {
+
                     WhatsAppApiResponseData responseData = response.body();
-                    String status = responseData.toString();
+                    String status = responseData.getStatus();
+
+                    loader.setVisibility(View.GONE);
+
                     Toast.makeText(WhatsappActivity.this, "Success!! " + status, Toast.LENGTH_SHORT).show();
-                    Log.d("Api Response","data: " + status);
+                    Log.d("Api Response", "data: " + status);
                     finish();
                 } else {
+                    loader.setVisibility(View.GONE);
                     Toast.makeText(WhatsappActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
                     Log.e("Api Response", "Response Error..");
                 }
@@ -870,6 +818,7 @@ public class WhatsappActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<WhatsAppApiResponseData> call, Throwable throwable) {
+                loader.setVisibility(View.GONE);
                 Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
                 Toast.makeText(WhatsappActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 throwable.printStackTrace();
@@ -900,22 +849,18 @@ public class WhatsappActivity extends AppCompatActivity {
             Uri selectedMediaUri = data.getData();
             if (requestCode == PICK_IMAGE_REQUEST) {
                 // Handle the image chosen from gallery
-                //handleImage(selectedMediaUri);
-                selectedUri = selectedMediaUri;
-                //Toast.makeText(this, "uri: " + selectedUri, Toast.LENGTH_SHORT).show();
+                selectedImageUri = selectedMediaUri;
 
             } else if (requestCode == PICK_VIDEO_REQUEST) {
                 // Handle the video chosen from gallery
-                //handleVideo(selectedMediaUri);
-                selectedUri = selectedMediaUri;
-                //Toast.makeText(this, "uri: " + selectedUri, Toast.LENGTH_SHORT).show();
+                selectedVideuri = selectedMediaUri;
             }
         }
     }
 
 
-    private String getRealPathFromURI(Uri contentUri) {
-
+    /*private String getRealPathFromURI(Uri contentUri) {
+        //---------------- only for Image ----------------------//
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -924,37 +869,28 @@ public class WhatsappActivity extends AppCompatActivity {
         cursor.close();
         return filePath;
 
-    }
-
-  /*  private String getRealPathFromURI(Uri contentUri) {
-        String[] projection;
-        Uri queryUri;
-
-        if (contentUri.toString().contains("video")) {
-            // For videos
-            projection = new String[]{MediaStore.Video.Media.DATA};
-            queryUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-        } else {
-            // For images
-            projection = new String[]{MediaStore.Images.Media.DATA};
-            queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        }
-
-        Cursor cursor = getContentResolver().query(queryUri, projection, MediaStore.Images.Media._ID + "=?",
-                new String[]{contentUri.getLastPathSegment()}, null);
-
-        if (cursor != null) {
-            try {
-                int columnIndex = cursor.getColumnIndexOrThrow(projection[0]);
-                cursor.moveToFirst();
-                String filePath = cursor.getString(columnIndex);
-                return filePath;
-            } finally {
-                cursor.close();
-            }
-        }
-        return null;
     }*/
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] projection;
+        if (getContentResolver().getType(contentUri).contains("image")) {
+            projection = new String[]{MediaStore.Images.Media.DATA};
+        } else if (getContentResolver().getType(contentUri).contains("video")) {
+            projection = new String[]{MediaStore.Video.Media.DATA};
+        } else {
+            return null; // Unsupported URI type
+        }
+
+        Cursor cursor = getContentResolver().query(contentUri, projection, null, null, null);
+        if (cursor == null)
+            return null;
+
+        int column_index = cursor.getColumnIndexOrThrow(projection[0]);
+        cursor.moveToFirst();
+        String filePath = cursor.getString(column_index);
+        cursor.close();
+        return filePath;
+    }
 
 
     private File uriToFile(Uri uri) throws IOException {

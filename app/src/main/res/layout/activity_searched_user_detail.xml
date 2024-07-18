@@ -590,6 +590,37 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_regular"
                         android:padding="5dp"
+                        android:text="Adhar Card"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_adhar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center_horizontal"
+                        android:padding="5dp"
+                        android:text="abc"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:padding="7dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_regular"
+                        android:padding="5dp"
                         android:text="Voter ID"
                         android:textColor="@color/colorBlack"
                         android:textSize="18sp"
@@ -612,36 +643,7 @@
                 <!--                    android:layout_margin="10dp"-->
                 <!--                    android:background="#595656"-->
                 <!--                    />-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:padding="7dp"
-                    android:weightSum="2">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/roboto_regular"
-                        android:padding="5dp"
-                        android:text="Adhar Card"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_adhar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp"
-                        android:text="abc"
-                        android:textSize="18sp" />
-                </LinearLayout>
 
 
                 <LinearLayout

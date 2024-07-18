@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -28,8 +27,6 @@
 
     </View>
 
-
-
     <LinearLayout
         android:id="@+id/ll_search"
         android:layout_width="match_parent"
@@ -40,50 +37,6 @@
         android:padding="5dp"
         android:weightSum="3">
 
-        <!--<EditText
-            android:id="@+id/et_name"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/border"
-            android:elevation="10dp"
-            android:gravity="center"
-            android:hint="name"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
-
-        <EditText
-            android:id="@+id/et_mname"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/border"
-            android:elevation="10dp"
-            android:gravity="center"
-            android:hint="middle name"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
-
-
-        <EditText
-            android:id="@+id/et_lname"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/border"
-            android:elevation="10dp"
-            android:gravity="center"
-            android:hint="last name"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />-->
 
 
         <EditText
@@ -100,8 +53,6 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/colorBlack"/>
-
-
 
     </LinearLayout>
 
@@ -155,69 +106,6 @@
             android:src="@drawable/ic_search" />
     </LinearLayout>
 
-    <!--    <HorizontalScrollView-->
-    <!--        android:id="@+id/horizontal1"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/view_search"-->
-    <!--        android:scrollbars="horizontal">-->
-
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/ll"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        android:gravity="center"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        >-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:fontFamily="@font/roboto_regular"-->
-    <!--            android:gravity="center"-->
-    <!--            android:padding="5dp"-->
-    <!--            android:text="Sr_No."-->
-    <!--            android:textColor="@color/colorBlack"-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:fontFamily="@font/roboto_regular"-->
-    <!--            android:gravity="center"-->
-    <!--            android:padding="5dp"-->
-    <!--            android:text="Name"-->
-    <!--            android:textColor="@color/colorBlack"-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:fontFamily="@font/roboto_regular"-->
-    <!--            android:gravity="center"-->
-    <!--            android:padding="5dp"-->
-    <!--            android:text="VoterID"-->
-    <!--            android:textColor="@color/colorBlack"-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:fontFamily="@font/roboto_regular"-->
-    <!--            android:gravity="center"-->
-    <!--            android:padding="5dp"-->
-    <!--            android:text="Adhar Card"-->
-    <!--            android:textColor="@color/colorBlack"-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold" />-->
-
-
-    <!--    </LinearLayout>-->
-    <!--    </HorizontalScrollView>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -231,7 +119,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-
             />
 
 

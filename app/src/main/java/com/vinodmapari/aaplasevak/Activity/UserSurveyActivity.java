@@ -217,7 +217,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
         spinner_constituency.setTitle("Select Constituency");
         spinner_zone.setTitle("Select Zone");
-        spinner_ward.setTitle("Select Prabhag /Ward");
+        spinner_ward.setTitle("Select Prabhag/Ward");
         spinner_city.setTitle("Select City/Village");
 
 
@@ -723,7 +723,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                     // Create a list of prabhag ward names
                     List<String> prabhagWardNames = new ArrayList<>();
-                    prabhagWardNames.add("Select Prabhag Ward");
+                    prabhagWardNames.add("Select Prabhag/Ward");
 
                     for (PrabhagWardItem prabhagWard : prabhagWards) {
                         prabhagWardNames.add(prabhagWard.getPrabhagWardName());
@@ -740,7 +740,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
-                            if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
+                            if (!selectedPrabhagWard.equals("Select Prabhag /")) {
                                 //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
                                 // Perform any other actions based on selection
                             }

@@ -937,7 +937,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                     // Create a list of prabhag ward names
                     List<String> prabhagWardNames = new ArrayList<>();
-                    prabhagWardNames.add("Select Prabhag Ward");
+                    prabhagWardNames.add("Select Prabhag/Ward");
 
                     for (PrabhagWardItem prabhagWard : prabhagWards) {
                         prabhagWardNames.add(prabhagWard.getPrabhagWardName());
