@@ -47,7 +47,8 @@
                     app:sliderIndicatorSelectedColor="@color/colorPrimary"
                     app:sliderIndicatorUnselectedColor="#FFF"
                     app:sliderScrollTimeInSec="1"
-                    app:sliderStartAutoCycle="true" />
+                    app:sliderStartAutoCycle="true"
+                    />
 
 
             </RelativeLayout>

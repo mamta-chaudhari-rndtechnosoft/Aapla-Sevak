@@ -65,10 +65,9 @@ public class SubMemberActivity extends AppCompatActivity {
     int selected_relation, selected_status;
     String relation_id, status_id;
     Button btnSubmit;
-    SearchableSpinner spinner_relation, spinner_status, spinner_constituency, spinner_zone, spinner_ward,
-            spinner_city;
+    SearchableSpinner spinner_relation, spinner_status, spinner_constituency, spinner_zone, spinner_ward, spinner_city;
     String gender, boothNo, serialNo;
-    String survey_id;
+    String survey_id, id;
     TextView tv1, tv2, member_colony, series, member_row, member_watersupply, member_caste, house_number, surname;
     ArrayList<MainMemberDetail> mainMemberDetails;
     RadioButton selectedRadioButton;
@@ -118,7 +117,6 @@ public class SubMemberActivity extends AppCompatActivity {
         //tv1=findViewById(R.id.tv1);
         //tv2=findViewById(R.id.tv2);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
@@ -131,7 +129,7 @@ public class SubMemberActivity extends AppCompatActivity {
 
 
         mainMemberDetails = new ArrayList<>();
-        // spinner_relation.setTitle("select relation");
+        //spinner_relation.setTitle("select relation");
         spinner_status.setTitle("select status");
         spinner_constituency.setTitle("Select Constituency");
         spinner_zone.setTitle("Select Zone");
@@ -148,12 +146,9 @@ public class SubMemberActivity extends AppCompatActivity {
         String row = intent.getStringExtra("row");
         String caste = intent.getStringExtra("caste");
         String watersupply = intent.getStringExtra("watersupply");
-
-        String id = intent.getStringExtra("id");
+         id = intent.getStringExtra("id");
         String member_id = intent.getStringExtra("member_id");
 
-
-//        Toast.makeText(getApplicationContext(), ""+series, Toast.LENGTH_SHORT).show();
 
         surname.setText(user_surname);
         series.setText(user_series);
@@ -169,7 +164,6 @@ public class SubMemberActivity extends AppCompatActivity {
         fetchPrabhagWards();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
             public void onCheckedChanged(RadioGroup rg, int checkedId) {
                 for (int i = 0; i < rg.getChildCount(); i++) {
                     RadioButton btn = (RadioButton) rg.getChildAt(i);
@@ -252,15 +246,12 @@ public class SubMemberActivity extends AppCompatActivity {
                 String colony_id = colony;
                 String watersupply_id = watersupply;
                 String user_caste = caste;
-
                 String constituency = spinner_constituency.getSelectedItem().toString();
                 String zone = spinner_zone.getSelectedItem().toString();
                 String cityVillage = spinner_city.getSelectedItem().toString();
                 String prabhagWard = spinner_ward.getSelectedItem().toString();
-
                 String apartment = etApartment.getText().toString();
                 String flateNo = etFlateNumber.getText().toString();
-
                 String BoothNo = etBoothNo.getText().toString();
                 String SerialNo = etSerialNo.getText().toString();
 
@@ -329,11 +320,10 @@ public class SubMemberActivity extends AppCompatActivity {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        // check for id and member id and also for what is surbey
+        // check for id and member id and also for what is survey
 
-        AddMemberBody addMemberBody = new AddMemberBody("1", gender, name, middle_name, surname, mobile1, mobile2,
-                dob, qualification, status_id, relation_id, voter_id, adhar_card, voting_center, house_no, row_id,
-                series_id, colony_id, watersupply_id, caste, constituency, city, zone, ward, apartment, flate);
+        AddMemberBody addMemberBody = new AddMemberBody(id,gender,name,middle_name,surname,mobile1,mobile2, dob,qualification,status_id,voter_id,
+                adhar_card,voting_center,BoothNo,SerialNo,apartment,flate,constituency,city,zone,ward);
 
         Call<AddMemberResponseData> call = apiInterface.addMember(addMemberBody);
 
@@ -342,6 +332,11 @@ public class SubMemberActivity extends AppCompatActivity {
             public void onResponse(Call<AddMemberResponseData> call, retrofit2.Response<AddMemberResponseData> response) {
                 if (response.isSuccessful()) {
 
+                    AddMemberResponseData responseData = response.body();
+                    String status = responseData.getStatus();
+                    String message = responseData.getMessage();
+                    Toast.makeText(SubMemberActivity.this, "Success: " + status + " " + message, Toast.LENGTH_SHORT).show();
+                    finish();
 
                 } else {
                     Toast.makeText(SubMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();

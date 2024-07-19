@@ -137,7 +137,7 @@ public interface ApiInterface {
     Call<AddSurveyResponseData> addSurvey(@Body AddSurveyBody addSurveyBody);
 
     // for add member
-    @POST("addMember.php")
+    @POST("add_member_api.php")
     Call<AddMemberResponseData> addMember(@Body AddMemberBody addMemberBody);
 
 }

@@ -205,7 +205,7 @@ public class SearchActivity extends AppCompatActivity {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        SearchListBody searchListBody = new SearchListBody(fullName);
+        SearchListBody searchListBody = new SearchListBody(fullName,voterId,adharcard);
 
         Call<SearchListResponseData> call = apiInterface.searchList(searchListBody);
 

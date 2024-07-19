@@ -1,5 +1,4 @@
 package com.vinodmapari.aaplasevak.Model;
-
 import com.google.gson.annotations.SerializedName;
 
 public class SearchListItem {
@@ -13,13 +12,13 @@ public class SearchListItem {
     @SerializedName("house_no")
     private String houseNo;
 
-    @SerializedName("series_id")
+    @SerializedName("series_name")
     private String seriesId;
 
-    @SerializedName("colony_id")
+    @SerializedName("colony_name")
     private String colonyId;
 
-    @SerializedName("row_id")
+    @SerializedName("row_name")
     private String rowId;
 
     @SerializedName("gender")
@@ -52,7 +51,7 @@ public class SearchListItem {
     @SerializedName("caste")
     private String caste;
 
-    @SerializedName("status_id")
+    @SerializedName("status")
     private String statusId;
 
     @SerializedName("relation")
@@ -67,7 +66,7 @@ public class SearchListItem {
     @SerializedName("adhar_card")
     private String adharCard;
 
-    @SerializedName("watersupply_id")
+    @SerializedName("watersupply_name")
     private String waterSupplyId;
 
     @SerializedName("voting_center")
@@ -105,7 +104,6 @@ public class SearchListItem {
 
     @SerializedName("created_at")
     private String createdAt;
-
 
     public String getId() {
         return id;

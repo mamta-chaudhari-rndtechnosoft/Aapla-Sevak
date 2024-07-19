@@ -165,13 +165,13 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
 
 
-        if (series.equalsIgnoreCase("A")) {
+        /*if (series.equalsIgnoreCase("A")) {
             SeriesId = 1;
         } else if (series.equalsIgnoreCase("B")) {
             SeriesId = 2;
         } else if (series.equalsIgnoreCase("C")) {
             SeriesId = 3;
-        }
+        }*/
 
         //Toast.makeText(this, "House: " + houseNo + "Series: " + SeriesId, Toast.LENGTH_SHORT).show();
 
@@ -302,9 +302,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         ivSaveContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 addContact(name, phone);
-
             }
         });
     }
