@@ -1,9 +1,11 @@
 package com.vinodmapari.aaplasevak.ApiConfig;
 
+import com.bumptech.glide.annotation.GlideType;
 import com.vinodmapari.aaplasevak.Model.AddMemberBody;
 import com.vinodmapari.aaplasevak.Model.AddMemberResponseData;
 import com.vinodmapari.aaplasevak.Model.AddSurveyBody;
 import com.vinodmapari.aaplasevak.Model.AddSurveyResponseData;
+import com.vinodmapari.aaplasevak.Model.CasteResponse;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
 import com.vinodmapari.aaplasevak.Model.DeleteMemberResponseData;
@@ -15,6 +17,7 @@ import com.vinodmapari.aaplasevak.Model.HomeSplashResponse;
 import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.HouseResponse;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
+import com.vinodmapari.aaplasevak.Model.QualificationsResponse;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
 import com.vinodmapari.aaplasevak.Model.SearchListBody;
 import com.vinodmapari.aaplasevak.Model.SearchListResponseData;
@@ -54,10 +57,11 @@ public interface ApiInterface {
 
     //Family Member list
     @GET("api.php?survey_detail_by_house_no")
-    Call<HouseResponse> getHouseDetails(@Query("house_no") String house_no, @Query("series_id") int series_id);
+    Call<HouseResponse> getHouseDetails(@Query("house_no") String house_no, @Query("series_id") String series_id);
 
     /*@POST("api.php?update_survey_detail")
     Call<ResponseBody> updateFamilyDetails(@Body EditFamilyMemberBody editFamilyMemberBody);*/
+
     @POST("surveyedit_api.php")
     Call<EditMemberRespponseData> updateFamilyDetails(@Body EditFamilyMemberBody editFamilyMemberBody);
 
@@ -139,5 +143,12 @@ public interface ApiInterface {
     // for add member
     @POST("add_member_api.php")
     Call<AddMemberResponseData> addMember(@Body AddMemberBody addMemberBody);
+
+    @GET("api.php?qualification")
+    Call<QualificationsResponse> qualificationResponse();
+
+    @GET("api.php?caste")
+    Call<CasteResponse> casteResponse();
+
 
 }

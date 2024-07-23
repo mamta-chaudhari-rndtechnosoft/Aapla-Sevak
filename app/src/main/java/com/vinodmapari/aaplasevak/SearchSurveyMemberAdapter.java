@@ -40,7 +40,7 @@ public class SearchSurveyMemberAdapter extends RecyclerView.Adapter<SearchSurvey
     public void onBindViewHolder(@NonNull SearchSurveyMemberAdapter.ViewHolder holder, int position) {
 
         SearchItem searchItem = searchItemArrayList.get(position);
-        String name = searchItem.getFullname();
+        String name = searchItem.getFullName();
         holder.tvFullName.setText(name);
 
         holder.cardName.setOnClickListener(new View.OnClickListener() {
@@ -48,15 +48,21 @@ public class SearchSurveyMemberAdapter extends RecyclerView.Adapter<SearchSurvey
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, UserSurveyActivity.class);
-                intent.putExtra("isDataHave","true");
+                intent.putExtra("isDataHave", "true");
                 intent.putExtra("name", searchItem.getName());
                 intent.putExtra("surname", searchItem.getSurname());
-                intent.putExtra("middlename", searchItem.getMiddle_name());
-                intent.putExtra("voterId", searchItem.getVoter_id());
-                intent.putExtra("boothNo", searchItem.getBooth_no());
-                intent.putExtra("sNo", searchItem.gets_no());
-                intent.putExtra("votingCenter", searchItem.getVoting_center());
+                intent.putExtra("middlename", searchItem.getMiddleName());
+                intent.putExtra("voterId", searchItem.getVoterId());
+                intent.putExtra("boothNo", searchItem.getBoothNo());
+                intent.putExtra("sNo", searchItem.getSerialNo());
+                intent.putExtra("votingCenter", searchItem.getVotingCenter());
                 intent.putExtra("gender", searchItem.getGender());
+                intent.putExtra("epicNo", searchItem.getEpicNo());
+                intent.putExtra("dob", searchItem.getDob());
+                intent.putExtra("constituency", searchItem.getConstituency());
+                intent.putExtra("cityVillage", searchItem.getCityVillage());
+                intent.putExtra("zone", searchItem.getZone());
+                intent.putExtra("prabhagWard", searchItem.getPrabhagWard());
                 context.startActivity(intent);
 
             }

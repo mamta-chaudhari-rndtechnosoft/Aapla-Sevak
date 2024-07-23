@@ -3,63 +3,80 @@ package com.vinodmapari.aaplasevak.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class UserDetail {
-
+    @SerializedName("id")
     private int id;
-    private String house_no;
+
+    @SerializedName("house_no")
+    private String houseNo;
+
+    @SerializedName("name")
     private String name;
-    private String middle_name;
+
+    @SerializedName("middle_name")
+    private String middleName;
+
+    @SerializedName("surname")
     private String surname;
-    private String voting_center;
+
+    @SerializedName("voting_center")
+    private String votingCenter;
+
     @SerializedName("booth_no")
-    private String booth_No;
-    private int voting_sr_no;
-    private String series_id;
-    private int colony_id;
-    private int row_id;
+    private String boothNo;
+
+    @SerializedName("voting_sr_no")
+    private int votingSrNo;
+
+    @SerializedName("series_id")
+    private int seriesId;
+
+    @SerializedName("colony_id")
+    private int colonyId;
+
+    @SerializedName("row_id")
+    private int rowId;
+
+    @SerializedName("gender")
     private String gender;
+
+    @SerializedName("mobile1")
     private String mobile1;
+
+    @SerializedName("mobile2")
     private String mobile2;
+
+    @SerializedName("dob")
     private String dob;
+
+    @SerializedName("qualification")
     private String qualification;
+
+    @SerializedName("caste")
     private String caste;
-    private String relation;
-    private String event;
-    private String adhar_card;
-    private int watersupply_id;
-    private int member_id;
-    private String voter_id;
-    private String status_id;
 
+    @SerializedName("adhar_card")
+    private String adharCard;
 
-    public UserDetail(int id, String house_no, String name, String middle_name, String surname, String voting_center,
-                      String booth_No, int voting_sr_no, String series_id, int colony_id, int row_id, String gender,
-                      String mobile1, String mobile2, String dob, String qualification, String caste, String relation,
-                      String event, String adhar_card, int watersupply_id, int member_id, String voter_id, String status_id) {
-        this.id = id;
-        this.house_no = house_no;
-        this.name = name;
-        this.middle_name = middle_name;
-        this.surname = surname;
-        this.voting_center = voting_center;
-        this.booth_No = booth_No;
-        this.voting_sr_no = voting_sr_no;
-        this.series_id = series_id;
-        this.colony_id = colony_id;
-        this.row_id = row_id;
-        this.gender = gender;
-        this.mobile1 = mobile1;
-        this.mobile2 = mobile2;
-        this.dob = dob;
-        this.qualification = qualification;
-        this.caste = caste;
-        this.relation = relation;
-        this.event = event;
-        this.adhar_card = adhar_card;
-        this.watersupply_id = watersupply_id;
-        this.member_id = member_id;
-        this.voter_id = voter_id;
-        this.status_id = status_id;
-    }
+    @SerializedName("watersupply_id")
+    private int waterSupplyId;
+
+    @SerializedName("member_id")
+    private int memberId;
+
+    @SerializedName("voter_id")
+    private String voterId;
+
+    @SerializedName("status_id")
+    private String statusId;
+
+    @SerializedName("apartment")
+    private String apartment;
+
+    @SerializedName("flat_no")
+    private String flatNo;
+
+    // Getters and Setters
+
 
     public int getId() {
         return id;
@@ -69,12 +86,12 @@ public class UserDetail {
         this.id = id;
     }
 
-    public String getHouse_no() {
-        return house_no;
+    public String getHouseNo() {
+        return houseNo;
     }
 
-    public void setHouse_no(String house_no) {
-        this.house_no = house_no;
+    public void setHouseNo(String houseNo) {
+        this.houseNo = houseNo;
     }
 
     public String getName() {
@@ -85,12 +102,12 @@ public class UserDetail {
         this.name = name;
     }
 
-    public String getMiddle_name() {
-        return middle_name;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setMiddle_name(String middle_name) {
-        this.middle_name = middle_name;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public String getSurname() {
@@ -101,52 +118,52 @@ public class UserDetail {
         this.surname = surname;
     }
 
-    public String getVoting_center() {
-        return voting_center;
+    public String getVotingCenter() {
+        return votingCenter;
     }
 
-    public void setVoting_center(String voting_center) {
-        this.voting_center = voting_center;
+    public void setVotingCenter(String votingCenter) {
+        this.votingCenter = votingCenter;
     }
 
-    public String getBooth_No() {
-        return booth_No;
+    public String getBoothNo() {
+        return boothNo;
     }
 
-    public void setBooth_No(String booth_No) {
-        this.booth_No = booth_No;
+    public void setBoothNo(String boothNo) {
+        this.boothNo = boothNo;
     }
 
-    public int getVoting_sr_no() {
-        return voting_sr_no;
+    public int getVotingSrNo() {
+        return votingSrNo;
     }
 
-    public void setVoting_sr_no(int voting_sr_no) {
-        this.voting_sr_no = voting_sr_no;
+    public void setVotingSrNo(int votingSrNo) {
+        this.votingSrNo = votingSrNo;
     }
 
-    public String getSeries_id() {
-        return series_id;
+    public int getSeriesId() {
+        return seriesId;
     }
 
-    public void setSeries_id(String series_id) {
-        this.series_id = series_id;
+    public void setSeriesId(int seriesId) {
+        this.seriesId = seriesId;
     }
 
-    public int getColony_id() {
-        return colony_id;
+    public int getColonyId() {
+        return colonyId;
     }
 
-    public void setColony_id(int colony_id) {
-        this.colony_id = colony_id;
+    public void setColonyId(int colonyId) {
+        this.colonyId = colonyId;
     }
 
-    public int getRow_id() {
-        return row_id;
+    public int getRowId() {
+        return rowId;
     }
 
-    public void setRow_id(int row_id) {
-        this.row_id = row_id;
+    public void setRowId(int rowId) {
+        this.rowId = rowId;
     }
 
     public String getGender() {
@@ -197,61 +214,93 @@ public class UserDetail {
         this.caste = caste;
     }
 
-    public String getRelation() {
-        return relation;
+    public String getAdharCard() {
+        return adharCard;
     }
 
-    public void setRelation(String relation) {
-        this.relation = relation;
+    public void setAdharCard(String adharCard) {
+        this.adharCard = adharCard;
     }
 
-    public String getEvent() {
-        return event;
+    public int getWaterSupplyId() {
+        return waterSupplyId;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    public void setWaterSupplyId(int waterSupplyId) {
+        this.waterSupplyId = waterSupplyId;
     }
 
-    public String getAdhar_card() {
-        return adhar_card;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setAdhar_card(String adhar_card) {
-        this.adhar_card = adhar_card;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
-    public int getWatersupply_id() {
-        return watersupply_id;
+    public String getVoterId() {
+        return voterId;
     }
 
-    public void setWatersupply_id(int watersupply_id) {
-        this.watersupply_id = watersupply_id;
+    public void setVoterId(String voterId) {
+        this.voterId = voterId;
     }
 
-    public int getMember_id() {
-        return member_id;
+    public String getStatusId() {
+        return statusId;
     }
 
-    public void setMember_id(int member_id) {
-        this.member_id = member_id;
+    public void setStatusId(String statusId) {
+        this.statusId = statusId;
     }
 
-    public String getVoter_id() {
-        return voter_id;
+    public String getApartment() {
+        return apartment;
     }
 
-    public void setVoter_id(String voter_id) {
-        this.voter_id = voter_id;
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
     }
 
-    public String getStatus_id() {
-        return status_id;
+    public String getFlatNo() {
+        return flatNo;
     }
 
-    public void setStatus_id(String status_id) {
-        this.status_id = status_id;
+    public void setFlatNo(String flatNo) {
+        this.flatNo = flatNo;
     }
+
+    @Override
+    public String toString() {
+        return "HouseDetails{" +
+                "id=" + id +
+                ", houseNo='" + houseNo + '\'' +
+                ", name='" + name + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", votingCenter='" + votingCenter + '\'' +
+                ", boothNo='" + boothNo + '\'' +
+                ", votingSrNo='" + votingSrNo + '\'' +
+                ", seriesId=" + seriesId +
+                ", colonyId=" + colonyId +
+                ", rowId=" + rowId +
+                ", gender='" + gender + '\'' +
+                ", mobile1='" + mobile1 + '\'' +
+                ", mobile2='" + mobile2 + '\'' +
+                ", dob='" + dob + '\'' +
+                ", qualification='" + qualification + '\'' +
+                ", caste='" + caste + '\'' +
+                ", flateNo='" + flatNo + '\'' +
+                ", apartmentNo='" + apartment + '\'' +
+                ", adharCard='" + adharCard + '\'' +
+                ", waterSupplyId=" + waterSupplyId +
+                ", memberId=" + memberId +
+                ", voterId='" + voterId + '\'' +
+                ", statusId='" + statusId + '\'' +
+                '}';
+    }
+
+
 }
 
 

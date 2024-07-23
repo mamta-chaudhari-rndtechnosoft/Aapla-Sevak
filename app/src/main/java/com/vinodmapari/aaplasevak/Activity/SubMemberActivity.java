@@ -34,6 +34,8 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.Model.AddMemberBody;
 import com.vinodmapari.aaplasevak.Model.AddMemberResponseData;
+import com.vinodmapari.aaplasevak.Model.CasteItem;
+import com.vinodmapari.aaplasevak.Model.CasteResponse;
 import com.vinodmapari.aaplasevak.Model.CityVillageItem;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.Constants;
@@ -42,6 +44,8 @@ import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
 import com.vinodmapari.aaplasevak.Model.MainMemberDetail;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardItem;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
+import com.vinodmapari.aaplasevak.Model.QualificationItem;
+import com.vinodmapari.aaplasevak.Model.QualificationsResponse;
 import com.vinodmapari.aaplasevak.Model.Status;
 import com.vinodmapari.aaplasevak.Model.ZoneItem;
 import com.vinodmapari.aaplasevak.Model.ZoneResponse;
@@ -65,15 +69,14 @@ public class SubMemberActivity extends AppCompatActivity {
     int selected_relation, selected_status;
     String relation_id, status_id;
     Button btnSubmit;
-    SearchableSpinner spinner_relation, spinner_status, spinner_constituency, spinner_zone, spinner_ward, spinner_city;
+    SearchableSpinner spinner_relation, spinner_status, spinner_constituency, spinner_zone, spinner_ward, spinner_city, spinner_qualification,spinner_caste;
     String gender, boothNo, serialNo;
     String survey_id, id;
-    TextView tv1, tv2, member_colony, series, member_row, member_watersupply, member_caste, house_number, surname;
+    TextView tv1, tv2, member_colony, series, member_row, member_watersupply, house_number, surname;
     ArrayList<MainMemberDetail> mainMemberDetails;
     RadioButton selectedRadioButton;
     RadioGroup radioGroup;
-    EditText votingcenter, dob, name, middle_name, mob1, mob2, qualification, voterID, adharcard, etBoothNo, etSerialNo, etApartment,
-            etFlateNumber;
+    EditText votingcenter, dob, name, middle_name, mob1, mob2, voterID, adharcard, etBoothNo, etSerialNo, etApartment, etFlateNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +91,7 @@ public class SubMemberActivity extends AppCompatActivity {
         surname = findViewById(R.id.surname);
         mob1 = findViewById(R.id.mobile1);
         mob2 = findViewById(R.id.mobile2);
-        qualification = findViewById(R.id.qualification);
-        member_caste = findViewById(R.id.caste);
+        //qualification = findViewById(R.id.qualification);
         voterID = findViewById(R.id.voterID);
         //edevent = findViewById(R.id.event);
         adharcard = findViewById(R.id.adharCard);
@@ -113,6 +115,8 @@ public class SubMemberActivity extends AppCompatActivity {
         spinner_city = findViewById(R.id.spinnerCity_Village);
         spinner_zone = findViewById(R.id.spinnerZone);
         spinner_ward = findViewById(R.id.spinnerPrabhag_Ward);
+        spinner_qualification = findViewById(R.id.spinner_qualification);
+        spinner_caste = findViewById(R.id.spinner_caste);
 
         //tv1=findViewById(R.id.tv1);
         //tv2=findViewById(R.id.tv2);
@@ -156,12 +160,14 @@ public class SubMemberActivity extends AppCompatActivity {
         member_row.setText(row);
         member_watersupply.setText(watersupply);
         house_number.setText(house_no);
-        member_caste.setText(caste);
+
 
         fetchConstituencies();
         fetchCityVillages();
         fetchZones();
         fetchPrabhagWards();
+        fetchQualification();
+        fetchCaste();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup rg, int checkedId) {
@@ -237,7 +243,6 @@ public class SubMemberActivity extends AppCompatActivity {
                 String mobile_no1 = calling_no;
                 String mobile_no2 = wp_no;
                 String user_dob = dob.getText().toString();
-                String user_qualification = qualification.getText().toString();
                 String voterId = voterID.getText().toString();
                 String user_adharcard = adharcard.getText().toString();
                 String voting_center = votingcenter.getText().toString();
@@ -250,6 +255,7 @@ public class SubMemberActivity extends AppCompatActivity {
                 String zone = spinner_zone.getSelectedItem().toString();
                 String cityVillage = spinner_city.getSelectedItem().toString();
                 String prabhagWard = spinner_ward.getSelectedItem().toString();
+                String user_qualification =spinner_qualification.getSelectedItem().toString();
                 String apartment = etApartment.getText().toString();
                 String flateNo = etFlateNumber.getText().toString();
                 String BoothNo = etBoothNo.getText().toString();
@@ -258,7 +264,7 @@ public class SubMemberActivity extends AppCompatActivity {
 
                 if (house_no.equals("") || user_name.equals("") || user_middle_name.equals("") || user_surname.equals("")
                         || mobile_no1.length() == 0 || mobile_no2.length() == 0
-                        || user_dob.isEmpty() || user_qualification.equals("") || caste.equals("") || voterId.equals("") || user_adharcard.equals("")
+                        || user_dob.isEmpty()  || voterId.equals("") || user_adharcard.equals("")
                         || voting_center.equals("") || BoothNo.equals("") || SerialNo.equals("") || apartment.equals("") || flateNo.equals("")
 
                 ) {
@@ -271,7 +277,10 @@ public class SubMemberActivity extends AppCompatActivity {
                     Toast.makeText(SubMemberActivity.this, "Please Select Zone", Toast.LENGTH_SHORT).show();
                 } else if (spinner_ward.getId() == 0) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Ward", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else if (spinner_qualification.getId() == 0) {
+                    Toast.makeText(SubMemberActivity.this, "Please Select Qualification", Toast.LENGTH_SHORT).show();
+                }else {
                     // id and member id is missing from here
                     addMember(house_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname,
                             mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, watersupply_id,
@@ -322,7 +331,7 @@ public class SubMemberActivity extends AppCompatActivity {
 
         // check for id and member id and also for what is survey
 
-        AddMemberBody addMemberBody = new AddMemberBody(id,gender,name,middle_name,surname,mobile1,mobile2, dob,qualification,status_id,voter_id,
+        AddMemberBody addMemberBody = new AddMemberBody(house_no,gender,name,middle_name,surname,mobile1,mobile2, dob,qualification,status_id,voter_id,
                 adhar_card,voting_center,BoothNo,SerialNo,apartment,flate,constituency,city,zone,ward);
 
         Call<AddMemberResponseData> call = apiInterface.addMember(addMemberBody);
@@ -350,7 +359,6 @@ public class SubMemberActivity extends AppCompatActivity {
                 Toast.makeText(SubMemberActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 
@@ -385,7 +393,6 @@ public class SubMemberActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(stringRequest);
-
     }
 
     private void fetchConstituencies() {
@@ -615,6 +622,121 @@ public class SubMemberActivity extends AppCompatActivity {
         });
 
     }
+
+    private void fetchQualification() {
+
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<QualificationsResponse> call = apiInterface.qualificationResponse();
+
+        call.enqueue(new Callback<QualificationsResponse>() {
+            @Override
+            public void onResponse(Call<QualificationsResponse> call, retrofit2.Response<QualificationsResponse> response) {
+                if (response.isSuccessful()) {
+
+                    List<QualificationItem> qualificationResponse = response.body().getQualifications();
+
+                    // Create a list of prabhag ward names
+                    List<String> qualificationNames = new ArrayList<>();
+                    qualificationNames.add("Select Qualification");
+
+                    for (QualificationItem qualification : qualificationResponse) {
+                        qualificationNames.add(qualification.getQualificationName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SubMemberActivity.this,
+                            android.R.layout.simple_spinner_item, qualificationNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_qualification.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_qualification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedQualification = (String) parent.getItemAtPosition(position);
+                            if (!selectedQualification.equals("Select Qualification")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(SubMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Api Response", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<QualificationsResponse> call, Throwable throwable) {
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(SubMemberActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchCaste(){
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<CasteResponse> call = apiInterface.casteResponse();
+        call.enqueue(new Callback<CasteResponse>() {
+            @Override
+            public void onResponse(Call<CasteResponse> call, retrofit2.Response<CasteResponse> response) {
+                if(response.isSuccessful()){
+                    List<CasteItem> casteResponses = response.body().getCastes();
+
+                    // Create a list of prabhag ward names
+                    List<String> casteNames = new ArrayList<>();
+                    casteNames.add("Select Caste");
+
+                    for (CasteItem caste : casteResponses) {
+                        casteNames.add(caste.getCasteName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SubMemberActivity.this,
+                            android.R.layout.simple_spinner_item, casteNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_caste.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_caste.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedCaste = (String) parent.getItemAtPosition(position);
+                            if (!selectedCaste.equals("Select Caste")) {
+
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(SubMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Api Response", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CasteResponse> call, Throwable throwable) {
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(SubMemberActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
     @Override

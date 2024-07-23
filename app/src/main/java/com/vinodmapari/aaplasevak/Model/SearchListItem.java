@@ -13,6 +13,9 @@ public class SearchListItem {
     private String houseNo;
 
     @SerializedName("series_name")
+    private String seriesName;
+
+    @SerializedName("series_id")
     private String seriesId;
 
     @SerializedName("colony_name")
@@ -127,6 +130,14 @@ public class SearchListItem {
 
     public void setHouseNo(String houseNo) {
         this.houseNo = houseNo;
+    }
+
+    public String getSeriesName() {
+        return seriesName;
+    }
+
+    public void setSeriesName(String seriesName) {
+        this.seriesName = seriesName;
     }
 
     public String getSeriesId() {

@@ -35,6 +35,8 @@ import com.android.volley.toolbox.Volley;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.CustomAdapter;
+import com.vinodmapari.aaplasevak.Model.CasteItem;
+import com.vinodmapari.aaplasevak.Model.CasteResponse;
 import com.vinodmapari.aaplasevak.Model.CityVillageItem;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.Colony;
@@ -46,6 +48,8 @@ import com.vinodmapari.aaplasevak.Model.EditMemberRespponseData;
 import com.vinodmapari.aaplasevak.Model.Method;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardItem;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
+import com.vinodmapari.aaplasevak.Model.QualificationItem;
+import com.vinodmapari.aaplasevak.Model.QualificationsResponse;
 import com.vinodmapari.aaplasevak.Model.Row;
 import com.vinodmapari.aaplasevak.Model.Series;
 import com.vinodmapari.aaplasevak.Model.SharedPref;
@@ -60,6 +64,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +74,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
-
 
     ArrayList<SurveyList> surveyLists;
     ArrayList<Colony> colonies;
@@ -84,9 +88,10 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
     TextView tv1, tv2;
     SwipeRefreshLayout swipe_refresh;
     SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row,
-            spinner_water_Supply, spinner_constituency, spinner_zone, spinner_ward, spinner_city;
+            spinner_water_Supply, spinner_constituency, spinner_zone, spinner_ward,
+            spinner_city, spinner_qualification, spinner_caste;
     EditText etHouseNumber, etVotingCenter, etDob, etName, etMiddleName, etSurname, etMob1, etMob2,
-            etQualification, etCaste, etRelation, etVoterId, etEvent, etAadharCard, etBooth, etSerial,
+            etVoterId, etAadharCard, etBooth, etSerial,
             etApartment, etFlateNumber;
     private String colonyName;
     int id;
@@ -94,7 +99,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
     //Field Entry
     String HouseNo, Name, MiddleName, Surname, VotingCenter, BoothNo, SeriesId, Gender,
             Mobile1, Mobile2, Dob, Qualification, Caste, Relation, Event, VoterId, AadharCard,
-            constituency, zone, cityVillage, prabhagWard, apartment, flateNo;
+            constituency, zone, cityVillage, prabhagWard, apartment, flateNo, StatusId;
 
     int ColonyId, RowId, WaterSupplyId, MemberId, VotingSrNo;
     LottieAnimationView loader;
@@ -104,7 +109,9 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_member);
 
+        //from edit family adapter
         id = getIntent().getIntExtra("id", 0);
+        //Toast.makeText(this, "Id: " + id, Toast.LENGTH_SHORT).show();
 
         //Edittext
         etHouseNumber = findViewById(R.id.house_number);
@@ -115,11 +122,11 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         etSurname = findViewById(R.id.surname);
         etMob1 = findViewById(R.id.mobile1);
         etMob2 = findViewById(R.id.mobile2);
-        etQualification = findViewById(R.id.qualification);
-        etCaste = findViewById(R.id.caste);
-        etRelation = findViewById(R.id.relation);
+        //etQualification = findViewById(R.id.qualification);
+
+        //etRelation = findViewById(R.id.relation);
+        //etEvent = findViewById(R.id.event);
         etVoterId = findViewById(R.id.voterID);
-        etEvent = findViewById(R.id.event);
         etAadharCard = findViewById(R.id.adharCard);
         etBooth = findViewById(R.id.etBoothNo);
         etSerial = findViewById(R.id.etSerialNo);
@@ -145,6 +152,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         spinner_city = findViewById(R.id.spinnerCity_Village);
         spinner_zone = findViewById(R.id.spinnerZone);
         spinner_ward = findViewById(R.id.spinnerPrabhag_Ward);
+        spinner_qualification = findViewById(R.id.spinner_qualification);
+        spinner_caste = findViewById(R.id.spinner_caste);
 
 
         //loader
@@ -178,7 +187,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
         spinner_constituency.setTitle("Select Constituency");
         spinner_zone.setTitle("Select Zone");
-        spinner_ward.setTitle("Select Prabhag /Ward");
+        spinner_ward.setTitle("Select Prabhag/Ward");
         spinner_city.setTitle("Select City/Village");
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
@@ -213,7 +222,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             if (series_name != null && series_name.equals(Constants.series.get(i).getSeries_name())) {
                 selected_series = i;
             } else {
-                Toast.makeText(UpdateMemberActivity.this, "Series name: " + selected_series_id, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(UpdateMemberActivity.this, "Series name: " + selected_series_id, Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -225,7 +234,6 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             if (status_name != null && status_name.equals(Constants.statuses.get(i).getStatus_name())) {
                 selected_status = i;
             }
-
         }
 
         Constants.colony_name.clear();
@@ -287,11 +295,6 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
         loader.setVisibility(View.VISIBLE);
         getUserDetail();
-
-        fetchConstituencies();
-        fetchZones();
-        fetchPrabhagWards();
-        fetchCityVillages();
 
 
         spinner_series.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -376,6 +379,14 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             }
         });
 
+        fetchConstituencies();
+        fetchZones();
+        fetchPrabhagWards();
+        fetchCityVillages();
+        fetchConstituencies();
+        fetchQualification();
+        fetchCaste();
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -390,22 +401,24 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                 SeriesId = String.valueOf(spinner_series.getSelectedItemPosition());
                 ColonyId = spinner_colony.getSelectedItemPosition();
                 RowId = spinner_row.getSelectedItemPosition();
+                StatusId = String.valueOf(spinner_status.getSelectedItemPosition());
                 Gender = gender;
                 Mobile1 = etMob1.getText().toString();
                 Mobile2 = etMob2.getText().toString();
-                Qualification = etQualification.getText().toString();
-                Caste = etCaste.getText().toString();
-                Relation = etRelation.getText().toString();
-                Event = etEvent.getText().toString();
+                //Relation = etRelation.getText().toString();
+                //Event = etEvent.getText().toString();
                 AadharCard = etAadharCard.getText().toString();
                 WaterSupplyId = spinner_water_Supply.getSelectedItemPosition();
                 VoterId = etVoterId.getText().toString();
                 Dob = etDob.getText().toString();
 
+
                 constituency = spinner_constituency.getSelectedItem().toString();
                 zone = spinner_zone.getSelectedItem().toString();
                 cityVillage = spinner_city.getSelectedItem().toString();
                 prabhagWard = spinner_ward.getSelectedItem().toString();
+                Qualification = spinner_qualification.getSelectedItem().toString();
+                Caste = spinner_caste.getSelectedItem().toString();
 
                 apartment = etApartment.getText().toString();
                 flateNo = etFlateNumber.getText().toString();
@@ -434,34 +447,34 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                     ArrayList<UserDetail> userDetails = response.body().getUserDetails();
 
-                    Log.d("mamta", String.valueOf(userDetails));
+                    Log.d("mamta", "Data: " + userDetails.toString());
 
                     loader.setVisibility(View.GONE);
 
                     int id = userDetails.get(0).getId();
                     String name = userDetails.get(0).getName();
-                    String middleName = userDetails.get(0).getMiddle_name();
+                    String middleName = userDetails.get(0).getMiddleName();
                     String surname = userDetails.get(0).getSurname();
-                    String votingCenter = userDetails.get(0).getVoting_center();
-                    String boothNo = userDetails.get(0).getBooth_No();
+                    String votingCenter = userDetails.get(0).getVotingCenter();
+                    String boothNo = userDetails.get(0).getBoothNo();
                     String mobile1 = userDetails.get(0).getMobile1();
                     String mobile2 = userDetails.get(0).getMobile2();
                     String dob = userDetails.get(0).getDob();
                     String qualification = userDetails.get(0).getQualification();
                     String caste = userDetails.get(0).getCaste();
-                    String relation = userDetails.get(0).getRelation();
-                    String event = userDetails.get(0).getEvent();
-                    String voterId = userDetails.get(0).getVoter_id();
-                    String adharCard = userDetails.get(0).getAdhar_card();
-                    String houseNo = userDetails.get(0).getHouse_no();
+                    String voterId = userDetails.get(0).getVoterId();
+                    String adharCard = userDetails.get(0).getAdharCard();
+                    String houseNo = userDetails.get(0).getHouseNo();
                     String gender = userDetails.get(0).getGender();
-                    String seriesId = userDetails.get(0).getSeries_id();
-                    int votingSrNo = userDetails.get(0).getVoting_sr_no();
-                    int colonyId = userDetails.get(0).getColony_id();
-                    int rowId = userDetails.get(0).getRow_id();
-                    int waterSupplyId = userDetails.get(0).getWatersupply_id();
-                    String statusId = userDetails.get(0).getStatus_id();
-                    int memberId = userDetails.get(0).getMember_id();
+                    int seriesId = userDetails.get(0).getSeriesId();
+                    int votingSrNo = userDetails.get(0).getVotingSrNo();
+                    int colonyId = userDetails.get(0).getColonyId();
+                    int rowId = userDetails.get(0).getRowId();
+                    int waterSupplyId = userDetails.get(0).getWaterSupplyId();
+                    String statusId = userDetails.get(0).getStatusId();
+                    int memberId = userDetails.get(0).getMemberId();
+                    String flateNo = userDetails.get(0).getFlatNo();
+                    String apartment = userDetails.get(0).getApartment();
 
 
                     //Toast.makeText(UpdateMemberActivity.this, "c: " + colonyId + "R: " + rowId + "W: " + waterSupplyId + "S: " + seriesId, Toast.LENGTH_SHORT).show();
@@ -469,9 +482,9 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     //passing the house no in global String
                     //HouseNo = houseNo;
 
-                    if (seriesId == null) {
+                   /* if (seriesId == null) {
                         seriesId = "0";
-                    }
+                    }*/
 
                     if (statusId == null) {
                         statusId = "0";
@@ -487,51 +500,21 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     etMob1.setText(mobile1);
                     etMob2.setText(mobile2);
                     etDob.setText(dob);
-                    etQualification.setText(qualification);
-                    etCaste.setText(caste);
-                    etRelation.setText(relation);
-                    etEvent.setText(event);
                     etAadharCard.setText(adharCard);
                     etVoterId.setText(voterId);
                     etSerial.setText(String.valueOf(votingSrNo));
+                    etApartment.setText(apartment);
+                    etFlateNumber.setText(flateNo);
 
-                    spinner_series.setSelection(Integer.parseInt(seriesId));
-                    spinner_colony.setSelection(colonyId);
-                    spinner_row.setSelection(rowId);
-                    spinner_status.setSelection(Integer.parseInt(statusId));
+                    spinner_series.setSelection(seriesId);
+                    //spinner_colony.setSelection(colonyId);
+                    //spinner_row.setSelection(rowId);
+                    //spinner_status.setSelection(Integer.parseInt(statusId));
                     spinner_water_Supply.setSelection(waterSupplyId);
+                    // spinner_qualification.setSelection(Integer.parseInt(qualification));
+                    // spinner_caste.setSelection(Integer.parseInt(caste));
 
                     MemberId = memberId;
-
-
-                    /*
-                    //if (seriesId != null) spinner_series.setSelection(Integer.parseInt(seriesId));
-                    if (colonyId != null) spinner_colony.setSelection(colonyId);
-                    if (rowId != null) spinner_row.setSelection(rowId);
-                    if (statusId != null) spinner_status.setSelection(statusId);
-
-                   // if (waterSupplyId != null) spinner_water_Supply.setSelection(waterSupplyId);
-
-                    if(waterSupplyId != null) {
-                        spinner_water_Supply.setSelection(waterSupplyId);
-                    }
-                    else{
-                        Toast.makeText(UpdateMemberActivity.this, "water supply Id is null", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if(seriesId != null) {
-                        spinner_series.setSelection(Integer.parseInt(seriesId));
-                    }
-                    else{
-                        Toast.makeText(UpdateMemberActivity.this, "Series Id is null", Toast.LENGTH_SHORT).show();
-                    }*/
-
-
-                    /*if (statusId != null) {
-                        spinner_status.setSelection(Integer.parseInt(statusId));
-                    } else {
-                        Toast.makeText(UpdateMemberActivity.this, "status Id is null", Toast.LENGTH_SHORT).show();
-                    }*/
 
 
                     //radioGroup.setSelected(true);
@@ -580,8 +563,10 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         //VotingSrNo and Aadhar card in Int or long
 
 
-        EditFamilyMemberBody editFamilyMemberBody = new EditFamilyMemberBody(id, Name, MiddleName, Surname, VotingCenter, BoothNo, VotingSrNo, selected_series, ColonyId, RowId, Gender, Mobile1, Mobile2, Qualification,
-                Caste, Relation, Event, AadharCard, WaterSupplyId, VoterId, selected_status, HouseNo, Dob, MemberId);
+        EditFamilyMemberBody editFamilyMemberBody = new EditFamilyMemberBody(id, HouseNo, Name, MiddleName, Surname, VotingCenter, BoothNo,
+                VotingSrNo, Integer.parseInt(SeriesId), ColonyId, RowId, Gender, Mobile1, Mobile2, Dob, Qualification, Caste, AadharCard, WaterSupplyId, MemberId,
+                VoterId, StatusId, apartment, flateNo, constituency, cityVillage, zone, prabhagWard);
+
         Log.d("Api Response", editFamilyMemberBody.toString());
 
         //Toast.makeText(this, "Data: " + editFamilyMemberBody.toString(), Toast.LENGTH_SHORT).show();
@@ -978,7 +963,119 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                 Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
             }
         });
+    }
 
+    private void fetchQualification() {
+
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<QualificationsResponse> call = apiInterface.qualificationResponse();
+
+        call.enqueue(new Callback<QualificationsResponse>() {
+            @Override
+            public void onResponse(Call<QualificationsResponse> call, retrofit2.Response<QualificationsResponse> response) {
+                if (response.isSuccessful()) {
+
+                    List<QualificationItem> qualificationResponse = response.body().getQualifications();
+
+                    // Create a list of prabhag ward names
+                    List<String> qualificationNames = new ArrayList<>();
+                    qualificationNames.add("Select Qualification");
+
+                    for (QualificationItem qualification : qualificationResponse) {
+                        qualificationNames.add(qualification.getQualificationName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, qualificationNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_qualification.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_qualification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedQualification = (String) parent.getItemAtPosition(position);
+                            if (!selectedQualification.equals("Select Qualification")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(UpdateMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Api Response", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<QualificationsResponse> call, Throwable throwable) {
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(UpdateMemberActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchCaste() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<CasteResponse> call = apiInterface.casteResponse();
+        call.enqueue(new Callback<CasteResponse>() {
+            @Override
+            public void onResponse(Call<CasteResponse> call, retrofit2.Response<CasteResponse> response) {
+                if (response.isSuccessful()) {
+                    List<CasteItem> casteResponses = response.body().getCastes();
+
+                    // Create a list of prabhag ward names
+                    List<String> casteNames = new ArrayList<>();
+                    casteNames.add("Select Caste");
+
+                    for (CasteItem caste : casteResponses) {
+                        casteNames.add(caste.getCasteName());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, casteNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_caste.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_caste.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedCaste = (String) parent.getItemAtPosition(position);
+                            if (!selectedCaste.equals("Select Caste")) {
+
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+                } else {
+                    Toast.makeText(UpdateMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Api Response", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CasteResponse> call, Throwable throwable) {
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(UpdateMemberActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

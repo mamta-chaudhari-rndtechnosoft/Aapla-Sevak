@@ -1,17 +1,56 @@
 package com.vinodmapari.aaplasevak.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class SearchItem {
 
+    @SerializedName("id")
     private String id;
+
+    @SerializedName("name")
     private String name;
-    private String middle_name;
+
+    @SerializedName("middle_name")
+    private String middleName;
+
+    @SerializedName("surname")
     private String surname;
-    private String fullname;
-    private String voter_id;
-    private String booth_no;
-    private String s_no;
-    private String voting_center;
+
+    @SerializedName("fullname")
+    private String fullName;
+
+    @SerializedName("voter_id")
+    private String voterId;
+
+    @SerializedName("booth_no")
+    private String boothNo;
+
+    @SerializedName("s_no")
+    private String serialNo;
+
+    @SerializedName("voting_center")
+    private String votingCenter;
+
+    @SerializedName("gender")
     private String gender;
+
+    @SerializedName("epic_no")
+    private String epicNo;
+
+    @SerializedName("dob")
+    private String dob;
+
+    @SerializedName("constituency")
+    private String constituency;
+
+    @SerializedName("city_village")
+    private String cityVillage;
+
+    @SerializedName("zone")
+    private String zone;
+
+    @SerializedName("prabhag_ward")
+    private String prabhagWard;
 
     // Getters and Setters
     public String getId() {
@@ -30,12 +69,12 @@ public class SearchItem {
         this.name = name;
     }
 
-    public String getMiddle_name() {
-        return middle_name;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setMiddle_name(String middle_name) {
-        this.middle_name = middle_name;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public String getSurname() {
@@ -46,44 +85,44 @@ public class SearchItem {
         this.surname = surname;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getVoter_id() {
-        return voter_id;
+    public String getVoterId() {
+        return voterId;
     }
 
-    public void setVoter_id(String voter_id) {
-        this.voter_id = voter_id;
+    public void setVoterId(String voterId) {
+        this.voterId = voterId;
     }
 
-    public String getBooth_no() {
-        return booth_no;
+    public String getBoothNo() {
+        return boothNo;
     }
 
-    public void setBooth_no(String booth_no) {
-        this.booth_no = booth_no;
+    public void setBoothNo(String boothNo) {
+        this.boothNo = boothNo;
     }
 
-    public String gets_no() {
-        return s_no;
+    public String getSerialNo() {
+        return serialNo;
     }
 
-    public void sets_no(String s_no) {
-        this.s_no = s_no;
+    public void setSerialNo(String serialNo) {
+        this.serialNo = serialNo;
     }
 
-    public String getVoting_center() {
-        return voting_center;
+    public String getVotingCenter() {
+        return votingCenter;
     }
 
-    public void setVoting_center(String voting_center) {
-        this.voting_center = voting_center;
+    public void setVotingCenter(String votingCenter) {
+        this.votingCenter = votingCenter;
     }
 
     public String getGender() {
@@ -92,6 +131,76 @@ public class SearchItem {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getEpicNo() {
+        return epicNo;
+    }
+
+    public void setEpicNo(String epicNo) {
+        this.epicNo = epicNo;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getConstituency() {
+        return constituency;
+    }
+
+    public void setConstituency(String constituency) {
+        this.constituency = constituency;
+    }
+
+    public String getCityVillage() {
+        return cityVillage;
+    }
+
+    public void setCityVillage(String cityVillage) {
+        this.cityVillage = cityVillage;
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public String getPrabhagWard() {
+        return prabhagWard;
+    }
+
+    public void setPrabhagWard(String prabhagWard) {
+        this.prabhagWard = prabhagWard;
+    }
+
+    @Override
+    public String toString() {
+        return "VoterDetails{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", voterId='" + voterId + '\'' +
+                ", boothNo='" + boothNo + '\'' +
+                ", serialNo='" + serialNo + '\'' +
+                ", votingCenter='" + votingCenter + '\'' +
+                ", gender='" + gender + '\'' +
+                ", epicNo='" + epicNo + '\'' +
+                ", dob='" + dob + '\'' +
+                ", constituency='" + constituency + '\'' +
+                ", cityVillage='" + cityVillage + '\'' +
+                ", zone='" + zone + '\'' +
+                ", prabhagWard='" + prabhagWard + '\'' +
+                '}';
     }
 
 }

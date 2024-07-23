@@ -64,7 +64,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 intent.putExtra("voter_id", searchLists.get(position).getVoterId());
                 intent.putExtra("adhar_card", searchLists.get(position).getAdharCard());
                 intent.putExtra("house_no", searchLists.get(position).getHouseNo());
-                intent.putExtra("series_no", searchLists.get(position).getSeriesId());
+                intent.putExtra("series_name", searchLists.get(position).getSeriesName());
                 intent.putExtra("row_id", searchLists.get(position).getRowId());
                 intent.putExtra("water_Supply_id", searchLists.get(position).getWaterSupplyId());
                 intent.putExtra("dob", searchLists.get(position).getDob());
@@ -88,6 +88,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 intent.putExtra("prabhag_ward", searchLists.get(position).getPrabhagWard());
                 intent.putExtra("s_no", searchLists.get(position).getsNo());
                 intent.putExtra("fullname",searchLists.get(position).getFullName());
+                intent.putExtra("series_id",searchLists.get(position).getSeriesId());
                 context.startActivity(intent);
 
  //                SearchedUserDetailActivity userDetailActivity=(SearchedUserDetailActivity) activity;

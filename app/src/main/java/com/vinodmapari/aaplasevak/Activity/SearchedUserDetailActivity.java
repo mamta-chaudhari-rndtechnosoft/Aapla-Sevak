@@ -1,5 +1,7 @@
 package com.vinodmapari.aaplasevak.Activity;
 
+import static com.vinodmapari.aaplasevak.ApiConfig.ApiHandler.getRetrofitInstance;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,12 +24,13 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.HouseDetail;
+import com.vinodmapari.aaplasevak.Model.HouseResponse;
 import com.vinodmapari.aaplasevak.Model.MainMemberDetail;
 import com.vinodmapari.aaplasevak.Model.SearchList;
 import com.vinodmapari.aaplasevak.R;
@@ -38,6 +41,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchedUserDetailActivity extends AppCompatActivity {
 
@@ -51,9 +58,9 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
     String id, member_id, name, series, middle_name, surname,
             gender, phone, dob, phone2, caste, houseNo, status,
-            watersupply, voterID, adhar, votingCenter,  row, colony,
+            watersupply, voterID, adhar, votingCenter, row, colony,
             qualification, boothNo, srNo, apartment, flateNo, constituency, cityVillage,
-            zone, ward, sNo, fullName;
+            zone, ward, sNo, fullName, seriesId;
     String Details;
     TextView tv_Name, tv_Gender, tv_Mob, tv_Series, tv_mob2, tv_houseNo, tv_colony, tv_whatsapp_no, tv_dob, tv_qualificatoon, tv_caste, tv_status, tv_voterID,
             tv_adhar, tv_watersupply, tv_voting_center, tv_row, tvBoothNo, tvSrNo, tvApartment, tvFlateNo;
@@ -108,7 +115,8 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         voterID = in.getStringExtra("voter_id");
         adhar = in.getStringExtra("adhar_card");
         houseNo = in.getStringExtra("house_no");
-        series = in.getStringExtra("series_no");
+        series = in.getStringExtra("series_name");
+        seriesId = in.getStringExtra("series_id");
         row = in.getStringExtra("row_id");
         watersupply = in.getStringExtra("water_Supply_id");
         dob = in.getStringExtra("dob");
@@ -133,13 +141,10 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         sNo = in.getStringExtra("s_no");
         fullName = in.getStringExtra("fullname");
 
-
-
+        //Toast.makeText(this, "Series: " + series, Toast.LENGTH_SHORT).show();
         //Toast.makeText(SearchedUserDetailActivity.this, "member-id= "+member_id, Toast.LENGTH_SHORT).show();
 
-
         ////////////////////////////////////////////////////////////////////////////////////////////
-
 
         tv_voterID.setText(voterID);
         tv_Name.setText(fullName);
@@ -159,46 +164,22 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         tv_Mob.setText("+91" + phone);
         tv_mob2.setText("+91" + phone2);
         tvBoothNo.setText(boothNo);
-        tvSrNo.setText(srNo);
+        tvSrNo.setText(sNo);
         tvApartment.setText(apartment);
         tvFlateNo.setText(flateNo);
 
-
-
-        /*if (series.equalsIgnoreCase("A")) {
-            SeriesId = 1;
-        } else if (series.equalsIgnoreCase("B")) {
-            SeriesId = 2;
-        } else if (series.equalsIgnoreCase("C")) {
-            SeriesId = 3;
-        }*/
-
         //Toast.makeText(this, "House: " + houseNo + "Series: " + SeriesId, Toast.LENGTH_SHORT).show();
 
-        fetchHouseDetails(houseNo, SeriesId);
-
+        fetchHouseDetails(houseNo, seriesId);
         mainMemberDetails = new ArrayList<>();
 
-       /* String Details= "Name : "+surname+""+name+""+middle_name+"\n"+"Series No."+series+"\n"+"Colony : "+colony+"\n"+"Row : "+row+"\n"+"HouseNo : "+houseNo+"\n"
-                +"Dob : "+dob+"\n"+"Gender : "+gender+"\n"+"Mobile1 : "+phone+"\n"+"Mobile2 : "+phone2+"\n"+"Qualification : "+qualification+"\n"
-                +"Caste : "+caste+"\n"+"Relation : "+relation+"\n"+"Status : "+status+"\n"+"VoterID : "+voterID+"\n"+"Adhar Card : "+adhar+"\n"+"WaterSupply : "+watersupply+"\n"
-                +"Voting-Center : "+votingCenter;*/
-
-
-       /* String Details =
-                "Name : " + surname + "" + name + "" + middle_name + "\n"
-                        + "Series No.: " + series + "\n"
-                        + "VoterID : " + voterID + "\n"
-                        + "Voting-Center : " + votingCenter;*/
-
+        //Toast.makeText(this, "Details: " + Details, Toast.LENGTH_SHORT).show();
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // getMainMemberDetails();
-
+                // getMainMemberDetails();
                 Intent intent = new Intent(SearchedUserDetailActivity.this, SubMemberActivity.class);
-
                 intent.putExtra("surname", surname);
                 intent.putExtra("series", series);
                 intent.putExtra("house_no", houseNo);
@@ -208,13 +189,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                 intent.putExtra("watersupply", watersupply);
                 intent.putExtra("id", id);
                 intent.putExtra("member_id", member_id);
-
-                //Toast.makeText(getApplicationContext(), ""+series, Toast.LENGTH_SHORT).show();
-
                 startActivity(intent);
-
-                //Toast.makeText(SearchedUserDetailActivity.this, ""+surname, Toast.LENGTH_SHORT).show();
-
 
             }
         });
@@ -224,12 +199,11 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SearchedUserDetailActivity.this, EditMemberActivity.class);
                 intent.putExtra("house_no", houseNo);
-                intent.putExtra("series_id", series);
+                intent.putExtra("series_id", seriesId);
                 startActivity(intent);
 
             }
         });
-
 
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,26 +225,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         ivWhatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-/*                Intent intent = new Intent(Intent.ACTION_SEND);
-
-                intent.setType("text/plain");
-                intent.setPackage("com.whatsapp");
-
-                // Give your message here
-                intent.putExtra(Intent.EXTRA_TEXT, Details);
-
-                // Checking whether Whatsapp
-                // is installed or not
-                if (intent.resolveActivity(
-                        getPackageManager()) == null) {
-                    Toast.makeText(SearchedUserDetailActivity.this, "Please install whatsapp first.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Starting Whatsapp
-                startActivity(intent);*/
-
 
                 try {
 
@@ -370,91 +324,12 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
     }
 
 
-   /* public void getSearchList() {
 
-        //Toast.makeText(this, "Inside Function", Toast.LENGTH_SHORT).show();
-
-        final RequestQueue requestQueue = Volley.newRequestQueue(SearchedUserDetailActivity.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.search_list + "&name=" + name + "&middle_name=" + middle_name + "&surname=" + surname + "&voter_id=" + voterID + "&adhar_card=" + adhar, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                searchLists.clear();
-                searchLists = new ArrayList<>();
-                try {
-                    JSONObject json = new JSONObject(response);
-                    //   Log.d("search", response);
-
-                    JSONArray jsonArray = json.getJSONArray("SEARCH");
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String id = object.getString("id");
-                        String name = object.getString("name");
-                        String middle_name = object.getString("middle_name");
-                        String surname = object.getString("surname");
-                        String voterId = object.getString("voter_id");
-                        String adhar_card = object.getString("adhar_card");
-                        String dob = object.getString("dob");
-                        //String event = object.getString("event");
-                        //String relation = object.getString("relation");
-                        String qualification = object.getString("qualification");
-                        String mobile1 = object.getString("mobile1");
-                        String mobile2 = object.getString("mobile2");
-                        String row_name = object.getString("row_name");
-                        String gender = object.getString("gender");
-                        String house_no = object.getString("house_no");
-                        String series_name = object.getString("series_name");
-                        String status_name = object.getString("status_name");
-                        String colony_name = object.getString("colony_name");
-                        String slot_name = object.getString("slot_name");
-                        String caste = object.getString("caste");
-                        String voting_center = object.getString("voting_center");
-                        String member_id = object.getString("member_id");
-                        String boothNo = object.getString("booth_no");
-                        String srNo = object.getString("voting_sr_no");
-
-
-                       *//* searchLists.add(new SearchList(id, house_no, series_name, colony_name, row_name, gender, name, middle_name,
-                                surname, mobile1, mobile2, dob, qualification, caste, status_name, relation, event, voterId, adhar_card,
-                                slot_name, voting_center, member_id));*//*
-
-                        searchLists.add(new SearchList(id, house_no, series_name, colony_name, row_name, gender, name, middle_name,
-                                surname, mobile1, mobile2, dob, qualification, caste, status_name, voterId, adhar_card,
-                                slot_name, voting_center, member_id, boothNo, srNo));
-
-
-                        tv_houseNo.setText(house_no);
-                        tv_dob.setText(dob);
-                        tvBoothNo.setText(boothNo);
-                        tvSrNo.setText(srNo);
-
-                    }
-                    //Toast.makeText(SearchedUserDetailActivity.this, "Hy:" + tv_houseNo.getText().toString(), Toast.LENGTH_SHORT).show();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
-                    Toast.makeText(SearchedUserDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
-
-            }
-        });
-        requestQueue.add(stringRequest);
-    }*/
-
-
-    private void fetchHouseDetails(String houseNo, int seriesID) {
+    /*private void fetchHouseDetails(String houseNo, String seriesID) {
         //String url = API_URL + "?" + HOUSE_NO_PARAM + "=" + houseNo;
         //Toast.makeText(this, "Inside House Function", Toast.LENGTH_SHORT).show();
+
+        //Toast.makeText(this, "house: " + houseNo + "series: " + seriesID, Toast.LENGTH_SHORT).show();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.houseDetail + "&house_no=" + houseNo + "&series_id=" + seriesID,
@@ -483,7 +358,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                 HouseDetail houseDetail = new HouseDetail(name, middleName, surname, votingCenter, boothNo, votingSrNo, voterId, seriesId);
                                 houseDetails.add(houseDetail);
 
-                                /*if (!houseDetails.isEmpty()) {
+                                *//*if (!houseDetails.isEmpty()) {
                                     HouseDetail firstHouseDetail = houseDetails.get(i);
                                     Log.d("TAG", "Name: " + firstHouseDetail.getName() + " " +
                                             "Voting Center: " + firstHouseDetail.getVotingCenter());
@@ -497,9 +372,9 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                                     Details = Data;
 
                                     // You can update UI or perform other actions here
-                                }*/
+                                }*//*
 
-                                String data =
+                               String data =
                                         counter + ")" + " Name: " + name + " " + middleName + " " + surname +
                                                 "\nVoter ID: " + voterId +
                                                 "\nBooth No: " + boothNo +
@@ -512,14 +387,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                             }
 
                             Details = allDetails.toString() + "*Aapla Sevak - Vinod Mapari*";
-
-                            // Example: Log the first item in the list
-                           /* if (!houseDetails.isEmpty()) {
-                                HouseDetail firstHouseDetail = houseDetails.get(0);
-                                Log.d("TAG", "Name: " + firstHouseDetail.getName() + " " +
-                                        "Voting Center: " + firstHouseDetail.getVotingCenter());
-                                // You can update UI or perform other actions here
-                            }*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -535,6 +402,49 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         });
 
         requestQueue.add(stringRequest);
+    }*/
+
+    private void fetchHouseDetails(String houseNo, String seriesId) {
+
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<HouseResponse> call = apiInterface.getHouseDetails(houseNo, seriesId);
+        call.enqueue(new Callback<HouseResponse>() {
+            @Override
+            public void onResponse(Call<HouseResponse> call, Response<HouseResponse> response) {
+                if (response.isSuccessful()) {
+
+                    List<HouseDetail> houseDetails = response.body().getHouseDetails();
+                    StringBuilder allDetails = new StringBuilder();
+                    int counter = 1;
+
+                    for (HouseDetail houseDetail : houseDetails) {
+                        String data = counter + ")" + " Name: " + houseDetail.getName() + " " + houseDetail.getMiddleName() + " " + houseDetail.getSurname() +
+                                "\nVoter ID: " + houseDetail.getVoterId() +
+                                "\nBooth No: " + houseDetail.getBoothNo() +
+                                "\nSr.No: " + houseDetail.getVotingSrNo() +
+                                "\nVoting Center: " + houseDetail.getVotingCenter() + "\n\n";
+
+                        allDetails.append(data);
+                        counter++;
+                    }
+
+                    Details = allDetails.toString() + "*Aapla Sevak - Vinod Mapari*";
+                    //Toast.makeText(SearchedUserDetailActivity.this, "Details: " + Details, Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(SearchedUserDetailActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Tag", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HouseResponse> call, Throwable throwable) {
+                Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(SearchedUserDetailActivity.this, "Error..", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 

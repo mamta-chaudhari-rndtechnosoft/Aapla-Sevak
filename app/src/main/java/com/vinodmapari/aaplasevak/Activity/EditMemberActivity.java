@@ -57,14 +57,15 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
 
         houseNo = getIntent().getStringExtra("house_no");
         seriesId = getIntent().getStringExtra("series_id");
+        //Toast.makeText(this, "Series: " + seriesId + "house: " + houseNo, Toast.LENGTH_SHORT).show();
 
-       if(seriesId.equalsIgnoreCase("A")){
+       /*if(seriesId.equalsIgnoreCase("A")){
            SeriesId = 1;
        } else if (seriesId.equalsIgnoreCase("B")) {
            SeriesId = 2;
        } else if (seriesId.equalsIgnoreCase("C")) {
            SeriesId = 3;
-       }
+       }*/
 
 
         layoutNoData = findViewById(R.id.layoutNoData);
@@ -86,7 +87,7 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        Call<HouseResponse> call = apiInterface.getHouseDetails(houseNo,SeriesId);
+        Call<HouseResponse> call = apiInterface.getHouseDetails(houseNo,seriesId);
 
         call.enqueue(new Callback<HouseResponse>() {
             @Override
@@ -94,7 +95,6 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
                 if (response.isSuccessful()) {
 
                     //Toast.makeText(EditMemberActivity.this, "Success", Toast.LENGTH_SHORT).show();
-
                     //HouseResponse houseResponse = response.body();
                     ArrayList<HouseDetail> houseDetails = response.body().getHouseDetails();
                     //houseDetailArrayList = houseDetails;

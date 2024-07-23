@@ -16,8 +16,6 @@ public class ConstituencyResponse {
     }
 
 
-
-
     // Override toString() for easy debugging
     @Override
     public String toString() {

@@ -3,8 +3,9 @@ package com.vinodmapari.aaplasevak.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class AddMemberBody {
-    @SerializedName("survey_id")
-    private String surveyId;
+
+    @SerializedName("house_no")
+    private String houseNo;
 
     @SerializedName("gender")
     private String gender;
@@ -66,12 +67,12 @@ public class AddMemberBody {
     @SerializedName("prabhag_ward")
     private String prabhagWard;
 
-    public AddMemberBody(String surveyId, String gender, String name, String middleName, String surname,
+    public AddMemberBody(String houseNo,  String gender, String name, String middleName, String surname,
                          String mobile1, String mobile2, String dob, String qualification, String statusId,
-                         String voterId, String adharCard, String votingCenter, String boothNo,
-                         String votingSrNo, String apartment, String flatNo, String constituency,
-                         String cityVillage, String zone, String prabhagWard) {
-        this.surveyId = surveyId;
+                         String voterId, String adharCard, String votingCenter, String boothNo, String votingSrNo,
+                         String apartment, String flatNo, String constituency, String cityVillage, String zone,
+                         String prabhagWard) {
+        this.houseNo = houseNo;
         this.gender = gender;
         this.name = name;
         this.middleName = middleName;

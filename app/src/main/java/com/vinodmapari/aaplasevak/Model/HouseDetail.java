@@ -3,35 +3,73 @@ package com.vinodmapari.aaplasevak.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class HouseDetail {
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("name")
     private String name;
+
     @SerializedName("middle_name")
-    private String middle_Name;
+    private String middleName;
+
+    @SerializedName("surname")
     private String surname;
-    private String voting_Center;
+
+    @SerializedName("voting_center")
+    private String votingCenter;
+
+    @SerializedName("booth_no")
     private String boothNo;
-    private int votingSrNo;
+
+    @SerializedName("voting_sr_no")
+    private String votingSrNo;
+
     @SerializedName("series_id")
-    private String seriesId;
+    private int seriesId;
+
+    @SerializedName("colony_id")
     private int colonyId;
+
+    @SerializedName("row_id")
     private int rowId;
+
+    @SerializedName("gender")
     private String gender;
+
+    @SerializedName("mobile1")
     private String mobile1;
+
+    @SerializedName("mobile2")
     private String mobile2;
+
+    @SerializedName("dob")
     private String dob;
+
+    @SerializedName("qualification")
     private String qualification;
+
+    @SerializedName("caste")
     private String caste;
+
+    @SerializedName("relation")
     private String relation;
+
+    @SerializedName("event")
     private String event;
+
     @SerializedName("adhar_card")
     private String adharCard;
-    private int watersupplyId;
 
+    @SerializedName("watersupply_id")
+    private int waterSupplyId;
+
+    @SerializedName("member_id")
     private int memberId;
+
     @SerializedName("voter_id")
     private String voterId;
 
-    public HouseDetail(String name, String middle_Name, String surname, String voting_Center, String boothNo, int votingSrNo, String voterId, String seriesId) {
+    /*public HouseDetail(String name, String middle_Name, String surname, String voting_Center, String boothNo, int votingSrNo, String voterId, String seriesId) {
         this.name = name;
         this.middle_Name = middle_Name;
         this.surname = surname;
@@ -40,35 +78,17 @@ public class HouseDetail {
         this.votingSrNo = votingSrNo;
         this.voterId = voterId;
         this.seriesId = seriesId;
-    }
+    }*/
 
-
-    public HouseDetail(int id, String name, String middle_Name, String surname, String voting_Center, String boothNo,
-                       int votingSrNo, String seriesId, int colonyId, int rowId, String gender, String mobile1, String mobile2,
-                       String dob, String qualification, String caste, String relation, String event, String adharCard,
-                       int watersupplyId, int memberId, String voterId) {
-        this.id = id;
+    public HouseDetail(String name, String middleName, String surname, String votingCenter, String boothNo, String votingSrNo, String voterId,int seriesId) {
         this.name = name;
-        this.middle_Name = middle_Name;
+        this.middleName = middleName;
         this.surname = surname;
-        this.voting_Center = voting_Center;
+        this.votingCenter = votingCenter;
         this.boothNo = boothNo;
         this.votingSrNo = votingSrNo;
-        this.seriesId = seriesId;
-        this.colonyId = colonyId;
-        this.rowId = rowId;
-        this.gender = gender;
-        this.mobile1 = mobile1;
-        this.mobile2 = mobile2;
-        this.dob = dob;
-        this.qualification = qualification;
-        this.caste = caste;
-        this.relation = relation;
-        this.event = event;
-        this.adharCard = adharCard;
-        this.watersupplyId = watersupplyId;
-        this.memberId = memberId;
         this.voterId = voterId;
+        this.seriesId = seriesId;
     }
 
     public int getId() {
@@ -88,11 +108,11 @@ public class HouseDetail {
     }
 
     public String getMiddleName() {
-        return middle_Name;
+        return middleName;
     }
 
-    public void setMiddleName(String middle_Name) {
-        this.middle_Name = middle_Name;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public String getSurname() {
@@ -104,11 +124,11 @@ public class HouseDetail {
     }
 
     public String getVotingCenter() {
-        return voting_Center;
+        return votingCenter;
     }
 
-    public void setVotingCenter(String voting_Center) {
-        this.voting_Center = voting_Center;
+    public void setVotingCenter(String votingCenter) {
+        this.votingCenter = votingCenter;
     }
 
     public String getBoothNo() {
@@ -119,19 +139,19 @@ public class HouseDetail {
         this.boothNo = boothNo;
     }
 
-    public int getVotingSrNo() {
+    public String getVotingSrNo() {
         return votingSrNo;
     }
 
-    public void setVotingSrNo(int votingSrNo) {
+    public void setVotingSrNo(String votingSrNo) {
         this.votingSrNo = votingSrNo;
     }
 
-    public String getSeriesId() {
+    public int getSeriesId() {
         return seriesId;
     }
 
-    public void setSeriesId(String seriesId) {
+    public void setSeriesId(int seriesId) {
         this.seriesId = seriesId;
     }
 
@@ -223,12 +243,12 @@ public class HouseDetail {
         this.adharCard = adharCard;
     }
 
-    public int getWatersupplyId() {
-        return watersupplyId;
+    public int getWaterSupplyId() {
+        return waterSupplyId;
     }
 
-    public void setWatersupplyId(int watersupplyId) {
-        this.watersupplyId = watersupplyId;
+    public void setWaterSupplyId(int waterSupplyId) {
+        this.waterSupplyId = waterSupplyId;
     }
 
     public int getMemberId() {

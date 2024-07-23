@@ -354,44 +354,28 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_qualification"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="@string/Qualification">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/qualification"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:background="@drawable/border"
+                    android:gravity="center" />
 
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_caste"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="@string/caste">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/caste"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:background="@drawable/border"
+                    android:gravity="center" />
 
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
