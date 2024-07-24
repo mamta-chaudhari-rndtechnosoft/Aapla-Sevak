@@ -7,6 +7,7 @@ import com.vinodmapari.aaplasevak.Model.AddSurveyBody;
 import com.vinodmapari.aaplasevak.Model.AddSurveyResponseData;
 import com.vinodmapari.aaplasevak.Model.CasteResponse;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
+import com.vinodmapari.aaplasevak.Model.ColonyResponse;
 import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
 import com.vinodmapari.aaplasevak.Model.DeleteMemberResponseData;
 import com.vinodmapari.aaplasevak.Model.EditFamilyMemberBody;
@@ -18,14 +19,19 @@ import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.HouseResponse;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.QualificationsResponse;
+import com.vinodmapari.aaplasevak.Model.RowResponse;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
 import com.vinodmapari.aaplasevak.Model.SearchListBody;
 import com.vinodmapari.aaplasevak.Model.SearchListResponseData;
 import com.vinodmapari.aaplasevak.Model.SearchResponse;
 import com.vinodmapari.aaplasevak.Model.SendSmsBody;
 import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
+import com.vinodmapari.aaplasevak.Model.SeriesResponse;
+import com.vinodmapari.aaplasevak.Model.StatusResponse;
+import com.vinodmapari.aaplasevak.Model.SurveyCountResponse;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
+import com.vinodmapari.aaplasevak.Model.WaterSupplyResponse;
 import com.vinodmapari.aaplasevak.Model.WhatsAppApiBody;
 import com.vinodmapari.aaplasevak.Model.WhatsAppApiResponseData;
 import com.vinodmapari.aaplasevak.Model.WhatsAppNumberResponseData;
@@ -150,5 +156,22 @@ public interface ApiInterface {
     @GET("api.php?caste")
     Call<CasteResponse> casteResponse();
 
+    @GET("api.php?series")
+    Call<SeriesResponse> seriesResponse();
+
+    @GET("api.php?colony")
+    Call<ColonyResponse> colonyResponse(@Query("series_id")String seriesId);
+
+    @GET("api.php?row")
+    Call<RowResponse> rowResponse(@Query("series_id")String seriesId,@Query("colony_id") String colonyId);
+
+    @GET("api.php?watersupply")
+    Call<WaterSupplyResponse> waterSupplyResponse();
+
+    @GET("api.php?status")
+    Call<StatusResponse> statusResponse();
+
+    @GET("api.php?survey_count")
+    Call<SurveyCountResponse> surveyCount();
 
 }

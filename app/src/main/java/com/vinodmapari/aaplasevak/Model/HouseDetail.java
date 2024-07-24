@@ -21,7 +21,7 @@ public class HouseDetail {
     @SerializedName("booth_no")
     private String boothNo;
 
-    @SerializedName("voting_sr_no")
+    @SerializedName("s_no")
     private String votingSrNo;
 
     @SerializedName("series_id")

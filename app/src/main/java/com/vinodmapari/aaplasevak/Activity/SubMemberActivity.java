@@ -26,7 +26,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -47,6 +46,8 @@ import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.QualificationItem;
 import com.vinodmapari.aaplasevak.Model.QualificationsResponse;
 import com.vinodmapari.aaplasevak.Model.Status;
+import com.vinodmapari.aaplasevak.Model.StatusItem;
+import com.vinodmapari.aaplasevak.Model.StatusResponse;
 import com.vinodmapari.aaplasevak.Model.ZoneItem;
 import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 import com.vinodmapari.aaplasevak.R;
@@ -63,20 +64,22 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SubMemberActivity extends AppCompatActivity {
 
     int selected_relation, selected_status;
-    String relation_id, status_id;
+    //String relation_id,survey_id;
     Button btnSubmit;
-    SearchableSpinner spinner_relation, spinner_status, spinner_constituency, spinner_zone, spinner_ward, spinner_city, spinner_qualification,spinner_caste;
+    SearchableSpinner spinner_relation, spinner_status, spinner_constituency, spinner_zone, spinner_ward, spinner_city, spinner_qualification, spinner_caste;
     String gender, boothNo, serialNo;
-    String survey_id, id;
+    String id;
     TextView tv1, tv2, member_colony, series, member_row, member_watersupply, house_number, surname;
     ArrayList<MainMemberDetail> mainMemberDetails;
     RadioButton selectedRadioButton;
     RadioGroup radioGroup;
     EditText votingcenter, dob, name, middle_name, mob1, mob2, voterID, adharcard, etBoothNo, etSerialNo, etApartment, etFlateNumber;
+    String series_id, status_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id, qualification_id,caste_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +109,6 @@ public class SubMemberActivity extends AppCompatActivity {
         //relation = findViewById(R.id.relation);
         etBoothNo = findViewById(R.id.etBoothNum);
         etSerialNo = findViewById(R.id.etSerialNum);
-
         etFlateNumber = findViewById(R.id.etFlatNo);
         etApartment = findViewById(R.id.etApartment);
 
@@ -150,7 +152,7 @@ public class SubMemberActivity extends AppCompatActivity {
         String row = intent.getStringExtra("row");
         String caste = intent.getStringExtra("caste");
         String watersupply = intent.getStringExtra("watersupply");
-         id = intent.getStringExtra("id");
+        id = intent.getStringExtra("id");
         String member_id = intent.getStringExtra("member_id");
 
 
@@ -168,6 +170,7 @@ public class SubMemberActivity extends AppCompatActivity {
         fetchPrabhagWards();
         fetchQualification();
         fetchCaste();
+        fetchStatus();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup rg, int checkedId) {
@@ -185,22 +188,6 @@ public class SubMemberActivity extends AppCompatActivity {
 
 
         //onResume();
-
-
-        status_name.clear();
-        status_name = new ArrayList<>();
-
-        for (int i = 0; i < Constants.statuses.size(); i++) {
-            Constants.status_name.add(Constants.statuses.get(i).getStatus_name());
-            if (status_name != null && status_name.equals(Constants.statuses.get(i).getStatus_name())) {
-                selected_status = i;
-            }
-        }
-
-        ArrayAdapter<String> dataAdapter_Status = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Constants.status_name);
-        dataAdapter_Status.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_status.setAdapter(dataAdapter_Status);
-        spinner_status.setSelection(selected_status);
 
 
         // getRelationList();
@@ -255,7 +242,7 @@ public class SubMemberActivity extends AppCompatActivity {
                 String zone = spinner_zone.getSelectedItem().toString();
                 String cityVillage = spinner_city.getSelectedItem().toString();
                 String prabhagWard = spinner_ward.getSelectedItem().toString();
-                String user_qualification =spinner_qualification.getSelectedItem().toString();
+                String user_qualification = spinner_qualification.getSelectedItem().toString();
                 String apartment = etApartment.getText().toString();
                 String flateNo = etFlateNumber.getText().toString();
                 String BoothNo = etBoothNo.getText().toString();
@@ -264,29 +251,28 @@ public class SubMemberActivity extends AppCompatActivity {
 
                 if (house_no.equals("") || user_name.equals("") || user_middle_name.equals("") || user_surname.equals("")
                         || mobile_no1.length() == 0 || mobile_no2.length() == 0
-                        || user_dob.isEmpty()  || voterId.equals("") || user_adharcard.equals("")
+                        || user_dob.isEmpty() || voterId.equals("") || user_adharcard.equals("")
                         || voting_center.equals("") || BoothNo.equals("") || SerialNo.equals("") || apartment.equals("") || flateNo.equals("")
 
                 ) {
                     Toast.makeText(SubMemberActivity.this, "some fields are empty", Toast.LENGTH_SHORT).show();
-                } else if (spinner_constituency.getId() == 0) {
+                } else if (constituency_id == null && constituency_id.equalsIgnoreCase("")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Constituency", Toast.LENGTH_SHORT).show();
-                } else if (spinner_city.getId() == 0) {
+                } else if (city_id == null && city_id.equalsIgnoreCase("")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select City/Village", Toast.LENGTH_SHORT).show();
-                } else if (spinner_zone.getId() == 0) {
+                }else if (zone_id == null && zone_id.equalsIgnoreCase("")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Zone", Toast.LENGTH_SHORT).show();
-                } else if (spinner_ward.getId() == 0) {
+                } else if (ward_id == null && ward_id.equalsIgnoreCase("")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Ward", Toast.LENGTH_SHORT).show();
-                }
-                else if (spinner_qualification.getId() == 0) {
+                } else if (qualification_id == null && qualification_id.equalsIgnoreCase("")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Qualification", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     // id and member id is missing from here
                     addMember(house_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname,
-                            mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, watersupply_id,
-                            voting_center, BoothNo, SerialNo, constituency, cityVillage, zone, prabhagWard, apartment, flateNo);
+                            mobile_no1, mobile_no2, user_dob, qualification_id, caste_id, status_id, voterId, user_adharcard, watersupply_id,
+                            voting_center, BoothNo, SerialNo, constituency_id, city_id, zone_id, ward_id, apartment, flateNo);
 
-                    Toast.makeText(SubMemberActivity.this, "family member added successfully", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SubMemberActivity.this, "family member added successfully", Toast.LENGTH_SHORT).show();
                     //finish();
                 }
             }
@@ -308,31 +294,19 @@ public class SubMemberActivity extends AppCompatActivity {
             }
         });*/
 
-        spinner_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                status_id = Constants.statuses.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
     }
 
     private void addMember(String house_no, String series_id, String colony_id, String row_id, String gender, String name, String middle_name,
-                           String surname, String mobile1, String mobile2, String dob, String qualification, String caste, String status_id,
+                           String surname, String mobile1, String mobile2, String dob, String qualification_id, String caste_id, String status_id,
                            String voter_id, String adhar_card, String watersupply_id, String voting_center, String BoothNo, String SerialNo,
-                           String constituency, String city, String zone, String ward, String apartment, String flate) {
+                           String constituency_id, String city_id, String zone_id, String ward_id, String apartment, String flate) {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         // check for id and member id and also for what is survey
 
-        AddMemberBody addMemberBody = new AddMemberBody(house_no,gender,name,middle_name,surname,mobile1,mobile2, dob,qualification,status_id,voter_id,
-                adhar_card,voting_center,BoothNo,SerialNo,apartment,flate,constituency,city,zone,ward);
+        AddMemberBody addMemberBody = new AddMemberBody(house_no, gender, name, middle_name, surname, mobile1, mobile2, dob, qualification_id, status_id, voter_id,
+                adhar_card, voting_center, BoothNo, SerialNo, apartment, flate, constituency_id, city_id, zone_id, ward_id);
 
         Call<AddMemberResponseData> call = apiInterface.addMember(addMemberBody);
 
@@ -361,38 +335,65 @@ public class SubMemberActivity extends AppCompatActivity {
         });
     }
 
+    private void fetchStatus() {
 
-    public void getStatusList() {
-        final RequestQueue requestQueue = Volley.newRequestQueue(SubMemberActivity.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.status_list, new Response.Listener<String>() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+        Call<StatusResponse> call = apiInterface.statusResponse();
+
+        call.enqueue(new Callback<StatusResponse>() {
             @Override
-            public void onResponse(String response) {
-                Constants.statuses.clear();
-                Constants.statuses = new ArrayList<>();
+            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                if (response.isSuccessful()) {
 
-                Constants.statuses.add(new Status("0", "select status"));
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("STATUS");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("id");
-                        String status_name = jsonObject1.getString("status_name");
+                    List<StatusItem> statusItems = response.body().getStatus();
 
-                        Constants.statuses.add(new Status(id, status_name));
+                    List<String> statusNames = new ArrayList<>();
+                    final Map<String, String> statusIdMap = new HashMap<>();
+                    statusNames.add("Select Status");
+
+                    for (StatusItem item : statusItems) {
+                        statusNames.add(item.getStatusName());
+                        statusIdMap.put(item.getStatusName(), item.getId());
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SubMemberActivity.this,
+                            android.R.layout.simple_spinner_item, statusNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_status.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedStatus = (String) parent.getItemAtPosition(position);
+                            if (!selectedStatus.equals("Select Status")) {
+                                //fetchColony();
+                                String selectedStatusId = statusIdMap.get(selectedStatus);
+                                status_id = selectedStatusId;
+
+                                //Toast.makeText(UserSurveyActivity.this, "S: " + series_id + " C: " + colony_id  + " R: " + row_id, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+                } else {
+                    Log.e("API Error", "Failed to fetch water supply");
+                }
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
+            public void onFailure(Call<StatusResponse> call, Throwable throwable) {
+                Toast.makeText(SubMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
             }
         });
-        requestQueue.add(stringRequest);
+
     }
 
     private void fetchConstituencies() {
@@ -407,10 +408,12 @@ public class SubMemberActivity extends AppCompatActivity {
 
                     // Create a list of constituency names
                     List<String> constituencyName = new ArrayList<>();
+                    final Map<String, String> constituencyIdMap = new HashMap<>();
                     constituencyName.add("Select Constituency");
 
                     for (ConstituencyItem constituency : constituencies) {
                         constituencyName.add(constituency.getConstituencyName());
+                        constituencyIdMap.put(constituency.getConstituencyName(), constituency.getId());
                     }
 
                     //Toast.makeText(UserSurveyActivity.this, "Names: " + constituencyName, Toast.LENGTH_SHORT).show();
@@ -427,7 +430,8 @@ public class SubMemberActivity extends AppCompatActivity {
                             String selectedConstituency = (String) parent.getItemAtPosition(position);
                             if (!selectedConstituency.equals("Select Constituency")) {
                                 //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedConstituency, Toast.LENGTH_SHORT).show();
-
+                                String selectedConstituencyId = constituencyIdMap.get(selectedConstituency);
+                                constituency_id = selectedConstituencyId;
                             }
                         }
 
@@ -465,10 +469,12 @@ public class SubMemberActivity extends AppCompatActivity {
 
                     // Create a list of city or village names
                     List<String> cityVillageNames = new ArrayList<>();
+                    final Map<String, String> cityVillageIdMap = new HashMap<>();
                     cityVillageNames.add("Select City/Village");
 
                     for (CityVillageItem item : cityVillages) {
                         cityVillageNames.add(item.getCityVillageName());
+                        cityVillageIdMap.put(item.getCityVillageName(), item.getId());
                     }
 
                     // Populate the spinner
@@ -483,8 +489,8 @@ public class SubMemberActivity extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedCityVillage = (String) parent.getItemAtPosition(position);
                             if (!selectedCityVillage.equals("Select City or Village")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedCityVillageId = cityVillageIdMap.get(selectedCityVillage);
+                                city_id = selectedCityVillageId;
                             }
                         }
 
@@ -522,10 +528,12 @@ public class SubMemberActivity extends AppCompatActivity {
 
                     // Create a list of zone names
                     List<String> zoneNames = new ArrayList<>();
+                    final Map<String, String> zoneIdMap = new HashMap<>();
                     zoneNames.add("Select Zone");
 
                     for (ZoneItem zone : zones) {
                         zoneNames.add(zone.getZoneName());
+                        zoneIdMap.put(zone.getZoneName(), zone.getId());
                     }
 
                     // Populate the spinner
@@ -540,8 +548,8 @@ public class SubMemberActivity extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedZone = (String) parent.getItemAtPosition(position);
                             if (!selectedZone.equals("Select Zone")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedZone, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedZoneId = zoneIdMap.get(selectedZone);
+                                zone_id = selectedZoneId;
                             }
                         }
 
@@ -579,10 +587,12 @@ public class SubMemberActivity extends AppCompatActivity {
 
                     // Create a list of prabhag ward names
                     List<String> prabhagWardNames = new ArrayList<>();
+                    final Map<String, String> prabhagWardIdMap = new HashMap<>();
                     prabhagWardNames.add("Select Prabhag/Ward");
 
                     for (PrabhagWardItem prabhagWard : prabhagWards) {
                         prabhagWardNames.add(prabhagWard.getPrabhagWardName());
+                        prabhagWardIdMap.put(prabhagWard.getPrabhagWardName(), prabhagWard.getId());
                     }
 
                     // Populate the spinner
@@ -597,8 +607,8 @@ public class SubMemberActivity extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
                             if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedPrabhagWardId = prabhagWardIdMap.get(selectedPrabhagWard);
+                                ward_id = selectedPrabhagWardId;
                             }
                         }
 
@@ -638,10 +648,12 @@ public class SubMemberActivity extends AppCompatActivity {
 
                     // Create a list of prabhag ward names
                     List<String> qualificationNames = new ArrayList<>();
+                    final Map<String, String> qualificationIdMap = new HashMap<>();
                     qualificationNames.add("Select Qualification");
 
                     for (QualificationItem qualification : qualificationResponse) {
                         qualificationNames.add(qualification.getQualificationName());
+                        qualificationIdMap.put(qualification.getQualificationName(), qualification.getId());
                     }
 
                     // Populate the spinner
@@ -656,8 +668,8 @@ public class SubMemberActivity extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedQualification = (String) parent.getItemAtPosition(position);
                             if (!selectedQualification.equals("Select Qualification")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedQualificationId = qualificationIdMap.get(selectedQualification);
+                                qualification_id = selectedQualificationId;
                             }
                         }
 
@@ -681,22 +693,24 @@ public class SubMemberActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchCaste(){
+    private void fetchCaste() {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         Call<CasteResponse> call = apiInterface.casteResponse();
         call.enqueue(new Callback<CasteResponse>() {
             @Override
             public void onResponse(Call<CasteResponse> call, retrofit2.Response<CasteResponse> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<CasteItem> casteResponses = response.body().getCastes();
 
                     // Create a list of prabhag ward names
                     List<String> casteNames = new ArrayList<>();
+                    final Map<String, String> casteIdMap = new HashMap<>();
                     casteNames.add("Select Caste");
 
                     for (CasteItem caste : casteResponses) {
                         casteNames.add(caste.getCasteName());
+                        casteIdMap.put(caste.getCasteName(), caste.getId());
                     }
 
                     // Populate the spinner
@@ -711,9 +725,8 @@ public class SubMemberActivity extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedCaste = (String) parent.getItemAtPosition(position);
                             if (!selectedCaste.equals("Select Caste")) {
-
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedCasteId = casteIdMap.get(selectedCaste);
+                                caste_id = selectedCasteId;
                             }
                         }
 
@@ -722,8 +735,7 @@ public class SubMemberActivity extends AppCompatActivity {
                             // Handle nothing selected
                         }
                     });
-                }
-                else{
+                } else {
                     Toast.makeText(SubMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
                     Log.e("Api Response", "Response Error..");
                 }
@@ -738,19 +750,18 @@ public class SubMemberActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
         //getRelationList();
-        getStatusList();
+        //getStatusList();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         //getRelationList();
-        getStatusList();
+        //getStatusList();
 
     }
 
@@ -758,7 +769,7 @@ public class SubMemberActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         //getRelationList();
-        getStatusList();
+        //getStatusList();
     }
 
     @Override

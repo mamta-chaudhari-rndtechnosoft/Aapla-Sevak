@@ -51,7 +51,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
     Button btnAdd, btnEdit;
     ImageView ivShare, ivWhatsapp, ivCall, ivEmail, ivSaveContact;
     private static final int REQUEST_CALL = 101;
-
     ArrayList<MainMemberDetail> mainMemberDetails;
 
     ArrayList<SearchList> searchLists;
@@ -190,7 +189,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                 intent.putExtra("id", id);
                 intent.putExtra("member_id", member_id);
                 startActivity(intent);
-
             }
         });
 
@@ -227,7 +225,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 try {
-
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + tv_Mob.getText().toString() + "&text=" + Details));
                     startActivity(intent);
@@ -419,14 +416,37 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                     int counter = 1;
 
                     for (HouseDetail houseDetail : houseDetails) {
-                        String data = counter + ")" + " Name: " + houseDetail.getName() + " " + houseDetail.getMiddleName() + " " + houseDetail.getSurname() +
-                                "\nVoter ID: " + houseDetail.getVoterId() +
-                                "\nBooth No: " + houseDetail.getBoothNo() +
-                                "\nSr.No: " + houseDetail.getVotingSrNo() +
+
+                        String voterId = houseDetail.getVoterId();
+                        String boothNo = houseDetail.getBoothNo();
+                        String votingSrNo = houseDetail.getVotingSrNo();
+
+                        //Toast.makeText(SearchedUserDetailActivity.this, "voterId: " + voterId + " booth: " + boothNo  + " voting: " + votingSrNo, Toast.LENGTH_SHORT).show();
+
+                        if (voterId == " " && boothNo == " " && votingSrNo == "0") {
+                            Toast.makeText(SearchedUserDetailActivity.this, "0", Toast.LENGTH_SHORT).show();
+                        } else  {
+                            String data = counter + ")" + " Name: " + houseDetail.getName() + " " + houseDetail.getMiddleName() + " " + houseDetail.getSurname() +
+                                    "\nVoter ID: " + voterId +
+                                    "\nBooth No: " + boothNo +
+                                    "\nSr.No: " + votingSrNo +
+                                    "\nVoting Center: " + houseDetail.getVotingCenter() + "\n\n";
+
+
+                            allDetails.append(data);
+                            counter++;
+                        }
+
+                        /*String data = counter + ")" + " Name: " + houseDetail.getName() + " " + houseDetail.getMiddleName() + " " + houseDetail.getSurname() +
+                                "\nVoter ID: " + voterId +
+                                "\nBooth No: " + boothNo +
+                                "\nSr.No: " + votingSrNo +
                                 "\nVoting Center: " + houseDetail.getVotingCenter() + "\n\n";
 
+
+
                         allDetails.append(data);
-                        counter++;
+                        counter++;*/
                     }
 
                     Details = allDetails.toString() + "*Aapla Sevak - Vinod Mapari*";

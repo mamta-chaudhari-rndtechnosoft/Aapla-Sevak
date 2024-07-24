@@ -2,21 +2,21 @@ package com.vinodmapari.aaplasevak.Model;
 
 public class SendSmsBody {
 
-    int series_id;
-    int row_id;
-    int colony_id;
-    int watersupply_id;
-    int constituency;
-    int city_village;
-    int zone;
-    int prabhag_ward;
+    String series_id;
+    String row_id;
+    String colony_id;
+    String watersupply_id;
+    String  constituency;
+    String city_village;
+    String zone;
+    String prabhag_ward;
     String template_desc;
 
 
     public SendSmsBody() {
     }
 
-    public SendSmsBody(int series_id, int row_id, int colony_id, int watersupply_id, int constituency, int city_village, int zone, int prabhag_ward, String template_desc) {
+    public SendSmsBody(String series_id, String row_id, String colony_id, String watersupply_id, String constituency, String city_village, String zone, String prabhag_ward, String template_desc) {
         this.series_id = series_id;
         this.row_id = row_id;
         this.colony_id = colony_id;

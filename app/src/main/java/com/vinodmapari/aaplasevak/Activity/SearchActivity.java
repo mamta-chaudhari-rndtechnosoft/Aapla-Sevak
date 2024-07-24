@@ -35,6 +35,8 @@ import com.vinodmapari.aaplasevak.Model.SearchListBody;
 import com.vinodmapari.aaplasevak.Model.SearchListItem;
 import com.vinodmapari.aaplasevak.Model.SearchListResponseData;
 import com.vinodmapari.aaplasevak.Model.SearchResponse;
+import com.vinodmapari.aaplasevak.Model.SurveyCountItem;
+import com.vinodmapari.aaplasevak.Model.SurveyCountResponse;
 import com.vinodmapari.aaplasevak.R;
 import com.vinodmapari.aaplasevak.SearchAdapter;
 
@@ -54,7 +56,7 @@ public class SearchActivity extends AppCompatActivity {
     ImageView search;
     SearchAdapter searchAdapter;
     RecyclerView rv;
-    TextView textView_empty;
+    TextView textView_empty, tvSurveyCount;
     LottieAnimationView loader, empty_icon;
     List<SearchListItem> searchLists;
     EditText etName, etLname, etMname, etVoterId, etAdharCard, etFullName;
@@ -79,6 +81,7 @@ public class SearchActivity extends AppCompatActivity {
         etVoterId = findViewById(R.id.et_voterID);
         etFullName = findViewById(R.id.et_fullName);
 
+        tvSurveyCount = findViewById(R.id.tvCount);
         textView_empty = findViewById(R.id.tv_empty_search);
         textView_empty.setVisibility(View.VISIBLE);
         textView_empty.setText(R.string.type_search);
@@ -120,26 +123,10 @@ public class SearchActivity extends AppCompatActivity {
         loader.setVisibility(View.VISIBLE);
         getSearchList();
 
+        surveyCount();
+
         addTextWatchers();
 
-       /* rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0) //check for scroll down
-                {
-                    visibleItemCount = mLayoutManager.getChildCount();
-                    totalItemCount = mLayoutManager.getItemCount();
-                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-
-                    if (!loadingMore) {
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount && (viewMore)) {
-                            loadingMore = true;
-                            getSearchList();
-                        }
-                    }
-                }
-            }
-        });*/
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,6 +219,36 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<SearchListResponseData> call, Throwable throwable) {
                 loader.setVisibility(View.GONE);
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(SearchActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void surveyCount(){
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+        Call<SurveyCountResponse> call = apiInterface.surveyCount();
+
+        call.enqueue(new Callback<SurveyCountResponse>() {
+            @Override
+            public void onResponse(Call<SurveyCountResponse> call, Response<SurveyCountResponse> response) {
+                if(response.isSuccessful()){
+                    SurveyCountResponse surveyCountResponse = response.body();
+                    List<SurveyCountItem> items = surveyCountResponse.getSurveyCountItems();
+
+                    int count = items.get(0).getSurveyCount();
+                    tvSurveyCount.setText("Total Data: " + count);
+                    //Toast.makeText(SearchActivity.this, "Count: " + count, Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(SearchActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Api Response", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SurveyCountResponse> call, Throwable throwable) {
                 Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
                 Toast.makeText(SearchActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }

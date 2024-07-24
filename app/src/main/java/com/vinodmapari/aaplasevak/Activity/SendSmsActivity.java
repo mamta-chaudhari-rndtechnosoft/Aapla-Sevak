@@ -38,6 +38,8 @@ import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.Model.CityVillageItem;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.Colony;
+import com.vinodmapari.aaplasevak.Model.ColonyItem;
+import com.vinodmapari.aaplasevak.Model.ColonyResponse;
 import com.vinodmapari.aaplasevak.Model.Constants;
 
 import com.vinodmapari.aaplasevak.Model.ConstituencyItem;
@@ -45,10 +47,16 @@ import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardItem;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.Row;
+import com.vinodmapari.aaplasevak.Model.RowItem;
+import com.vinodmapari.aaplasevak.Model.RowResponse;
 import com.vinodmapari.aaplasevak.Model.SendSmsBody;
 import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
 import com.vinodmapari.aaplasevak.Model.Series;
+import com.vinodmapari.aaplasevak.Model.SeriesItem;
+import com.vinodmapari.aaplasevak.Model.SeriesResponse;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
+import com.vinodmapari.aaplasevak.Model.WaterSupplyItem;
+import com.vinodmapari.aaplasevak.Model.WaterSupplyResponse;
 import com.vinodmapari.aaplasevak.Model.ZoneItem;
 import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 import com.vinodmapari.aaplasevak.R;
@@ -59,20 +67,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SendSmsActivity extends AppCompatActivity {
 
     SearchableSpinner spinner_series, spinner_colony, spinner_row, spinner_water_Supply, spinner_template;
     SearchableSpinner spinner_constituency, spinner_city_village, spinner_zone, spinner_ward;
-    int selected_series, selected_colony, selected_row, selected_water_supply, selected_template;
-    String series_id, colony_id, row_id, water_supply_id, template_id;
-    String series, colony, row, templateText;
+    int  selected_template;
+    String series_id, colony_id, row_id, water_supply_id, template_id, constituency_id, city_id, zone_id, ward_id;
     Button btnSend;
     ArrayList<Colony> colonies;
-    EditText house_number, etTemplateText;
+    EditText  etTemplateText;
     private String colonyName;
-    long selected_series_id, selected_colony_id;
     AVLoadingIndicatorView progress;
 
     @Override
@@ -87,7 +95,6 @@ public class SendSmsActivity extends AppCompatActivity {
         etTemplateText = findViewById(R.id.etTemplate);
         spinner_template = findViewById(R.id.spinner_template);
         spinner_water_Supply = findViewById(R.id.spinner_water_supply);
-        house_number = findViewById(R.id.house_number);
         progress = findViewById(R.id.progress);
         progress.hide();
 
@@ -107,73 +114,22 @@ public class SendSmsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-        spinner_series.setTitle("select series");
-        spinner_colony.setTitle("select colony");
-        spinner_row.setTitle("select row");
         spinner_template.setTitle("select template");
-        spinner_water_Supply.setTitle("select watersupply slot");
-
-        spinner_constituency.setTitle("Select Constituency");
-        spinner_city_village.setTitle("Select City/Village");
-        spinner_zone.setTitle("Select Zone");
-        spinner_ward.setTitle("Select Ward/Prabhag");
 
 
-        //spinner function called
+        //spinners
+        fetchSeries();
+        fetchColony("0");
+        fetchRow("0", "0");
+        fetchWaterSupplyId();
+
         fetchConstituencies();
         fetchZones();
         fetchCityVillages();
         fetchPrabhagWards();
+        fetchTemplateDescription();
 
 
-        colonies = new ArrayList<>();
-        getSeriesList();
-
-        series_name.clear();
-        series_name = new ArrayList<>();
-
-        for (int i = 0; i < Constants.series.size(); i++) {
-            Constants.series_name.add(Constants.series.get(i).getSeries_name());
-            if (series_name != null && series_name.equals(Constants.series.get(i).getSeries_name())) {
-                selected_series = i;
-            }
-
-        }
-
-
-        colony_name.clear();
-        colony_name = new ArrayList<>();
-
-        for (int i = 0; i < Constants.colonies.size(); i++) {
-            Constants.colony_name.add(Constants.colonies.get(i).getColony_name());
-            if (colony_name != null && colony_name.equals(Constants.colonies.get(i).getColony_name())) {
-                selected_colony = i;
-            }
-
-        }
-
-        row_name.clear();
-        row_name = new ArrayList<>();
-
-        for (int i = 0; i < Constants.rows.size(); i++) {
-            Constants.row_name.add(Constants.rows.get(i).getRow_name());
-            if (row_name != null && row_name.equals(Constants.rows.get(i).getRow_name())) {
-                selected_row = i;
-            }
-
-        }
-
-        water_supply_slots.clear();
-        water_supply_slots = new ArrayList<>();
-
-        for (int i = 0; i < Constants.waterSupplies.size(); i++) {
-            Constants.water_supply_slots.add(Constants.waterSupplies.get(i).getSlot_name());
-            if (water_supply_slots != null && water_supply_slots.equals(Constants.waterSupplies.get(i).getSlot_name())) {
-                selected_water_supply = i;
-            }
-
-        }
 
         template_name.clear();
         template_name = new ArrayList<>();
@@ -185,48 +141,11 @@ public class SendSmsActivity extends AppCompatActivity {
             }
         }
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Constants.series_name);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_series.setAdapter(dataAdapter);
-
-        ArrayAdapter<String> dataAdapter_colony = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colony_name);
-        dataAdapter_colony.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_colony.setAdapter(dataAdapter_colony);
-
-        ArrayAdapter<String> dataAdapter_row = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, row_name);
-        dataAdapter_row.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_row.setAdapter(dataAdapter_row);
-
-        ArrayAdapter<String> dataAdapter_water_supply = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, water_supply_slots);
-        dataAdapter_water_supply.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_water_Supply.setAdapter(dataAdapter_water_supply);
-        spinner_water_Supply.setSelection(selected_water_supply);
 
         ArrayAdapter<String> dataAdapter_template = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, template_name);
         dataAdapter_template.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_template.setAdapter(dataAdapter_template);
 
-
-        spinner_series.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                series_id = Constants.templates.get(position).getId();
-                series = parent.getItemAtPosition(position).toString();
-
-                selected_series_id = spinner_series.getSelectedItemId();
-
-                if (selected_series_id != 0) {
-                    getColonyList(selected_series_id);
-
-                }
-            }
-
-            @Override
-
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         spinner_template.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -242,7 +161,6 @@ public class SendSmsActivity extends AppCompatActivity {
                     //etTemplateText.setText(message);
                     fetchTemplateDescription();
                 }
-
             }
 
             @Override
@@ -253,60 +171,7 @@ public class SendSmsActivity extends AppCompatActivity {
         });
 
 
-        spinner_colony.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                colonyName = String.valueOf(spinner_colony.getSelectedItem());
-                for (int i = 0; i < colonies.size(); i++) {
-
-                    if (colonies.get(i).getColony_name().equalsIgnoreCase(colonyName)) {
-                        getRowList(selected_series_id, Long.parseLong(colonies.get(i).getId()));
-
-                        colony_id = String.valueOf(Long.parseLong(colonies.get(i).getId()));
-                    }
-//                    colony_id = Constants.colonies.get(position).getId();
-
-
-                    if (selected_colony_id != 0) {
-
-                    }
-                }
-            }
-
-            @Override
-
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-        spinner_row.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                row_id = Constants.rows.get(position).getId();
-                row = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        spinner_water_Supply.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                water_supply_id = Constants.waterSupplies.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -329,221 +194,19 @@ public class SendSmsActivity extends AppCompatActivity {
 
     }
 
-    private void getSeriesList() {
-//        Constants.series.clear();
-//        Constants.series=new ArrayList<>();
-
-        final RequestQueue requestQueue = Volley.newRequestQueue(SendSmsActivity.this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.series_list, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Constants.series.clear();
-                Constants.series = new ArrayList<>();
-
-                Constants.series.add(new Series("0", "select series"));
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    //Log.d("TAG", "onResponse: "+response);
-
-                    JSONArray jsonArray = jsonObject.getJSONArray("SERIES");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("id");
-                        String series_name = jsonObject1.getString("series_name");
-
-                        Constants.series.add(new Series(id, series_name));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
-            }
-        });
-        requestQueue.add(stringRequest);
-
-    }
-
 
     @Override
     protected void onResume() {
         super.onResume();
-        getSeriesList();
-
-
+        //getSeriesList();
+        fetchSeries();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        getSeriesList();
-
-
-    }
-
-    private void getColonyList(long series_id) {
-
-        // Toast.makeText(SendSmsActivity.this, "series-id here"+series_id, Toast.LENGTH_SHORT).show();
-        //recreate();
-        final RequestQueue requestQueue = Volley.newRequestQueue(SendSmsActivity.this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.colony_list + "&series_id=" + series_id, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Constants.colonies.clear();
-                Constants.colony_name.clear();
-                Constants.colony_name = new ArrayList<>();
-                Constants.colonies = new ArrayList<>();
-                spinner_colony.setAdapter(null);
-
-                Constants.colonies.add(new Colony("0", "select colony"));
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    Log.d("TAG", "onResponse: " + response);
-                    // Toast.makeText(SendSmsActivity.this, ""+response, Toast.LENGTH_SHORT).show();
-
-                    JSONArray jsonArray = jsonObject.getJSONArray("COLONY");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("id");
-                        String colony_name = jsonObject1.getString("colony_name");
-
-                        //  Toast.makeText(SendSmsActivity.this, "colonyName= "+colony_name, Toast.LENGTH_SHORT).show();
-
-
-                        colonies.add(new Colony(id, colony_name));
-                        Constants.colony_name.add(colony_name);
-                        spinner_colony.setAdapter(new ArrayAdapter<String>(SendSmsActivity.this, android.R.layout.simple_spinner_item, Constants.colony_name));
-//
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
-            }
-        });
-        requestQueue.add(stringRequest);
-
-    }
-
-    private void getRowList(long series_id, long colony_id) {
-        //
-        //
-        Constants.rows.add(new Row("0", "select row"));
-        //Toast.makeText(SendSmsActivity.this, "colony_id= "+colony_id, Toast.LENGTH_SHORT).show();
-        final RequestQueue requestQueue = Volley.newRequestQueue(SendSmsActivity.this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.row_list + "&series_id=" + series_id + "&colony_id=" + colony_id, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                spinner_row.setAdapter(null);
-                Constants.rows.clear();
-                Constants.row_name.clear();
-                Constants.row_name = new ArrayList<>();
-                Constants.rows = new ArrayList<>();
-
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    Log.d("TAG", "onResponse: " + response);
-
-                    JSONArray jsonArray = jsonObject.getJSONArray("ROW");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("id");
-                        String row_name = jsonObject1.getString("row_name");
-
-
-                        Constants.rows.add(new Row(id, row_name));
-
-                        //Toast.makeText(SendSmsActivity.this, "vaishnavi= "+id, Toast.LENGTH_SHORT).show();
-                        Constants.row_name.add(row_name);
-                        spinner_row.setAdapter(new ArrayAdapter<String>(SendSmsActivity.this, android.R.layout.simple_spinner_item, Constants.row_name));
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
-                // Toast.makeText(SendSmsActivity.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(stringRequest);
-
-    }
-
-
-    private void getSMSList() {
-
-        progress.show();
-        btnSend.setEnabled(false);
-
-        final RequestQueue requestQueue = Volley.newRequestQueue(SendSmsActivity.this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.send_sms + "&series_id=" + series_id + "&colony_id=" + colony_id + "&row_id=" + row_id + "&template_name=" + etTemplateText.getText().toString(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-
-                try {
-                    JSONObject json = new JSONObject(response);
-                    // Toast.makeText(GetWhatsappContactsActivity.this, "onResponse"+response, Toast.LENGTH_SHORT).show();
-
-                    Log.d("TAG", "onResponse: " + response);
-
-                    // Toast.makeText(SendSmsActivity.this, ""+response, Toast.LENGTH_SHORT).show();
-
-                    JSONArray jsonArray = json.getJSONArray("SMS_LIST");
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        //here sms need to be send
-
-                    }
-                    progress.hide();
-                    btnSend.setEnabled(true);
-                    Toast.makeText(SendSmsActivity.this, "Sms has been sent", Toast.LENGTH_SHORT).show();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    progress.hide();
-                    btnSend.setEnabled(true);
-
-//
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
-                progress.hide();
-                btnSend.setEnabled(true);
-            }
-        });
-        requestQueue.add(stringRequest);
+        //getSeriesList();
+        fetchSeries();
     }
 
 
@@ -554,7 +217,6 @@ public class SendSmsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Handle the JSON response
-
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -580,7 +242,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             //progress_splash.setVisibility(View.GONE);
-                            Toast.makeText(SendSmsActivity.this, "Error parsing JSON response.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SendSmsActivity.this, "Error parsing JSON response.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -602,14 +264,15 @@ public class SendSmsActivity extends AppCompatActivity {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         //SendSmsBody sendSmsBody = new SendSmsBody(selected_series,selected_row,selected_colony,selected_water_supply,etTemplateText.getText().toString());
-        SendSmsBody sendSmsBody = new SendSmsBody(spinner_series.getSelectedItemPosition(),
-                spinner_row.getSelectedItemPosition() + 1,
-                spinner_colony.getSelectedItemPosition() + 1,
-                spinner_water_Supply.getSelectedItemPosition(),
-                spinner_constituency.getSelectedItemPosition(),
-                spinner_city_village.getSelectedItemPosition(),
-                spinner_zone.getSelectedItemPosition(),
-                spinner_ward.getSelectedItemPosition(),
+        SendSmsBody sendSmsBody = new SendSmsBody(
+                series_id,
+                row_id,
+                colony_id,
+                water_supply_id,
+                constituency_id,
+                city_id,
+                zone_id,
+                ward_id,
                 etTemplateText.getText().toString()
         );
 
@@ -643,11 +306,243 @@ public class SendSmsActivity extends AppCompatActivity {
 
     }
 
+    private void fetchSeries() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+        Call<SeriesResponse> call = apiInterface.seriesResponse();
+
+        call.enqueue(new Callback<SeriesResponse>() {
+            @Override
+            public void onResponse(Call<SeriesResponse> call, retrofit2.Response<SeriesResponse> response) {
+                if (response.isSuccessful()) {
+
+                    List<SeriesItem> seriesItems = response.body().getSeries();
+
+                    List<String> seriesNames = new ArrayList<>();
+                    final Map<String, String> seriesIdMap = new HashMap<>();
+                    seriesNames.add("Select Series");
+
+                    for (SeriesItem item : seriesItems) {
+                        seriesNames.add(item.getSeriesName());
+                        seriesIdMap.put(item.getSeriesName(), item.getId());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SendSmsActivity.this,
+                            android.R.layout.simple_spinner_item, seriesNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_series.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_series.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedSeries = (String) parent.getItemAtPosition(position);
+                            if (!selectedSeries.equals("Select Series")) {
+                                //fetchColony();
+                                String selectedSeriesId = seriesIdMap.get(selectedSeries);
+                                fetchColony(selectedSeriesId);
+                                series_id = selectedSeriesId;
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    Log.e("API Error", "Failed to fetch Series");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SeriesResponse> call, Throwable throwable) {
+                Toast.makeText(SendSmsActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+    }
+
+    private void fetchColony(String SeriesId) {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<ColonyResponse> call = apiInterface.colonyResponse(SeriesId);
+        call.enqueue(new Callback<ColonyResponse>() {
+            @Override
+            public void onResponse(Call<ColonyResponse> call, retrofit2.Response<ColonyResponse> response) {
+                if (response.isSuccessful()) {
+                    List<ColonyItem> colonyItems = response.body().getColonies();
+
+                    List<String> colonyNames = new ArrayList<>();
+                    final Map<String, String> colonyIdMap = new HashMap<>();
+                    colonyNames.add("Select Colony");
+
+                    for (ColonyItem item : colonyItems) {
+                        colonyNames.add(item.getColonyName());
+                        colonyIdMap.put(item.getColonyName(), item.getId());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SendSmsActivity.this,
+                            android.R.layout.simple_spinner_item, colonyNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_colony.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_colony.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedColony = (String) parent.getItemAtPosition(position);
+                            if (!selectedColony.equals("Select Colony")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                                String selectedColonyId = colonyIdMap.get(selectedColony);
+                                fetchRow(SeriesId, selectedColonyId);
+                                colony_id = selectedColonyId;
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+                } else {
+                    Toast.makeText(SendSmsActivity.this, "Response Not Success: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response Not Success: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ColonyResponse> call, Throwable throwable) {
+                Toast.makeText(SendSmsActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+    }
+
+    private void fetchRow(String seriesId, String colonyId) {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+        Call<RowResponse> call = apiInterface.rowResponse(seriesId, colonyId);
+        call.enqueue(new Callback<RowResponse>() {
+            @Override
+            public void onResponse(Call<RowResponse> call, retrofit2.Response<RowResponse> response) {
+                if (response.isSuccessful()) {
+                    List<RowItem> rowItems = response.body().getRows();
+
+                    List<String> rowNames = new ArrayList<>();
+                    final Map<String, String> rowIdMap = new HashMap<>();
+                    rowNames.add("Select Row");
+
+                    for (RowItem item : rowItems) {
+                        rowNames.add(item.getRowName());
+                        rowIdMap.put(item.getRowName(), item.getId());
+                    }
+
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SendSmsActivity.this,
+                            android.R.layout.simple_spinner_item, rowNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_row.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_row.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedRows = (String) parent.getItemAtPosition(position);
+                            if (!selectedRows.equals("Select Row")) {
+                                //fetchColony();
+                                String selectedRowId = rowIdMap.get(selectedRows);
+                                row_id = selectedRowId;
+
+                                //Toast.makeText(SendSmsActivity.this, "S: " + series_id + " C: " + colony_id + " R: " + row_id, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+                } else {
+                    Log.e("API Error", "Failed to fetch Row");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RowResponse> call, Throwable throwable) {
+                Toast.makeText(SendSmsActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+    }
+
+    private void fetchWaterSupplyId() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<WaterSupplyResponse> call = apiInterface.waterSupplyResponse();
+        call.enqueue(new Callback<WaterSupplyResponse>() {
+            @Override
+            public void onResponse(Call<WaterSupplyResponse> call, retrofit2.Response<WaterSupplyResponse> response) {
+                if (response.isSuccessful()) {
+
+                    List<WaterSupplyItem> waterSupplyItems = response.body().getWaterSupply();
+
+                    List<String> waterSupplyNames = new ArrayList<>();
+                    final Map<String, String> waterSupplyIdMap = new HashMap<>();
+                    waterSupplyNames.add("Select WaterSupply");
+
+                    for (WaterSupplyItem item : waterSupplyItems) {
+                        waterSupplyNames.add(item.getSlotName());
+                        waterSupplyIdMap.put(item.getSlotName(), item.getId());
+                    }
+
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SendSmsActivity.this,
+                            android.R.layout.simple_spinner_item, waterSupplyNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_water_Supply.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_water_Supply.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedWaterSupply = (String) parent.getItemAtPosition(position);
+                            if (!selectedWaterSupply.equals("Select WaterSupply")) {
+                                //fetchColony();
+                                String selectedWaterSupplyId = waterSupplyIdMap.get(selectedWaterSupply);
+                                water_supply_id = selectedWaterSupplyId;
+
+                                //Toast.makeText(UserSurveyActivity.this, "S: " + series_id + " C: " + colony_id  + " R: " + row_id, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    Log.e("API Error", "Failed to fetch water supply");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WaterSupplyResponse> call, Throwable throwable) {
+                Toast.makeText(SendSmsActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+    }
 
     private void fetchConstituencies() {
-        // Clear the list and add the title
-        //Constants.constituency_name.clear();
-        //Constants.constituency_name.add("Select a Constituency");
+
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         Call<ConstituencyResponse> call = apiInterface.getConstituencyList();
@@ -659,10 +554,12 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     // Create a list of constituency names
                     List<String> constituencyName = new ArrayList<>();
+                    final Map<String, String> constituencyIdMap = new HashMap<>();
                     constituencyName.add("Select Constituency");
 
                     for (ConstituencyItem constituency : constituencies) {
                         constituencyName.add(constituency.getConstituencyName());
+                        constituencyIdMap.put(constituency.getConstituencyName(), constituency.getId());
                     }
 
                     //Toast.makeText(UserSurveyActivity.this, "Names: " + constituencyName, Toast.LENGTH_SHORT).show();
@@ -680,7 +577,8 @@ public class SendSmsActivity extends AppCompatActivity {
                             String selectedConstituency = (String) parent.getItemAtPosition(position);
                             if (!selectedConstituency.equals("Select Constituency")) {
                                 //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedConstituency, Toast.LENGTH_SHORT).show();
-
+                                String selectedConstituencyId = constituencyIdMap.get(selectedConstituency);
+                                constituency_id = selectedConstituencyId;
                             }
                         }
 
@@ -719,10 +617,12 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     // Create a list of city or village names
                     List<String> cityVillageNames = new ArrayList<>();
+                    final Map<String, String> cityVillageIdMap = new HashMap<>();
                     cityVillageNames.add("Select City/Village");
 
                     for (CityVillageItem item : cityVillages) {
                         cityVillageNames.add(item.getCityVillageName());
+                        cityVillageIdMap.put(item.getCityVillageName(), item.getId());
                     }
 
                     // Populate the spinner
@@ -735,9 +635,9 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedCityVillage = (String) parent.getItemAtPosition(position);
-                            if (!selectedCityVillage.equals("Select City or Village")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                            if (!selectedCityVillage.equals("Select City/Village")) {
+                                String selectedCityVillageId = cityVillageIdMap.get(selectedCityVillage);
+                                city_id = selectedCityVillageId;
                             }
                         }
 
@@ -776,10 +676,12 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     // Create a list of zone names
                     List<String> zoneNames = new ArrayList<>();
+                    final Map<String, String> zoneIdMap = new HashMap<>();
                     zoneNames.add("Select Zone");
 
                     for (ZoneItem zone : zones) {
                         zoneNames.add(zone.getZoneName());
+                        zoneIdMap.put(zone.getZoneName(), zone.getId());
                     }
 
                     // Populate the spinner
@@ -793,8 +695,8 @@ public class SendSmsActivity extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedZone = (String) parent.getItemAtPosition(position);
                             if (!selectedZone.equals("Select Zone")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedZone, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedZoneId = zoneIdMap.get(selectedZone);
+                                zone_id = selectedZoneId;
                             }
                         }
 
@@ -832,10 +734,12 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     // Create a list of prabhag ward names
                     List<String> prabhagWardNames = new ArrayList<>();
+                    final Map<String, String> prabhagWardIdMap = new HashMap<>();
                     prabhagWardNames.add("Select Prabhag/Ward");
 
                     for (PrabhagWardItem prabhagWard : prabhagWards) {
                         prabhagWardNames.add(prabhagWard.getPrabhagWardName());
+                        prabhagWardIdMap.put(prabhagWard.getPrabhagWardName(), prabhagWard.getId());
                     }
 
                     // Populate the spinner
@@ -849,8 +753,8 @@ public class SendSmsActivity extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
                             if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedPrabhagWardId = prabhagWardIdMap.get(selectedPrabhagWard);
+                                ward_id = selectedPrabhagWardId;
                             }
                         }
 
@@ -872,7 +776,6 @@ public class SendSmsActivity extends AppCompatActivity {
                 Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
             }
         });
-
     }
 
 

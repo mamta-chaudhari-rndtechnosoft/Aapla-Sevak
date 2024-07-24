@@ -73,7 +73,7 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
         rvSearch.setAdapter(adapter);
 
 
-        //getVoterSearchList();
+        getVoterSearchList();
 
         etSearchFullName.addTextChangedListener(new TextWatcher() {
             @Override

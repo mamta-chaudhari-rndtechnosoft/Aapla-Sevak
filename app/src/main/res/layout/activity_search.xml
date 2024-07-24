@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".Activity.SearchActivity">
 
 
@@ -36,7 +37,6 @@
         android:orientation="horizontal"
         android:padding="5dp"
         android:weightSum="3">
-
 
 
         <EditText
@@ -104,14 +104,31 @@
             android:padding="10dp"
             android:background="@drawable/border_search"
             android:src="@drawable/ic_search" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvCount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_search"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:text="Count"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/colorBlack"
+        android:layout_below="@id/ll"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/btnview"
-        android:layout_below="@id/ll"
+        android:layout_below="@id/tvCount"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView

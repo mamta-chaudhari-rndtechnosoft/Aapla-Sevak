@@ -40,6 +40,8 @@ import com.vinodmapari.aaplasevak.Model.CasteResponse;
 import com.vinodmapari.aaplasevak.Model.CityVillageItem;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.Colony;
+import com.vinodmapari.aaplasevak.Model.ColonyItem;
+import com.vinodmapari.aaplasevak.Model.ColonyResponse;
 import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.ConstituencyItem;
 import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
@@ -51,11 +53,19 @@ import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.QualificationItem;
 import com.vinodmapari.aaplasevak.Model.QualificationsResponse;
 import com.vinodmapari.aaplasevak.Model.Row;
+import com.vinodmapari.aaplasevak.Model.RowItem;
+import com.vinodmapari.aaplasevak.Model.RowResponse;
 import com.vinodmapari.aaplasevak.Model.Series;
+import com.vinodmapari.aaplasevak.Model.SeriesItem;
+import com.vinodmapari.aaplasevak.Model.SeriesResponse;
 import com.vinodmapari.aaplasevak.Model.SharedPref;
+import com.vinodmapari.aaplasevak.Model.StatusItem;
+import com.vinodmapari.aaplasevak.Model.StatusResponse;
 import com.vinodmapari.aaplasevak.Model.SurveyList;
 import com.vinodmapari.aaplasevak.Model.UserDetail;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
+import com.vinodmapari.aaplasevak.Model.WaterSupplyItem;
+import com.vinodmapari.aaplasevak.Model.WaterSupplyResponse;
 import com.vinodmapari.aaplasevak.Model.ZoneItem;
 import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 import com.vinodmapari.aaplasevak.R;
@@ -66,7 +76,9 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -79,7 +91,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
     ArrayList<Colony> colonies;
     CustomAdapter adapter;
     int selected_series, selected_status, selected_colony, selected_row, selected_water_supply;
-    String series_id, status_id, colony_id, row_id, water_supply_id;
+    String series_id, status_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id, qualification_id, caste_id;
     Button btnSubmit;
     long selected_series_id, selected_colony_id;
     String gender;
@@ -101,7 +113,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             Mobile1, Mobile2, Dob, Qualification, Caste, Relation, Event, VoterId, AadharCard,
             constituency, zone, cityVillage, prabhagWard, apartment, flateNo, StatusId;
 
-    int ColonyId, RowId, WaterSupplyId, MemberId, VotingSrNo;
+    String ColonyId, RowId, WaterSupplyId, MemberId, VotingSrNo;
     LottieAnimationView loader;
 
     @Override
@@ -197,7 +209,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         swipe_refresh.setOnRefreshListener(UpdateMemberActivity.this);
 
 
-        getSeriesList();
+        //getSeriesList();
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -214,176 +226,15 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
             }
         });
 
-        series_name.clear();
-        series_name = new ArrayList<>();
-
-        for (int i = 0; i < Constants.series.size(); i++) {
-            Constants.series_name.add(Constants.series.get(i).getSeries_name());
-            if (series_name != null && series_name.equals(Constants.series.get(i).getSeries_name())) {
-                selected_series = i;
-            } else {
-                //Toast.makeText(UpdateMemberActivity.this, "Series name: " + selected_series_id, Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        status_name.clear();
-        status_name = new ArrayList<>();
-
-        for (int i = 0; i < Constants.statuses.size(); i++) {
-            Constants.status_name.add(Constants.statuses.get(i).getStatus_name());
-            if (status_name != null && status_name.equals(Constants.statuses.get(i).getStatus_name())) {
-                selected_status = i;
-            }
-        }
-
-        Constants.colony_name.clear();
-        Constants.colony_name = new ArrayList<>();
-
-        for (int i = 0; i < Constants.colonies.size(); i++) {
-            Constants.colony_name.add(Constants.colonies.get(i).getColony_name());
-            if (Constants.colony_name != null && Constants.colony_name.equals(Constants.colonies.get(i).getColony_name())) {
-                selected_colony = i;
-            }
-        }
-
-
-        Constants.row_name.clear();
-        Constants.row_name = new ArrayList<>();
-
-        for (int i = 0; i < Constants.rows.size(); i++) {
-            Constants.row_name.add(Constants.rows.get(i).getRow_name());
-            if (Constants.row_name != null && Constants.row_name.equals(Constants.rows.get(i).getRow_name())) {
-                selected_row = i;
-            }
-        }
-
-        water_supply_slots.clear();
-        water_supply_slots = new ArrayList<>();
-
-        for (int i = 0; i < Constants.waterSupplies.size(); i++) {
-            Constants.water_supply_slots.add(Constants.waterSupplies.get(i).getSlot_name());
-            if (water_supply_slots != null && water_supply_slots.equals(Constants.waterSupplies.get(i).getSlot_name())) {
-                selected_water_supply = i;
-            }
-        }
-
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Constants.series_name);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_series.setAdapter(dataAdapter);
-        spinner_series.setSelection(selected_series);
-
-        ArrayAdapter<String> dataAdapter_Status = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Constants.status_name);
-        dataAdapter_Status.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_status.setAdapter(dataAdapter_Status);
-        spinner_status.setSelection(selected_status);
-
-        ArrayAdapter<String> dataAdapter_Colony = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Constants.colony_name);
-        dataAdapter_Colony.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_colony.setAdapter(dataAdapter_Colony);
-        spinner_colony.setSelection(selected_colony);
-
-        ArrayAdapter<String> dataAdapter_Row = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Constants.row_name);
-        dataAdapter_Row.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_row.setAdapter(dataAdapter_Row);
-        spinner_row.setSelection(selected_row);
-
-        ArrayAdapter<String> dataAdapter_water_supply = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, water_supply_slots);
-        dataAdapter_water_supply.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_water_Supply.setAdapter(dataAdapter_water_supply);
-        spinner_water_Supply.setSelection(selected_water_supply);
 
         loader.setVisibility(View.VISIBLE);
         getUserDetail();
 
 
-        spinner_series.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                series_id = Constants.series.get(position).getId();
-                selected_series_id = spinner_series.getSelectedItemId();
-
-                if (selected_series_id != 0) {
-                    getColonyList(selected_series_id);
-                } else {
-                    Toast.makeText(UpdateMemberActivity.this, "Series Is: " + selected_series_id, Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        spinner_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                status_id = Constants.statuses.get(position).getId();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-        spinner_colony.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                colonyName = String.valueOf(spinner_colony.getSelectedItem());
-                for (int i = 0; i < colonies.size(); i++) {
-
-                    if (colonies.get(i).getColony_name().equalsIgnoreCase(colonyName)) {
-
-                        getRowList(selected_series_id, Long.parseLong(colonies.get(i).getId()));
-                        colony_id = String.valueOf(Long.parseLong(colonies.get(i).getId()));
-
-                    }
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        spinner_row.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                row_id = Constants.rows.get(position).getId();
-                //Toast.makeText(UserSurveyActivity.this, "row_id= "+row_id, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-        spinner_water_Supply.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                water_supply_id = Constants.waterSupplies.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         fetchConstituencies();
         fetchZones();
         fetchPrabhagWards();
         fetchCityVillages();
-        fetchConstituencies();
         fetchQualification();
         fetchCaste();
 
@@ -397,31 +248,42 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                 Surname = etSurname.getText().toString();
                 VotingCenter = etVotingCenter.getText().toString();
                 BoothNo = etBooth.getText().toString();
-                VotingSrNo = Integer.parseInt(etSerial.getText().toString());
-                SeriesId = String.valueOf(spinner_series.getSelectedItemPosition());
-                ColonyId = spinner_colony.getSelectedItemPosition();
-                RowId = spinner_row.getSelectedItemPosition();
-                StatusId = String.valueOf(spinner_status.getSelectedItemPosition());
+                VotingSrNo = etSerial.getText().toString();
                 Gender = gender;
                 Mobile1 = etMob1.getText().toString();
                 Mobile2 = etMob2.getText().toString();
                 //Relation = etRelation.getText().toString();
                 //Event = etEvent.getText().toString();
                 AadharCard = etAadharCard.getText().toString();
-                WaterSupplyId = spinner_water_Supply.getSelectedItemPosition();
+
                 VoterId = etVoterId.getText().toString();
                 Dob = etDob.getText().toString();
+                apartment = etApartment.getText().toString();
+                flateNo = etFlateNumber.getText().toString();
 
-
+                /*SeriesId = String.valueOf(spinner_series.getSelectedItemPosition());
+                ColonyId = spinner_colony.getSelectedItemPosition();
+                RowId = spinner_row.getSelectedItemPosition();
+                StatusId = String.valueOf(spinner_status.getSelectedItemPosition());
+                WaterSupplyId = spinner_water_Supply.getSelectedItemPosition();
                 constituency = spinner_constituency.getSelectedItem().toString();
                 zone = spinner_zone.getSelectedItem().toString();
                 cityVillage = spinner_city.getSelectedItem().toString();
                 prabhagWard = spinner_ward.getSelectedItem().toString();
                 Qualification = spinner_qualification.getSelectedItem().toString();
-                Caste = spinner_caste.getSelectedItem().toString();
+                Caste = spinner_caste.getSelectedItem().toString();*/
 
-                apartment = etApartment.getText().toString();
-                flateNo = etFlateNumber.getText().toString();
+                SeriesId = series_id;
+                ColonyId = colony_id;
+                RowId = row_id;
+                StatusId = status_id;
+                WaterSupplyId = water_supply_id;
+                constituency = constituency_id;
+                zone = zone_id;
+                cityVillage = city_id;
+                prabhagWard = ward_id;
+                Qualification = qualification_id;
+                Caste = caste_id;
 
                 loader.setVisibility(View.VISIBLE);
                 updateMemberData();
@@ -506,16 +368,28 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     etApartment.setText(apartment);
                     etFlateNumber.setText(flateNo);
 
-                    spinner_series.setSelection(seriesId);
+                    //spinner_series.setSelection(seriesId);
                     //spinner_colony.setSelection(colonyId);
                     //spinner_row.setSelection(rowId);
                     //spinner_status.setSelection(Integer.parseInt(statusId));
-                    spinner_water_Supply.setSelection(waterSupplyId);
+                    //spinner_water_Supply.setSelection(waterSupplyId);
                     // spinner_qualification.setSelection(Integer.parseInt(qualification));
                     // spinner_caste.setSelection(Integer.parseInt(caste));
+                    //spinner_series.setSelection(seriesId);
 
-                    MemberId = memberId;
+                    series_id = String.valueOf(seriesId);
+                    colony_id = String.valueOf(colonyId);
+                    row_id = String.valueOf(rowId);
+                    water_supply_id = String.valueOf(waterSupplyId);
+                    status_id = statusId;
 
+                    fetchSeries();
+                    fetchStatus();
+                    fetchWaterSupplyId();
+                    fetchColony("0");
+                    fetchRow("0","0");
+
+                    MemberId = String.valueOf(memberId);
 
                     //radioGroup.setSelected(true);
                     if (gender != null) {
@@ -536,7 +410,6 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                     } else {
                         Toast.makeText(UpdateMemberActivity.this, "Gender is null", Toast.LENGTH_SHORT).show();
                         Log.d("Tag", "Gender is null");
-
                     }
 
 
@@ -562,9 +435,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
         //VotingSrNo and Aadhar card in Int or long
 
-
         EditFamilyMemberBody editFamilyMemberBody = new EditFamilyMemberBody(id, HouseNo, Name, MiddleName, Surname, VotingCenter, BoothNo,
-                VotingSrNo, Integer.parseInt(SeriesId), ColonyId, RowId, Gender, Mobile1, Mobile2, Dob, Qualification, Caste, AadharCard, WaterSupplyId, MemberId,
+                VotingSrNo, SeriesId, ColonyId, RowId, Gender, Mobile1, Mobile2, Dob, Qualification, Caste, AadharCard, WaterSupplyId, MemberId,
                 VoterId, StatusId, apartment, flateNo, constituency, cityVillage, zone, prabhagWard);
 
         Log.d("Api Response", editFamilyMemberBody.toString());
@@ -603,139 +475,413 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
         });
     }
 
+    //--------------------------------------------------------------------------------------
 
-    private void getSeriesList() {
+    private void fetchSeries() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+        Call<SeriesResponse> call = apiInterface.seriesResponse();
 
-        final RequestQueue requestQueue = Volley.newRequestQueue(UpdateMemberActivity.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.series_list, new com.android.volley.Response.Listener<String>() {
+        call.enqueue(new Callback<SeriesResponse>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(Call<SeriesResponse> call, retrofit2.Response<SeriesResponse> response) {
+                if (response.isSuccessful()) {
 
-                Constants.series.clear();
-                Constants.series = new ArrayList<>();
-                Constants.series.add(new Series("0", "select series"));
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    //  Log.d("TAG", "onResponse: "+response);
+                    List<SeriesItem> seriesItems = response.body().getSeries();
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("SERIES");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("id");
-                        String series_name = jsonObject1.getString("series_name");
+                    List<String> seriesNames = new ArrayList<>();
+                    final Map<String, String> seriesIdMap = new HashMap<>();
+                    seriesNames.add("Select Series");
 
-                        Constants.series.add(new Series(id, series_name));
+                    //List<String> seriesId = new ArrayList<>();
+                    //seriesId.add("0");
+
+                    for (SeriesItem item : seriesItems) {
+                        seriesNames.add(item.getSeriesName());
+                        seriesIdMap.put(item.getSeriesName(), item.getId());
                     }
-                    //getColonyList(response.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, seriesNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_series.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    // Set spinner selection based on series ID (if you have the ID)
+
+                    String selectedSeriesId = series_id; // Replace with your series ID
+                    String selectedRowId = row_id;
+                    String selectedColonyId = colony_id;
+
+                    if (selectedSeriesId != null) {
+                        String selectedSeriesName = getSeriesNameById(seriesIdMap, selectedSeriesId);
+                        if (selectedSeriesName != null) {
+                            int position = adapter.getPosition(selectedSeriesName);
+                            if (position >= 0) {
+                                spinner_series.setSelection(position);
+                            }
+                        }
+                    }
+
+                    spinner_series.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedSeries = (String) parent.getItemAtPosition(position);
+                            if (!selectedSeries.equals("Select Series")) {
+                                //fetchColony();
+                                String selectedSeriesId = seriesIdMap.get(selectedSeries);
+                                fetchColony(selectedSeriesId);
+                                series_id = selectedSeriesId;
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    Log.e("API Error", "Failed to fetch Series");
+                }
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
+            public void onFailure(Call<SeriesResponse> call, Throwable throwable) {
+                Toast.makeText(UpdateMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
             }
         });
-        requestQueue.add(stringRequest);
+    }
+
+    private String getSeriesNameById(Map<String, String> seriesIdMap, String seriesId) {
+        for (Map.Entry<String, String> entry : seriesIdMap.entrySet()) {
+            if (entry.getValue().equals(seriesId)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    private void fetchColony(String SeriesId) {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<ColonyResponse> call = apiInterface.colonyResponse(SeriesId);
+        call.enqueue(new Callback<ColonyResponse>() {
+            @Override
+            public void onResponse(Call<ColonyResponse> call, retrofit2.Response<ColonyResponse> response) {
+                if (response.isSuccessful()) {
+                    List<ColonyItem> colonyItems = response.body().getColonies();
+
+                    List<String> colonyNames = new ArrayList<>();
+                    final Map<String, String> colonyIdMap = new HashMap<>();
+                    colonyNames.add("Select Colony");
+
+                    for (ColonyItem item : colonyItems) {
+                        colonyNames.add(item.getColonyName());
+                        colonyIdMap.put(item.getColonyName(), item.getId());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, colonyNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_colony.setAdapter(adapter);
+
+                    //String selectedSeriesId = series_id; // Replace with your series ID
+                    //String selectedRowId = row_id;
+                    String selectedColonyId = colony_id;
+
+                    if (selectedColonyId != null) {
+                        String selectedColonyName = getColonyById(colonyIdMap, selectedColonyId);
+                        if (selectedColonyName != null) {
+                            int position = adapter.getPosition(selectedColonyName);
+                            if (position >= 0) {
+                                spinner_colony.setSelection(position);
+                            }
+                        }
+                    }
+
+                    // Handle spinner item selection
+                    spinner_colony.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedColony = (String) parent.getItemAtPosition(position);
+                            if (!selectedColony.equals("Select Colony")) {
+                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
+                                // Perform any other actions based on selection
+                                String selectedColonyId = colonyIdMap.get(selectedColony);
+                                fetchRow(SeriesId, selectedColonyId);
+                                colony_id = selectedColonyId;
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+                } else {
+                    Toast.makeText(UpdateMemberActivity.this, "Response Not Success: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response Not Success: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ColonyResponse> call, Throwable throwable) {
+                Toast.makeText(UpdateMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+    }
+    private String getColonyById(Map<String, String> colonyIdMap, String colonyId) {
+        for (Map.Entry<String, String> entry : colonyIdMap.entrySet()) {
+            if (entry.getValue().equals(colonyId)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    private void fetchRow(String seriesId, String colonyId) {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+        Call<RowResponse> call = apiInterface.rowResponse(seriesId, colonyId);
+        call.enqueue(new Callback<RowResponse>() {
+            @Override
+            public void onResponse(Call<RowResponse> call, retrofit2.Response<RowResponse> response) {
+                if (response.isSuccessful()) {
+                    List<RowItem> rowItems = response.body().getRows();
+
+                    List<String> rowNames = new ArrayList<>();
+                    final Map<String, String> rowIdMap = new HashMap<>();
+                    rowNames.add("Select Row");
+
+                    for (RowItem item : rowItems) {
+                        rowNames.add(item.getRowName());
+                        rowIdMap.put(item.getRowName(), item.getId());
+                    }
+
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, rowNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_row.setAdapter(adapter);
+
+                    String selectedRowId = row_id;
+                    //String selectedColonyId = colony_id;
+
+                    if (selectedRowId != null) {
+                        String selectedRowName = getRowById(rowIdMap, selectedRowId);
+                        if (selectedRowName != null) {
+                            int position = adapter.getPosition(selectedRowName);
+                            if (position >= 0) {
+                                spinner_row.setSelection(position);
+                            }
+                        }
+                    }
+
+                    // Handle spinner item selection
+                    spinner_row.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedRows = (String) parent.getItemAtPosition(position);
+                            if (!selectedRows.equals("Select Row")) {
+                                //fetchColony();
+                                String selectedRowId = rowIdMap.get(selectedRows);
+                                row_id = selectedRowId;
+                                //Toast.makeText(UpdateMemberActivity.this, "S: " + series_id + " C: " + colony_id + " R: " + row_id, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+                } else {
+                    Log.e("API Error", "Failed to fetch Row");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RowResponse> call, Throwable throwable) {
+                Toast.makeText(UpdateMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+    }
+    private String getRowById(Map<String, String> rowIdMap, String rowId) {
+        for (Map.Entry<String, String> entry : rowIdMap.entrySet()) {
+            if (entry.getValue().equals(rowId)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    private void fetchWaterSupplyId() {
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<WaterSupplyResponse> call = apiInterface.waterSupplyResponse();
+        call.enqueue(new Callback<WaterSupplyResponse>() {
+            @Override
+            public void onResponse(Call<WaterSupplyResponse> call, Response<WaterSupplyResponse> response) {
+                if (response.isSuccessful()) {
+
+                    List<WaterSupplyItem> waterSupplyItems = response.body().getWaterSupply();
+
+                    List<String> waterSupplyNames = new ArrayList<>();
+                    final Map<String, String> waterSupplyIdMap = new HashMap<>();
+                    waterSupplyNames.add("Select WaterSupply");
+
+                    for (WaterSupplyItem item : waterSupplyItems) {
+                        waterSupplyNames.add(item.getSlotName());
+                        waterSupplyIdMap.put(item.getSlotName(), item.getId());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, waterSupplyNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_water_Supply.setAdapter(adapter);
+
+                    String selectedWaterSupplyId = water_supply_id;
+
+                    if (selectedWaterSupplyId != null) {
+                        String selectedWaterSupplyName = getWaterSupplyNameById(waterSupplyIdMap, selectedWaterSupplyId);
+                        if (selectedWaterSupplyName != null) {
+                            int position = adapter.getPosition(selectedWaterSupplyName);
+                            if (position >= 0) {
+                                spinner_water_Supply.setSelection(position);
+                            }
+                        }
+                    }
+
+
+                    // Handle spinner item selection
+                    spinner_water_Supply.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedWaterSupply = (String) parent.getItemAtPosition(position);
+                            if (!selectedWaterSupply.equals("Select WaterSupply")) {
+                                //fetchColony();
+                                String selectedWaterSupplyId = waterSupplyIdMap.get(selectedWaterSupply);
+                                water_supply_id = selectedWaterSupplyId;
+                                //Toast.makeText(UserSurveyActivity.this, "S: " + series_id + " C: " + colony_id  + " R: " + row_id, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+                } else {
+                    Log.e("API Error", "Failed to fetch water supply");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WaterSupplyResponse> call, Throwable throwable) {
+                Toast.makeText(UpdateMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
+    }
+    private String getWaterSupplyNameById(Map<String, String> waterSupplyIdMap, String waterSupplyId) {
+        for (Map.Entry<String, String> entry : waterSupplyIdMap.entrySet()) {
+            if (entry.getValue().equals(waterSupplyId)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    private void fetchStatus() {
+
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+        Call<StatusResponse> call = apiInterface.statusResponse();
+
+        call.enqueue(new Callback<StatusResponse>() {
+            @Override
+            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                if (response.isSuccessful()) {
+
+                    List<StatusItem> statusItems = response.body().getStatus();
+
+                    List<String> statusNames = new ArrayList<>();
+                    final Map<String, String> statusIdMap = new HashMap<>();
+                    statusNames.add("Select Status");
+
+                    for (StatusItem item : statusItems) {
+                        statusNames.add(item.getStatusName());
+                        statusIdMap.put(item.getStatusName(), item.getId());
+                    }
+
+                    // Populate the spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdateMemberActivity.this,
+                            android.R.layout.simple_spinner_item, statusNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_status.setAdapter(adapter);
+
+                    String selectedStatusId = status_id;
+
+                    if (selectedStatusId != null) {
+                        String selectedStatusName = getStatusByName(statusIdMap, selectedStatusId);
+                        if (selectedStatusName != null) {
+                            int position = adapter.getPosition(selectedStatusName);
+                            if (position >= 0) {
+                                spinner_status.setSelection(position);
+                            }
+                        }
+                    }
+
+                    // Handle spinner item selection
+                    spinner_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedStatus = (String) parent.getItemAtPosition(position);
+                            if (!selectedStatus.equals("Select Status")) {
+                                //fetchColony();
+                                String selectedStatusId = statusIdMap.get(selectedStatus);
+                                status_id = selectedStatusId;
+
+                                //Toast.makeText(UserSurveyActivity.this, "S: " + series_id + " C: " + colony_id  + " R: " + row_id, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+                } else {
+                    Log.e("API Error", "Failed to fetch water supply");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StatusResponse> call, Throwable throwable) {
+                Toast.makeText(UpdateMemberActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Error fetching prabhag wards: " + throwable.getMessage());
+            }
+        });
 
     }
 
-    private void getRowList(long series_id, long colony_id) {
-
-        Constants.rows.add(new Row("0", "select row"));
-        final RequestQueue requestQueue = Volley.newRequestQueue(UpdateMemberActivity.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.row_list + "&series_id=" + series_id + "&colony_id=" + colony_id, new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                spinner_row.setAdapter(null);
-                Constants.rows.clear();
-                Constants.row_name.clear();
-                Constants.row_name = new ArrayList<>();
-                Constants.rows = new ArrayList<>();
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    Log.d("TAG", "onResponse: " + response);
-
-                    JSONArray jsonArray = jsonObject.getJSONArray("ROW");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("id");
-                        String row_name = jsonObject1.getString("row_name");
-                        Constants.rows.add(new Row(id, row_name));
-
-                        //Toast.makeText(UserSurveyActivity.this, "vaishnavi= "+id, Toast.LENGTH_SHORT).show();
-                        Constants.row_name.add(row_name);
-                        spinner_row.setAdapter(new ArrayAdapter<String>(UpdateMemberActivity.this, android.R.layout.simple_spinner_item, Constants.row_name));
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+    private String getStatusByName(Map<String, String> statusIdMap, String statusId) {
+        for (Map.Entry<String, String> entry : statusIdMap.entrySet()) {
+            if (entry.getValue().equals(statusId)) {
+                return entry.getKey();
             }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
-                // Toast.makeText(UserSurveyActivity.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(stringRequest);
-
+        }
+        return null;
     }
 
-    private void getColonyList(long series_id) {
-
-        // Toast.makeText(UserSurveyActivity.this, "series-id here"+series_id, Toast.LENGTH_SHORT).show();
-        //recreate();
-        final RequestQueue requestQueue = Volley.newRequestQueue(UpdateMemberActivity.this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.colony_list + "&series_id=" + series_id, new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Constants.colonies.clear();
-                Constants.colony_name.clear();
-                Constants.colony_name = new ArrayList<>();
-                Constants.colonies = new ArrayList<>();
-                spinner_colony.setAdapter(null);
-
-                Constants.colonies.add(new Colony("0", "select colony"));
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    Log.d("TAG", "onResponse: " + response);
-                    // Toast.makeText(UserSurveyActivity.this, ""+response, Toast.LENGTH_SHORT).show();
-
-                    JSONArray jsonArray = jsonObject.getJSONArray("COLONY");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("id");
-                        String colony_name = jsonObject1.getString("colony_name");
-                        colonies.add(new Colony(id, colony_name));
-                        Constants.colony_name.add(colony_name);
-                        spinner_colony.setAdapter(new ArrayAdapter<String>(UpdateMemberActivity.this, android.R.layout.simple_spinner_item, Constants.colony_name));
-
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.stop();
-            }
-        });
-        requestQueue.add(stringRequest);
-
-    }
+    //----------------------------------------------------------------------------------------
 
     private void fetchConstituencies() {
 
@@ -749,10 +895,12 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                     // Create a list of constituency names
                     List<String> constituencyName = new ArrayList<>();
+                    final Map<String, String> constituencyIdMap = new HashMap<>();
                     constituencyName.add("Select Constituency");
 
                     for (ConstituencyItem constituency : constituencies) {
                         constituencyName.add(constituency.getConstituencyName());
+                        constituencyIdMap.put(constituency.getConstituencyName(), constituency.getId());
                     }
 
                     //Toast.makeText(UserSurveyActivity.this, "Names: " + constituencyName, Toast.LENGTH_SHORT).show();
@@ -770,7 +918,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                             String selectedConstituency = (String) parent.getItemAtPosition(position);
                             if (!selectedConstituency.equals("Select Constituency")) {
                                 //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedConstituency, Toast.LENGTH_SHORT).show();
-
+                                String selectedConstituencyId = constituencyIdMap.get(selectedConstituency);
+                                constituency_id = selectedConstituencyId;
                             }
                         }
 
@@ -808,10 +957,12 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                     // Create a list of city or village names
                     List<String> cityVillageNames = new ArrayList<>();
+                    final Map<String, String> cityVillageIdMap = new HashMap<>();
                     cityVillageNames.add("Select City/Village");
 
                     for (CityVillageItem item : cityVillages) {
                         cityVillageNames.add(item.getCityVillageName());
+                        cityVillageIdMap.put(item.getCityVillageName(), item.getId());
                     }
 
                     // Populate the spinner
@@ -826,8 +977,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedCityVillage = (String) parent.getItemAtPosition(position);
                             if (!selectedCityVillage.equals("Select City or Village")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedCityVillageId = cityVillageIdMap.get(selectedCityVillage);
+                                city_id = selectedCityVillageId;
                             }
                         }
 
@@ -866,10 +1017,12 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                     // Create a list of zone names
                     List<String> zoneNames = new ArrayList<>();
+                    final Map<String, String> zoneIdMap = new HashMap<>();
                     zoneNames.add("Select Zone");
 
                     for (ZoneItem zone : zones) {
                         zoneNames.add(zone.getZoneName());
+                        zoneIdMap.put(zone.getZoneName(), zone.getId());
                     }
 
                     // Populate the spinner
@@ -884,8 +1037,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedZone = (String) parent.getItemAtPosition(position);
                             if (!selectedZone.equals("Select Zone")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedZone, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedZoneId = zoneIdMap.get(selectedZone);
+                                zone_id = selectedZoneId;
                             }
                         }
 
@@ -922,10 +1075,12 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                     // Create a list of prabhag ward names
                     List<String> prabhagWardNames = new ArrayList<>();
+                    final Map<String, String> prabhagWardIdMap = new HashMap<>();
                     prabhagWardNames.add("Select Prabhag/Ward");
 
                     for (PrabhagWardItem prabhagWard : prabhagWards) {
                         prabhagWardNames.add(prabhagWard.getPrabhagWardName());
+                        prabhagWardIdMap.put(prabhagWard.getPrabhagWardName(), prabhagWard.getId());
                     }
 
                     // Populate the spinner
@@ -940,8 +1095,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
                             if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedPrabhagWardId = prabhagWardIdMap.get(selectedPrabhagWard);
+                                ward_id = selectedPrabhagWardId;
                             }
                         }
 
@@ -980,10 +1135,12 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                     // Create a list of prabhag ward names
                     List<String> qualificationNames = new ArrayList<>();
+                    final Map<String, String> qualificationIdMap = new HashMap<>();
                     qualificationNames.add("Select Qualification");
 
                     for (QualificationItem qualification : qualificationResponse) {
                         qualificationNames.add(qualification.getQualificationName());
+                        qualificationIdMap.put(qualification.getQualificationName(), qualification.getId());
                     }
 
                     // Populate the spinner
@@ -998,8 +1155,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedQualification = (String) parent.getItemAtPosition(position);
                             if (!selectedQualification.equals("Select Qualification")) {
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedQualificationId = qualificationIdMap.get(selectedQualification);
+                                qualification_id = selectedQualificationId;
                             }
                         }
 
@@ -1035,10 +1192,12 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
                     // Create a list of prabhag ward names
                     List<String> casteNames = new ArrayList<>();
+                    final Map<String, String> casteIdMap = new HashMap<>();
                     casteNames.add("Select Caste");
 
                     for (CasteItem caste : casteResponses) {
                         casteNames.add(caste.getCasteName());
+                        casteIdMap.put(caste.getCasteName(), caste.getId());
                     }
 
                     // Populate the spinner
@@ -1054,8 +1213,8 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
                             String selectedCaste = (String) parent.getItemAtPosition(position);
                             if (!selectedCaste.equals("Select Caste")) {
 
-                                //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedPrabhagWard, Toast.LENGTH_SHORT).show();
-                                // Perform any other actions based on selection
+                                String selectedCasteId = casteIdMap.get(selectedCaste);
+                                caste_id = selectedCasteId;
                             }
                         }
 
@@ -1084,7 +1243,7 @@ public class UpdateMemberActivity extends AppCompatActivity implements SwipeRefr
 
         if (Method.haveNetworkConnection(this)) {
             if (SharedPref.getAppStatus(this).equalsIgnoreCase("on")) {
-                getSeriesList();
+                //getSeriesList();
                 //getColonyList(series_id);
             } else {
                 swipe_refresh.setRefreshing(false);

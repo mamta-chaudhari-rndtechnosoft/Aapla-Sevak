@@ -26,16 +26,16 @@ public class EditFamilyMemberBody {
     private String boothNo;
 
     @SerializedName("voting_sr_no")
-    private int votingSrNo;
+    private String votingSrNo;
 
     @SerializedName("series_id")
-    private int seriesId;
+    private String seriesId;
 
     @SerializedName("colony_id")
-    private int colonyId;
+    private String colonyId;
 
     @SerializedName("row_id")
-    private int rowId;
+    private String rowId;
 
     @SerializedName("gender")
     private String gender;
@@ -59,10 +59,10 @@ public class EditFamilyMemberBody {
     private String adharCard;
 
     @SerializedName("watersupply_id")
-    private int waterSupplyId;
+    private String waterSupplyId;
 
     @SerializedName("member_id")
-    private int memberId;
+    private String memberId;
 
     @SerializedName("voter_id")
     private String voterId;
@@ -94,10 +94,10 @@ public class EditFamilyMemberBody {
 
 
     public EditFamilyMemberBody(int id, String houseNo, String name, String middleName, String surname,
-                                String votingCenter, String boothNo, int votingSrNo, int seriesId,
-                                int colonyId, int rowId, String gender, String mobile1, String mobile2,
+                                String votingCenter, String boothNo, String votingSrNo, String seriesId,
+                                String colonyId, String rowId, String gender, String mobile1, String mobile2,
                                 String dob, String qualification, String caste, String adharCard,
-                                int waterSupplyId, int memberId, String voterId, String statusId,
+                                String waterSupplyId, String memberId, String voterId, String statusId,
                                 String apartment, String flatNo, String constituency, String cityVillage,
                                 String zone, String prabhagWard) {
         this.id = id;
