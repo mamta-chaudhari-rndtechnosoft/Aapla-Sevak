@@ -69,6 +69,11 @@ public class EditFamilyAdapter extends RecyclerView.Adapter<EditFamilyAdapter.Vi
                 Intent intent = new Intent(context, UpdateMemberActivity.class);
                 //intent.putExtra("id",houseDetailData.getId());
                 intent.putExtra("id",familyMemberList.get(holder.getAdapterPosition()).getId());
+                //intent.putExtra("constituencyId",familyMemberList.get(holder.getAdapterPosition()).getConstituencyId());
+                //intent.putExtra("cityId",familyMemberList.get(holder.getAdapterPosition()).getCityVillageId());
+                //intent.putExtra("zoneId",familyMemberList.get(holder.getAdapterPosition()).getZoneId());
+                //intent.putExtra("wardId",familyMemberList.get(holder.getAdapterPosition()).getWardId());
+
                 context.startActivity(intent);
             }
         });

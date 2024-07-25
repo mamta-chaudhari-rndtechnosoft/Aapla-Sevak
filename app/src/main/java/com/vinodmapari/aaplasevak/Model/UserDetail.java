@@ -24,8 +24,8 @@ public class UserDetail {
     @SerializedName("booth_no")
     private String boothNo;
 
-    @SerializedName("voting_sr_no")
-    private int votingSrNo;
+    @SerializedName("s_no")
+    private int sNo;
 
     @SerializedName("series_id")
     private int seriesId;
@@ -49,10 +49,10 @@ public class UserDetail {
     private String dob;
 
     @SerializedName("qualification")
-    private String qualification;
+    private int qualification;
 
     @SerializedName("caste")
-    private String caste;
+    private int caste;
 
     @SerializedName("adhar_card")
     private String adharCard;
@@ -74,6 +74,15 @@ public class UserDetail {
 
     @SerializedName("flat_no")
     private String flatNo;
+
+    @SerializedName("constituency")
+    private int constituencyId;
+    @SerializedName("city_village")
+    private int cityVillageId;
+    @SerializedName("zone")
+    private int zoneId;
+    @SerializedName("prabhag_ward")
+    private int wardId;
 
     // Getters and Setters
 
@@ -134,12 +143,12 @@ public class UserDetail {
         this.boothNo = boothNo;
     }
 
-    public int getVotingSrNo() {
-        return votingSrNo;
+    public int getSNo() {
+        return sNo;
     }
 
-    public void setVotingSrNo(int votingSrNo) {
-        this.votingSrNo = votingSrNo;
+    public void setSNo(int sNo) {
+        this.sNo = sNo;
     }
 
     public int getSeriesId() {
@@ -198,19 +207,19 @@ public class UserDetail {
         this.dob = dob;
     }
 
-    public String getQualification() {
+    public int getQualification() {
         return qualification;
     }
 
-    public void setQualification(String qualification) {
+    public void setQualification(int qualification) {
         this.qualification = qualification;
     }
 
-    public String getCaste() {
+    public int getCaste() {
         return caste;
     }
 
-    public void setCaste(String caste) {
+    public void setCaste(int caste) {
         this.caste = caste;
     }
 
@@ -270,6 +279,46 @@ public class UserDetail {
         this.flatNo = flatNo;
     }
 
+    public int getsNo() {
+        return sNo;
+    }
+
+    public void setsNo(int sNo) {
+        this.sNo = sNo;
+    }
+
+    public int getConstituencyId() {
+        return constituencyId;
+    }
+
+    public void setConstituencyId(int constituencyId) {
+        this.constituencyId = constituencyId;
+    }
+
+    public int getCityVillageId() {
+        return cityVillageId;
+    }
+
+    public void setCityVillageId(int cityVillageId) {
+        this.cityVillageId = cityVillageId;
+    }
+
+    public int getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(int zoneId) {
+        this.zoneId = zoneId;
+    }
+
+    public int getWardId() {
+        return wardId;
+    }
+
+    public void setWardId(int wardId) {
+        this.wardId = wardId;
+    }
+
     @Override
     public String toString() {
         return "HouseDetails{" +
@@ -280,7 +329,7 @@ public class UserDetail {
                 ", surname='" + surname + '\'' +
                 ", votingCenter='" + votingCenter + '\'' +
                 ", boothNo='" + boothNo + '\'' +
-                ", votingSrNo='" + votingSrNo + '\'' +
+                ", votingSrNo='" + sNo + '\'' +
                 ", seriesId=" + seriesId +
                 ", colonyId=" + colonyId +
                 ", rowId=" + rowId +

@@ -736,11 +736,15 @@ public class WhatsappActivity extends AppCompatActivity {
         RequestBody colonyId = RequestBody.create(MediaType.parse("multipart/form-data"), colony_id);
         RequestBody rowId = RequestBody.create(MediaType.parse("multipart/form-data"), row_id);
         RequestBody waterSupplyId = RequestBody.create(MediaType.parse("multipart/form-data"), water_supply_id);
-        RequestBody constituencyId = RequestBody.create(MediaType.parse("multipart/form-data"), zone_id);
+        RequestBody constituencyId = RequestBody.create(MediaType.parse("multipart/form-data"), constituency_id);
         RequestBody cityVillageId = RequestBody.create(MediaType.parse("multipart/form-data"), city_id);
         RequestBody zoneId = RequestBody.create(MediaType.parse("multipart/form-data"), zone_id);
         RequestBody wardId = RequestBody.create(MediaType.parse("multipart/form-data"), ward_id);
         RequestBody message = RequestBody.create(MediaType.parse("multipart/form-data"), etMessage.getText().toString());
+
+        Log.d("Api Response","WhatsAppData: " + "series: " + series_id + " colonyId: " + colony_id + " row: " + row_id + " water: " + water_supply_id);
+        Log.d("Api Response","WhatsAppData: " + " constituency: " + constituency_id + " cityVillageId: " + city_id + " zoneId: " + zone_id + " wardId: " + ward_id + " message: " + message);
+
 
         MultipartBody.Part body = null;
         Call<WhatsAppApiResponseData> call = null;
@@ -775,7 +779,6 @@ public class WhatsappActivity extends AppCompatActivity {
                     String status = responseData.getStatus();
 
                     loader.setVisibility(View.GONE);
-
                     Toast.makeText(WhatsappActivity.this, "Success!! " + status, Toast.LENGTH_SHORT).show();
                     Log.d("Api Response", "data: " + status);
                     finish();

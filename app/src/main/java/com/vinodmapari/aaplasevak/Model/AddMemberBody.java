@@ -46,7 +46,7 @@ public class AddMemberBody {
     @SerializedName("booth_no")
     private String boothNo;
 
-    @SerializedName("voting_sr_no")
+    @SerializedName("s_no")
     private String votingSrNo;
 
     @SerializedName("apartment")
@@ -125,5 +125,31 @@ public class AddMemberBody {
         this.member_id=member_id;
     }*/
 
+    @Override
+    public String toString() {
+        return "AddMemberBody{" +
+                "houseNo='" + houseNo + '\'' +
+                ", gender='" + gender + '\'' +
+                ", name='" + name + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", mobile1='" + mobile1 + '\'' +
+                ", mobile2='" + mobile2 + '\'' +
+                ", dob='" + dob + '\'' +
+                ", qualification='" + qualification + '\'' +
+                ", statusId='" + statusId + '\'' +
+                ", voterId='" + voterId + '\'' +
+                ", adharCard='" + adharCard + '\'' +
+                ", votingCenter='" + votingCenter + '\'' +
+                ", boothNo='" + boothNo + '\'' +
+                ", votingSrNo='" + votingSrNo + '\'' +
+                ", apartment='" + apartment + '\'' +
+                ", flatNo='" + flatNo + '\'' +
+                ", constituency='" + constituency + '\'' +
+                ", cityVillage='" + cityVillage + '\'' +
+                ", zone='" + zone + '\'' +
+                ", prabhagWard='" + prabhagWard + '\'' +
+                '}';
+    }
 
 }

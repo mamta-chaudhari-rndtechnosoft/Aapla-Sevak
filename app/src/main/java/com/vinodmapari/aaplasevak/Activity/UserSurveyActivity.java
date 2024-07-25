@@ -301,17 +301,16 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 String mobile_no1 = calling_no;
                 String mobile_no2 = wp_no;
                 String user_dob = dob.getText().toString();
-                //String user_qualification = qualification.getText().toString();
 
                 String voterId = voterID.getText().toString();
                 String user_adharcard = adharcard.getText().toString();
                 String votingcenter = voting_center.getText().toString();
                 String BoothNo = etBooth.getText().toString();
                 String SerialNo = etSerial.getText().toString();
-                String constituency = spinner_constituency.getSelectedItem().toString();
-                String city = spinner_city.getSelectedItem().toString();
-                String zone = spinner_zone.getSelectedItem().toString();
-                String ward = spinner_ward.getSelectedItem().toString();
+                //String constituency = spinner_constituency.getSelectedItem().toString();
+                //String city = spinner_city.getSelectedItem().toString();
+                //String zone = spinner_zone.getSelectedItem().toString();
+                //String ward = spinner_ward.getSelectedItem().toString();
                 String qulification = spinner_qualification.getSelectedItem().toString();
                 String user_caste = spinner_caste.getSelectedItem().toString();
                 String apartment = etApartment.getText().toString();
@@ -332,36 +331,35 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         || flateNo.equals("")
                 ) {
                     Toast.makeText(UserSurveyActivity.this, "some fields are empty", Toast.LENGTH_SHORT).show();
-                } else if (series_id == null && series_id.equalsIgnoreCase("")) {
+                } else if (spinner_series.getSelectedItem().toString().equalsIgnoreCase("Select Series")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Series", Toast.LENGTH_SHORT).show();
-                } else if (status_id == null && status_id.equalsIgnoreCase("")) {
+                } else if (spinner_status.getSelectedItem().toString().equalsIgnoreCase("Select Status")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Status", Toast.LENGTH_SHORT).show();
-                } else if (row_id == null && row_id.equalsIgnoreCase("")) {
+                } else if (spinner_row.getSelectedItem().toString().equalsIgnoreCase("Select Row")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Row", Toast.LENGTH_SHORT).show();
-                } else if (colony_id == null && colony_id.equalsIgnoreCase("")) {
+                } else if (spinner_colony.getSelectedItem().toString().equalsIgnoreCase("Select Colony")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Colony", Toast.LENGTH_SHORT).show();
-                } else if (water_supply_id == null && water_supply_id.equalsIgnoreCase("")) {
+                } else if (spinner_water_Supply.getSelectedItem().toString().equalsIgnoreCase("Select WaterSupply")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Water Supply", Toast.LENGTH_SHORT).show();
-                } else if (constituency_id == null && constituency_id.equalsIgnoreCase("")) {
+                } else if (spinner_constituency.getSelectedItem().toString().equalsIgnoreCase("Select Constituency")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Constituency", Toast.LENGTH_SHORT).show();
-                } else if (city_id == null && city_id.equalsIgnoreCase("")) {
+                } else if (spinner_city.getSelectedItem().toString().equalsIgnoreCase("Select City/Village")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select City/Village", Toast.LENGTH_SHORT).show();
-                } else if (zone_id == null && zone_id.equalsIgnoreCase("")) {
+                } else if (spinner_zone.getSelectedItem().toString().equalsIgnoreCase("Select Zone")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Zone", Toast.LENGTH_SHORT).show();
-                } else if (ward_id == null && ward_id.equalsIgnoreCase("")) {
+                } else if (spinner_ward.getSelectedItem().toString().equalsIgnoreCase("Select Prabhag/Ward")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Ward", Toast.LENGTH_SHORT).show();
-                } else if (qualification_id == null && qualification_id.equalsIgnoreCase("")) {
+                } else if (spinner_qualification.getSelectedItem().toString().equalsIgnoreCase("Select Qualification")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Qualification", Toast.LENGTH_SHORT).show();
-                } else if (caste_id == null && caste_id.equalsIgnoreCase("")) {
+                } else if (spinner_caste.getSelectedItem().toString().equalsIgnoreCase("Select Caste")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Caste", Toast.LENGTH_SHORT).show();
                 } else {
                     addSurvey(House_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname, mobile_no1, mobile_no2,
-                            user_dob, qualification_id, caste_id, status_id, voterId, user_adharcard, water_supply_id, votingcenter,
+                            user_dob, qulification, user_caste, status_id, voterId, user_adharcard, water_supply_id, votingcenter,
                             BoothNo, SerialNo, constituency_id, city_id, zone_id, ward_id, apartment, flateNo);
                     // Toast.makeText(UserSurveyActivity.this, "new family added successfully", Toast.LENGTH_SHORT).show();
                     // finish();
                 }
-
             }
         });
 
@@ -556,7 +554,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                                 String selectedRowId = rowIdMap.get(selectedRows);
                                 row_id = selectedRowId;
 
-                                Toast.makeText(UserSurveyActivity.this, "S: " + series_id + " C: " + colony_id + " R: " + row_id, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(UserSurveyActivity.this, "S: " + series_id + " C: " + colony_id + " R: " + row_id, Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -973,7 +971,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                     String selectedWardId = ward_id;
                     if (selectedWardId != null) {
-                        String selectedWardName = getZoneById(prabhagWardIdMap, selectedWardId);
+                        String selectedWardName = getWardById(prabhagWardIdMap, selectedWardId);
                         if (selectedWardName != null) {
                             int position = adapter.getPosition(selectedWardName);
                             if (position >= 0) {
@@ -1148,7 +1146,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         AddSurveyBody addSurveyBody = new AddSurveyBody(house_no, series_id, colony_id, row_id, gender, name, middle_name, surname, mobile1, mobile2, dob, qualification_id, caste_id, status_id, voter_id, adhar_card,
-                watersupply_id, voting_center, BoothNo, SerialNo, apartment, flate, constituency_id, city_id, zone_id, ward_id, "1");
+                watersupply_id, voting_center, BoothNo, SerialNo, apartment, flate, constituency_id, city_id, zone_id, ward_id);
 
         Call<AddSurveyResponseData> call = apiInterface.addSurvey(addSurveyBody);
 

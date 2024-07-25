@@ -61,8 +61,8 @@ public class AddSurveyBody {
     @SerializedName("booth_no")
     private String boothNo;
 
-    @SerializedName("voting_sr_no")
-    private String votingSrNo;
+    @SerializedName("s_no")
+    private String SNo;
 
     @SerializedName("apartment")
     private String apartment;
@@ -82,15 +82,13 @@ public class AddSurveyBody {
     @SerializedName("prabhag_ward")
     private String prabhagWard;
 
-    @SerializedName("survey_id")
-    private String surveyId;
+
 
     public AddSurveyBody(String houseNo, String seriesId, String colonyId, String rowId, String gender, String name,
                          String middleName, String surname, String mobile1, String mobile2, String dob,
                          String qualification, String caste, String statusId, String voterId, String adharCard,
-                         String watersupplyId, String votingCenter, String boothNo, String votingSrNo, String apartment,
-                         String flatNo, String constituency, String cityVillage, String zone, String prabhagWard,
-                         String surveyId) {
+                         String watersupplyId, String votingCenter, String boothNo, String SNo, String apartment,
+                         String flatNo, String constituency, String cityVillage, String zone, String prabhagWard) {
         this.houseNo = houseNo;
         this.seriesId = seriesId;
         this.colonyId = colonyId;
@@ -110,13 +108,13 @@ public class AddSurveyBody {
         this.watersupplyId = watersupplyId;
         this.votingCenter = votingCenter;
         this.boothNo = boothNo;
-        this.votingSrNo = votingSrNo;
+        this.SNo = SNo;
         this.apartment = apartment;
         this.flatNo = flatNo;
         this.constituency = constituency;
         this.cityVillage = cityVillage;
         this.zone = zone;
         this.prabhagWard = prabhagWard;
-        this.surveyId = surveyId;
+
     }
 }

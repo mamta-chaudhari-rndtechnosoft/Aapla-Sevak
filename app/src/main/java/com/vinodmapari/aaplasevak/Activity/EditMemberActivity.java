@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.EditFamilyAdapter;
 import com.vinodmapari.aaplasevak.Model.DeleteMemberResponseData;
@@ -29,14 +30,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditMemberActivity extends AppCompatActivity implements EditFamilyAdapter.OnDeleteClickListener{
+public class EditMemberActivity extends AppCompatActivity implements EditFamilyAdapter.OnDeleteClickListener {
 
     ArrayList<HouseDetail> houseDetailArrayList;
     RecyclerView rvFamilyMember;
     EditFamilyAdapter editFamilyAdapter;
-    String houseNo,seriesId;
+    String houseNo, seriesId;
     int SeriesId;
     LinearLayout layoutNoData;
+    MaterialToolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +46,19 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
         setContentView(R.layout.activity_edit_member);
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
+        toolbar = findViewById(R.id.toolbar);
 
-        toolbar.setTitle(Html.fromHtml("<b>" + "Edit Family Member" + "</b>"));
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         houseNo = getIntent().getStringExtra("house_no");
         seriesId = getIntent().getStringExtra("series_id");
+
         //Toast.makeText(this, "Series: " + seriesId + "house: " + houseNo, Toast.LENGTH_SHORT).show();
 
        /*if(seriesId.equalsIgnoreCase("A")){
@@ -87,7 +89,7 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        Call<HouseResponse> call = apiInterface.getHouseDetails(houseNo,seriesId);
+        Call<HouseResponse> call = apiInterface.getHouseDetails(houseNo, seriesId);
 
         call.enqueue(new Callback<HouseResponse>() {
             @Override
@@ -130,34 +132,32 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
     }
 
 
-
-    public void deleteMember( int position,int memberId){
+    public void deleteMember(int position, int memberId) {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         Call<DeleteMemberResponseData> call = apiInterface.deleteFamilyMember(memberId);
 
-       // Toast.makeText(this, "ID: " + memberId, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "ID: " + memberId, Toast.LENGTH_SHORT).show();
         call.enqueue(new Callback<DeleteMemberResponseData>() {
             @Override
             public void onResponse(Call<DeleteMemberResponseData> call, Response<DeleteMemberResponseData> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
                     //Toast.makeText(EditMemberActivity.this, "Success..!!", Toast.LENGTH_SHORT).show();
                     houseDetailArrayList.remove(position);
                     editFamilyAdapter.notifyItemRemoved(position);
                     Toast.makeText(EditMemberActivity.this, "Family Member Delete Successfully..!", Toast.LENGTH_SHORT).show();
 
-                }
-                else{
-                    Log.e("Tag","Response not Success");
+                } else {
+                    Log.e("Tag", "Response not Success");
                     Toast.makeText(EditMemberActivity.this, "Response not Success..", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DeleteMemberResponseData> call, Throwable t) {
-                Log.e("Tag","Error..." + t.getLocalizedMessage());
+                Log.e("Tag", "Error..." + t.getLocalizedMessage());
                 Toast.makeText(EditMemberActivity.this, "Error..", Toast.LENGTH_SHORT).show();
 
             }
@@ -174,13 +174,12 @@ public class EditMemberActivity extends AppCompatActivity implements EditFamilyA
     @Override
     public void onDeleteMember(int position, int memberId) {
         //Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
-        deleteMember(position,memberId);
+        deleteMember(position, memberId);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         getFamilyMember();
     }
 }

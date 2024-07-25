@@ -143,6 +143,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         //Toast.makeText(this, "Series: " + series, Toast.LENGTH_SHORT).show();
         //Toast.makeText(SearchedUserDetailActivity.this, "member-id= "+member_id, Toast.LENGTH_SHORT).show();
 
+
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         tv_voterID.setText(voterID);
@@ -175,8 +176,10 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         //Toast.makeText(this, "Details: " + Details, Toast.LENGTH_SHORT).show();
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                //Toast.makeText(SearchedUserDetailActivity.this, "C: " + constituency + " V: " + cityVillage + " Z: " + zone + " W: " + ward, Toast.LENGTH_SHORT).show();
                 // getMainMemberDetails();
                 Intent intent = new Intent(SearchedUserDetailActivity.this, SubMemberActivity.class);
                 intent.putExtra("surname", surname);
@@ -188,6 +191,12 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                 intent.putExtra("watersupply", watersupply);
                 intent.putExtra("id", id);
                 intent.putExtra("member_id", member_id);
+                intent.putExtra("constituency",constituency);
+                intent.putExtra("village",cityVillage);
+                intent.putExtra("zone",zone);
+                intent.putExtra("ward",ward);
+
+                //in future caste may be
                 startActivity(intent);
             }
         });
@@ -322,84 +331,7 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
 
 
-    /*private void fetchHouseDetails(String houseNo, String seriesID) {
-        //String url = API_URL + "?" + HOUSE_NO_PARAM + "=" + houseNo;
-        //Toast.makeText(this, "Inside House Function", Toast.LENGTH_SHORT).show();
 
-        //Toast.makeText(this, "house: " + houseNo + "series: " + seriesID, Toast.LENGTH_SHORT).show();
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.houseDetail + "&house_no=" + houseNo + "&series_id=" + seriesID,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray houseDetailArray = jsonObject.getJSONArray("HOUSE_DETAIL");
-
-                            List<HouseDetail> houseDetails = new ArrayList<>();
-                            StringBuilder allDetails = new StringBuilder();
-                            int counter = 1;
-
-                            for (int i = 0; i < houseDetailArray.length(); i++) {
-                                JSONObject houseDetailObject = houseDetailArray.getJSONObject(i);
-                                String name = houseDetailObject.getString("name");
-                                String middleName = houseDetailObject.getString("middle_name");
-                                String surname = houseDetailObject.getString("surname");
-                                String votingCenter = houseDetailObject.getString("voting_center");
-                                String boothNo = houseDetailObject.getString("booth_no");
-                                int votingSrNo = houseDetailObject.getInt("voting_sr_no");
-                                String voterId = houseDetailObject.getString("voter_id");
-                                String seriesId = (String) houseDetailObject.get("series_id");
-
-                                HouseDetail houseDetail = new HouseDetail(name, middleName, surname, votingCenter, boothNo, votingSrNo, voterId, seriesId);
-                                houseDetails.add(houseDetail);
-
-                                *//*if (!houseDetails.isEmpty()) {
-                                    HouseDetail firstHouseDetail = houseDetails.get(i);
-                                    Log.d("TAG", "Name: " + firstHouseDetail.getName() + " " +
-                                            "Voting Center: " + firstHouseDetail.getVotingCenter());
-
-                                    String Data = "Name: " + firstHouseDetail.getName() + " " + firstHouseDetail.getMiddleName() + " " + firstHouseDetail.getSurname() +
-                                             "\n" + "Voter ID: " + firstHouseDetail.getVoterId() +
-                                            "\n" + "Booth No: " + firstHouseDetail.getBoothNo() +
-                                            "\n" + "Sr. No: " + firstHouseDetail.getVotingSrNo() +
-                                            "\n" + "Voting Center: " + firstHouseDetail.getVotingCenter();
-
-                                    Details = Data;
-
-                                    // You can update UI or perform other actions here
-                                }*//*
-
-                               String data =
-                                        counter + ")" + " Name: " + name + " " + middleName + " " + surname +
-                                                "\nVoter ID: " + voterId +
-                                                "\nBooth No: " + boothNo +
-                                                "\nSr.No: " + votingSrNo +
-                                                "\nVoting Center: " + votingCenter + "\n\n";
-
-                                allDetails.append(data);
-                                counter++;
-
-                            }
-
-                            Details = allDetails.toString() + "*Aapla Sevak - Vinod Mapari*";
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            //Toast.makeText(SearchedUserDetailActivity.this, "", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("TAG", "Error: " + error.getMessage());
-                Toast.makeText(SearchedUserDetailActivity.this, "Error fetching data.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        requestQueue.add(stringRequest);
-    }*/
 
     private void fetchHouseDetails(String houseNo, String seriesId) {
 
@@ -419,23 +351,24 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
 
                         String voterId = houseDetail.getVoterId();
                         String boothNo = houseDetail.getBoothNo();
-                        String votingSrNo = houseDetail.getVotingSrNo();
+                        String votingSrNo = houseDetail.getSNo();
 
                         //Toast.makeText(SearchedUserDetailActivity.this, "voterId: " + voterId + " booth: " + boothNo  + " voting: " + votingSrNo, Toast.LENGTH_SHORT).show();
 
-                        if (voterId == " " && boothNo == " " && votingSrNo == "0") {
-                            Toast.makeText(SearchedUserDetailActivity.this, "0", Toast.LENGTH_SHORT).show();
-                        } else  {
+                        if (voterId != null && boothNo != null && votingSrNo != null &&
+                                !voterId.equalsIgnoreCase("") &&
+                                !boothNo.equalsIgnoreCase("") &&
+                                !votingSrNo.equalsIgnoreCase("0")) {
                             String data = counter + ")" + " Name: " + houseDetail.getName() + " " + houseDetail.getMiddleName() + " " + houseDetail.getSurname() +
                                     "\nVoter ID: " + voterId +
                                     "\nBooth No: " + boothNo +
                                     "\nSr.No: " + votingSrNo +
                                     "\nVoting Center: " + houseDetail.getVotingCenter() + "\n\n";
 
-
                             allDetails.append(data);
                             counter++;
                         }
+
 
                         /*String data = counter + ")" + " Name: " + houseDetail.getName() + " " + houseDetail.getMiddleName() + " " + houseDetail.getSurname() +
                                 "\nVoter ID: " + voterId +

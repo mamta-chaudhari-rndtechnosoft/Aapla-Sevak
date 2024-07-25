@@ -74,12 +74,14 @@ public class SubMemberActivity extends AppCompatActivity {
     SearchableSpinner spinner_relation, spinner_status, spinner_constituency, spinner_zone, spinner_ward, spinner_city, spinner_qualification, spinner_caste;
     String gender, boothNo, serialNo;
     String id;
-    TextView tv1, tv2, member_colony, series, member_row, member_watersupply, house_number, surname;
+    TextView tv1, tv2, member_colony, series, member_row, member_watersupply, house_number, surname, tvSpinnerConstituency, tvSpinnerCIty, tvSpinnerZone, tvSpinnerWard;
     ArrayList<MainMemberDetail> mainMemberDetails;
     RadioButton selectedRadioButton;
     RadioGroup radioGroup;
     EditText votingcenter, dob, name, middle_name, mob1, mob2, voterID, adharcard, etBoothNo, etSerialNo, etApartment, etFlateNumber;
-    String series_id, status_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id, qualification_id,caste_id;
+    String series_id, status_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id, qualification_id, caste_id;
+
+    String constituencyId, villageId, zoneId, wardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,10 @@ public class SubMemberActivity extends AppCompatActivity {
         surname = findViewById(R.id.surname);
         mob1 = findViewById(R.id.mobile1);
         mob2 = findViewById(R.id.mobile2);
+        /*tvSpinnerConstituency = findViewById(R.id.tv_spinner_Constituency);
+        tvSpinnerCIty = findViewById(R.id.tvSpinnerCity);
+        tvSpinnerZone = findViewById(R.id.tvSpinnerZone);
+        tvSpinnerWard = findViewById(R.id.tvSpinnerWard);*/
         //qualification = findViewById(R.id.qualification);
         voterID = findViewById(R.id.voterID);
         //edevent = findViewById(R.id.event);
@@ -111,6 +117,7 @@ public class SubMemberActivity extends AppCompatActivity {
         etSerialNo = findViewById(R.id.etSerialNum);
         etFlateNumber = findViewById(R.id.etFlatNo);
         etApartment = findViewById(R.id.etApartment);
+
 
         //Spinners
         spinner_constituency = findViewById(R.id.spinnerConstituency);
@@ -154,6 +161,12 @@ public class SubMemberActivity extends AppCompatActivity {
         String watersupply = intent.getStringExtra("watersupply");
         id = intent.getStringExtra("id");
         String member_id = intent.getStringExtra("member_id");
+        constituencyId = intent.getStringExtra("constituency");
+        villageId = intent.getStringExtra("village");
+        zoneId = intent.getStringExtra("zone");
+        wardId = intent.getStringExtra("ward");
+
+        //Toast.makeText(this, "C: " + constituencyId + " V: " + villageId + " Z: " + zoneId + " W: " + wardId, Toast.LENGTH_SHORT).show();
 
 
         surname.setText(user_surname);
@@ -237,11 +250,13 @@ public class SubMemberActivity extends AppCompatActivity {
                 String row_id = row;
                 String colony_id = colony;
                 String watersupply_id = watersupply;
-                String user_caste = caste;
-                String constituency = spinner_constituency.getSelectedItem().toString();
-                String zone = spinner_zone.getSelectedItem().toString();
-                String cityVillage = spinner_city.getSelectedItem().toString();
-                String prabhagWard = spinner_ward.getSelectedItem().toString();
+                //String user_caste = caste;
+
+                //String constituency = spinner_constituency.getSelectedItem().toString();
+                //String zone = spinner_zone.getSelectedItem().toString();
+                //String cityVillage = spinner_city.getSelectedItem().toString();
+                //String prabhagWard = spinner_ward.getSelectedItem().toString();
+                String user_caste = spinner_caste.getSelectedItem().toString();
                 String user_qualification = spinner_qualification.getSelectedItem().toString();
                 String apartment = etApartment.getText().toString();
                 String flateNo = etFlateNumber.getText().toString();
@@ -249,10 +264,12 @@ public class SubMemberActivity extends AppCompatActivity {
                 String SerialNo = etSerialNo.getText().toString();
 
 
-                if (house_no.equals("") || user_name.equals("") || user_middle_name.equals("") || user_surname.equals("")
+                if (house_no.equals("") || user_name.equals("")
+                        || user_middle_name.equals("") || user_surname.equals("")
                         || mobile_no1.length() == 0 || mobile_no2.length() == 0
                         || user_dob.isEmpty() || voterId.equals("") || user_adharcard.equals("")
-                        || voting_center.equals("") || BoothNo.equals("") || SerialNo.equals("") || apartment.equals("") || flateNo.equals("")
+                        || voting_center.equals("") || BoothNo.equals("") || SerialNo.equals("")
+                        || apartment.equals("") || flateNo.equals("")
 
                 ) {
                     Toast.makeText(SubMemberActivity.this, "some fields are empty", Toast.LENGTH_SHORT).show();
@@ -260,7 +277,7 @@ public class SubMemberActivity extends AppCompatActivity {
                     Toast.makeText(SubMemberActivity.this, "Please Select Constituency", Toast.LENGTH_SHORT).show();
                 } else if (city_id == null && city_id.equalsIgnoreCase("")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select City/Village", Toast.LENGTH_SHORT).show();
-                }else if (zone_id == null && zone_id.equalsIgnoreCase("")) {
+                } else if (zone_id == null && zone_id.equalsIgnoreCase("")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Zone", Toast.LENGTH_SHORT).show();
                 } else if (ward_id == null && ward_id.equalsIgnoreCase("")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Ward", Toast.LENGTH_SHORT).show();
@@ -269,7 +286,7 @@ public class SubMemberActivity extends AppCompatActivity {
                 } else {
                     // id and member id is missing from here
                     addMember(house_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname,
-                            mobile_no1, mobile_no2, user_dob, qualification_id, caste_id, status_id, voterId, user_adharcard, watersupply_id,
+                            mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, watersupply_id,
                             voting_center, BoothNo, SerialNo, constituency_id, city_id, zone_id, ward_id, apartment, flateNo);
 
                     //Toast.makeText(SubMemberActivity.this, "family member added successfully", Toast.LENGTH_SHORT).show();
@@ -277,22 +294,6 @@ public class SubMemberActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-       /* spinner_relation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                relation_id = Constants.relations.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-
-            }
-        });*/
 
     }
 
@@ -309,6 +310,7 @@ public class SubMemberActivity extends AppCompatActivity {
                 adhar_card, voting_center, BoothNo, SerialNo, apartment, flate, constituency_id, city_id, zone_id, ward_id);
 
         Call<AddMemberResponseData> call = apiInterface.addMember(addMemberBody);
+        Log.d("Api Response","AddMember: " + addMemberBody.toString());
 
         call.enqueue(new Callback<AddMemberResponseData>() {
             @Override
@@ -423,6 +425,18 @@ public class SubMemberActivity extends AppCompatActivity {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner_constituency.setAdapter(adapter);
 
+
+                    String selectedConstituencyId = constituencyId;
+                    if (selectedConstituencyId != null) {
+                        String selectedConstituencyName = getConstituencyById(constituencyIdMap, selectedConstituencyId);
+                        if (selectedConstituencyName != null) {
+                            int position = adapter.getPosition(selectedConstituencyName);
+                            if (position >= 0) {
+                                spinner_constituency.setSelection(position);
+                            }
+                        }
+                    }
+
                     // Handle spinner item selection
                     spinner_constituency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -456,6 +470,15 @@ public class SubMemberActivity extends AppCompatActivity {
         });
     }
 
+    private String getConstituencyById(Map<String, String> constituencyIdMap, String constituencyId) {
+        for (Map.Entry<String, String> entry : constituencyIdMap.entrySet()) {
+            if (entry.getValue().equals(constituencyId)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     private void fetchCityVillages() {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
@@ -482,6 +505,17 @@ public class SubMemberActivity extends AppCompatActivity {
                             android.R.layout.simple_spinner_item, cityVillageNames);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner_city.setAdapter(adapter);
+
+                    String selectedCityId = villageId;
+                    if (selectedCityId != null) {
+                        String selectedCityName = getCityById(cityVillageIdMap, selectedCityId);
+                        if (selectedCityName != null) {
+                            int position = adapter.getPosition(selectedCityName);
+                            if (position >= 0) {
+                                spinner_city.setSelection(position);
+                            }
+                        }
+                    }
 
                     // Handle spinner item selection
                     spinner_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -513,6 +547,14 @@ public class SubMemberActivity extends AppCompatActivity {
             }
         });
     }
+    private String getCityById(Map<String, String> cityIdMap, String cityId) {
+        for (Map.Entry<String, String> entry : cityIdMap.entrySet()) {
+            if (entry.getValue().equals(cityId)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
 
     private void fetchZones() {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
@@ -541,6 +583,17 @@ public class SubMemberActivity extends AppCompatActivity {
                             android.R.layout.simple_spinner_item, zoneNames);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner_zone.setAdapter(adapter);
+
+                    String selectedZoneId = zoneId;
+                    if (selectedZoneId != null) {
+                        String selectedZoneName = getZoneById(zoneIdMap, selectedZoneId);
+                        if (selectedZoneName != null) {
+                            int position = adapter.getPosition(selectedZoneName);
+                            if (position >= 0) {
+                                spinner_zone.setSelection(position);
+                            }
+                        }
+                    }
 
                     // Handle spinner item selection
                     spinner_zone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -573,6 +626,15 @@ public class SubMemberActivity extends AppCompatActivity {
         });
 
     }
+    private String getZoneById(Map<String, String> zoneIdMap, String zoneId) {
+        for (Map.Entry<String, String> entry : zoneIdMap.entrySet()) {
+            if (entry.getValue().equals(zoneId)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
 
     private void fetchPrabhagWards() {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
@@ -600,6 +662,17 @@ public class SubMemberActivity extends AppCompatActivity {
                             android.R.layout.simple_spinner_item, prabhagWardNames);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner_ward.setAdapter(adapter);
+
+                    String selectedWardId = wardId;
+                    if (selectedWardId != null) {
+                        String selectedWardName = getWardById(prabhagWardIdMap, selectedWardId);
+                        if (selectedWardName != null) {
+                            int position = adapter.getPosition(selectedWardName);
+                            if (position >= 0) {
+                                spinner_ward.setSelection(position);
+                            }
+                        }
+                    }
 
                     // Handle spinner item selection
                     spinner_ward.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -631,6 +704,15 @@ public class SubMemberActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String getWardById(Map<String, String> wardIdMap, String wardId) {
+        for (Map.Entry<String, String> entry : wardIdMap.entrySet()) {
+            if (entry.getValue().equals(wardId)) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
     private void fetchQualification() {

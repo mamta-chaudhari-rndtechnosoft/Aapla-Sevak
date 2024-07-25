@@ -22,7 +22,7 @@ public class HouseDetail {
     private String boothNo;
 
     @SerializedName("s_no")
-    private String votingSrNo;
+    private String sNo;
 
     @SerializedName("series_id")
     private int seriesId;
@@ -49,7 +49,7 @@ public class HouseDetail {
     private String qualification;
 
     @SerializedName("caste")
-    private String caste;
+    private int caste;
 
     @SerializedName("relation")
     private String relation;
@@ -69,6 +69,18 @@ public class HouseDetail {
     @SerializedName("voter_id")
     private String voterId;
 
+    @SerializedName("constituency")
+    private int constituencyId;
+
+    @SerializedName("city_village")
+    private int cityVillageId;
+
+    @SerializedName("zone")
+    private int zoneId;
+
+    @SerializedName("prabhag_ward")
+    private int wardId;
+
     /*public HouseDetail(String name, String middle_Name, String surname, String voting_Center, String boothNo, int votingSrNo, String voterId, String seriesId) {
         this.name = name;
         this.middle_Name = middle_Name;
@@ -80,13 +92,13 @@ public class HouseDetail {
         this.seriesId = seriesId;
     }*/
 
-    public HouseDetail(String name, String middleName, String surname, String votingCenter, String boothNo, String votingSrNo, String voterId,int seriesId) {
+    public HouseDetail(String name, String middleName, String surname, String votingCenter, String boothNo, String sNo, String voterId,int seriesId) {
         this.name = name;
         this.middleName = middleName;
         this.surname = surname;
         this.votingCenter = votingCenter;
         this.boothNo = boothNo;
-        this.votingSrNo = votingSrNo;
+        this.sNo = sNo;
         this.voterId = voterId;
         this.seriesId = seriesId;
     }
@@ -139,12 +151,12 @@ public class HouseDetail {
         this.boothNo = boothNo;
     }
 
-    public String getVotingSrNo() {
-        return votingSrNo;
+    public String getSNo() {
+        return sNo;
     }
 
-    public void setVotingSrNo(String votingSrNo) {
-        this.votingSrNo = votingSrNo;
+    public void setSNo(String votingSrNo) {
+        this.sNo = votingSrNo;
     }
 
     public int getSeriesId() {
@@ -211,11 +223,11 @@ public class HouseDetail {
         this.qualification = qualification;
     }
 
-    public String getCaste() {
+    public int getCaste() {
         return caste;
     }
 
-    public void setCaste(String caste) {
+    public void setCaste(int caste) {
         this.caste = caste;
     }
 
@@ -265,6 +277,38 @@ public class HouseDetail {
 
     public void setVoterId(String voterId) {
         this.voterId = voterId;
+    }
+
+    public int getConstituencyId() {
+        return constituencyId;
+    }
+
+    public void setConstituencyId(int constituencyId) {
+        this.constituencyId = constituencyId;
+    }
+
+    public int getCityVillageId() {
+        return cityVillageId;
+    }
+
+    public void setCityVillageId(int cityVillageId) {
+        this.cityVillageId = cityVillageId;
+    }
+
+    public int getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(int zoneId) {
+        this.zoneId = zoneId;
+    }
+
+    public int getWardId() {
+        return wardId;
+    }
+
+    public void setWardId(int wardId) {
+        this.wardId = wardId;
     }
 }
 

@@ -41,7 +41,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/border"
-                android:gravity="center" />
+                android:gravity="center"
+                android:visibility="visible"/>
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerCity_Village"
@@ -54,8 +55,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/border"
                 android:gravity="center"
-                android:visibility="visible"
-                />
+                android:visibility="visible"/>
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerZone"
@@ -67,7 +67,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/border"
-                android:gravity="center" />
+                android:gravity="center"
+                android:visibility="visible"/>
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerPrabhag_Ward"
@@ -80,7 +81,56 @@
                 android:layout_weight="1"
                 android:background="@drawable/border"
                 android:gravity="center"
-                android:visibility="visible" />
+                android:visibility="visible"/>
+
+           <!-- <TextView
+                android:id="@+id/tv_spinner_Constituency"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/border"
+                android:gravity="start|center_vertical"
+                android:padding="10dp"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tvSpinnerCity"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/border"
+                android:gravity="start|center_vertical"
+                android:padding="10dp"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tvSpinnerZone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/border"
+                android:gravity="start|center_vertical"
+                android:padding="10dp"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tvSpinnerWard"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/border"
+                android:gravity="start|center_vertical"
+                android:padding="10dp"
+                android:textSize="18sp" />-->
 
 
             <TextView
