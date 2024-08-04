@@ -53,18 +53,19 @@ import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
 
-    ImageView search;
+    //ImageView search;
     SearchAdapter searchAdapter;
     RecyclerView rv;
     TextView textView_empty, tvSurveyCount;
     LottieAnimationView loader, empty_icon;
     List<SearchListItem> searchLists;
-    EditText etName, etLname, etMname, etVoterId, etAdharCard, etFullName;
-    String name, lname, mname, voterId, adharcard, fullName;
+    EditText etName, etLname, etMname, etVoterId, etAdharCard, etFullName, etHouseNumber, etMobileNumber, etMobileNumberTwo;
+    String name, lname, mname, voterId, adharcard, fullName, houseNo, mobileNumber, mobileNumberTwo;
     Button btn;
+
     LinearLayoutManager mLayoutManager;
     //private int positionSelect;
-    // private int pageNo = 0;
+    //private int pageNo = 0;
     //private int pageLimit = 20;
     //private Boolean loadingMore = false;
     //private Boolean viewMore = false;
@@ -75,11 +76,14 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        search = findViewById(R.id.iv_search_icon);
+        //search = findViewById(R.id.iv_search_icon);
         rv = findViewById(R.id.rv_search);
         etAdharCard = findViewById(R.id.adharCard);
         etVoterId = findViewById(R.id.et_voterID);
         etFullName = findViewById(R.id.et_fullName);
+        etHouseNumber = findViewById(R.id.et_house_no);
+        etMobileNumber = findViewById(R.id.et_number);
+        etMobileNumberTwo = findViewById(R.id.et_number_two);
 
         tvSurveyCount = findViewById(R.id.tvCount);
         textView_empty = findViewById(R.id.tv_empty_search);
@@ -87,21 +91,20 @@ public class SearchActivity extends AppCompatActivity {
         textView_empty.setText(R.string.type_search);
         loader = findViewById(R.id.loader);
         empty_icon = findViewById(R.id.empty_icon);
-
         empty_icon.setVisibility(View.GONE);
 
-      /*  etName = findViewById(R.id.et_name);
-        etMname = findViewById(R.id.et_mname);
-        etLname = findViewById(R.id.et_lname);
-*/
+
+      /*
+         etName = findViewById(R.id.et_name);
+         etMname = findViewById(R.id.et_mname);
+         etLname = findViewById(R.id.et_lname);
+      */
+
         btn = findViewById(R.id.btnview);
-
         //pageNo = 0;
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
-
         toolbar.setTitle(Html.fromHtml("<b>" + "Search" + "</b>"));
         setSupportActionBar(toolbar);
 
@@ -119,42 +122,59 @@ public class SearchActivity extends AppCompatActivity {
         fullName = "";
         voterId = "";
         adharcard = "";
+        houseNo = "";
+        mobileNumber = "";
+        mobileNumberTwo = "";
 
         loader.setVisibility(View.VISIBLE);
         getSearchList();
 
         surveyCount();
-
         addTextWatchers();
 
-
-        search.setOnClickListener(new View.OnClickListener() {
+        /*search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* name = etName.getText().toString();
+
+               *//*
+                name = etName.getText().toString();
                 mname = etMname.getText().toString();
-                lname = etLname.getText().toString();*/
+                lname = etLname.getText().toString();
+                *//*
+
                 fullName = etFullName.getText().toString();
                 voterId = etVoterId.getText().toString();
                 adharcard = etAdharCard.getText().toString();
+                houseNo = etHouseNumber.getText().toString();
+                mobileNumber = etMobileNumber.getText().toString();
+                mobileNumberTwo = etMobileNumberTwo.getText().toString();
+                loader.setVisibility(View.VISIBLE);
                 getSearchList();
+
             }
-        });
+        });*/
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                /* name = etName.getText().toString();
                 mname = etMname.getText().toString();
                 lname = etLname.getText().toString();*/
                 fullName = etFullName.getText().toString();
                 voterId = etVoterId.getText().toString();
                 adharcard = etAdharCard.getText().toString();
+                houseNo = etHouseNumber.getText().toString();
+                mobileNumber = etMobileNumber.getText().toString();
+                mobileNumberTwo = etMobileNumberTwo.getText().toString();
                 //pageNo = pageNo + 1;
+                loader.setVisibility(View.VISIBLE);
                 getSearchList();
+
             }
         });
     }
+
 
     private void addTextWatchers() {
        /* etName.addTextChangedListener(textWatcher);
@@ -163,27 +183,41 @@ public class SearchActivity extends AppCompatActivity {
         etFullName.addTextChangedListener(textWatcher);
         etVoterId.addTextChangedListener(textWatcher);
         etAdharCard.addTextChangedListener(textWatcher);
+        etHouseNumber.addTextChangedListener(textWatcher);
+        etMobileNumber.addTextChangedListener(textWatcher);
+        etMobileNumberTwo.addTextChangedListener(textWatcher);
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            /*name = etName.getText().toString();
+
+            /*
+            name = etName.getText().toString();
             mname = etMname.getText().toString();
-            lname = etLname.getText().toString();*/
+            lname = etLname.getText().toString();
+            */
+
             fullName = etFullName.getText().toString();
             voterId = etVoterId.getText().toString();
             adharcard = etAdharCard.getText().toString();
-            //pageNo = 0; // Reset to the first page for new search
+            houseNo = etHouseNumber.getText().toString();
+            mobileNumber = etMobileNumber.getText().toString();
+            mobileNumberTwo = etMobileNumberTwo.getText().toString();
+            //pageNo = 0;
+            //Reset to the first page for new search
+            loader.setVisibility(View.VISIBLE);
             getSearchList();
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
+
         }
     };
 
@@ -192,7 +226,7 @@ public class SearchActivity extends AppCompatActivity {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        SearchListBody searchListBody = new SearchListBody(fullName,voterId,adharcard);
+        SearchListBody searchListBody = new SearchListBody(fullName, voterId, adharcard, houseNo, mobileNumber);
 
         Call<SearchListResponseData> call = apiInterface.searchList(searchListBody);
 
@@ -223,25 +257,24 @@ public class SearchActivity extends AppCompatActivity {
                 Toast.makeText(SearchActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    private void surveyCount(){
+    private void surveyCount() {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
         Call<SurveyCountResponse> call = apiInterface.surveyCount();
 
         call.enqueue(new Callback<SurveyCountResponse>() {
             @Override
+
             public void onResponse(Call<SurveyCountResponse> call, Response<SurveyCountResponse> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     SurveyCountResponse surveyCountResponse = response.body();
                     List<SurveyCountItem> items = surveyCountResponse.getSurveyCountItems();
 
                     int count = items.get(0).getSurveyCount();
                     tvSurveyCount.setText("Total Data: " + count);
                     //Toast.makeText(SearchActivity.this, "Count: " + count, Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     Toast.makeText(SearchActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
                     Log.e("Api Response", "Response Error..");
                 }
@@ -253,23 +286,25 @@ public class SearchActivity extends AppCompatActivity {
                 Toast.makeText(SearchActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 
     @Override
     protected void onResume() {
         //pageNo = 0;
+        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
         loader.setVisibility(View.VISIBLE);
         getSearchList();
         super.onResume();
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
+
 
     @Override
     protected void onRestart() {

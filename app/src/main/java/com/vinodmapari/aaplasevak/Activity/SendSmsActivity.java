@@ -493,7 +493,7 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     List<String> waterSupplyNames = new ArrayList<>();
                     final Map<String, String> waterSupplyIdMap = new HashMap<>();
-                    waterSupplyNames.add("Select WaterSupply");
+                    waterSupplyNames.add("Select Water Supply");
 
                     for (WaterSupplyItem item : waterSupplyItems) {
                         waterSupplyNames.add(item.getSlotName());
@@ -512,7 +512,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedWaterSupply = (String) parent.getItemAtPosition(position);
-                            if (!selectedWaterSupply.equals("Select WaterSupply")) {
+                            if (!selectedWaterSupply.equals("Select Water Supply")) {
                                 //fetchColony();
                                 String selectedWaterSupplyId = waterSupplyIdMap.get(selectedWaterSupply);
                                 water_supply_id = selectedWaterSupplyId;

@@ -3,6 +3,7 @@ package com.vinodmapari.aaplasevak;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,27 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         //SearchList searchList = searchLists.get(position);
         SearchListItem searchList = searchLists.get(position);
-        holder.adhar.setText(searchList.getAdharCard());
+
+        // change the aadhar card with house no
+        //holder.adhar.setText(searchList.getAdharCard());
+        holder.adhar.setText(searchList.getHouseNo());
+        //holder.adhar.setText(searchList.getSeriesName() + "/" + searchList.getHouseNo());
+        holder.voterId.setText(searchList.getVoterId());
+
+        /*if (!searchList.getFullName().equals("") || !searchList.getName().equals("") || !searchList.getMiddleName().equals("") || !searchList.getSurname().equals("")) {
+
+            *//*holder.adhar.setText(searchList.getAdharCard());
+            holder.voterId.setText(searchList.getVoterId());
+            holder.tvName.setText(searchList.getFullName());*//*
+            Log.d("Api Response","Name Not Found");
+        } else {
+            holder.adhar.setText(searchList.getAdharCard());
+            holder.voterId.setText(searchList.getVoterId());
+            holder.tvName.setText(searchList.getName() + " " + searchList.getMiddleName() + " " + searchList.getSurname());
+        }*/
+
         //holder.tvName.setText(searchList.getSurname()+" "+searchList.getName()+" "+searchList.getMiddle_name());
         holder.tvName.setText(searchList.getName() + " " + searchList.getMiddleName() + " " + searchList.getSurname());
-        holder.voterId.setText(searchList.getVoterId());
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -87,12 +105,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 intent.putExtra("zone", searchLists.get(position).getZone());
                 intent.putExtra("prabhag_ward", searchLists.get(position).getPrabhagWard());
                 intent.putExtra("s_no", searchLists.get(position).getsNo());
-                intent.putExtra("fullname",searchLists.get(position).getFullName());
-                intent.putExtra("series_id",searchLists.get(position).getSeriesId());
+                intent.putExtra("fullname", searchLists.get(position).getFullName());
+                intent.putExtra("series_id", searchLists.get(position).getSeriesId());
+                intent.putExtra("constituencyName", searchLists.get(position).getConstituencyName());
+                intent.putExtra("cityName", searchLists.get(position).getCityName());
+                intent.putExtra("zoneName", searchLists.get(position).getZoneName());
+                intent.putExtra("wardName", searchLists.get(position).getWardName());
                 context.startActivity(intent);
 
- //                SearchedUserDetailActivity userDetailActivity=(SearchedUserDetailActivity) activity;
- //                userDetailActivity.getSearchList();
+                //                SearchedUserDetailActivity userDetailActivity=(SearchedUserDetailActivity) activity;
+                //                userDetailActivity.getSearchList();
 
             }
         });

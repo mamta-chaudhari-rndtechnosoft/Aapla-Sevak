@@ -1,4 +1,5 @@
 package com.vinodmapari.aaplasevak.Model;
+
 import com.google.gson.annotations.SerializedName;
 
 public class SearchListItem {
@@ -107,6 +108,19 @@ public class SearchListItem {
 
     @SerializedName("created_at")
     private String createdAt;
+
+    @SerializedName("zone_name")
+    private String zoneName;
+
+    @SerializedName("city_village_name")
+    private String cityName;
+
+    @SerializedName("constituency_name")
+    private String constituencyName;
+
+    @SerializedName("prabhag_ward_name")
+    private String wardName;
+
 
     public String getId() {
         return id;
@@ -386,5 +400,37 @@ public class SearchListItem {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getConstituencyName() {
+        return constituencyName;
+    }
+
+    public void setConstituencyName(String constituencyName) {
+        this.constituencyName = constituencyName;
+    }
+
+    public String getWardName() {
+        return wardName;
+    }
+
+    public void setWardName(String wardName) {
+        this.wardName = wardName;
     }
 }

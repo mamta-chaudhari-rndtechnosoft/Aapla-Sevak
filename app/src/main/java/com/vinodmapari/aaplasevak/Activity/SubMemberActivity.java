@@ -74,13 +74,14 @@ public class SubMemberActivity extends AppCompatActivity {
     SearchableSpinner spinner_relation, spinner_status, spinner_constituency, spinner_zone, spinner_ward, spinner_city, spinner_qualification, spinner_caste;
     String gender, boothNo, serialNo;
     String id;
-    TextView tv1, tv2, member_colony, series, member_row, member_watersupply, house_number, surname, tvSpinnerConstituency, tvSpinnerCIty, tvSpinnerZone, tvSpinnerWard;
+    TextView tv1, tv2, member_colony, series, member_row, member_watersupply, house_number,
+            tvSpinnerConstituency, tvSpinnerCIty, tvSpinnerZone, tvSpinnerWard;
     ArrayList<MainMemberDetail> mainMemberDetails;
     RadioButton selectedRadioButton;
     RadioGroup radioGroup;
-    EditText votingcenter, dob, name, middle_name, mob1, mob2, voterID, adharcard, etBoothNo, etSerialNo, etApartment, etFlateNumber;
+    EditText votingcenter, dob, name, middle_name, etSurname, mob1, mob2, voterID, adharcard, etBoothNo, etSerialNo, etApartment, etFlateNumber;
     String series_id, status_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id, qualification_id, caste_id;
-
+    //TextView surname;
     String constituencyId, villageId, zoneId, wardId;
 
     @Override
@@ -93,7 +94,7 @@ public class SubMemberActivity extends AppCompatActivity {
         votingcenter = findViewById(R.id.voting_center);
         name = findViewById(R.id.name);
         middle_name = findViewById(R.id.middle_name);
-        surname = findViewById(R.id.surname);
+        etSurname = findViewById(R.id.etSurname);
         mob1 = findViewById(R.id.mobile1);
         mob2 = findViewById(R.id.mobile2);
         /*tvSpinnerConstituency = findViewById(R.id.tv_spinner_Constituency);
@@ -169,7 +170,7 @@ public class SubMemberActivity extends AppCompatActivity {
         //Toast.makeText(this, "C: " + constituencyId + " V: " + villageId + " Z: " + zoneId + " W: " + wardId, Toast.LENGTH_SHORT).show();
 
 
-        surname.setText(user_surname);
+        etSurname.setText(user_surname);
         series.setText(user_series);
         member_colony.setText(colony);
         member_row.setText(row);
@@ -239,7 +240,7 @@ public class SubMemberActivity extends AppCompatActivity {
                 String house_no = house_number.getText().toString();
                 String user_name = name.getText().toString();
                 String user_middle_name = middle_name.getText().toString();
-                String user_surname = surname.getText().toString();
+                String user_surname = etSurname.getText().toString();
                 String mobile_no1 = calling_no;
                 String mobile_no2 = wp_no;
                 String user_dob = dob.getText().toString();
@@ -264,13 +265,10 @@ public class SubMemberActivity extends AppCompatActivity {
                 String SerialNo = etSerialNo.getText().toString();
 
 
-                if (house_no.equals("") || user_name.equals("")
-                        || user_middle_name.equals("") || user_surname.equals("")
-                        || mobile_no1.length() == 0 || mobile_no2.length() == 0
-                        || user_dob.isEmpty() || voterId.equals("") || user_adharcard.equals("")
-                        || voting_center.equals("") || BoothNo.equals("") || SerialNo.equals("")
-                        || apartment.equals("") || flateNo.equals("")
-
+                if (    house_no.equals("")
+                        || user_name.equals("")
+                        || user_middle_name.equals("")
+                        || user_surname.equals("")
                 ) {
                     Toast.makeText(SubMemberActivity.this, "some fields are empty", Toast.LENGTH_SHORT).show();
                 } else if (constituency_id == null && constituency_id.equalsIgnoreCase("")) {
@@ -310,7 +308,7 @@ public class SubMemberActivity extends AppCompatActivity {
                 adhar_card, voting_center, BoothNo, SerialNo, apartment, flate, constituency_id, city_id, zone_id, ward_id);
 
         Call<AddMemberResponseData> call = apiInterface.addMember(addMemberBody);
-        Log.d("Api Response","AddMember: " + addMemberBody.toString());
+        Log.d("Api Response", "AddMember: " + addMemberBody.toString());
 
         call.enqueue(new Callback<AddMemberResponseData>() {
             @Override
@@ -547,6 +545,7 @@ public class SubMemberActivity extends AppCompatActivity {
             }
         });
     }
+
     private String getCityById(Map<String, String> cityIdMap, String cityId) {
         for (Map.Entry<String, String> entry : cityIdMap.entrySet()) {
             if (entry.getValue().equals(cityId)) {
@@ -626,6 +625,7 @@ public class SubMemberActivity extends AppCompatActivity {
         });
 
     }
+
     private String getZoneById(Map<String, String> zoneIdMap, String zoneId) {
         for (Map.Entry<String, String> entry : zoneIdMap.entrySet()) {
             if (entry.getValue().equals(zoneId)) {

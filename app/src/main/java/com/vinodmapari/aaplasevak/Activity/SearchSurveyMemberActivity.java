@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +26,10 @@ import com.vinodmapari.aaplasevak.Model.HouseResponse;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
 import com.vinodmapari.aaplasevak.Model.SearchItem;
 import com.vinodmapari.aaplasevak.Model.SearchResponse;
+import com.vinodmapari.aaplasevak.Model.SurveyCountItem;
+import com.vinodmapari.aaplasevak.Model.SurveyCountResponse;
+import com.vinodmapari.aaplasevak.Model.VoterCountItem;
+import com.vinodmapari.aaplasevak.Model.VoterCountResponse;
 import com.vinodmapari.aaplasevak.R;
 import com.vinodmapari.aaplasevak.SearchSurveyMemberAdapter;
 
@@ -46,6 +51,8 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
     ArrayList<SearchItem> searchItemsList;
     LinearLayout layoutNoData;
 
+    TextView tvVoterCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +62,7 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
         etSearchFullName = findViewById(R.id.etSearchFullName);
         layoutNoData = findViewById(R.id.layoutNoDataSearch);
         toolbar = findViewById(R.id.toolbarSearch);
+        tvVoterCount = findViewById(R.id.tvVoterCount);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +82,7 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
 
 
         getVoterSearchList();
+        voterCount();
 
         etSearchFullName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -135,5 +144,34 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void voterCount(){
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+
+        Call<VoterCountResponse> call = apiInterface.voterCount();
+
+        call.enqueue(new Callback<VoterCountResponse>() {
+            @Override
+            public void onResponse(Call<VoterCountResponse> call, Response<VoterCountResponse> response) {
+                if(response.isSuccessful()){
+                    VoterCountResponse voterCountResponse = response.body();
+                    List<VoterCountItem> items = voterCountResponse.getVoterCountItems();
+
+                    String count = items.get(0).getVoterCount();
+                    tvVoterCount.setText("Total Data: " + count);
+                }
+                else{
+                    Toast.makeText(SearchSurveyMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
+                    Log.e("Api Response", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VoterCountResponse> call, Throwable throwable) {
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(SearchSurveyMemberActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -60,6 +60,7 @@
         android:id="@id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@id/ll_search"
         android:layout_marginTop="-10dp"
         android:elevation="10dp"
@@ -94,7 +95,7 @@
              />
 
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/iv_search_icon"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -103,7 +104,64 @@
             android:layout_weight="1"
             android:padding="10dp"
             android:background="@drawable/border_search"
-            android:src="@drawable/ic_search" />
+            android:src="@drawable/ic_search" />-->
+        <EditText
+            android:id="@+id/et_house_no"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:gravity="center"
+            android:hint="House No"
+            android:background="@drawable/border_search"
+            android:singleLine="true"
+            android:textColor="@color/colorBlack"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll"
+        android:layout_marginTop="0dp"
+        android:elevation="10dp"
+        android:padding="5dp"
+        android:weightSum="2">
+
+
+    <EditText
+        android:id="@+id/et_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_search"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:hint="Number"
+        android:inputType="number"
+        android:singleLine="true"
+        android:textColor="@color/colorBlack"
+        />
+
+    <EditText
+        android:id="@+id/et_number_two"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_search"
+        android:gravity="center"
+        android:hint="Calling Number"
+        android:singleLine="true"
+        android:inputType="number"
+        android:visibility="gone"
+        android:textColor="@color/colorBlack"
+        />
 
     </LinearLayout>
 
@@ -121,7 +179,7 @@
         android:padding="10dp"
         android:singleLine="true"
         android:textColor="@color/colorBlack"
-        android:layout_below="@id/ll"/>
+        android:layout_below="@id/ll_two"/>
 
 
     <LinearLayout
@@ -136,6 +194,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            tools:listitem="@layout/search_item"
             />
 
 

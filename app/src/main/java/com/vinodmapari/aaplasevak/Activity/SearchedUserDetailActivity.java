@@ -59,10 +59,13 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
             gender, phone, dob, phone2, caste, houseNo, status,
             watersupply, voterID, adhar, votingCenter, row, colony,
             qualification, boothNo, srNo, apartment, flateNo, constituency, cityVillage,
-            zone, ward, sNo, fullName, seriesId;
-    String Details;
+            zone, ward, sNo, fullName, seriesId, nameSave;
+
+    String Details, constituencyName, zoneName, wardName, cityName;
+
     TextView tv_Name, tv_Gender, tv_Mob, tv_Series, tv_mob2, tv_houseNo, tv_colony, tv_whatsapp_no, tv_dob, tv_qualificatoon, tv_caste, tv_status, tv_voterID,
-            tv_adhar, tv_watersupply, tv_voting_center, tv_row, tvBoothNo, tvSrNo, tvApartment, tvFlateNo;
+            tv_adhar, tv_watersupply, tv_voting_center, tv_row, tvBoothNo, tvSrNo, tvApartment, tvFlateNo,
+            tvConstituency, tvCity, tvZone, tvWard;
 
     int SeriesId;
 
@@ -98,6 +101,10 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         tvSrNo = findViewById(R.id.tvSrNo);
         tvApartment = findViewById(R.id.tvApartment);
         tvFlateNo = findViewById(R.id.tvFlateNo);
+        tvConstituency = findViewById(R.id.tvConstituency);
+        tvZone = findViewById(R.id.tvZone);
+        tvCity = findViewById(R.id.tvCity);
+        tvWard = findViewById(R.id.tvWard);
 
 
         searchLists = new ArrayList<>();
@@ -139,6 +146,10 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         ward = in.getStringExtra("prabhag_ward");
         sNo = in.getStringExtra("s_no");
         fullName = in.getStringExtra("fullname");
+        constituencyName = in.getStringExtra("constituencyName");
+        cityName = in.getStringExtra("cityName");
+        zoneName = in.getStringExtra("zoneName");
+        wardName = in.getStringExtra("wardName");
 
         //Toast.makeText(this, "Series: " + series, Toast.LENGTH_SHORT).show();
         //Toast.makeText(SearchedUserDetailActivity.this, "member-id= "+member_id, Toast.LENGTH_SHORT).show();
@@ -167,8 +178,15 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         tvSrNo.setText(sNo);
         tvApartment.setText(apartment);
         tvFlateNo.setText(flateNo);
+        tvConstituency.setText(constituencyName);
+        tvCity.setText(cityName);
+        tvZone.setText(zoneName);
+        tvWard.setText(wardName);
+
 
         //Toast.makeText(this, "House: " + houseNo + "Series: " + SeriesId, Toast.LENGTH_SHORT).show();
+
+        nameSave = name + " " + surname + " " + colony + " " + row + " " + series + "/" + houseNo;
 
         fetchHouseDetails(houseNo, seriesId);
         mainMemberDetails = new ArrayList<>();
@@ -191,10 +209,10 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
                 intent.putExtra("watersupply", watersupply);
                 intent.putExtra("id", id);
                 intent.putExtra("member_id", member_id);
-                intent.putExtra("constituency",constituency);
-                intent.putExtra("village",cityVillage);
-                intent.putExtra("zone",zone);
-                intent.putExtra("ward",ward);
+                intent.putExtra("constituency", constituency);
+                intent.putExtra("village", cityVillage);
+                intent.putExtra("zone", zone);
+                intent.putExtra("ward", ward);
 
                 //in future caste may be
                 startActivity(intent);
@@ -262,7 +280,8 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
         ivSaveContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addContact(name, phone);
+                //addContact(name, phone);
+                addContact(nameSave, phone);
             }
         });
     }
@@ -328,9 +347,6 @@ public class SearchedUserDetailActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
 
 
     private void fetchHouseDetails(String houseNo, String seriesId) {

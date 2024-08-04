@@ -315,7 +315,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/surname"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -326,7 +326,25 @@
                 android:background="@drawable/border"
                 android:gravity="start|center_vertical"
                 android:padding="10dp"
-                android:textSize="18sp" />
+                android:textSize="18sp" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/surname">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSurname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -520,20 +538,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <TextView
-                android:id="@+id/spinner_water_supply"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/border"
-                android:gravity="start|center_vertical"
-                android:padding="10dp"
-                android:textSize="18sp" />
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -592,6 +596,19 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/spinner_water_supply"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/border"
+                android:gravity="start|center_vertical"
+                android:padding="10dp"
+                android:textSize="18sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_submit"

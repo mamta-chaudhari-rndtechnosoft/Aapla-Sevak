@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -109,9 +110,11 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row,
             spinner_water_Supply, spinner_constituency, spinner_zone, spinner_ward,
             spinner_city, spinner_qualification, spinner_caste;
-    EditText house_number, voting_center, dob, name, middle_name, surname, mob1, mob2,
+
+    EditText house_number, voting_center,  name, middle_name, surname, mob1, mob2,
             voterID, adharcard, etBooth, etSerial, etApartment,
             etFlateNumber;
+    TextView dob;
     private String colonyName;
     ImageButton imgSearch;
 
@@ -171,6 +174,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
         // -------------------------------------------------------
 
+        dob.setText("Select Dob");
+
         //isDataHave = false;
         //Here get the data
 
@@ -187,11 +192,17 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 votingCenterAdapter = intent.getStringExtra("votingCenter");
                 genderAdapter = intent.getStringExtra("gender");
                 epicNoAdapter = intent.getStringExtra("epicNo");
-                dobAdapter = intent.getStringExtra("dob");
                 constituencyAdapter = intent.getStringExtra("constituency");
                 cityVillageAdapter = intent.getStringExtra("cityVillage");
                 zoneAdapter = intent.getStringExtra("zone");
                 prabhagWardAdapter = intent.getStringExtra("prabhagWard");
+
+                dobAdapter = intent.getStringExtra("dob");
+                if (dobAdapter != null && !dobAdapter.isEmpty()) {
+                    dob.setText(dobAdapter);
+                } else {
+                    dob.setText("Select Dob");
+                }
 
                 //Toast.makeText(this, "Data: " + nameAdapter + " " + surnameAdapter + " " + middleNameAdapter, Toast.LENGTH_SHORT).show();
 
@@ -204,7 +215,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 etSerial.setText(sNoAdapter);
                 voting_center.setText(votingCenterAdapter);
                 voterID.setText(epicNoAdapter);
-                dob.setText(dobAdapter);
+
                 //spinner_constituency.setSelection(Integer.parseInt(constituencyAdapter));
                 //fetchConstituencies();
                 //spinner_city.setSelection(Integer.parseInt(cityVillageAdapter));
@@ -214,6 +225,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 city_id = cityVillageAdapter;
                 zone_id = zoneAdapter;
                 ward_id = prabhagWardAdapter;
+                //dob.setText(dobAdapter);
 
                 fetchConstituencies();
                 fetchCityVillages();
@@ -307,41 +319,37 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 String votingcenter = voting_center.getText().toString();
                 String BoothNo = etBooth.getText().toString();
                 String SerialNo = etSerial.getText().toString();
-                //String constituency = spinner_constituency.getSelectedItem().toString();
-                //String city = spinner_city.getSelectedItem().toString();
-                //String zone = spinner_zone.getSelectedItem().toString();
-                //String ward = spinner_ward.getSelectedItem().toString();
                 String qulification = spinner_qualification.getSelectedItem().toString();
                 String user_caste = spinner_caste.getSelectedItem().toString();
                 String apartment = etApartment.getText().toString();
                 String flateNo = etFlateNumber.getText().toString();
 
 
-                if (House_no.equals("") || user_name.equals("")
-                        || user_middle_name.equals("") || user_surname.equals("")
-                        || mobile_no1.length() == 0 || mobile_no2.length() == 0
-                        || user_dob.isEmpty()
-                        || votingcenter.equals("")
-                        || voterId.equals("")
-                        || user_adharcard.equals("")
+                if (    user_name.equals("")
+                        || user_middle_name.equals("")
+                        || user_surname.equals("")
                         || gender.equals("")
-                        || BoothNo.equals("")
-                        || SerialNo.equals("")
-                        || apartment.equals("")
-                        || flateNo.equals("")
+                        || voterId.equals("")
+                        || House_no.equals("")
+                        //|| votingcenter.equals("")
+                        //|| user_dob.isEmpty()
+                        //|| user_adharcard.equals("")
+                        //|| BoothNo.equals("")
+                        //|| SerialNo.equals("")
+
                 ) {
                     Toast.makeText(UserSurveyActivity.this, "some fields are empty", Toast.LENGTH_SHORT).show();
                 } else if (spinner_series.getSelectedItem().toString().equalsIgnoreCase("Select Series")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Series", Toast.LENGTH_SHORT).show();
                 } else if (spinner_status.getSelectedItem().toString().equalsIgnoreCase("Select Status")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Status", Toast.LENGTH_SHORT).show();
-                } else if (spinner_row.getSelectedItem().toString().equalsIgnoreCase("Select Row")) {
+                }/* else if (spinner_row.getSelectedItem().toString().equalsIgnoreCase("Select Row")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Row", Toast.LENGTH_SHORT).show();
-                } else if (spinner_colony.getSelectedItem().toString().equalsIgnoreCase("Select Colony")) {
+                }*/ else if (spinner_colony.getSelectedItem().toString().equalsIgnoreCase("Select Colony")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Colony", Toast.LENGTH_SHORT).show();
-                } else if (spinner_water_Supply.getSelectedItem().toString().equalsIgnoreCase("Select WaterSupply")) {
+                }/* else if (spinner_water_Supply.getSelectedItem().toString().equalsIgnoreCase("Select WaterSupply")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Water Supply", Toast.LENGTH_SHORT).show();
-                } else if (spinner_constituency.getSelectedItem().toString().equalsIgnoreCase("Select Constituency")) {
+                }*/ else if (spinner_constituency.getSelectedItem().toString().equalsIgnoreCase("Select Constituency")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select Constituency", Toast.LENGTH_SHORT).show();
                 } else if (spinner_city.getSelectedItem().toString().equalsIgnoreCase("Select City/Village")) {
                     Toast.makeText(UserSurveyActivity.this, "Please Select City/Village", Toast.LENGTH_SHORT).show();
@@ -362,6 +370,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 }
             }
         });
+
 
 
         dob.setOnClickListener(new View.OnClickListener() {
@@ -413,7 +422,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                     List<String> seriesNames = new ArrayList<>();
                     final Map<String, String> seriesIdMap = new HashMap<>();
-                    seriesNames.add("Select Series");
+                    seriesNames.add("Select Series*");
 
                     //List<String> seriesId = new ArrayList<>();
                     //seriesId.add("0");
@@ -434,7 +443,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedSeries = (String) parent.getItemAtPosition(position);
-                            if (!selectedSeries.equals("Select Series")) {
+                            if (!selectedSeries.equals("Select Series*")) {
                                 //fetchColony();
                                 String selectedSeriesId = seriesIdMap.get(selectedSeries);
                                 fetchColony(selectedSeriesId);
@@ -473,7 +482,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                     List<String> colonyNames = new ArrayList<>();
                     final Map<String, String> colonyIdMap = new HashMap<>();
-                    colonyNames.add("Select Colony");
+                    colonyNames.add("Select Colony*");
 
                     for (ColonyItem item : colonyItems) {
                         colonyNames.add(item.getColonyName());
@@ -491,7 +500,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedColony = (String) parent.getItemAtPosition(position);
-                            if (!selectedColony.equals("Select Colony")) {
+                            if (!selectedColony.equals("Select Colony*")) {
                                 //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
                                 // Perform any other actions based on selection
                                 String selectedColonyId = colonyIdMap.get(selectedColony);
@@ -591,7 +600,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                     List<String> waterSupplyNames = new ArrayList<>();
                     final Map<String, String> waterSupplyIdMap = new HashMap<>();
-                    waterSupplyNames.add("Select WaterSupply");
+                    waterSupplyNames.add("Select Water Supply");
 
                     for (WaterSupplyItem item : waterSupplyItems) {
                         waterSupplyNames.add(item.getSlotName());
@@ -610,7 +619,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedWaterSupply = (String) parent.getItemAtPosition(position);
-                            if (!selectedWaterSupply.equals("Select WaterSupply")) {
+                            if (!selectedWaterSupply.equals("Select Water Supply")) {
                                 //fetchColony();
                                 String selectedWaterSupplyId = waterSupplyIdMap.get(selectedWaterSupply);
                                 water_supply_id = selectedWaterSupplyId;
@@ -653,7 +662,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                     List<String> statusNames = new ArrayList<>();
                     final Map<String, String> statusIdMap = new HashMap<>();
-                    statusNames.add("Select Status");
+                    statusNames.add("Select Status*");
 
                     for (StatusItem item : statusItems) {
                         statusNames.add(item.getStatusName());
@@ -671,7 +680,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedStatus = (String) parent.getItemAtPosition(position);
-                            if (!selectedStatus.equals("Select Status")) {
+                            if (!selectedStatus.equals("Select Status*")) {
                                 //fetchColony();
                                 String selectedStatusId = statusIdMap.get(selectedStatus);
                                 status_id = selectedStatusId;
@@ -716,7 +725,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     // Create a list of constituency names
                     List<String> constituencyName = new ArrayList<>();
                     final Map<String, String> constituencyIdMap = new HashMap<>();
-                    constituencyName.add("Select Constituency");
+                    constituencyName.add("Select Constituency*");
 
                     for (ConstituencyItem constituency : constituencies) {
                         constituencyName.add(constituency.getConstituencyName());
@@ -794,7 +803,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     // Create a list of city or village names
                     List<String> cityVillageNames = new ArrayList<>();
                     final Map<String, String> cityVillageIdMap = new HashMap<>();
-                    cityVillageNames.add("Select City/Village");
+                    cityVillageNames.add("Select City/Village*");
 
                     for (CityVillageItem item : cityVillages) {
                         cityVillageNames.add(item.getCityVillageName());
@@ -876,7 +885,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     // Create a list of zone names
                     List<String> zoneNames = new ArrayList<>();
                     final Map<String, String> zoneIdMap = new HashMap<>();
-                    zoneNames.add("Select Zone");
+                    zoneNames.add("Select Zone*");
 
                     for (ZoneItem zone : zones) {
                         zoneNames.add(zone.getZoneName());
@@ -956,7 +965,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     // Create a list of prabhag ward names
                     List<String> prabhagWardNames = new ArrayList<>();
                     final Map<String, String> prabhagWardIdMap = new HashMap<>();
-                    prabhagWardNames.add("Select Prabhag/Ward");
+                    prabhagWardNames.add("Select Prabhag/Ward*");
 
                     for (PrabhagWardItem prabhagWard : prabhagWards) {
                         prabhagWardNames.add(prabhagWard.getPrabhagWardName());
@@ -1037,7 +1046,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     // Create a list of prabhag ward names
                     List<String> qualificationNames = new ArrayList<>();
                     final Map<String, String> qualificationIdMap = new HashMap<>();
-                    qualificationNames.add("Select Qualification");
+                    qualificationNames.add("Select Qualification*");
 
                     for (QualificationItem qualification : qualificationResponse) {
                         qualificationNames.add(qualification.getQualificationName());
@@ -1094,7 +1103,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     // Create a list of prabhag ward names
                     List<String> casteNames = new ArrayList<>();
                     final Map<String, String> casteIdMap = new HashMap<>();
-                    casteNames.add("Select Caste");
+                    casteNames.add("Select Caste*");
 
                     for (CasteItem caste : casteResponses) {
                         casteNames.add(caste.getCasteName());
@@ -1112,7 +1121,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedCaste = (String) parent.getItemAtPosition(position);
-                            if (!selectedCaste.equals("Select Caste")) {
+                            if (!selectedCaste.equals("Select Caste*")) {
                                 String selectedCasteId = casteIdMap.get(selectedCaste);
                                 caste_id = selectedCasteId;
                             }

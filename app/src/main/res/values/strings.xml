@@ -9,10 +9,10 @@
     <string name="colony"> Colony</string>
     <string name="row"> row</string>
     <string name="Gender"> Gender</string>
-    <string name="name"> Name</string>
+    <string name="name"> Name*</string>
     <string name="dob"> DOB</string>
-    <string name="middle_name"> Middle Name</string>
-    <string name="surname"> Surname</string>
+    <string name="middle_name"> Middle Name*</string>
+    <string name="surname"> Surname*</string>
     <string name="Mobile_No1"> Mobile No1</string>
     <string name="Mobile_No2"> Mobile No2</string>
     <string name="Qualification"> Qualification</string>

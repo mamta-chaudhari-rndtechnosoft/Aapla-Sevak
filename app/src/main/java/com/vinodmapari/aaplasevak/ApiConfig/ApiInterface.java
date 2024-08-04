@@ -31,6 +31,7 @@ import com.vinodmapari.aaplasevak.Model.StatusResponse;
 import com.vinodmapari.aaplasevak.Model.SurveyCountResponse;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
+import com.vinodmapari.aaplasevak.Model.VoterCountResponse;
 import com.vinodmapari.aaplasevak.Model.WaterSupplyResponse;
 import com.vinodmapari.aaplasevak.Model.WhatsAppApiBody;
 import com.vinodmapari.aaplasevak.Model.WhatsAppApiResponseData;
@@ -173,5 +174,8 @@ public interface ApiInterface {
 
     @GET("api.php?survey_count")
     Call<SurveyCountResponse> surveyCount();
+
+    @GET("api.php?voter_count")
+    Call<VoterCountResponse> voterCount();
 
 }

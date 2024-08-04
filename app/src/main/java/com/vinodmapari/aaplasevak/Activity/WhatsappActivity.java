@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Html;
@@ -216,31 +217,67 @@ public class WhatsappActivity extends AppCompatActivity {
         btnImageCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(WhatsappActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+               /* if (ContextCompat.checkSelfPermission(WhatsappActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_GRANTED) {
                     openImageChooser();
                 } else {
                     ActivityCompat.requestPermissions(WhatsappActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-                }
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            PERMISSION_REQUEST_CODE);
+                }*/
+                checkAndRequestPermissions(PICK_IMAGE_REQUEST);
             }
         });
 
         btnVideoPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(WhatsappActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                /*if (ContextCompat.checkSelfPermission(WhatsappActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_GRANTED) {
                     openVideoChooser();
                 } else {
                     ActivityCompat.requestPermissions(WhatsappActivity.this,
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-                }
+                }*/
+                checkAndRequestPermissions(PICK_VIDEO_REQUEST);
             }
         });
 
     }
 
+    //----------------------------- on create finish ------------------
+
+    private void checkAndRequestPermissions(int requestType) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 14
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                    == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO)
+                            == PackageManager.PERMISSION_GRANTED) {
+                if (requestType == PICK_IMAGE_REQUEST) {
+                    openImageChooser();
+                } else {
+                    openVideoChooser();
+                }
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO},
+                        PERMISSION_REQUEST_CODE);
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                if (requestType == PICK_IMAGE_REQUEST) {
+                    openImageChooser();
+                } else {
+                    openVideoChooser();
+                }
+             } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
 
 
     @Override
@@ -444,7 +481,7 @@ public class WhatsappActivity extends AppCompatActivity {
 
                     List<String> waterSupplyNames = new ArrayList<>();
                     final Map<String, String> waterSupplyIdMap = new HashMap<>();
-                    waterSupplyNames.add("Select WaterSupply");
+                    waterSupplyNames.add("Select Water Supply");
 
                     for (WaterSupplyItem item : waterSupplyItems) {
                         waterSupplyNames.add(item.getSlotName());
@@ -463,7 +500,7 @@ public class WhatsappActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedWaterSupply = (String) parent.getItemAtPosition(position);
-                            if (!selectedWaterSupply.equals("Select WaterSupply")) {
+                            if (!selectedWaterSupply.equals("Select Water Supply")) {
                                 //fetchColony();
                                 String selectedWaterSupplyId = waterSupplyIdMap.get(selectedWaterSupply);
                                 water_supply_id = selectedWaterSupplyId;
