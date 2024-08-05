@@ -336,9 +336,8 @@ public class HomeFragment extends Fragment {
 
                                // Toast.makeText(requireContext(), "ID: " + id + " " + "NAME: " + name1  , Toast.LENGTH_SHORT).show();
                               //  Log.d("Api Response","ID: " + id + " " + "NAME: " + name1);
-
-
                                 //homeOptions.add(new HomeOption(id, name1, image));
+
                                 homeOptions.add(new HomeOptionsItem(id,image,name1));
                             }
 

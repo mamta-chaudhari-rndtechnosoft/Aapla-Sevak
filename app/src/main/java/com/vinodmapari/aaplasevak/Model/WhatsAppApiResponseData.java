@@ -3,7 +3,7 @@ package com.vinodmapari.aaplasevak.Model;
 public class WhatsAppApiResponseData {
 
     String status;
-   // String message;
+   String message;
 
     public WhatsAppApiResponseData() {
     }
@@ -20,5 +20,11 @@ public class WhatsAppApiResponseData {
         this.status = status;
     }
 
+    public String getMessage() {
+        return message;
+    }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

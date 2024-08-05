@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    tools:openDrawer="start"
+    tools:openDrawer="end"
     tools:context=".Activity.DashBoardActivity">
 
         <include
             android:id="@+id/toolbar_lay"
-            layout="@layout/toolbar_layout"/>
+            layout="@layout/toolbar_layout"
+            />
 
     <RelativeLayout
         android:layout_width="@dimen/_200sdp"

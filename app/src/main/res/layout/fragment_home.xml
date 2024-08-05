@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
-    android:background="@color/colorGrey"
+    android:background="@drawable/back"
     tools:context=".Fragment.HomeFragment">
 
 
@@ -104,48 +104,49 @@
                 android:padding="@dimen/_10sdp">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cd_survey"
+                    android:id="@+id/cd_msg_member"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="180dp"
                     android:layout_margin="8dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:focusable="true"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp">
+                    app:cardCornerRadius="1dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="#02A9FA">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:id="@+id/iv_survey"
-                            android:layout_width="80dp"
-                            android:layout_height="100dp"
+                            android:id="@+id/iv_search_icon"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/group"
-                            app:layout_constraintBottom_toTopOf="@+id/tv_survey"
+                            android:src="@drawable/search"
+                            app:layout_constraintBottom_toTopOf="@+id/tv_msg_member"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tv_survey"
+                            android:id="@+id/tv_msg_member"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Add Family"
+                            android:text="SEARCH"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/iv_survey" />
+                            app:layout_constraintTop_toBottomOf="@+id/iv_search_icon" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -154,14 +155,15 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cd_search"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="180dp"
                     android:layout_margin="8dp"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:focusable="true"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp">
+                    app:cardCornerRadius="1dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="#F4DE1C">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -169,8 +171,8 @@
 
                         <ImageView
                             android:id="@+id/iv_search"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/search"
                             app:layout_constraintBottom_toTopOf="@+id/tv_search"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -183,10 +185,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Search"
+                            android:text="FIND"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -214,14 +216,15 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cd_msg"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="180dp"
                     android:layout_margin="8dp"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:focusable="true"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp">
+                    app:cardCornerRadius="1dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="#FB7065">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -229,9 +232,10 @@
 
                         <ImageView
                             android:id="@+id/iv_msg"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/sms"
+                            android:gravity="center"
                             app:layout_constraintBottom_toTopOf="@+id/tv_msg"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -245,8 +249,8 @@
                             android:gravity="center"
                             android:text="Sms"
                             android:textAllCaps="true"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="14sp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -262,14 +266,16 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cd_whatsapp"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="180dp"
                     android:layout_margin="8dp"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:focusable="true"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp">
+                    app:cardCornerRadius="1dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="#2F9D35"
+                    >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -277,8 +283,8 @@
 
                         <ImageView
                             android:id="@+id/iv_whatsapp"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/whatsapp"
                             app:layout_constraintBottom_toTopOf="@+id/tv_whatsapp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -293,8 +299,8 @@
                             android:gravity="center"
                             android:text="WhatsApp"
                             android:textAllCaps="true"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="14sp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -320,37 +326,46 @@
 
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cd_msg_member"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:id="@+id/cd_survey"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
                     android:layout_margin="8dp"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:focusable="true"
-                    app:cardCornerRadius="18dp"
+                    app:cardCornerRadius="1dp"
+                    app:cardBackgroundColor="#FB8C00"
                     app:cardElevation="3dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:gravity="center">
 
                         <ImageView
-                            android:id="@+id/iv_search_icon"
+                            android:id="@+id/iv_survey"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/search"
+                            android:src="@drawable/group"
                             android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/baseline_add_circle_24"
+
                             />
 
                         <TextView
-                            android:id="@+id/tv_msg_member"
-                            android:layout_width="match_parent"
+                            android:id="@+id/tv_survey"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Search Voter"
+                            android:text="Add Family"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"

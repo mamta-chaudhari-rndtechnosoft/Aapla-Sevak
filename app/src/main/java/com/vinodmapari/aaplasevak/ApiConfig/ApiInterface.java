@@ -108,9 +108,8 @@ public interface ApiInterface {
     @POST("search_voting_list.php")
     Call<SearchResponse> getVoterSearchList(@Body SearchBody searchBody);
 
-   /* @POST("whatsapp_api.php")
-    Call<WhatsAppApiResponseData> sentWhatsAppMessage(@Body WhatsAppApiBody whatsAppApiBody);
-    */
+    @POST("whatsapp_api.php")
+    Call<WhatsAppApiResponseData> sentWhatsAppMessages(@Body WhatsAppApiBody whatsAppApiBody);
 
     @Multipart
     @POST("whatsapp_api.php")
@@ -140,6 +139,25 @@ public interface ApiInterface {
             @Part("prabhag_ward") RequestBody  prabhagWard,
             @Part("template_desc") RequestBody  templateDesc
     );
+
+    //without watersupply
+   /* @Multipart
+    @POST("whatsapp_api.php")
+    Call<WhatsAppApiResponseData> sentWhatsAppMessage(
+            @Part("series_id") RequestBody seriesId,
+            @Part("colony_id") RequestBody  colonyId,
+            @Part("row_id") RequestBody  rowId,
+            @Part("constituency") RequestBody  constituency,
+            @Part("city_village") RequestBody  cityVillage,
+            @Part("zone") RequestBody  zone,
+            @Part("prabhag_ward") RequestBody  prabhagWard,
+            @Part("template_desc") RequestBody  templateDesc
+    );*/
+
+    // with watersupply only
+
+
+
 
     @POST("search_survey_details.php")
     Call<SearchListResponseData> searchList(@Body SearchListBody searchListBody);

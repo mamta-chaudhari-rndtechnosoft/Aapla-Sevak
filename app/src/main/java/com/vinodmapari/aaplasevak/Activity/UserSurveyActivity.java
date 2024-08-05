@@ -92,19 +92,15 @@ import retrofit2.Response;
 
 public class UserSurveyActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     Boolean isDataHave;
-    String colony, row, waterSupply, series;
     RadioButton selectedRadioButton;
     TextView tv1, tv2;
     ArrayList<SurveyList> surveyLists;
     ArrayList<Colony> colonies;
     CustomAdapter adapter;
-    int selected_series, selected_status, selected_colony, selected_row,
-            selected_water_supply, selected_constituency, selected_zone,
-            selected_ward, selected_city_village;
     String series_id, status_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id, qualification_id, caste_id;
     Button btnSubmit;
     long selected_series_id, selected_colony_id;
-    String gender;
+
     RadioGroup radioGroup;
     SwipeRefreshLayout swipe_refresh;
     SearchableSpinner spinner_series, spinner_status, spinner_colony, spinner_row,
@@ -122,6 +118,9 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
             voterIdAdapter, boothAdapter, sNoAdapter,
             votingCenterAdapter, genderAdapter, epicNoAdapter, dobAdapter,
             constituencyAdapter, cityVillageAdapter, zoneAdapter, prabhagWardAdapter;
+
+    String calling_no,wp_no,House_no,user_name,user_middle_name,user_surname,mobile_no1,mobile_no2,user_dob,gender,
+            voterId,user_adharcard,votingcenter,BoothNo,SerialNo,qulification,user_caste,apartment,flateNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -304,25 +303,23 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
             @Override
             public void onClick(View v) {
 
-                String calling_no = mob1.getText().toString();
-                String wp_no = mob2.getText().toString();
-                String House_no = house_number.getText().toString();
-                String user_name = name.getText().toString();
-                String user_middle_name = middle_name.getText().toString();
-                String user_surname = surname.getText().toString();
-                String mobile_no1 = calling_no;
-                String mobile_no2 = wp_no;
-                String user_dob = dob.getText().toString();
+                 calling_no = mob1.getText().toString();
+                 wp_no = mob2.getText().toString();
+                 House_no = house_number.getText().toString();
+                 user_surname = surname.getText().toString();
+                 mobile_no1 = calling_no;
+                 mobile_no2 = wp_no;
+                 user_dob = dob.getText().toString();
 
-                String voterId = voterID.getText().toString();
-                String user_adharcard = adharcard.getText().toString();
-                String votingcenter = voting_center.getText().toString();
-                String BoothNo = etBooth.getText().toString();
-                String SerialNo = etSerial.getText().toString();
-                String qulification = spinner_qualification.getSelectedItem().toString();
-                String user_caste = spinner_caste.getSelectedItem().toString();
-                String apartment = etApartment.getText().toString();
-                String flateNo = etFlateNumber.getText().toString();
+                 voterId = voterID.getText().toString();
+                 user_adharcard = adharcard.getText().toString();
+                 votingcenter = voting_center.getText().toString();
+                 BoothNo = etBooth.getText().toString();
+                 SerialNo = etSerial.getText().toString();
+                 qulification = spinner_qualification.getSelectedItem().toString();
+                 user_caste = spinner_caste.getSelectedItem().toString();
+                 apartment = etApartment.getText().toString();
+                 flateNo = etFlateNumber.getText().toString();
 
 
                 if (    user_name.equals("")
@@ -403,6 +400,76 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 startActivity(intent);
             }
         });
+    }
+
+
+    //------------------------------------------------------------------------------ Instance Saved-----------------------------------------
+    @Override
+    protected void onSaveInstanceState( Bundle outState) {
+        // put string value
+        outState.putString("constituency",constituency_id);
+        outState.putString("city",city_id);
+        outState.putString("zone",zone_id);
+        outState.putString("ward",ward_id);
+        outState.putString("series",series_id);
+        outState.putString("colony",colony_id);
+        outState.putString("row",row_id);
+        outState.putString("houseNum",House_no);
+        outState.putString("status",status_id);
+        outState.putString("apartment",apartment);
+        outState.putString("flateNum",flateNo);
+        outState.putString("gender",gender);
+        outState.putString("name",user_name);
+        outState.putString("middleName",user_middle_name);
+        outState.putString("surname",user_surname);
+        outState.putString("whatNumber",mobile_no1);
+        outState.putString("callingNumber",mobile_no2);
+        outState.putString("dob",user_dob);
+        outState.putString("qualification",qulification);
+        outState.putString("caste",user_caste);
+        outState.putString("adharCard",user_adharcard);
+        outState.putString("epicNo",voterId);
+        outState.putString("boothNo",BoothNo);
+        outState.putString("serialNo",SerialNo);
+        outState.putString("votingCenter",votingcenter);
+        outState.putString("waterSupply",water_supply_id);
+        super.onSaveInstanceState(outState);
+    }
+
+    // --------------------------------------- Restore the instance ---------------------------------
+
+    @Override
+    protected void onRestoreInstanceState( Bundle savedInstanceState) {
+        // get values from saved state
+        constituency_id = savedInstanceState.getString("constituency", "");
+        city_id = savedInstanceState.getString("city", "");
+        zone_id = savedInstanceState.getString("zone", "");
+        ward_id = savedInstanceState.getString("ward", "");
+        series_id = savedInstanceState.getString("series", "");
+        colony_id = savedInstanceState.getString("colony", "");
+        row_id = savedInstanceState.getString("row", "");
+        House_no = savedInstanceState.getString("houseNum", "");
+        status_id = savedInstanceState.getString("status", "");
+        apartment = savedInstanceState.getString("apartment", "");
+        flateNo = savedInstanceState.getString("flateNum", "");
+        gender = savedInstanceState.getString("gender", "");
+        user_name = savedInstanceState.getString("name", "");
+        user_middle_name = savedInstanceState.getString("middleName", "");
+        user_surname = savedInstanceState.getString("surname", "");
+        mobile_no1 = savedInstanceState.getString("whatNumber", "");
+        mobile_no2 = savedInstanceState.getString("callingNumber", "");
+        user_dob = savedInstanceState.getString("dob", "");
+        qulification = savedInstanceState.getString("qualification", "");
+        user_caste = savedInstanceState.getString("caste", "");
+        user_adharcard = savedInstanceState.getString("adharCard", "");
+        voterId = savedInstanceState.getString("epicNo", "");
+        BoothNo = savedInstanceState.getString("boothNo", "");
+        SerialNo = savedInstanceState.getString("serialNo", "");
+        votingcenter = savedInstanceState.getString("votingCenter", "");
+        water_supply_id = savedInstanceState.getString("waterSupply", "");
+        // display toast
+        //Toast.makeText(getApplicationContext(),string+" - "+ aBoolean+" - "+anInt,Toast.LENGTH_SHORT).show();
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
 
@@ -1211,6 +1278,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
                 //getSeriesList();
                 //getColonyList(series_id);
+
             } else {
                 swipe_refresh.setRefreshing(false);
             }
