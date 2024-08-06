@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
-    android:background="@drawable/back"
+    android:background="@drawable/back_two"
     tools:context=".Fragment.HomeFragment">
-
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/slide_card"
@@ -49,8 +49,6 @@
                     app:sliderScrollTimeInSec="1"
                     app:sliderStartAutoCycle="true"
                     />
-
-
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
@@ -81,8 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvChoose">
-
-
 
         <LinearLayout
             android:id="@+id/ll_grid"
@@ -122,9 +118,8 @@
 
                         <ImageView
                             android:id="@+id/iv_search_icon"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:scaleType="fitCenter"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/search"
                             app:layout_constraintBottom_toTopOf="@+id/tv_msg_member"
                             app:layout_constraintEnd_toEndOf="parent"

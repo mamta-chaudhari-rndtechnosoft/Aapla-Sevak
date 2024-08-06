@@ -85,7 +85,8 @@ public class SplashActivity extends AppCompatActivity {
 
                     }else if(!username.equalsIgnoreCase("")){
 
-                        Intent intent = new Intent(SplashActivity.this,DashBoardActivity.class);
+                        //Intent intent = new Intent(SplashActivity.this,DashBoardActivity.class);
+                        Intent intent = new Intent(SplashActivity.this,MainActivity.class);
                         startActivity(intent);
                         finish();
 

@@ -97,12 +97,12 @@ public class WhatsappActivity extends AppCompatActivity {
     SearchableSpinner spinner_series, spinner_colony, spinner_row, spinner_water_Supply;
     SearchableSpinner spinner_constituency, spinner_city_village, spinner_zone, spinner_ward;
     //int selected_series, selected_colony, selected_row, selected_water_supply;
-    String series_id, colony_id, row_id, water_supply_id, constituency_id,city_id,zone_id,ward_id;
+    String series_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id;
     //String series, colony, row, watersupply, house_no, message, image;
     Button getContacts, btnWhatsAppApi;
     //long selected_series_id, selected_colony_id;
     //ArrayList<Colony> colonies;
-    EditText  text;
+    EditText text;
     EditText etMessage;
     ImageButton btnImageCamera, btnVideoPick;
     private static final int PERMISSION_REQUEST_CODE = 100;
@@ -271,7 +271,7 @@ public class WhatsappActivity extends AppCompatActivity {
                 } else {
                     openVideoChooser();
                 }
-             } else {
+            } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PERMISSION_REQUEST_CODE);
@@ -530,7 +530,7 @@ public class WhatsappActivity extends AppCompatActivity {
     }
 
 
-//----------------------------------------------------------------
+    //----------------------------------------------------------------
     private void fetchConstituencies() {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
@@ -769,7 +769,8 @@ public class WhatsappActivity extends AppCompatActivity {
         //WhatsAppApiBody whatsAppApiBody;
         // Determine if there is media to send
 
-        RequestBody seriesId = RequestBody.create(MediaType.parse("multipart/form-data"), series_id);
+
+        /*RequestBody seriesId = RequestBody.create(MediaType.parse("multipart/form-data"), series_id);
         RequestBody colonyId = RequestBody.create(MediaType.parse("multipart/form-data"), colony_id);
         RequestBody rowId = RequestBody.create(MediaType.parse("multipart/form-data"), row_id);
         RequestBody waterSupplyId = RequestBody.create(MediaType.parse("multipart/form-data"), water_supply_id);
@@ -777,10 +778,20 @@ public class WhatsappActivity extends AppCompatActivity {
         RequestBody cityVillageId = RequestBody.create(MediaType.parse("multipart/form-data"), city_id);
         RequestBody zoneId = RequestBody.create(MediaType.parse("multipart/form-data"), zone_id);
         RequestBody wardId = RequestBody.create(MediaType.parse("multipart/form-data"), ward_id);
-        RequestBody message = RequestBody.create(MediaType.parse("multipart/form-data"), etMessage.getText().toString());
+        RequestBody message = RequestBody.create(MediaType.parse("multipart/form-data"), etMessage.getText().toString());*/
 
-        Log.d("Api Response","WhatsAppData: " + "series: " + series_id + " colonyId: " + colony_id + " row: " + row_id + " water: " + water_supply_id);
-        Log.d("Api Response","WhatsAppData: " + " constituency: " + constituency_id + " cityVillageId: " + city_id + " zoneId: " + zone_id + " wardId: " + ward_id + " message: " + message);
+        RequestBody seriesId = createRequestBody(series_id);
+        RequestBody colonyId = createRequestBody(colony_id);
+        RequestBody rowId = createRequestBody(row_id);
+        RequestBody waterSupplyId = createRequestBody(water_supply_id);
+        RequestBody constituencyId = createRequestBody(constituency_id);
+        RequestBody cityVillageId = createRequestBody(city_id);
+        RequestBody zoneId = createRequestBody(zone_id);
+        RequestBody wardId = createRequestBody(ward_id);
+        RequestBody message = createRequestBody(etMessage.getText().toString());
+
+        Log.d("Api Response", "WhatsAppData: " + "series: " + series_id + " colonyId: " + colony_id + " row: " + row_id + " water: " + water_supply_id);
+        Log.d("Api Response", "WhatsAppData: " + " constituency: " + constituency_id + " cityVillageId: " + city_id + " zoneId: " + zone_id + " wardId: " + ward_id + " message: " + message);
 
 
         MultipartBody.Part body = null;
@@ -788,20 +799,78 @@ public class WhatsappActivity extends AppCompatActivity {
 
 
         if (selectedVideuri == null && selectedImageUri != null) {
+
+            // all request with images
             File file = new File(getRealPathFromURI(selectedImageUri));
             RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
             body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-            call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
+            //call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
 
+            if (water_supply_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, constituencyId, cityVillageId, zoneId, wardId, message, body);
+            } else if (water_supply_id != null) {
+                call = apiInterface.sentWhatsAppMessage(waterSupplyId, message, body);
+            } else if (water_supply_id == null && row_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
+            }
+
+
+        } else if (selectedImageUri == null && selectedVideuri != null) {
+            //all request with video
+            File file = new File(getRealPathFromURI(selectedVideuri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse("video/mp4"), file);
+            body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+            //call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
+            if (water_supply_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, constituencyId, cityVillageId, zoneId, wardId, message, body);
+            } else if (water_supply_id != null) {
+                call = apiInterface.sentWhatsAppMessage(waterSupplyId, message, body);
+            } else if (water_supply_id == null && row_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
+            }
+
+        } else if (selectedImageUri == null && selectedVideuri == null) {
+            // without image and video requests
+            //call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message);
+            if (water_supply_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, constituencyId, cityVillageId, zoneId, wardId, message);
+            } else if (water_supply_id != null) {
+                call = apiInterface.sentWhatsAppMessage(waterSupplyId, message);
+            } else if (water_supply_id == null && row_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, constituencyId, cityVillageId, zoneId, wardId, message);
+            }
+        }
+
+        /*if (selectedVideuri == null && selectedImageUri != null) {
+            File file = new File(getRealPathFromURI(selectedImageUri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
+            body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
         } else if (selectedImageUri == null && selectedVideuri != null) {
             File file = new File(getRealPathFromURI(selectedVideuri));
             RequestBody requestFile = RequestBody.create(MediaType.parse("video/mp4"), file);
             body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-            call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
-
-        } else if (selectedImageUri == null && selectedVideuri == null) {
-            call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message);
         }
+
+        // Assign the correct call based on conditions
+        if (body != null) {
+            if (water_supply_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, constituencyId, cityVillageId, zoneId, wardId, message, body);
+            } else if (water_supply_id != null) {
+                call = apiInterface.sentWhatsAppMessage(waterSupplyId, message, body);
+            } else if (water_supply_id == null && row_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
+            }
+        } else {
+            if (water_supply_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, constituencyId, cityVillageId, zoneId, wardId, message);
+            } else if (water_supply_id != null) {
+                call = apiInterface.sentWhatsAppMessage(waterSupplyId, message);
+            } else if (water_supply_id == null && row_id == null) {
+                call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, constituencyId, cityVillageId, zoneId, wardId, message);
+            }
+        }*/
+
+
 
 
         //Call<WhatsAppApiResponseData> call = apiInterface.sentWhatsAppMessage(seriesId, colonyId, rowId, waterSupplyId, constituencyId, cityVillageId, zoneId, wardId, message, body);
@@ -837,153 +906,10 @@ public class WhatsappActivity extends AppCompatActivity {
 
     }
 
-    /*private void sentWhatsAppMessage() {
-        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
+    private RequestBody createRequestBody(String value) {
+        return value == null ? null : RequestBody.create(MediaType.parse("multipart/form-data"), value);
+    }
 
-        //MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-
-        WhatsAppApiBody whatsAppApiBody = new WhatsAppApiBody();
-
-        if (series_id != null && !series_id.isEmpty()) {
-            RequestBody seriesId = RequestBody.create(MediaType.parse("multipart/form-data"), series_id);
-            //builder.addFormDataPart("series_id", series_id);
-            whatsAppApiBody.setSeries_id(seriesId);
-        }else {
-            RequestBody seriesId = RequestBody.create(MediaType.parse("text/plain"), "");
-            whatsAppApiBody.setSeries_id(seriesId);
-        }
-
-        if (colony_id != null && !colony_id.isEmpty()) {
-            RequestBody colonyId = RequestBody.create(MediaType.parse("multipart/form-data"), colony_id);
-            //builder.addFormDataPart("colony_id", colony_id);
-            whatsAppApiBody.setColony_id(colonyId);
-        }
-        else {
-            RequestBody colonyId = RequestBody.create(MediaType.parse("text/plain"), "");
-            whatsAppApiBody.setColony_id(colonyId);
-        }
-
-        if (row_id != null && !row_id.isEmpty()) {
-            RequestBody rowId = RequestBody.create(MediaType.parse("multipart/form-data"), row_id);
-            //builder.addFormDataPart("row_id", row_id);
-            whatsAppApiBody.setRow_id(rowId);
-        }
-        else {
-            RequestBody rowId = RequestBody.create(MediaType.parse("text/plain"), "");
-            whatsAppApiBody.setRow_id(rowId);
-        }
-
-        if (water_supply_id != null && !water_supply_id.isEmpty()) {
-            RequestBody waterSupplyId = RequestBody.create(MediaType.parse("multipart/form-data"), water_supply_id);
-            //builder.addFormDataPart("watersupply_id", water_supply_id);
-            whatsAppApiBody.setWatersupply_id(waterSupplyId);
-        }
-        else {
-            RequestBody waterSupplyId = RequestBody.create(MediaType.parse("text/plain"), "");
-            whatsAppApiBody.setWatersupply_id(waterSupplyId);
-        }
-
-        if (constituency_id != null && !constituency_id.isEmpty()) {
-            RequestBody constituencyId = RequestBody.create(MediaType.parse("multipart/form-data"), constituency_id);
-            //builder.addFormDataPart("constituency", constituency_id);
-            whatsAppApiBody.setConstituency(constituencyId);
-        }else {
-            RequestBody constituencyId = RequestBody.create(MediaType.parse("text/plain"), "");
-            whatsAppApiBody.setConstituency(constituencyId);
-        }
-
-        if (city_id != null && !city_id.isEmpty()) {
-            RequestBody cityVillageId = RequestBody.create(MediaType.parse("multipart/form-data"), city_id);
-            //builder.addFormDataPart("city_village", city_id);
-            whatsAppApiBody.setCity_village(cityVillageId);
-        } else {
-            RequestBody cityVillageId = RequestBody.create(MediaType.parse("text/plain"), "");
-            whatsAppApiBody.setCity_village(cityVillageId);
-        }
-
-        if (zone_id != null && !zone_id.isEmpty()) {
-            RequestBody zoneId = RequestBody.create(MediaType.parse("multipart/form-data"), zone_id);
-            //builder.addFormDataPart("zone", zone_id);
-            whatsAppApiBody.setZone(zoneId);
-        }else {
-            RequestBody zoneId = RequestBody.create(MediaType.parse("text/plain"), "");
-            whatsAppApiBody.setZone(zoneId);
-        }
-
-        if (ward_id != null && !ward_id.isEmpty()) {
-            RequestBody wardId = RequestBody.create(MediaType.parse("multipart/form-data"), ward_id);
-            //builder.addFormDataPart("prabhag_ward", ward_id);
-            whatsAppApiBody.setPrabhag_ward(wardId);
-        }else {
-            RequestBody wardId = RequestBody.create(MediaType.parse("text/plain"), "");
-            whatsAppApiBody.setPrabhag_ward(wardId);
-        }
-
-        String messageText = etMessage.getText().toString();
-        if (messageText != null && !messageText.isEmpty()) {
-            RequestBody message = RequestBody.create(MediaType.parse("multipart/form-data"), messageText);
-            //builder.addFormDataPart("template_desc", messageText);
-            whatsAppApiBody.setTemplate_desc(message);
-        }else {
-            RequestBody message = RequestBody.create(MediaType.parse("text/plain"), "");
-            whatsAppApiBody.setTemplate_desc(message);
-        }
-
-        //MultipartBody.Part body = null;
-        MultipartBody.Part filePart = null;
-        if (selectedVideuri == null && selectedImageUri != null) {
-            File file = new File(getRealPathFromURI(selectedImageUri));
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
-            //body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-            //builder.addPart(body);
-             filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-            whatsAppApiBody.setFile(filePart);
-        } else if (selectedImageUri == null && selectedVideuri != null) {
-            File file = new File(getRealPathFromURI(selectedVideuri));
-            RequestBody requestFile = RequestBody.create(MediaType.parse("video/mp4"), file);
-            //body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-            //builder.addPart(body);
-             filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-            whatsAppApiBody.setFile(filePart);
-        }
-
-        // Set file in WhatsAppApiBody
-        if (filePart != null) {
-            whatsAppApiBody.setFile(filePart);
-        }
-
-        Call<WhatsAppApiResponseData> call = apiInterface.sentWhatsAppMessages(whatsAppApiBody);
-
-        Log.d("Api Response", "WhatsApp: " + whatsAppApiBody.toString());
-        Log.d("Api Response", "WaterSupply: " + water_supply_id);
-        call.enqueue(new Callback<WhatsAppApiResponseData>() {
-            @Override
-            public void onResponse(Call<WhatsAppApiResponseData> call, retrofit2.Response<WhatsAppApiResponseData> response) {
-                if (response.isSuccessful()) {
-                    WhatsAppApiResponseData responseData = response.body();
-                    String status = responseData.getStatus();
-                    String message = responseData.getMessage();
-
-                    loader.setVisibility(View.GONE);
-                    Toast.makeText(WhatsappActivity.this, "Success!! " + status + " M: " + message,Toast.LENGTH_SHORT).show();
-                    Log.d("Api Response", "data: " + status);
-                    finish();
-                } else {
-                    loader.setVisibility(View.GONE);
-                    Toast.makeText(WhatsappActivity.this, "Response Error..!! " + response.code(), Toast.LENGTH_SHORT).show();
-                    Log.e("Api Response", "Response Error..");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<WhatsAppApiResponseData> call, Throwable throwable) {
-                loader.setVisibility(View.GONE);
-                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
-                Toast.makeText(WhatsappActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                throwable.printStackTrace();
-            }
-        });
-    }*/
 
 
 

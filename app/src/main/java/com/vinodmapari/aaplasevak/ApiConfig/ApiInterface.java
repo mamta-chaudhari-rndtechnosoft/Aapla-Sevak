@@ -117,7 +117,7 @@ public interface ApiInterface {
             @Part("series_id") RequestBody seriesId,
             @Part("colony_id") RequestBody  colonyId,
             @Part("row_id") RequestBody  rowId,
-            @Part("watersupply_id") RequestBody  waterSupplyId,
+            //@Part("watersupply_id") RequestBody  waterSupplyId,
             @Part("constituency") RequestBody  constituency,
             @Part("city_village") RequestBody  cityVillage,
             @Part("zone") RequestBody  zone,
@@ -132,7 +132,7 @@ public interface ApiInterface {
             @Part("series_id") RequestBody seriesId,
             @Part("colony_id") RequestBody  colonyId,
             @Part("row_id") RequestBody  rowId,
-            @Part("watersupply_id") RequestBody  waterSupplyId,
+            //@Part("watersupply_id") RequestBody  waterSupplyId,
             @Part("constituency") RequestBody  constituency,
             @Part("city_village") RequestBody  cityVillage,
             @Part("zone") RequestBody  zone,
@@ -140,23 +140,49 @@ public interface ApiInterface {
             @Part("template_desc") RequestBody  templateDesc
     );
 
-    //without watersupply
-   /* @Multipart
+    @Multipart
+    @POST("whatsapp_api.php")
+    Call<WhatsAppApiResponseData> sentWhatsAppMessage(
+            @Part("watersupply_id") RequestBody  waterSupplyId,
+            @Part("template_desc") RequestBody  templateDesc
+    );
+
+    @Multipart
+    @POST("whatsapp_api.php")
+    Call<WhatsAppApiResponseData> sentWhatsAppMessage(
+            @Part("watersupply_id") RequestBody  waterSupplyId,
+            @Part("template_desc") RequestBody  templateDesc,
+            @Part MultipartBody.Part file
+    );
+
+    @Multipart
     @POST("whatsapp_api.php")
     Call<WhatsAppApiResponseData> sentWhatsAppMessage(
             @Part("series_id") RequestBody seriesId,
             @Part("colony_id") RequestBody  colonyId,
-            @Part("row_id") RequestBody  rowId,
+            //@Part("row_id") RequestBody  rowId,
+            //@Part("watersupply_id") RequestBody  waterSupplyId,
+            @Part("constituency") RequestBody  constituency,
+            @Part("city_village") RequestBody  cityVillage,
+            @Part("zone") RequestBody  zone,
+            @Part("prabhag_ward") RequestBody  prabhagWard,
+            @Part("template_desc") RequestBody  templateDesc,
+            @Part MultipartBody.Part file
+    );
+
+    @Multipart
+    @POST("whatsapp_api.php")
+    Call<WhatsAppApiResponseData> sentWhatsAppMessage(
+            @Part("series_id") RequestBody seriesId,
+            @Part("colony_id") RequestBody  colonyId,
+            // @Part("row_id") RequestBody  rowId,
+            // @Part("watersupply_id") RequestBody  waterSupplyId,
             @Part("constituency") RequestBody  constituency,
             @Part("city_village") RequestBody  cityVillage,
             @Part("zone") RequestBody  zone,
             @Part("prabhag_ward") RequestBody  prabhagWard,
             @Part("template_desc") RequestBody  templateDesc
-    );*/
-
-    // with watersupply only
-
-
+    );
 
 
     @POST("search_survey_details.php")

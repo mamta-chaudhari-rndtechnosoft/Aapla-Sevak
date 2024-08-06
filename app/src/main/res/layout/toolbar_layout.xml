@@ -51,12 +51,13 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
+   <!-- <FrameLayout
         android:id="@+id/fragment_container"
         android:text="Dashboard"
         android:layout_below="@+id/toolbar_main"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+        -->
 
 </RelativeLayout>

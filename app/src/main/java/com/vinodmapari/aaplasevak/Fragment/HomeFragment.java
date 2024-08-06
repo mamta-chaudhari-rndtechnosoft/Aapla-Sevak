@@ -242,7 +242,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
+    private class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
 
         private Context context;
         private List<SliderModel> mSliderItems;
@@ -334,8 +334,8 @@ public class HomeFragment extends Fragment {
                                 String name1 = homeOptionObject.getString("name1");
                                 String image = homeOptionObject.getString("image");
 
-                               // Toast.makeText(requireContext(), "ID: " + id + " " + "NAME: " + name1  , Toast.LENGTH_SHORT).show();
-                              //  Log.d("Api Response","ID: " + id + " " + "NAME: " + name1);
+                                // Toast.makeText(requireContext(), "ID: " + id + " " + "NAME: " + name1  , Toast.LENGTH_SHORT).show();
+                                //  Log.d("Api Response","ID: " + id + " " + "NAME: " + name1);
                                 //homeOptions.add(new HomeOption(id, name1, image));
 
                                 homeOptions.add(new HomeOptionsItem(id,image,name1));
@@ -390,7 +390,6 @@ public class HomeFragment extends Fragment {
 
 
 }
-
 
 
 

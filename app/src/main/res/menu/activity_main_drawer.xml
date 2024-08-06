@@ -6,24 +6,20 @@
         <item
             android:id="@+id/home"
             android:icon="@drawable/ic_home"
-
             android:title="@string/home" />
 
         <item
             android:id="@+id/contact_us"
             android:icon="@drawable/ic_contact"
-
             android:title="@string/contact_us" />
 
         <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_settings"
-
             android:title="@string/setting" />
         <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_logout"
-
             android:title="@string/logout" />
     </group>
 

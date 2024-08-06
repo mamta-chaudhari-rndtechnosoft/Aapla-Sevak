@@ -159,148 +159,146 @@ public class DashBoardActivity extends AppCompatActivity {
     }
 
 
-            public void checkPer() {
-                permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-                permissions.add(Manifest.permission.CAMERA);
-                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-                permissionsToRequest = findUnAskedPermissions(permissions);
+    public void checkPer() {
+        permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        permissions.add(Manifest.permission.CAMERA);
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        permissionsToRequest = findUnAskedPermissions(permissions);
 
-                // check permissions
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (permissionsToRequest.size() > 0) {
-                        requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]),
-                                ALL_PERMISSIONS_RESULT);
+        // check permissions
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (permissionsToRequest.size() > 0) {
+                requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]),
+                        ALL_PERMISSIONS_RESULT);
 
+            }
+        }
+    }
+
+    private ArrayList findUnAskedPermissions(ArrayList<String> wanted) {
+        ArrayList result = new ArrayList();
+
+        for (String perm : wanted) {
+            if (!hasPermission(perm)) {
+                result.add(perm);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean hasPermission(String permission) {
+        if (canAskPermission()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
+            }
+        }
+        return true;
+    }
+
+    private boolean canAskPermission() {
+        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean canUseExternalStorage = false;
+
+        switch (requestCode) {
+            case ALL_PERMISSIONS_RESULT:
+                try {
+                    for (String perms : permissionsToRequest) {
+                        if (!hasPermission(perms)) {
+                            permissionsRejected.add(perms);
+                        }
                     }
-                }
-            }
 
-            private ArrayList findUnAskedPermissions(ArrayList<String> wanted) {
-                ArrayList result = new ArrayList();
-
-                for (String perm : wanted) {
-                    if (!hasPermission(perm)) {
-                        result.add(perm);
-                    }
-                }
-
-                return result;
-            }
-
-            private boolean hasPermission(String permission) {
-                if (canAskPermission()) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
-                    }
-                }
-                return true;
-            }
-
-            private boolean canAskPermission() {
-                return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
-            }
-
-
-            @Override
-            public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-                boolean canUseExternalStorage = false;
-
-                switch (requestCode) {
-                    case ALL_PERMISSIONS_RESULT:
-                        try {
-                            for (String perms : permissionsToRequest) {
-                                if (!hasPermission(perms)) {
-                                    permissionsRejected.add(perms);
-                                }
+                    if (permissionsRejected.size() > 0) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
+                                showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                    requestPermissions(permissionsRejected.toArray(
+                                                            new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
+                                                }
+                                            }
+                                        });
+                                return;
                             }
-
-                            if (permissionsRejected.size() > 0) {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                    if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
-                                        showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
-                                                new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                            requestPermissions(permissionsRejected.toArray(
-                                                                    new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                                        }
-                                                    }
-                                                });
-                                        return;
-                                    }
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-
-                        }
-                        break;
-                    case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                        if (grantResults.length > 0
-                                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                            canUseExternalStorage = true;
-                        }
-                        if (!canUseExternalStorage) {
-                            Toast.makeText(DashBoardActivity.this, getResources().getString(R.string.cannot_use_save_permission), Toast.LENGTH_SHORT).show();
                         }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+
+                }
+                break;
+            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    canUseExternalStorage = true;
+                }
+                if (!canUseExternalStorage) {
+                    Toast.makeText(DashBoardActivity.this, getResources().getString(R.string.cannot_use_save_permission), Toast.LENGTH_SHORT).show();
                 }
             }
+        }
+    }
 
-            private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-                new AlertDialog.Builder(DashBoardActivity.this)
-                        .setMessage(message)
-                        .setPositiveButton("OK", okListener)
-                        .setNegativeButton("cancel", null)
-                        .create()
-                        .show();
-            }
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(DashBoardActivity.this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("cancel", null)
+                .create()
+                .show();
+    }
 
-            private void initView() {
-                toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-                tvToolbarTitle = (TextView) findViewById(R.id.tvToolbarTitle);
-                textView_appDevlopBy = (TextView) findViewById(R.id.textView_app_developed_by);
-                drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    private void initView() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        tvToolbarTitle = (TextView) findViewById(R.id.tvToolbarTitle);
+        textView_appDevlopBy = (TextView) findViewById(R.id.textView_app_developed_by);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-                navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-                toolbar.setTitleTextColor(getResources().getColor(R.color.colorBlack));
-                setSupportActionBar(toolbar);
-                tvToolbarTitle.setText(getResources().getString(R.string.home));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorBlack));
+        setSupportActionBar(toolbar);
+        tvToolbarTitle.setText(getResources().getString(R.string.home));
 
-                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                        DashBoardActivity.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-                drawer.addDrawerListener(toggle);
-                toggle.syncState();
-                toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_hamburger));
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                DashBoardActivity.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_hamburger));
 
-              //  navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
-
-//        loadAppDetail();
-            }
-
-
-
-
-            private void addFragment(Fragment fragment, String tag) {
-
-                toolbar.setTitle(tag);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, fragment, tag)
-                        .commit();
+        //  navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
+        //  loadAppDetail();
+    }
 
 
-                drawer.closeDrawer(Gravity.LEFT);
-            }
 
-            private void setToolBarTitle(String title) {
-                toolbar.setTitle(title);
-            }
+
+    private void addFragment(Fragment fragment, String tag) {
+
+        toolbar.setTitle(tag);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment, tag)
+                .commit();
+
+        drawer.closeDrawer(Gravity.LEFT);
+    }
+
+    private void setToolBarTitle(String title) {
+        toolbar.setTitle(title);
+    }
 
 
     private void getSeriesList()
@@ -321,7 +319,7 @@ public class DashBoardActivity extends AppCompatActivity {
                 Constants.series.add(new Series("0","Select Series"));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                  //  Log.d("TAG", "onResponse: "+response);
+                    //  Log.d("TAG", "onResponse: "+response);
 
                     JSONArray jsonArray = jsonObject.getJSONArray("SERIES");
                     for(int i = 0; i < jsonArray.length(); i++)
@@ -370,8 +368,8 @@ public class DashBoardActivity extends AppCompatActivity {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         String id = jsonObject1.getString("id");
                         String status_name = jsonObject1.getString("status_name");
-
                         Constants.statuses.add(new Status(id,status_name));
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -393,7 +391,6 @@ public class DashBoardActivity extends AppCompatActivity {
     {
 
         final RequestQueue requestQueue = Volley.newRequestQueue(DashBoardActivity.this);
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.colony_list, new Response.Listener<String>() {
             @Override
             public void onResponse(String response)
