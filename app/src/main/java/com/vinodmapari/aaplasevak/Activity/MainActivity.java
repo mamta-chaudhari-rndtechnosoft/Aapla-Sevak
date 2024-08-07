@@ -1,6 +1,5 @@
 package com.vinodmapari.aaplasevak.Activity;
 
-import static androidx.test.InstrumentationRegistry.getContext;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -176,10 +175,10 @@ public class MainActivity extends AppCompatActivity {
                     //startActivity(this);
                 }
                 else if (id == R.id.contact_us){
-
+                        startActivity(new Intent(MainActivity.this, ContactActivity.class));
                 }
                 else if(id == R.id.settings){
-
+                    startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 }
                 else if (id == R.id.logout) {
                     AlertDialog alertbox = new AlertDialog.Builder(MainActivity.this)
@@ -221,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 drawerLayout.closeDrawer(GravityCompat.START);
+                //drawer.closeDrawer(Gravity.LEFT);
                 return true;
             }
         });
@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public MainActivity.SliderAdapter.SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
+        public SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
 
             View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_slider_image, null);
             //return new HomeFragment.SliderAdapter.SliderAdapterVH(inflate);
@@ -354,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
             SliderModel sliderItem = mSliderItems.get(position);
 
 
-            displayImageOriginal(getContext(), viewHolder.imageSlider, mSliderItems, position);
+            displayImageOriginal(context, viewHolder.imageSlider, mSliderItems, position);
         }
 
 

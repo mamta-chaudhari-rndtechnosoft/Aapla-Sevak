@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
@@ -62,6 +63,7 @@ public class SearchActivity extends AppCompatActivity {
     EditText etName, etLname, etMname, etVoterId, etAdharCard, etFullName, etHouseNumber, etMobileNumber, etMobileNumberTwo;
     String name, lname, mname, voterId, adharcard, fullName, houseNo, mobileNumber, mobileNumberTwo;
     Button btn;
+    MaterialToolbar toolbar;
 
     LinearLayoutManager mLayoutManager;
     //private int positionSelect;
@@ -77,6 +79,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         //search = findViewById(R.id.iv_search_icon);
+        toolbar =  findViewById(R.id.toolbar);
         rv = findViewById(R.id.rv_search);
         etAdharCard = findViewById(R.id.adharCard);
         etVoterId = findViewById(R.id.et_voterID);
@@ -102,14 +105,16 @@ public class SearchActivity extends AppCompatActivity {
 
         btn = findViewById(R.id.btnview);
         //pageNo = 0;
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
-        toolbar.setTitle(Html.fromHtml("<b>" + "Search" + "</b>"));
-        setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 finish();
+             }
+         });
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         searchLists = new ArrayList<>();
 

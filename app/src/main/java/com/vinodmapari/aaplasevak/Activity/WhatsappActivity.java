@@ -174,6 +174,10 @@ public class WhatsappActivity extends AppCompatActivity {
                 intent.putExtra("row_id", row_id);
                 intent.putExtra("water_Supply_id", water_supply_id);
                 intent.putExtra("colony_id", colony_id);
+                intent.putExtra("constituency_id",constituency_id);
+                intent.putExtra("city_id",city_id);
+                intent.putExtra("zone_id",zone_id);
+                intent.putExtra("ward_id",ward_id);
                 startActivity(intent);
 
 

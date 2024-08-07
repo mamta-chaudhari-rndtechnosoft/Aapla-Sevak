@@ -8,17 +8,50 @@
     tools:context=".Activity.SearchActivity">
 
 
-    <androidx.appcompat.widget.Toolbar
+    <!--  <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/toolbar_gradient"
+          android:textStyle="bold"
+          app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+          app:titleTextColor="@color/colorWhite" />-->
+
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/toolbar_gradient"
-        android:textStyle="bold"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/colorWhite" />
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="30dp"
+        app:title="Search"
+        app:titleCentered="true"
+        app:titleTextColor="#0442B6"
+        android:background="#DBD7D7"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/colorDarkBlue"
+        android:elevation="0dp">
+
+        <!--<ImageButton
+            android:id="@+id/menuBurger"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/ic_back"
+            />-->
 
 
-    <View
+        <ImageButton
+            android:id="@+id/notification"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:visibility="gone"
+            android:background="@drawable/sevak_logoo" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+
+    <!--<View
         android:id="@+id/view_search"
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -26,167 +59,178 @@
         android:background="@color/colorWhite"
         android:elevation="0dp">
 
-    </View>
+    </View>-->
 
-    <LinearLayout
-        android:id="@+id/ll_search"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardMain"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        android:weightSum="3">
+        app:cardBackgroundColor="#FF7043"
+        android:paddingVertical="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp">
 
-
-        <EditText
-            android:id="@+id/et_fullName"
+        <LinearLayout
+            android:id="@+id/layoutMain"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/border_search"
-            android:elevation="10dp"
-            android:gravity="center"
-            android:hint="Search Name"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/colorBlack"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@id/ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/ll_search"
-        android:layout_marginTop="-10dp"
-        android:elevation="10dp"
-        android:padding="5dp"
-        android:weightSum="3">
+            <LinearLayout
+                android:id="@+id/ll_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="5dp"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:weightSum="3">
 
 
-        <EditText
-            android:id="@+id/et_voterID"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/border_search"
-            android:elevation="10dp"
-            android:gravity="center"
-            android:hint="Voter ID"
-            android:singleLine="true"
-            android:textColor="@color/colorBlack"
-           />
+                <EditText
+                    android:id="@+id/et_fullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/et_border"
+                    android:elevation="10dp"
+                    android:gravity="center"
+                    android:hint="Full Name"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack" />
 
-        <EditText
-            android:id="@+id/adharCard"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/border_search"
-            android:gravity="center"
-            android:hint="Adhar Card"
-            android:singleLine="true"
-            android:textColor="@color/colorBlack"
-             />
+            </LinearLayout>
 
-
-        <!--<ImageView
-            android:id="@+id/iv_search_icon"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:background="@drawable/border_search"
-            android:src="@drawable/ic_search" />-->
-        <EditText
-            android:id="@+id/et_house_no"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:gravity="center"
-            android:hint="House No"
-            android:background="@drawable/border_search"
-            android:singleLine="true"
-            android:textColor="@color/colorBlack"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_two"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll"
-        android:layout_marginTop="0dp"
-        android:elevation="10dp"
-        android:padding="5dp"
-        android:weightSum="2">
+            <LinearLayout
+                android:id="@id/ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:elevation="10dp"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="5dp"
+                android:weightSum="3">
 
 
-    <EditText
-        android:id="@+id/et_number"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_weight="1"
-        android:background="@drawable/border_search"
-        android:elevation="10dp"
-        android:gravity="center"
-        android:hint="Number"
-        android:inputType="number"
-        android:singleLine="true"
-        android:textColor="@color/colorBlack"
-        />
+                <EditText
+                    android:id="@+id/et_voterID"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/et_border"
+                    android:elevation="10dp"
+                    android:gravity="center"
+                    android:hint="Voter ID"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack" />
 
-    <EditText
-        android:id="@+id/et_number_two"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:background="@drawable/border_search"
-        android:gravity="center"
-        android:hint="Calling Number"
-        android:singleLine="true"
-        android:inputType="number"
-        android:visibility="gone"
-        android:textColor="@color/colorBlack"
-        />
+                <EditText
+                    android:id="@+id/adharCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/et_border"
+                    android:gravity="center"
+                    android:hint="Adhar Card"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack" />
 
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvCount"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_weight="1"
-        android:background="@drawable/border_search"
-        android:elevation="10dp"
-        android:gravity="center"
-        android:text="Count"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textColor="@color/colorBlack"
-        android:layout_below="@id/ll_two"/>
+                <!--<ImageView
+                    android:id="@+id/iv_search_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:background="@drawable/border_search"
+                    android:src="@drawable/ic_search" />-->
+                <EditText
+                    android:id="@+id/et_house_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/et_border"
+                    android:gravity="center"
+                    android:hint="House No"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:elevation="10dp"
+                android:padding="5dp"
+                android:weightSum="2">
+
+
+                <EditText
+                    android:id="@+id/et_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/et_border"
+                    android:elevation="10dp"
+                    android:gravity="center"
+                    android:hint="Mobile Number"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack" />
+
+                <EditText
+                    android:id="@+id/et_number_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_search"
+                    android:gravity="center"
+                    android:hint="Calling Number"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCount"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/ll_two"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_border"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="#FF7043"
+                android:textStyle="bold"
+                tools:text="Count" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/btnview"
-        android:layout_below="@id/tvCount"
+        android:layout_below="@id/cardMain"
+        android:layout_marginTop="8dp"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -194,8 +238,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-
-            />
+            tools:listitem="@layout/search_item"/>
 
 
         <!--we are adding progress bar
@@ -220,8 +263,7 @@
             android:layout_gravity="center"
             app:lottie_autoPlay="true"
             app:lottie_fileName="loading_app.json"
-            app:lottie_loop="true"
-            />
+            app:lottie_loop="true" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/empty_icon"
@@ -231,8 +273,7 @@
             android:layout_gravity="center"
             app:lottie_autoPlay="true"
             app:lottie_fileName="empty.json"
-            app:lottie_loop="true"
-            />
+            app:lottie_loop="true" />
 
     </LinearLayout>
 
@@ -241,7 +282,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="#228B22"
         android:elevation="10dp"
         android:text="view more"
         android:textColor="@color/colorWhite"

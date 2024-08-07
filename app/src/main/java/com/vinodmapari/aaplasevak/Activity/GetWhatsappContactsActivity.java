@@ -101,7 +101,7 @@ public class GetWhatsappContactsActivity extends AppCompatActivity implements Po
     private Uri outputFileUri;
     private static String APP_TEMP_FOLDER = "";
     ArrayList<GetContact> getContacts;
-    String houseNo, row, series, watersupply, colony, image;
+    String houseNo, row, series, watersupply, colony, image, constituency, city, zone, ward;
     ArrayList<Wp_Img> imgs;
     EditText etMessage;
     private String filePath;
@@ -119,10 +119,7 @@ public class GetWhatsappContactsActivity extends AppCompatActivity implements Po
         setContentView(R.layout.activity_get_contacts);
 
 
-
         etMessage = findViewById(R.id.etMessage);
-
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
@@ -148,8 +145,24 @@ public class GetWhatsappContactsActivity extends AppCompatActivity implements Po
         series = in.getStringExtra("series_id");
         row = in.getStringExtra("row_id");
         watersupply = in.getStringExtra("water_Supply_id");
+        constituency = in.getStringExtra("constituency_id");
+        city = in.getStringExtra("city_id");
+        zone = in.getStringExtra("zone_id");
+        ward = in.getStringExtra("ward_id");
+
+        colony = (colony != null) ? colony : "0";
+        series = (series != null) ? series : "0";
+        row = (row != null) ? row : "0";
+        watersupply = (watersupply != null) ? watersupply : "0";
+        constituency = (constituency != null) ? constituency : "0";
+        city = (city != null) ? city : "0";
+        zone = (zone != null) ? zone : "0";
+        ward = (ward != null) ? ward : "0";
+
+
 
         //Toast.makeText(this, "W: " + watersupply  + "" +"C: " + colony + " " + "S: " + series + " " + "R: " + row, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Con: " + constituency  + "" +"City: " + city + " " + "zone: " + zone + " " + "ward: " + ward, Toast.LENGTH_SHORT).show();
 
 
         //////////////////////////////////////////////////////////////////
@@ -180,7 +193,7 @@ public class GetWhatsappContactsActivity extends AppCompatActivity implements Po
         empty_icon.setVisibility(GONE);
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.whatsapp + "&series_id=" + series + "&colony_id=" + colony + "&row_id=" + row + "&watersupply_id=" + watersupply, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.whatsapp + "&series_id=" + series + "&colony_id=" + colony + "&row_id=" + row + "&watersupply_id=" + watersupply + "&constituency_id=" + constituency + "&city_village_id=" + city + "&zone_id=" + zone + "&prabhag_ward_id=" + ward,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 

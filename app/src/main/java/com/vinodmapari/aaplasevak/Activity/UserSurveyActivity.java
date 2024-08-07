@@ -306,7 +306,12 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                  calling_no = mob1.getText().toString();
                  wp_no = mob2.getText().toString();
                  House_no = house_number.getText().toString();
+
+                 user_name = name.getText().toString();
+                 user_middle_name = middle_name.getText().toString();
                  user_surname = surname.getText().toString();
+
+
                  mobile_no1 = calling_no;
                  mobile_no2 = wp_no;
                  user_dob = dob.getText().toString();
@@ -326,8 +331,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                         || user_middle_name.equals("")
                         || user_surname.equals("")
                         || gender.equals("")
-                        || voterId.equals("")
                         || House_no.equals("")
+                        //|| voterId.equals("")
                         //|| votingcenter.equals("")
                         //|| user_dob.isEmpty()
                         //|| user_adharcard.equals("")
@@ -1272,8 +1277,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     @Override
     protected void onResume() {
 
-
-        if (Method.haveNetworkConnection(this)) {
+        /*if (Method.haveNetworkConnection(this)) {
             if (SharedPref.getAppStatus(this).equalsIgnoreCase("on")) {
 
                 //getSeriesList();
@@ -1284,19 +1288,19 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
             }
         } else {
             swipe_refresh.setRefreshing(false);
-        }
+        }*/
         super.onResume();
     }
 
 
-    @Override
+   /* @Override
     protected void onStop() {
-        Intent intent = new Intent(UserSurveyActivity.this, DashBoardActivity.class);
+        Intent intent = new Intent(UserSurveyActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
         super.onStop();
-    }
+    }*/
 
     @Override
     public void onRefresh() {

@@ -14,6 +14,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +60,7 @@ import com.vinodmapari.aaplasevak.Model.SeriesResponse;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.WaterSupplyItem;
 import com.vinodmapari.aaplasevak.Model.WaterSupplyResponse;
+import com.vinodmapari.aaplasevak.Model.WhatsAppApiResponseData;
 import com.vinodmapari.aaplasevak.Model.ZoneItem;
 import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 import com.vinodmapari.aaplasevak.R;
@@ -114,7 +118,7 @@ public class SendSmsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        spinner_template.setTitle("select template");
+        //spinner_template.setTitle("select template");
 
 
         //spinners
@@ -127,27 +131,26 @@ public class SendSmsActivity extends AppCompatActivity {
         fetchZones();
         fetchCityVillages();
         fetchPrabhagWards();
-        fetchTemplateDescription();
+        fetchTemplateDesciption();
 
 
+        //template_name.clear();
+       // template_name = new ArrayList<>();
 
-        template_name.clear();
-        template_name = new ArrayList<>();
-
-        for (int i = 0; i < Constants.templates.size(); i++) {
+       /* for (int i = 0; i < Constants.templates.size(); i++) {
             Constants.template_name.add(Constants.templates.get(i).getTemplate());
             if (template_name != null && template_name.equals(Constants.templates.get(i).getTemplate())) {
                 selected_template = i;
             }
-        }
+        }*/
 
 
-        ArrayAdapter<String> dataAdapter_template = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, template_name);
+       /* ArrayAdapter<String> dataAdapter_template = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, template_name);
         dataAdapter_template.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_template.setAdapter(dataAdapter_template);
+        spinner_template.setAdapter(dataAdapter_template);*/
 
 
-        spinner_template.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* spinner_template.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 template_id = Constants.templates.get(position).getId();
@@ -168,7 +171,7 @@ public class SendSmsActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
 
 
@@ -209,54 +212,72 @@ public class SendSmsActivity extends AppCompatActivity {
         fetchSeries();
     }
 
+    private void fetchTemplateDesciption(){
+        ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-    private void fetchTemplateDescription() {
-        RequestQueue requestQueue = Volley.newRequestQueue(SendSmsActivity.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.templateDec + "&template_id=" + template_id,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Handle the JSON response
+        Call<TemplateResponse> call = apiInterface.getTemplateData();
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray templateDescArray = jsonObject.getJSONArray("TEMPLATE_DESC");
-
-                            List<TemplateResponse> templateDescItems = new ArrayList<>();
-                            for (int i = 0; i < templateDescArray.length(); i++) {
-                                JSONObject templateDescObject = templateDescArray.getJSONObject(i);
-                                String error = templateDescObject.getString("error");
-                                String id = templateDescObject.getString("id");
-                                String template = templateDescObject.getString("template");
-                                String templateDesc = templateDescObject.getString("template_desc");
-
-                                // Set the template description text to the TextView
-                                etTemplateText.setText(templateDesc);
-
-                                // Optionally, load an image using Picasso if there's an image URL
-                                // For example: Picasso.get().load(imageUrl).into(imgLogo);
-
-                                // templateDescItems.add(new TemplateResponse(error, id, template, templateDesc));
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            //progress_splash.setVisibility(View.GONE);
-                            //Toast.makeText(SendSmsActivity.this, "Error parsing JSON response.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+        call.enqueue(new Callback<TemplateResponse>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                //progress_splash.setVisibility(View.GONE);
-                Log.e("Tag", "Error : " + error.getLocalizedMessage());
-                Toast.makeText(SendSmsActivity.this, "Server Taking Too Much Time to Load...", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<TemplateResponse> call, retrofit2.Response<TemplateResponse> response) {
+                if(response.isSuccessful()){
+
+                    List<TemplateResponse.TemplateDesc> templateItems = response.body().getTEMPLATE_DESC();
+
+                    List<String> templateNames = new ArrayList<>();
+                    final Map<String, String> templateIdMap = new HashMap<>();
+                    templateNames.add("Select Template");
+
+                    for (TemplateResponse.TemplateDesc item: templateItems){
+                        templateNames.add(item.getTemplate());
+                        templateIdMap.put(item.getTemplate(), item.getTemplateDesc());
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SendSmsActivity.this,
+                            android.R.layout.simple_spinner_item, templateNames);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_template.setAdapter(adapter);
+
+                    // Handle spinner item selection
+                    spinner_template.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String selectedTemplate = (String) parent.getItemAtPosition(position);
+                            if (!selectedTemplate.equals("Select Template")) {
+                                //fetchColony();
+                                String selectedTemplateId = templateIdMap.get(selectedTemplate);
+                                etTemplateText.setText(selectedTemplateId);
+
+                                //Toast.makeText(UserSurveyActivity.this, "S: " + series_id + " C: " + colony_id  + " R: " + row_id, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // Handle nothing selected
+                        }
+                    });
+
+
+                }
+                else{
+                    Toast.makeText(SendSmsActivity.this, "Response Error..!!" + response.code(), Toast.LENGTH_SHORT).show();
+                    Log.e("Tag", "Response Error..");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TemplateResponse> call, Throwable throwable) {
+                Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(SendSmsActivity.this, "Error..", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Add the request to the RequestQueue
-        requestQueue.add(stringRequest);
     }
+
+
+
 
 
     public void sendSms() {
@@ -264,22 +285,29 @@ public class SendSmsActivity extends AppCompatActivity {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         //SendSmsBody sendSmsBody = new SendSmsBody(selected_series,selected_row,selected_colony,selected_water_supply,etTemplateText.getText().toString());
-        SendSmsBody sendSmsBody = new SendSmsBody(
-                series_id,
-                row_id,
-                colony_id,
-                water_supply_id,
-                constituency_id,
-                city_id,
-                zone_id,
-                ward_id,
-                etTemplateText.getText().toString()
-        );
 
-        Log.d("Api Response", sendSmsBody.toString());
+        RequestBody seriesId = createRequestBody(series_id);
+        RequestBody colonyId = createRequestBody(colony_id);
+        RequestBody rowId = createRequestBody(row_id);
+        RequestBody waterSupplyId = createRequestBody(water_supply_id);
+        RequestBody constituencyId = createRequestBody(constituency_id);
+        RequestBody cityVillageId = createRequestBody(city_id);
+        RequestBody zoneId = createRequestBody(zone_id);
+        RequestBody wardId = createRequestBody(ward_id);
+        RequestBody message = createRequestBody(etTemplateText.getText().toString());
 
-        Call<SendSmsResponseData> call = apiInterface.sendSms(sendSmsBody);
-        //Toast.makeText(this, "Body: " + sendSmsBody.toString(), Toast.LENGTH_SHORT).show();
+
+        Call<SendSmsResponseData> call = null;
+
+
+        if (water_supply_id == null) {
+            call = apiInterface.sendSms(seriesId, colonyId, rowId, constituencyId, cityVillageId, zoneId, wardId, message);
+        } else if (water_supply_id != null) {
+            call = apiInterface.sendSms(waterSupplyId, message);
+        } else if (water_supply_id == null && row_id == null) {
+            call = apiInterface.sendSms(seriesId, colonyId, constituencyId, cityVillageId, zoneId, wardId, message);
+        }
+
 
         call.enqueue(new Callback<SendSmsResponseData>() {
             @Override
@@ -305,6 +333,11 @@ public class SendSmsActivity extends AppCompatActivity {
         });
 
     }
+
+    private RequestBody createRequestBody(String value) {
+        return value == null ? null : RequestBody.create(MediaType.parse("multipart/form-data"), value);
+    }
+
 
     private void fetchSeries() {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);

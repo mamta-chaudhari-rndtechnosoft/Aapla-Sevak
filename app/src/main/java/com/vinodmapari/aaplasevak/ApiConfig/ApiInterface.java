@@ -59,8 +59,8 @@ public interface ApiInterface {
     @GET("option")
     Call<HomeOptionsResponseData> getHomeData();
 
-    @GET("template_desc")
-    Call<TemplateResponse> getTemplateData(@Query("template_id") String templateId);
+    @GET("api.php?template_desc")
+    Call<TemplateResponse> getTemplateData();
 
     //Family Member list
     @GET("api.php?survey_detail_by_house_no")
@@ -82,8 +82,43 @@ public interface ApiInterface {
     @POST("api.php?sms_send_new")
     Call<ResponseBody> sendSms(@Body SendSmsBody sendSmsBody);
     */
+   /* @POST("sendsms_api.php")
+    Call<SendSmsResponseData> sendSms(@Body SendSmsBody sendSmsBody);*/
+
+    @Multipart
     @POST("sendsms_api.php")
-    Call<SendSmsResponseData> sendSms(@Body SendSmsBody sendSmsBody);
+    Call<SendSmsResponseData> sendSms(
+            @Part("series_id") RequestBody seriesId,
+            @Part("colony_id") RequestBody  colonyId,
+            @Part("row_id") RequestBody  rowId,
+            //@Part("watersupply_id") RequestBody  waterSupplyId,
+            @Part("constituency") RequestBody  constituency,
+            @Part("city_village") RequestBody  cityVillage,
+            @Part("zone") RequestBody  zone,
+            @Part("prabhag_ward") RequestBody  prabhagWard,
+            @Part("template_desc") RequestBody  templateDesc
+    );
+    @Multipart
+    @POST("sendsms_api.php")
+    Call<SendSmsResponseData> sendSms(
+            //@Part("row_id") RequestBody  rowId,
+            @Part("watersupply_id") RequestBody  waterSupplyId,
+            @Part("template_desc") RequestBody  templateDesc
+    );
+    @Multipart
+    @POST("sendsms_api.php")
+    Call<SendSmsResponseData> sendSms(
+            @Part("series_id") RequestBody seriesId,
+            @Part("colony_id") RequestBody  colonyId,
+            //@Part("row_id") RequestBody  rowId,
+            //@Part("watersupply_id") RequestBody  waterSupplyId,
+            @Part("constituency") RequestBody  constituency,
+            @Part("city_village") RequestBody  cityVillage,
+            @Part("zone") RequestBody  zone,
+            @Part("prabhag_ward") RequestBody  prabhagWard,
+            @Part("template_desc") RequestBody  templateDesc
+    );
+
 
     @GET("api.php?wts_no")
     Call<WhatsAppNumberResponseData> getWhatsAppContact(
