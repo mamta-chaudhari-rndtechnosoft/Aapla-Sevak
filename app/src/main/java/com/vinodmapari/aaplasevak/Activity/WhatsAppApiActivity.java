@@ -84,12 +84,12 @@ public class WhatsAppApiActivity extends AppCompatActivity {
         rvWhatsAppApi.setLayoutManager(mLayoutManager);
 
 
-        getNumberList();
+        //getNumberList();
 
 
     }
 
-    private void getNumberList() {
+    /*private void getNumberList() {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
         apiInterface.getWhatsAppContact(waterSupply, row, colony, series).enqueue(new Callback<WhatsAppNumberResponseData>() {
@@ -114,5 +114,5 @@ public class WhatsAppApiActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 }

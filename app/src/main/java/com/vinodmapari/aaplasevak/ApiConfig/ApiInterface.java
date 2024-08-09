@@ -122,10 +122,14 @@ public interface ApiInterface {
 
     @GET("api.php?wts_no")
     Call<WhatsAppNumberResponseData> getWhatsAppContact(
-            @Query("watersupply_id") String waterSupplyId,
-            @Query("row_id") String rowId,
+            @Query("series_id") String seriesId,
             @Query("colony_id") String colonyId,
-            @Query("series_id") String seriesId
+            @Query("row_id") String rowId,
+            @Query("watersupply_id") String waterSupplyId,
+            @Query("constituency_id") String constituencyId,
+            @Query("city_village_id") String cityId,
+            @Query("zone_id") String zoneId,
+            @Query("prabhag_ward_id") String wardId
     );
 
     @GET("api.php?constituency")

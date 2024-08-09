@@ -6,6 +6,7 @@ public class WhatsAppNumList {
     String mobile1;
     String middle_name;
     String surname;
+    private boolean isMessageSent = false;
 
 
     public WhatsAppNumList(String id, String name, String mobile1, String middle_name, String surname) {
@@ -54,5 +55,12 @@ public class WhatsAppNumList {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+    public boolean isMessageSent() {
+        return isMessageSent;
+    }
+
+    public void setMessageSent(boolean messageSent) {
+        isMessageSent = messageSent;
     }
 }

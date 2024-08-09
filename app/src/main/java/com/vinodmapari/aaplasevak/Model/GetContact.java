@@ -2,6 +2,7 @@ package com.vinodmapari.aaplasevak.Model;
 
 public class GetContact {
     String id, name,mobile1,middle_name,surname;
+    private boolean isMessageSent = false;
 
     public GetContact(String id, String name, String mobile1, String middle_name, String surname) {
         this.id = id;
@@ -49,5 +50,14 @@ public class GetContact {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+
+    public boolean isMessageSent() {
+        return isMessageSent;
+    }
+
+    public void setMessageSent(boolean messageSent) {
+        isMessageSent = messageSent;
     }
 }

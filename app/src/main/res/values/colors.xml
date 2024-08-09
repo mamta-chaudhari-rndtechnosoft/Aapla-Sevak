@@ -20,6 +20,9 @@
     <color name="colorGreen">#00cc44</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="colorDarkBlue">#232653</color>
+    
+    <color name="orange_bjp">#F47216</color>
+    <color name="green_bjp">#00A650</color>
 
     <color name="saved_location_default_tag_backgrond">#ff9e83d6</color>
     <color name="saved_location_home_tag_background">#ffe56161</color>

@@ -36,6 +36,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.Model.CityVillageItem;
@@ -86,6 +87,7 @@ public class SendSmsActivity extends AppCompatActivity {
     EditText  etTemplateText;
     private String colonyName;
     AVLoadingIndicatorView progress;
+    MaterialToolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,15 +110,13 @@ public class SendSmsActivity extends AppCompatActivity {
         spinner_ward = findViewById(R.id.spinner_ward_prabhag);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
-
-        toolbar.setTitle(Html.fromHtml("<b>" + "Send SMS" + "</b>"));
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+         toolbar = findViewById(R.id.toolbar);
+         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 finish();
+             }
+         });
 
         //spinner_template.setTitle("select template");
 
@@ -226,7 +226,7 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     List<String> templateNames = new ArrayList<>();
                     final Map<String, String> templateIdMap = new HashMap<>();
-                    templateNames.add("Select Template");
+                    templateNames.add("Template");
 
                     for (TemplateResponse.TemplateDesc item: templateItems){
                         templateNames.add(item.getTemplate());
@@ -243,7 +243,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedTemplate = (String) parent.getItemAtPosition(position);
-                            if (!selectedTemplate.equals("Select Template")) {
+                            if (!selectedTemplate.equals("Template")) {
                                 //fetchColony();
                                 String selectedTemplateId = templateIdMap.get(selectedTemplate);
                                 etTemplateText.setText(selectedTemplateId);
@@ -352,7 +352,7 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     List<String> seriesNames = new ArrayList<>();
                     final Map<String, String> seriesIdMap = new HashMap<>();
-                    seriesNames.add("Select Series");
+                    seriesNames.add("Series");
 
                     for (SeriesItem item : seriesItems) {
                         seriesNames.add(item.getSeriesName());
@@ -370,7 +370,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedSeries = (String) parent.getItemAtPosition(position);
-                            if (!selectedSeries.equals("Select Series")) {
+                            if (!selectedSeries.equals("Series")) {
                                 //fetchColony();
                                 String selectedSeriesId = seriesIdMap.get(selectedSeries);
                                 fetchColony(selectedSeriesId);
@@ -409,7 +409,7 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     List<String> colonyNames = new ArrayList<>();
                     final Map<String, String> colonyIdMap = new HashMap<>();
-                    colonyNames.add("Select Colony");
+                    colonyNames.add("Colony");
 
                     for (ColonyItem item : colonyItems) {
                         colonyNames.add(item.getColonyName());
@@ -427,7 +427,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedColony = (String) parent.getItemAtPosition(position);
-                            if (!selectedColony.equals("Select Colony")) {
+                            if (!selectedColony.equals("Colony")) {
                                 //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedCityVillage, Toast.LENGTH_SHORT).show();
                                 // Perform any other actions based on selection
                                 String selectedColonyId = colonyIdMap.get(selectedColony);
@@ -466,7 +466,7 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     List<String> rowNames = new ArrayList<>();
                     final Map<String, String> rowIdMap = new HashMap<>();
-                    rowNames.add("Select Row");
+                    rowNames.add("Row");
 
                     for (RowItem item : rowItems) {
                         rowNames.add(item.getRowName());
@@ -485,7 +485,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedRows = (String) parent.getItemAtPosition(position);
-                            if (!selectedRows.equals("Select Row")) {
+                            if (!selectedRows.equals("Row")) {
                                 //fetchColony();
                                 String selectedRowId = rowIdMap.get(selectedRows);
                                 row_id = selectedRowId;
@@ -526,7 +526,7 @@ public class SendSmsActivity extends AppCompatActivity {
 
                     List<String> waterSupplyNames = new ArrayList<>();
                     final Map<String, String> waterSupplyIdMap = new HashMap<>();
-                    waterSupplyNames.add("Select Water Supply");
+                    waterSupplyNames.add("Water Supply");
 
                     for (WaterSupplyItem item : waterSupplyItems) {
                         waterSupplyNames.add(item.getSlotName());
@@ -545,7 +545,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedWaterSupply = (String) parent.getItemAtPosition(position);
-                            if (!selectedWaterSupply.equals("Select Water Supply")) {
+                            if (!selectedWaterSupply.equals("Water Supply")) {
                                 //fetchColony();
                                 String selectedWaterSupplyId = waterSupplyIdMap.get(selectedWaterSupply);
                                 water_supply_id = selectedWaterSupplyId;
@@ -588,7 +588,7 @@ public class SendSmsActivity extends AppCompatActivity {
                     // Create a list of constituency names
                     List<String> constituencyName = new ArrayList<>();
                     final Map<String, String> constituencyIdMap = new HashMap<>();
-                    constituencyName.add("Select Constituency");
+                    constituencyName.add("Constituency");
 
                     for (ConstituencyItem constituency : constituencies) {
                         constituencyName.add(constituency.getConstituencyName());
@@ -608,7 +608,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedConstituency = (String) parent.getItemAtPosition(position);
-                            if (!selectedConstituency.equals("Select Constituency")) {
+                            if (!selectedConstituency.equals("Constituency")) {
                                 //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedConstituency, Toast.LENGTH_SHORT).show();
                                 String selectedConstituencyId = constituencyIdMap.get(selectedConstituency);
                                 constituency_id = selectedConstituencyId;
@@ -651,7 +651,7 @@ public class SendSmsActivity extends AppCompatActivity {
                     // Create a list of city or village names
                     List<String> cityVillageNames = new ArrayList<>();
                     final Map<String, String> cityVillageIdMap = new HashMap<>();
-                    cityVillageNames.add("Select City/Village");
+                    cityVillageNames.add("City/Village");
 
                     for (CityVillageItem item : cityVillages) {
                         cityVillageNames.add(item.getCityVillageName());
@@ -668,7 +668,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedCityVillage = (String) parent.getItemAtPosition(position);
-                            if (!selectedCityVillage.equals("Select City/Village")) {
+                            if (!selectedCityVillage.equals("City/Village")) {
                                 String selectedCityVillageId = cityVillageIdMap.get(selectedCityVillage);
                                 city_id = selectedCityVillageId;
                             }
@@ -710,7 +710,7 @@ public class SendSmsActivity extends AppCompatActivity {
                     // Create a list of zone names
                     List<String> zoneNames = new ArrayList<>();
                     final Map<String, String> zoneIdMap = new HashMap<>();
-                    zoneNames.add("Select Zone");
+                    zoneNames.add("Zone");
 
                     for (ZoneItem zone : zones) {
                         zoneNames.add(zone.getZoneName());
@@ -727,7 +727,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedZone = (String) parent.getItemAtPosition(position);
-                            if (!selectedZone.equals("Select Zone")) {
+                            if (!selectedZone.equals("Zone")) {
                                 String selectedZoneId = zoneIdMap.get(selectedZone);
                                 zone_id = selectedZoneId;
                             }
@@ -768,7 +768,7 @@ public class SendSmsActivity extends AppCompatActivity {
                     // Create a list of prabhag ward names
                     List<String> prabhagWardNames = new ArrayList<>();
                     final Map<String, String> prabhagWardIdMap = new HashMap<>();
-                    prabhagWardNames.add("Select Prabhag/Ward");
+                    prabhagWardNames.add("Prabhag/Ward");
 
                     for (PrabhagWardItem prabhagWard : prabhagWards) {
                         prabhagWardNames.add(prabhagWard.getPrabhagWardName());
@@ -785,7 +785,7 @@ public class SendSmsActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
-                            if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
+                            if (!selectedPrabhagWard.equals("Prabhag Ward")) {
                                 String selectedPrabhagWardId = prabhagWardIdMap.get(selectedPrabhagWard);
                                 ward_id = selectedPrabhagWardId;
                             }

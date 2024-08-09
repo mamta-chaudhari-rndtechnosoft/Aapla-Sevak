@@ -29,6 +29,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.Model.AddMemberBody;
@@ -83,6 +84,7 @@ public class SubMemberActivity extends AppCompatActivity {
     String series_id, status_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id, qualification_id, caste_id;
     //TextView surname;
     String constituencyId, villageId, zoneId, wardId;
+    MaterialToolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,24 +133,22 @@ public class SubMemberActivity extends AppCompatActivity {
         //tv1=findViewById(R.id.tv1);
         //tv2=findViewById(R.id.tv2);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
-
-        toolbar.setTitle(Html.fromHtml("<b>" + "Add Family Member" + "</b>"));
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         mainMemberDetails = new ArrayList<>();
         //spinner_relation.setTitle("select relation");
-        spinner_status.setTitle("select status");
-        spinner_constituency.setTitle("Select Constituency");
-        spinner_zone.setTitle("Select Zone");
-        spinner_ward.setTitle("Select Prabhag /Ward");
-        spinner_city.setTitle("Select City/Village");
+        spinner_status.setTitle("status");
+        spinner_constituency.setTitle("Constituency");
+        spinner_zone.setTitle("Zone");
+        spinner_ward.setTitle("Prabhag /Ward");
+        spinner_city.setTitle("City/Village");
 
 
         // from SearchedUserDetail Activity
@@ -258,17 +258,20 @@ public class SubMemberActivity extends AppCompatActivity {
                 //String cityVillage = spinner_city.getSelectedItem().toString();
                 //String prabhagWard = spinner_ward.getSelectedItem().toString();
                 String user_caste = spinner_caste.getSelectedItem().toString();
+
                 String user_qualification = spinner_qualification.getSelectedItem().toString();
+                String user_status = spinner_status.getSelectedItem().toString();
                 String apartment = etApartment.getText().toString();
                 String flateNo = etFlateNumber.getText().toString();
                 String BoothNo = etBoothNo.getText().toString();
                 String SerialNo = etSerialNo.getText().toString();
 
 
-                if (    house_no.equals("")
+                if (house_no.equals("")
                         || user_name.equals("")
                         || user_middle_name.equals("")
                         || user_surname.equals("")
+                        || gender.equals("")
                 ) {
                     Toast.makeText(SubMemberActivity.this, "some fields are empty", Toast.LENGTH_SHORT).show();
                 } else if (constituency_id == null && constituency_id.equalsIgnoreCase("")) {
@@ -279,12 +282,14 @@ public class SubMemberActivity extends AppCompatActivity {
                     Toast.makeText(SubMemberActivity.this, "Please Select Zone", Toast.LENGTH_SHORT).show();
                 } else if (ward_id == null && ward_id.equalsIgnoreCase("")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Ward", Toast.LENGTH_SHORT).show();
-                } else if (qualification_id == null && qualification_id.equalsIgnoreCase("")) {
+                } else if (spinner_status.getSelectedItem().toString().equalsIgnoreCase("Select Status")) {
+                    Toast.makeText(SubMemberActivity.this, "Please Select Status", Toast.LENGTH_SHORT).show();
+                } else if (spinner_qualification.getSelectedItem().toString().equalsIgnoreCase("Select Qualification")) {
                     Toast.makeText(SubMemberActivity.this, "Please Select Qualification", Toast.LENGTH_SHORT).show();
                 } else {
                     // id and member id is missing from here
-                    addMember(house_no, series_id, colony_id, row_id, gender, user_name, user_middle_name, user_surname,
-                            mobile_no1, mobile_no2, user_dob, user_qualification, user_caste, status_id, voterId, user_adharcard, watersupply_id,
+                    addMember(house_no, gender, user_name, user_middle_name, user_surname,
+                            mobile_no1, mobile_no2, user_dob, user_qualification, user_status, voterId, user_adharcard,
                             voting_center, BoothNo, SerialNo, constituency_id, city_id, zone_id, ward_id, apartment, flateNo);
 
                     //Toast.makeText(SubMemberActivity.this, "family member added successfully", Toast.LENGTH_SHORT).show();
@@ -295,9 +300,9 @@ public class SubMemberActivity extends AppCompatActivity {
 
     }
 
-    private void addMember(String house_no, String series_id, String colony_id, String row_id, String gender, String name, String middle_name,
-                           String surname, String mobile1, String mobile2, String dob, String qualification_id, String caste_id, String status_id,
-                           String voter_id, String adhar_card, String watersupply_id, String voting_center, String BoothNo, String SerialNo,
+    private void addMember(String house_no, String gender, String name, String middle_name,
+                           String surname, String mobile1, String mobile2, String dob, String qualification_id, String status_id,
+                           String voter_id, String adhar_card, String voting_center, String BoothNo, String SerialNo,
                            String constituency_id, String city_id, String zone_id, String ward_id, String apartment, String flate) {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
@@ -349,7 +354,7 @@ public class SubMemberActivity extends AppCompatActivity {
 
                     List<String> statusNames = new ArrayList<>();
                     final Map<String, String> statusIdMap = new HashMap<>();
-                    statusNames.add("Select Status");
+                    statusNames.add("Status*");
 
                     for (StatusItem item : statusItems) {
                         statusNames.add(item.getStatusName());
@@ -367,7 +372,7 @@ public class SubMemberActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedStatus = (String) parent.getItemAtPosition(position);
-                            if (!selectedStatus.equals("Select Status")) {
+                            if (!selectedStatus.equals("Status*")) {
                                 //fetchColony();
                                 String selectedStatusId = statusIdMap.get(selectedStatus);
                                 status_id = selectedStatusId;
@@ -409,7 +414,7 @@ public class SubMemberActivity extends AppCompatActivity {
                     // Create a list of constituency names
                     List<String> constituencyName = new ArrayList<>();
                     final Map<String, String> constituencyIdMap = new HashMap<>();
-                    constituencyName.add("Select Constituency");
+                    constituencyName.add("Constituency");
 
                     for (ConstituencyItem constituency : constituencies) {
                         constituencyName.add(constituency.getConstituencyName());
@@ -440,7 +445,7 @@ public class SubMemberActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedConstituency = (String) parent.getItemAtPosition(position);
-                            if (!selectedConstituency.equals("Select Constituency")) {
+                            if (!selectedConstituency.equals("Constituency")) {
                                 //Toast.makeText(UserSurveyActivity.this, "Selected: " + selectedConstituency, Toast.LENGTH_SHORT).show();
                                 String selectedConstituencyId = constituencyIdMap.get(selectedConstituency);
                                 constituency_id = selectedConstituencyId;
@@ -491,7 +496,7 @@ public class SubMemberActivity extends AppCompatActivity {
                     // Create a list of city or village names
                     List<String> cityVillageNames = new ArrayList<>();
                     final Map<String, String> cityVillageIdMap = new HashMap<>();
-                    cityVillageNames.add("Select City/Village");
+                    cityVillageNames.add("City/Village");
 
                     for (CityVillageItem item : cityVillages) {
                         cityVillageNames.add(item.getCityVillageName());
@@ -520,7 +525,7 @@ public class SubMemberActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedCityVillage = (String) parent.getItemAtPosition(position);
-                            if (!selectedCityVillage.equals("Select City or Village")) {
+                            if (!selectedCityVillage.equals("City/Village")) {
                                 String selectedCityVillageId = cityVillageIdMap.get(selectedCityVillage);
                                 city_id = selectedCityVillageId;
                             }
@@ -570,7 +575,7 @@ public class SubMemberActivity extends AppCompatActivity {
                     // Create a list of zone names
                     List<String> zoneNames = new ArrayList<>();
                     final Map<String, String> zoneIdMap = new HashMap<>();
-                    zoneNames.add("Select Zone");
+                    zoneNames.add("Zone");
 
                     for (ZoneItem zone : zones) {
                         zoneNames.add(zone.getZoneName());
@@ -599,7 +604,7 @@ public class SubMemberActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedZone = (String) parent.getItemAtPosition(position);
-                            if (!selectedZone.equals("Select Zone")) {
+                            if (!selectedZone.equals("Zone")) {
                                 String selectedZoneId = zoneIdMap.get(selectedZone);
                                 zone_id = selectedZoneId;
                             }
@@ -650,7 +655,7 @@ public class SubMemberActivity extends AppCompatActivity {
                     // Create a list of prabhag ward names
                     List<String> prabhagWardNames = new ArrayList<>();
                     final Map<String, String> prabhagWardIdMap = new HashMap<>();
-                    prabhagWardNames.add("Select Prabhag/Ward");
+                    prabhagWardNames.add("Prabhag/Ward");
 
                     for (PrabhagWardItem prabhagWard : prabhagWards) {
                         prabhagWardNames.add(prabhagWard.getPrabhagWardName());
@@ -679,7 +684,7 @@ public class SubMemberActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedPrabhagWard = (String) parent.getItemAtPosition(position);
-                            if (!selectedPrabhagWard.equals("Select Prabhag Ward")) {
+                            if (!selectedPrabhagWard.equals("Prabhag Ward")) {
                                 String selectedPrabhagWardId = prabhagWardIdMap.get(selectedPrabhagWard);
                                 ward_id = selectedPrabhagWardId;
                             }
@@ -731,7 +736,7 @@ public class SubMemberActivity extends AppCompatActivity {
                     // Create a list of prabhag ward names
                     List<String> qualificationNames = new ArrayList<>();
                     final Map<String, String> qualificationIdMap = new HashMap<>();
-                    qualificationNames.add("Select Qualification");
+                    qualificationNames.add("Qualification*");
 
                     for (QualificationItem qualification : qualificationResponse) {
                         qualificationNames.add(qualification.getQualificationName());
@@ -749,7 +754,7 @@ public class SubMemberActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedQualification = (String) parent.getItemAtPosition(position);
-                            if (!selectedQualification.equals("Select Qualification")) {
+                            if (!selectedQualification.equals("Qualification")) {
                                 String selectedQualificationId = qualificationIdMap.get(selectedQualification);
                                 qualification_id = selectedQualificationId;
                             }
@@ -788,7 +793,7 @@ public class SubMemberActivity extends AppCompatActivity {
                     // Create a list of prabhag ward names
                     List<String> casteNames = new ArrayList<>();
                     final Map<String, String> casteIdMap = new HashMap<>();
-                    casteNames.add("Select Caste");
+                    casteNames.add("Caste");
 
                     for (CasteItem caste : casteResponses) {
                         casteNames.add(caste.getCasteName());
@@ -806,7 +811,7 @@ public class SubMemberActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             String selectedCaste = (String) parent.getItemAtPosition(position);
-                            if (!selectedCaste.equals("Select Caste")) {
+                            if (!selectedCaste.equals("Caste")) {
                                 String selectedCasteId = casteIdMap.get(selectedCaste);
                                 caste_id = selectedCasteId;
                             }

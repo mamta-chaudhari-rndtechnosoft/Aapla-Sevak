@@ -5,17 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorWhite"
     tools:context=".Activity.UserSurveyActivity">
 
 
-    <androidx.appcompat.widget.Toolbar
+    <!--<androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_gradient"
         android:textStyle="bold"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/colorWhite" />
+        app:titleTextColor="@color/colorWhite" />-->
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toolbar_gradient"
+        app:title="Add family"
+        app:titleTextColor="@color/colorWhite"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_back"
+        />
+
+
 
     <!-- <com.google.android.material.card.MaterialCardView
          android:layout_width="match_parent"
@@ -49,6 +63,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:elevation="10dp"
                     android:orientation="horizontal">
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -59,7 +74,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
+                        android:background="@drawable/border_three"
                         android:gravity="center" />
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -70,7 +85,8 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="15dp"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
+                        android:elevation="0dp"
+                        android:background="@drawable/border_three"
                         android:gravity="center"
                         android:visibility="visible"
                         />
@@ -92,7 +108,8 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
+                        android:elevation="0dp"
+                        android:background="@drawable/border_three"
                         android:gravity="center" />
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -103,7 +120,8 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="15dp"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
+                        android:elevation="0dp"
+                        android:background="@drawable/border_three"
                         android:gravity="center"
                         android:visibility="visible" />
 
@@ -125,7 +143,8 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
+                        android:elevation="0dp"
+                        android:background="@drawable/border_three"
                         android:gravity="center" />
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -136,7 +155,8 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="15dp"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
+                        android:background="@drawable/border_three"
+                        android:elevation="0dp"
                         android:gravity="center"
                         android:visibility="visible" />
 
@@ -179,7 +199,8 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
+                        android:elevation="0dp"
+                        android:background="@drawable/border_three"
                         android:gravity="center" />
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -190,7 +211,8 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="15dp"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
+                        android:background="@drawable/border_three"
+                        android:elevation="0dp"
                         android:gravity="center" />
 
                 </LinearLayout>
@@ -202,8 +224,9 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:elevation="0dp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:backgroundTint="@color/orange_bjp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/apartment">
 
@@ -211,7 +234,7 @@
                         android:id="@+id/etApartment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/colorPrimaryDark" />
+                        android:backgroundTint="@color/orange_bjp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -223,7 +246,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:backgroundTint="@color/orange_bjp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/flat_number">
 
@@ -231,7 +254,7 @@
                         android:id="@+id/etFlatNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/colorPrimaryDark" />
+                        android:backgroundTint="@color/orange_bjp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -247,7 +270,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/border_three"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:padding="10dp"
@@ -259,7 +282,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0.13"
-                        android:buttonTint="@color/colorPrimaryDark"
+                        android:buttonTint="@color/orange_bjp"
                         android:checked="false"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Male"
@@ -271,7 +294,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0.13"
-                        android:buttonTint="@color/colorPrimaryDark"
+                        android:buttonTint="@color/orange_bjp"
                         android:checked="false"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Female"
@@ -283,7 +306,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0.13"
-                        android:buttonTint="@color/colorPrimaryDark"
+                        android:buttonTint="@color/orange_bjp"
                         android:checked="false"
                         android:fontFamily="@font/roboto_regular"
                         android:text="others"
@@ -497,7 +520,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/border_three"
                     android:gravity="center" />
 
 
@@ -509,7 +532,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/border_three"
                     android:gravity="center" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -619,7 +642,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/border_three"
                     android:gravity="center" />
 
                 <com.google.android.material.button.MaterialButton
@@ -631,7 +654,7 @@
                     android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:backgroundTint="@color/orange_bjp"
                     android:elevation="10dp"
                     android:gravity="center"
                     android:text="@string/submit"

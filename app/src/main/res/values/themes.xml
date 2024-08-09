@@ -2,7 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.AaplaSevak" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#df1d40</item>
+<!--        <item name="colorPrimary">#df1d40</item>-->
+        <item name="colorPrimary">@color/orange_bjp</item>
 
 
         <!-- Status bar color. -->

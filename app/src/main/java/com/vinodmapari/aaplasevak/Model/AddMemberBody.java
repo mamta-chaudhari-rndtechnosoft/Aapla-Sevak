@@ -46,6 +46,8 @@ public class AddMemberBody {
     @SerializedName("booth_no")
     private String boothNo;
 
+    //s_no
+    //voting_sr_no
     @SerializedName("s_no")
     private String votingSrNo;
 

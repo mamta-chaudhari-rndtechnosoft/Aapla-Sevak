@@ -40,6 +40,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:paddingStart="3dp"
                 android:background="@drawable/border"
                 android:hint="@string/enter_your_message"
                 android:textSize="14sp" />

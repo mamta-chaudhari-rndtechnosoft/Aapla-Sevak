@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorgreyLight"
     tools:context=".Activity.UpdateMemberActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -14,6 +15,7 @@
         android:textStyle="bold"
         app:titleTextColor="@color/colorWhite"
         app:title="Edit Details"
+        app:titleCentered="true"
         app:navigationIcon="@drawable/ic_back"
         />
 
@@ -38,7 +40,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinnerConstituency"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -50,7 +53,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinnerCity_Village"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -64,7 +68,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinnerZone"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -76,7 +81,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinnerPrabhag_Ward"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -90,7 +96,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinnerSeries"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -106,7 +113,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/house_number">
 
@@ -121,7 +129,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_colony"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -134,7 +143,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_row"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -150,7 +160,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/apartment">
 
@@ -170,7 +181,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/flat_number">
 
@@ -202,7 +214,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0.13"
-                        android:buttonTint="@color/colorPrimaryDark"
+                        android:buttonTint="@color/orange_bjp"
                         android:checked="false"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Male"
@@ -214,7 +226,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0.13"
-                        android:buttonTint="@color/colorPrimaryDark"
+                        android:buttonTint="@color/orange_bjp"
                         android:checked="false"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Female"
@@ -226,7 +238,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0.13"
-                        android:buttonTint="@color/colorPrimaryDark"
+                        android:buttonTint="@color/orange_bjp"
                         android:checked="false"
                         android:fontFamily="@font/roboto_regular"
                         android:text="others"
@@ -242,7 +254,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/name">
 
@@ -262,6 +275,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/middle_name">
 
@@ -280,7 +295,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/surname">
 
@@ -300,7 +316,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="whatsapp number">
 
@@ -322,7 +339,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="calling number">
 
@@ -344,7 +362,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/dob">
 
@@ -359,7 +378,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_qualification"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -371,7 +391,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_caste"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -383,7 +404,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_status"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -399,7 +421,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/Relation"
                     android:visibility="gone">
@@ -420,7 +443,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/event"
                     android:visibility="gone">
@@ -443,7 +467,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/adharcard">
 
@@ -462,7 +487,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/voterID">
 
@@ -482,7 +508,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="Booth No">
 
@@ -502,7 +529,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="Serial no">
 
@@ -522,7 +550,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="15dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/votingCenter">
 
@@ -536,7 +565,8 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner_water_supply"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="50dp"
+                    android:elevation="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="@dimen/_10ssp"
@@ -553,7 +583,7 @@
                     android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="30dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:backgroundTint="@color/orange_bjp"
                     android:elevation="10dp"
                     android:gravity="center"
                     android:text="@string/submit"

@@ -4,17 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGrey"
     android:orientation="vertical"
     tools:context=".Activity.WhatsappActivity">
 
-    <androidx.appcompat.widget.Toolbar
+  <!--  <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_gradient"
         android:textStyle="bold"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toolbar_gradient"
+        app:title="Send Message"
+        app:titleTextColor="@color/colorWhite"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_back"
+        />
 
     <!--
     <com.google.android.material.card.MaterialCardView
@@ -48,43 +58,47 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_constituency"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
+                android:elevation="8dp"
                 android:background="@drawable/border"
                 android:gravity="center" />
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_city_village"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="0dp"
+                android:elevation="8dp"
                 android:background="@drawable/border"
                 android:gravity="center" />
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_zone"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="0dp"
+                android:elevation="8dp"
                 android:background="@drawable/border"
                 android:gravity="center" />
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_ward"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
+                android:elevation="8dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -96,23 +110,24 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerSeries"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/border"
-                android:elevation="10dp"
+                android:elevation="8dp"
                 android:gravity="center" />
 
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_colony"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
+                android:elevation="8dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/border"
                 android:gravity="center" />
@@ -121,21 +136,22 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_row"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/border"
-                android:elevation="10dp"
+                android:elevation="8dp"
                 android:gravity="center" />
 
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_water_supply"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
+                android:elevation="8dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -150,10 +166,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20dp"
+                android:elevation="8dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/roboto_regular"
+                android:background="@color/colorWhite"
                 android:hint="Add Message">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -190,6 +208,7 @@
                     android:layout_height="55dp"
                     android:layout_margin="12dp"
                     android:layout_weight="1"
+                    app:tint="@color/green_bjp"
                     android:src="@drawable/baseline_image_24" />
 
                 <ImageButton
@@ -198,6 +217,7 @@
                     android:layout_height="55dp"
                     android:layout_margin="12dp"
                     android:layout_weight="1"
+                    app:tint="@color/green_bjp"
                     android:src="@drawable/baseline_video_call_24" />
 
                 <ImageButton
@@ -223,7 +243,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="0dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:backgroundTint="@color/orange_bjp"
                 android:elevation="10dp"
                 android:gravity="center"
                 android:text="Get Contacts"
@@ -241,7 +261,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="30dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:backgroundTint="@color/orange_bjp"
                 android:elevation="10dp"
                 android:gravity="center"
                 android:text="WhatsApp Api"

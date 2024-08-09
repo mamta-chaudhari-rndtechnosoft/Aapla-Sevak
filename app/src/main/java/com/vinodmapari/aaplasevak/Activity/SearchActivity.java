@@ -277,7 +277,8 @@ public class SearchActivity extends AppCompatActivity {
                     List<SurveyCountItem> items = surveyCountResponse.getSurveyCountItems();
 
                     int count = items.get(0).getSurveyCount();
-                    tvSurveyCount.setText("Total Data: " + count);
+                    tvSurveyCount.setText(String.valueOf(count));
+                    toolbar.setTitle("Search From: " + count);
                     //Toast.makeText(SearchActivity.this, "Count: " + count, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(SearchActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();

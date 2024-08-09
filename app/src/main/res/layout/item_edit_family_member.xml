@@ -63,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/baseline_edit"
+                app:tint="@color/orange_bjp"
                 />
 
             <View
@@ -77,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/baseline_delete"
+                app:tint="@color/orange_bjp"
                 />
 
             <View

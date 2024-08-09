@@ -8,14 +8,18 @@
     tools:context=".Activity.SubMemberActivity">
 
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_gradient"
         android:textStyle="bold"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/colorWhite" />
+        app:titleTextColor="@color/colorWhite"
+        app:title="Add Family Member"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_back"
+        />
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/main_scroll"
@@ -34,7 +38,8 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerConstituency"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -47,7 +52,8 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerCity_Village"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -60,7 +66,8 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerZone"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -73,7 +80,8 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinnerPrabhag_Ward"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -136,7 +144,8 @@
             <TextView
                 android:id="@+id/spinnerSeries"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -149,7 +158,8 @@
             <TextView
                 android:id="@+id/house_number"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -163,7 +173,8 @@
             <TextView
                 android:id="@+id/spinner_colony"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -176,7 +187,8 @@
             <TextView
                 android:id="@+id/spinner_row"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -194,8 +206,9 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
+                android:elevation="8dp"
                 android:hint="@string/apartment">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -214,7 +227,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:background="@color/colorWhite"
+                android:elevation="8dp"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="@string/flat_number">
 
@@ -238,6 +252,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:padding="10dp"
+                android:elevation="8dp"
                 android:weightSum="1">
 
                 <RadioButton
@@ -246,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="0.13"
-                    android:buttonTint="@color/colorAccent"
+                    android:buttonTint="@color/orange_bjp"
                     android:checked="false"
                     android:fontFamily="@font/roboto_regular"
                     android:text="Male"
@@ -258,7 +273,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="0.13"
-                    android:buttonTint="@color/colorAccent"
+                    android:buttonTint="@color/orange_bjp"
                     android:checked="false"
                     android:fontFamily="@font/roboto_regular"
                     android:text="Female"
@@ -270,7 +285,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="0.13"
-                    android:buttonTint="@color/colorAccent"
+                    android:buttonTint="@color/orange_bjp"
                     android:checked="false"
                     android:fontFamily="@font/roboto_regular"
                     android:text="Others"
@@ -287,6 +302,8 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
                 android:fontFamily="@font/roboto_regular"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:hint="@string/name">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -305,6 +322,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="@string/middle_name">
 
@@ -336,6 +355,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="@string/surname">
 
@@ -355,7 +376,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Whatsapp Number">
 
@@ -376,7 +398,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Calling Number">
 
@@ -398,6 +421,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="@string/dob">
 
@@ -412,7 +437,8 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_qualification"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -425,7 +451,8 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_caste"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
@@ -437,7 +464,8 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_status"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
@@ -468,6 +496,8 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
                 android:fontFamily="@font/roboto_regular"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:hint="@string/Relation"
                 android:visibility="gone">
 
@@ -487,6 +517,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="@string/event"
                 android:visibility="gone">
@@ -509,6 +541,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="@string/adharcard">
 
@@ -527,6 +561,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="@string/voterID">
 
@@ -546,7 +582,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Booth No">
 
@@ -566,7 +603,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="Serial No">
 
@@ -586,6 +624,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
+                android:elevation="8dp"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="@string/votingCenter">
 
@@ -599,7 +639,8 @@
             <TextView
                 android:id="@+id/spinner_water_supply"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="50dp"
+                android:elevation="8dp"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="15dp"
@@ -619,7 +660,7 @@
                 android:layout_marginTop="@dimen/_10ssp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="30dp"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:backgroundTint="@color/orange_bjp"
                 android:elevation="10dp"
                 android:gravity="center"
                 android:text="@string/submit"

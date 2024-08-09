@@ -18,13 +18,13 @@
         tools:context=".Activity.MainActivity">
 
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/myToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#DBD7D7"
         android:layout_marginTop="30dp"
+        android:visibility="gone"
         android:elevation="0dp">
 
         <ImageButton
@@ -38,7 +38,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home"
             android:textColor="#0442B6"
             android:textSize="22sp"
             android:textAlignment="center"
@@ -63,7 +62,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="0dp">
+            android:layout_marginTop="50dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/slide_card"
@@ -400,6 +399,7 @@
                                     android:layout_height="20dp"
                                     android:src="@drawable/baseline_add_circle_24"
                                     android:layout_gravity="center_vertical"
+                                    app:tint="@color/green_bjp"
                                     />
 
                                 <TextView
@@ -409,7 +409,7 @@
                                     android:gravity="center_vertical"
                                     android:text="Add Family"
                                     android:textAllCaps="true"
-                                    android:textColor="@color/colorBlack"
+                                    android:textColor="@color/colorWhite"
                                     android:textSize="14sp"
                                     android:textStyle="bold"
                                     />
@@ -443,7 +443,7 @@
         app:headerLayout="@layout/nav_header_main"
         android:fitsSystemWindows="true"
         app:itemIconSize="35dp"
-        app:itemIconTint="@color/colorRed"
+        app:itemIconTint="@color/orange_bjp"
         app:itemTextColor="@color/colorBlack"
         app:menu="@menu/activity_main_drawer">
 
