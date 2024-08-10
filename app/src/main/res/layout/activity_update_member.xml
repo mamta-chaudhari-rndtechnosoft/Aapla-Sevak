@@ -598,7 +598,6 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loaderUpdate"
         android:layout_width="@dimen/_80sdp"
@@ -610,6 +609,4 @@
         app:lottie_loop="true"
         android:visibility="gone"
         />
-
-
 </RelativeLayout>

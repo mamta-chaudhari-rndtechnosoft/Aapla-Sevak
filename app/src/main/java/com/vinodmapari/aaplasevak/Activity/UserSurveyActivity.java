@@ -202,7 +202,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                 if (dobAdapter != null && !dobAdapter.isEmpty()) {
                     dob.setText(dobAdapter);
                 } else {
-                    dob.setText("Dob");
+                    dob.setText("DOB");
                 }
 
                 //Toast.makeText(this, "Data: " + nameAdapter + " " + surnameAdapter + " " + middleNameAdapter, Toast.LENGTH_SHORT).show();

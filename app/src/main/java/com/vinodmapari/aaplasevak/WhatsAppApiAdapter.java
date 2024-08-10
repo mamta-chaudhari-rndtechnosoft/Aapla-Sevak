@@ -50,7 +50,7 @@ public class WhatsAppApiAdapter extends RecyclerView.Adapter<WhatsAppApiAdapter.
 
         String name = numListData.getName() + " " + numListData.getMiddle_name() + " " + numListData.getSurname();
         holder.tvName.setText(name);
-        holder.tvNumber.setText(numListData.getMobile1());
+        holder.tvNumber.setText("+91" + numListData.getMobile1());
 
         String mobileNumber = numListData.getMobile1();
 

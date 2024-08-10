@@ -59,8 +59,8 @@ public class EditFamilyAdapter extends RecyclerView.Adapter<EditFamilyAdapter.Vi
         String name = "NAME: " + houseDetailData.getName() + " " + houseDetailData.getMiddleName() + " " + houseDetailData.getSurname();
         holder.tvName.setText(name);
 
-        holder.tvAadhaarNo.setText("AADHAR NO: " + houseDetailData.getAdharCard());
-        holder.tvVoterId.setText("EPIC NO " + houseDetailData.getVoterId());
+        holder.tvAadhaarNo.setText("ADHAR NO. " + houseDetailData.getAdharCard());
+        holder.tvVoterId.setText("EPIC NO. " + houseDetailData.getVoterId());
 
         holder.imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
