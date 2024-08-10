@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorgreyLight"
     tools:context=".Activity.SearchSurveyMemberActivity">
 
@@ -13,67 +12,95 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_gradient"
-        app:title="Search Voter"
-        app:titleTextColor="@color/colorWhite"
-        app:titleCentered="true"
         app:navigationIcon="@drawable/ic_back"
-        />
+        app:title="Search Voter"
+        app:titleCentered="true"
+        app:titleTextColor="@color/colorWhite" />
+
+    <EditText
+        android:id="@+id/etSearchFullName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border"
+        android:layout_below="@id/toolbarSearch"
+        android:hint="Enter Name to Search"
+        android:padding="10dp" />
+
+    <View
+        android:id="@+id/viewLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/etSearchFullName"
+        android:background="#5C0E0D0D" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_above="@id/btnCount"
+        android:layout_below="@id/viewLine"
         android:orientation="vertical">
 
 
-        <EditText
-            android:id="@+id/etSearchFullName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Name to Search"
-            android:background="@drawable/border"
-            android:padding="10dp" />
-
-        <TextView
-            android:id="@+id/tvVoterCount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Count"
-            android:textAlignment="center"
-            android:background="@drawable/border_search"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"/>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:visibility="visible"
-            tools:listitem="@layout/item_search_survey_member" />
-
         <LinearLayout
-            android:id="@+id/layoutNoDataSearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:padding="0dp">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/no_member_found" />
 
-            <TextView
+            <!--<TextView
+                android:id="@+id/tvVoterCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No Member Found"
-                android:textAlignment="center"
-                android:textColor="@color/colorBlack"
-                android:textSize="20sp" />
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_search"
+                android:hint="Count"
+                android:padding="10dp"
+                android:textAlignment="center" />-->
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="visible"
+                tools:listitem="@layout/item_search_survey_member" />
+
+            <LinearLayout
+                android:id="@+id/layoutNoDataSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/no_member_found" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No Member Found"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <Button
+        android:id="@+id/btnCount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/orange_bjp"
+        android:elevation="10dp"
+        android:text="Total Voter"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+
+</RelativeLayout>

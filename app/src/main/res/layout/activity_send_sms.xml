@@ -1,275 +1,285 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorWhite"
     tools:context=".Activity.SendSmsActivity">
 
-    <!--<androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/toolbar_gradient"
-        android:textStyle="bold"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/toolbar_gradient"
-        app:title="Send SMS"
-        app:titleTextColor="@color/colorWhite"
-        app:titleCentered="true"
-        app:navigationIcon="@drawable/ic_back"
-        />
 
-    <!-- <androidx.core.widget.NestedScrollView
-         android:id="@+id/main_scroll"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:layout_above="@id/send_sms"
-         android:layout_below="@id/toolbar"
-         android:fillViewport="true">-->
-
-    <!-- <androidx.cardview.widget.CardView
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:layout_gravity="center_horizontal"
-         android:layout_marginLeft="20dp"
-         android:layout_marginTop="20dp"
-         android:layout_marginRight="20dp"
-         android:layout_marginBottom="20dp"
-         android:background="@color/colorWhite"
-         android:elevation="20dp"
-         app:cardCornerRadius="10dp"
-         app:cardUseCompatPadding="true">-->
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="false">
-
-        <LinearLayout
-            android:id="@+id/registeration_form"
+        <!--<androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/_10sdp"
-            android:orientation="vertical">
+            android:background="@drawable/toolbar_gradient"
+            android:textStyle="bold"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinner_constituency"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/border"
-                android:elevation="10dp"
-                android:gravity="center" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/toolbar_gradient"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="Send SMS"
+            app:titleCentered="true"
+            app:titleTextColor="@color/colorWhite" />
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinner_city_village"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="0dp"
-                android:elevation="10dp"
-                android:background="@drawable/border"
-                android:gravity="center" />
+        <!-- <androidx.core.widget.NestedScrollView
+             android:id="@+id/main_scroll"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_above="@id/send_sms"
+             android:layout_below="@id/toolbar"
+             android:fillViewport="true">-->
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinner_zone"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="0dp"
-                android:elevation="10dp"
-                android:background="@drawable/border"
-                android:gravity="center" />
+        <!-- <androidx.cardview.widget.CardView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_gravity="center_horizontal"
+             android:layout_marginLeft="20dp"
+             android:layout_marginTop="20dp"
+             android:layout_marginRight="20dp"
+             android:layout_marginBottom="20dp"
+             android:background="@color/colorWhite"
+             android:elevation="20dp"
+             app:cardCornerRadius="10dp"
+             app:cardUseCompatPadding="true">-->
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinner_ward_prabhag"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="0dp"
-                android:elevation="10dp"
-                android:background="@drawable/border"
-                android:gravity="center" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="false">
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinnerSeries"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/border"
-                android:elevation="10dp"
-                android:gravity="center" />
-
-
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinner_colony"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/border"
-                android:elevation="10dp"
-                android:gravity="center" />
-
-
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinner_row"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:layout_marginRight="20dp"
-                android:elevation="10dp"
-                android:background="@drawable/border"
-                android:gravity="center" />
-
-
-            <!--                <com.google.android.material.textfield.TextInputLayout-->
-            <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-            <!--                    android:layout_width="320dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_gravity="center_horizontal"-->
-            <!--                    android:layout_marginTop="@dimen/_10sdp"-->
-            <!--                    android:fontFamily="@font/roboto_regular"-->
-            <!--                    android:hint="@string/house_number">-->
-
-            <!--                    <com.google.android.material.textfield.TextInputEditText-->
-            <!--                        android:id="@+id/house_number"-->
-            <!--                        android:layout_width="320dp"-->
-            <!--                        android:layout_height="match_parent" />-->
-
-            <!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinner_water_supply"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/border"
-                android:gravity="center"
-                android:elevation="10dp"
-                android:visibility="visible" />
-
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spinner_template"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:layout_marginRight="20dp"
-                android:elevation="10dp"
-                android:background="@drawable/border"
-                android:gravity="center" />
-
-            <!-- <com.google.android.material.textfield.TextInputLayout
-                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                 android:layout_width="match_parent"
-                 android:layout_height="@dimen/_50sdp"
-                 android:layout_gravity="center_horizontal"
-                 android:layout_marginLeft="20dp"
-                 android:layout_marginTop="@dimen/_10sdp"
-                 android:layout_marginRight="20dp"
-                 android:fontFamily="@font/roboto_regular"
-                 android:hint="selected template">
-
-                 <com.google.android.material.textfield.TextInputEditText
-                     android:id="@+id/etTemplate"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent" />
-
-             </com.google.android.material.textfield.TextInputLayout>-->
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
+                android:id="@+id/registeration_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/colorWhite"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:elevation="8dp"
-                android:fontFamily="@font/roboto_regular"
-                android:hint="Selected template">
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etTemplate"
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_constituency"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border"
+                    android:elevation="10dp"
+                    android:gravity="center" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_city_village"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/border"
+                    android:elevation="10dp"
+                    android:gravity="center" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_zone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/border"
+                    android:elevation="10dp"
+                    android:gravity="center" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_ward_prabhag"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/border"
+                    android:elevation="10dp"
+                    android:gravity="center" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnerSeries"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border"
+                    android:elevation="10dp"
+                    android:gravity="center" />
+
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_colony"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border"
+                    android:elevation="10dp"
+                    android:gravity="center" />
+
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border"
+                    android:elevation="10dp"
+                    android:gravity="center" />
+
+
+                <!--                <com.google.android.material.textfield.TextInputLayout-->
+                <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+                <!--                    android:layout_width="320dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="center_horizontal"-->
+                <!--                    android:layout_marginTop="@dimen/_10sdp"-->
+                <!--                    android:fontFamily="@font/roboto_regular"-->
+                <!--                    android:hint="@string/house_number">-->
+
+                <!--                    <com.google.android.material.textfield.TextInputEditText-->
+                <!--                        android:id="@+id/house_number"-->
+                <!--                        android:layout_width="320dp"-->
+                <!--                        android:layout_height="match_parent" />-->
+
+                <!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_water_supply"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border"
+                    android:elevation="10dp"
+                    android:gravity="center"
+                    android:visibility="visible" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_template"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border"
+                    android:elevation="10dp"
+                    android:gravity="center" />
+
+                <!-- <com.google.android.material.textfield.TextInputLayout
+                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/_50sdp"
+                     android:layout_gravity="center_horizontal"
+                     android:layout_marginLeft="20dp"
+                     android:layout_marginTop="@dimen/_10sdp"
+                     android:layout_marginRight="20dp"
+                     android:fontFamily="@font/roboto_regular"
+                     android:hint="selected template">
+
+                     <com.google.android.material.textfield.TextInputEditText
+                         android:id="@+id/etTemplate"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent" />
+
+                 </com.google.android.material.textfield.TextInputLayout>-->
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/colorWhite"
+                    android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:gravity="top|start"
-                    android:inputType="textMultiLine"
-                    android:minHeight="150dp"
-                    android:padding="16dp"
-                    android:textSize="18sp" />
+                    android:hint="Selected template">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTemplate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="top|start"
+                        android:inputType="textMultiLine"
+                        android:minHeight="150dp"
+                        android:padding="16dp"
+                        android:textSize="18sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/send_sms"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:backgroundTint="@color/orange_bjp"
+                    android:elevation="10dp"
+                    android:gravity="center"
+                    android:text="Send SMS"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="10dp"
+                    app:rippleColor="@color/colorWhite" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/send_sms"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="30dp"
-                android:backgroundTint="@color/orange_bjp"
-                android:elevation="10dp"
-                android:gravity="center"
-                android:text="Send SMS"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:cornerRadius="10dp"
-                app:rippleColor="@color/colorWhite" />
 
-            <com.wang.avi.AVLoadingIndicatorView
-                android:id="@+id/progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="40dp"
-                android:visibility="gone"
-                app:indicatorColor="@color/colorPrimaryDark"
-                app:indicatorName="BallSpinFadeLoaderIndicator" />
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+            </LinearLayout>
+
+
+        </ScrollView>
+    </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loader"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_app.json"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

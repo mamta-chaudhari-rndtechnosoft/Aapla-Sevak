@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,7 +52,8 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
     ArrayList<SearchItem> searchItemsList;
     LinearLayout layoutNoData;
 
-    TextView tvVoterCount;
+    Button btnCount;
+    //TextView tvVoterCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,8 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
         etSearchFullName = findViewById(R.id.etSearchFullName);
         layoutNoData = findViewById(R.id.layoutNoDataSearch);
         toolbar = findViewById(R.id.toolbarSearch);
-        tvVoterCount = findViewById(R.id.tvVoterCount);
+        //tvVoterCount = findViewById(R.id.tvVoterCount);
+        btnCount = findViewById(R.id.btnCount);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +162,8 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
                     List<VoterCountItem> items = voterCountResponse.getVoterCountItems();
 
                     String count = items.get(0).getVoterCount();
-                    tvVoterCount.setText("Total Data: " + count);
+                    //tvVoterCount.setText("Total Data: " + count);
+                    btnCount.setText("Total Voter: " + count);
                 }
                 else{
                     Toast.makeText(SearchSurveyMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();

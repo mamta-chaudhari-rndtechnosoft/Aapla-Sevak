@@ -11,6 +11,8 @@ import static com.vinodmapari.aaplasevak.Model.Constants.water_supply_slots;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -30,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -86,7 +89,8 @@ public class SendSmsActivity extends AppCompatActivity {
     ArrayList<Colony> colonies;
     EditText  etTemplateText;
     private String colonyName;
-    AVLoadingIndicatorView progress;
+    //AVLoadingIndicatorView progress;
+    LottieAnimationView loader;
     MaterialToolbar toolbar;
 
     @Override
@@ -101,8 +105,8 @@ public class SendSmsActivity extends AppCompatActivity {
         etTemplateText = findViewById(R.id.etTemplate);
         spinner_template = findViewById(R.id.spinner_template);
         spinner_water_Supply = findViewById(R.id.spinner_water_supply);
-        progress = findViewById(R.id.progress);
-        progress.hide();
+        loader = findViewById(R.id.loader);
+
 
         spinner_constituency = findViewById(R.id.spinner_constituency);
         spinner_city_village = findViewById(R.id.spinner_city_village);
@@ -181,6 +185,7 @@ public class SendSmsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //getSMSList();
+                loader.setVisibility(View.VISIBLE);
                 sendSms();
             }
         });
@@ -202,14 +207,14 @@ public class SendSmsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //getSeriesList();
-        fetchSeries();
+        //fetchSeries();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         //getSeriesList();
-        fetchSeries();
+        //fetchSeries();
     }
 
     private void fetchTemplateDesciption(){
@@ -314,12 +319,32 @@ public class SendSmsActivity extends AppCompatActivity {
             public void onResponse(Call<SendSmsResponseData> call, retrofit2.Response<SendSmsResponseData> response) {
                 if (response.isSuccessful()) {
 
+                    loader.setVisibility(View.GONE);
                     SendSmsResponseData responseData = response.body();
                     String status = responseData.getStatus();
 
-                    Toast.makeText(SendSmsActivity.this, "status: " + status, Toast.LENGTH_SHORT).show();
-                    finish();
+                    Toast.makeText(SendSmsActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    //finish();
+
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SendSmsActivity.this);
+                    alertDialogBuilder.setTitle("Message Status");
+                    alertDialogBuilder.setMessage("Message sent successfully!");
+
+                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    // Create and show the dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
+
                 } else {
+                    loader.setVisibility(View.GONE);
                     Toast.makeText(SendSmsActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
                     Log.e("Tag", "Response Error..");
                 }
@@ -327,6 +352,7 @@ public class SendSmsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SendSmsResponseData> call, Throwable throwable) {
+                loader.setVisibility(View.GONE);
                 Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
                 Toast.makeText(SendSmsActivity.this, "Error..", Toast.LENGTH_SHORT).show();
             }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cd_search"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     app:cardBackgroundColor="@color/colorWhite"
     android:layout_margin="8dp"
     app:cardElevation="8dp">
@@ -13,6 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
 
@@ -20,7 +21,7 @@
             android:id="@+id/ll_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
             android:orientation="horizontal">
 
             <TextView
@@ -39,8 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:gravity="center"
-                android:textAlignment="center"
+                android:gravity="left"
                 tools:text="Chaudhari Mamta Vinod"
                 android:textSize="12sp"
                 android:textStyle="bold"

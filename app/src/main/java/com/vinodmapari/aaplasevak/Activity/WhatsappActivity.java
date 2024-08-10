@@ -12,6 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -288,7 +290,7 @@ public class WhatsappActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //getSeriesList();
-        fetchSeries();
+        //fetchSeries();
     }
 
     @Override
@@ -891,7 +893,25 @@ public class WhatsappActivity extends AppCompatActivity {
                     loader.setVisibility(View.GONE);
                     Toast.makeText(WhatsappActivity.this, "Success!! " + status, Toast.LENGTH_SHORT).show();
                     Log.d("Api Response", "data: " + status);
-                    finish();
+                    //finish();
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WhatsappActivity.this);
+                    alertDialogBuilder.setTitle("Message Status");
+                    alertDialogBuilder.setMessage("Message sent successfully!");
+
+                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    // Create and show the dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
+
+
                 } else {
                     loader.setVisibility(View.GONE);
                     Toast.makeText(WhatsappActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
