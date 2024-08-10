@@ -163,7 +163,7 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
 
                     String count = items.get(0).getVoterCount();
                     //tvVoterCount.setText("Total Data: " + count);
-                    btnCount.setText("Total Voter: " + count);
+                    btnCount.setText("Voters " + count);
                 }
                 else{
                     Toast.makeText(SearchSurveyMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();

@@ -175,7 +175,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
 
         // -------------------------------------------------------
 
-        dob.setText("Dob");
+        dob.setText("DOB");
 
         //isDataHave = false;
         //Here get the data

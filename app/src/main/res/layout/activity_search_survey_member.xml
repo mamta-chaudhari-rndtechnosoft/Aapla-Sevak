@@ -99,7 +99,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/orange_bjp"
         android:elevation="10dp"
-        android:text="Total Voter"
+        android:text="Voter"
         android:textColor="@color/colorWhite"
         android:textStyle="bold" />
 

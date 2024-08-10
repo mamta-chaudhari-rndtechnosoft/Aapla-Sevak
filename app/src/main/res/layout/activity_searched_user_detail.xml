@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:padding="7dp"
-                    android:text="Personal details"
+                    android:text="Personal Details"
                     android:textSize="14sp" />
 
 
@@ -366,7 +366,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:padding="7dp"
-                    android:text="Housing details"
+                    android:text="Housing Details"
                     android:textSize="14sp" />
 
                 <LinearLayout
@@ -511,7 +511,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_regular"
                         android:padding="5dp"
-                        android:text="Series No"
+                        android:text="Series No."
                         android:textColor="@color/colorBlack"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -548,7 +548,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_regular"
                         android:padding="5dp"
-                        android:text="House No"
+                        android:text="House No."
                         android:textColor="@color/colorBlack"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -681,7 +681,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_regular"
                         android:padding="5dp"
-                        android:text="Flat No"
+                        android:text="Flat No."
                         android:textColor="@color/colorBlack"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -713,7 +713,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:padding="7dp"
-                    android:text="Contact details"
+                    android:text="Contact Details"
                     android:textSize="14sp" />
 
                 <LinearLayout
@@ -795,7 +795,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:padding="7dp"
-                    android:text="Voting details"
+                    android:text="Voting Details"
                     android:textSize="14sp" />
 
 

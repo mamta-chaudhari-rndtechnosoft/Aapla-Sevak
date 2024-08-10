@@ -3,8 +3,8 @@
     <string name="Name">Name</string>
     <string name="UserName">Username</string>
     <string name="Password">Password</string>
-    <string name="house_number"> House Number</string>
-    <string name="flat_number"> Flat Number</string>
+    <string name="house_number"> House No.</string>
+    <string name="flat_number"> Flat No.</string>
     <string name="apartment"> Apartment </string>
     <string name="colony"> Colony</string>
     <string name="row"> row</string>
@@ -75,7 +75,12 @@
 
     <string name="type_search">Type to Search</string>
 
-    <string name="edittext_hint"><font size="15">Mobile Number</font></string>
+    <string name="number_hint"><font size="15">Mobile No.</font></string>
+    <string name="Name_hint"><font size="15">Full Name</font></string>
+    <string name="Voter_hint"><font size="15">Voter ID</font></string>
+    <string name="Aadhar_hint"><font size="15">Adhar Card</font></string>
+    <string name="HouseNo_hint"><font size="15">House No.</font></string>
+
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>

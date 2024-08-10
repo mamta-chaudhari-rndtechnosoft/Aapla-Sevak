@@ -153,7 +153,7 @@
                     android:elevation="8dp"
                     android:background="@drawable/border"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="House Number*">
+                    android:hint="House No.*">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/house_number"
@@ -223,7 +223,7 @@
                     android:elevation="8dp"
                     android:background="@drawable/border"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="@string/flat_number">
+                    android:hint="Flate No.">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etFlatNo"
@@ -285,7 +285,7 @@
                         android:buttonTint="@color/orange_bjp"
                         android:checked="false"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="others"
+                        android:text="Others"
                         android:textSize="18sp" />
 
                 </RadioGroup>
@@ -385,7 +385,7 @@
                     android:elevation="8dp"
                     android:background="@drawable/border"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="Whatsapp Number">
+                    android:hint="Whatsapp No.">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/mobile1"
@@ -408,7 +408,7 @@
                     android:elevation="8dp"
                     android:background="@drawable/border"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="Calling Number">
+                    android:hint="Calling No.">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/mobile2"
@@ -441,7 +441,7 @@
                     android:elevation="8dp"
                     android:background="@drawable/border"
                     android:padding="15dp"
-                    android:text="Select Dob"
+                    android:text="DOB"
                     android:textColor="@color/colorBlack" />
 
                 <!-- <com.google.android.material.textfield.TextInputLayout
@@ -560,7 +560,7 @@
                     android:elevation="8dp"
                     android:background="@drawable/border"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="Booth No">
+                    android:hint="Booth No.">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etBoothNo"
@@ -581,7 +581,7 @@
                     android:elevation="8dp"
                     android:background="@drawable/border"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="Serial No">
+                    android:hint="Serial No.">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etSerialNo"

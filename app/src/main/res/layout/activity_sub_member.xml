@@ -379,7 +379,7 @@
                 android:elevation="8dp"
                 android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
-                android:hint="Whatsapp Number">
+                android:hint="Whatsapp No.">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/mobile1"
@@ -401,7 +401,7 @@
                 android:elevation="8dp"
                 android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
-                android:hint="Calling Number">
+                android:hint="Calling No.">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/mobile2"
@@ -585,7 +585,7 @@
                 android:elevation="8dp"
                 android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
-                android:hint="Booth No">
+                android:hint="Booth No.">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etBoothNum"
@@ -606,7 +606,7 @@
                 android:elevation="8dp"
                 android:background="@color/colorWhite"
                 android:fontFamily="@font/roboto_regular"
-                android:hint="Serial No">
+                android:hint="Serial No.">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSerialNum"

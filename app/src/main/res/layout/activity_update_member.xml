@@ -241,7 +241,7 @@
                         android:buttonTint="@color/orange_bjp"
                         android:checked="false"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="others"
+                        android:text="Others"
                         android:textSize="18sp" />
 
                 </RadioGroup>
@@ -319,7 +319,7 @@
                     android:background="@color/colorWhite"
                     android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="whatsapp number">
+                    android:hint="Whatsapp No.">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/mobile1"
@@ -342,7 +342,7 @@
                     android:background="@color/colorWhite"
                     android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="calling number">
+                    android:hint="Calling No.">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/mobile2"
@@ -511,7 +511,7 @@
                     android:background="@color/colorWhite"
                     android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="Booth No">
+                    android:hint="Booth No.">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etBoothNo"
@@ -532,7 +532,7 @@
                     android:background="@color/colorWhite"
                     android:elevation="8dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="Serial no">
+                    android:hint="Serial No.">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etSerialNo"

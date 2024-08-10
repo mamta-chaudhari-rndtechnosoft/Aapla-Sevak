@@ -26,7 +26,7 @@
         android:elevation="0dp"
         app:navigationIcon="@drawable/ic_back"
         app:navigationIconTint="@color/colorWhite"
-        app:title="Search From: 000"
+        app:title="Search From 000"
         app:titleCentered="true"
         app:titleTextColor="@color/colorWhite">
 
@@ -115,7 +115,7 @@
                         android:background="@drawable/et_border"
                         android:elevation="10dp"
                         android:gravity="center"
-                        android:hint="Full Name"
+                        android:hint="@string/Name_hint"
                         android:padding="10dp"
                         android:singleLine="true"
                         android:textColor="@color/colorBlack" />
@@ -128,7 +128,7 @@
                         android:layout_marginEnd="0dp"
                         android:layout_weight="2"
                         android:background="@drawable/et_border"
-                        android:hint="House No"
+                        android:hint="@string/HouseNo_hint"
                         android:padding="10dp"
                         android:singleLine="true"
                         android:textAlignment="center"
@@ -157,7 +157,7 @@
                         android:background="@drawable/et_border"
                         android:elevation="10dp"
                         android:gravity="center"
-                        android:hint="@string/edittext_hint"
+                        android:hint="@string/number_hint"
                         android:singleLine="true"
                         android:textColor="@color/colorBlack" />
 
@@ -169,7 +169,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/et_border"
                         android:gravity="center"
-                        android:hint="Voter ID"
+                        android:hint="@string/Voter_hint"
                         android:singleLine="true"
                         android:textColor="@color/colorBlack" />
 
@@ -183,7 +183,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/et_border"
                         android:gravity="center"
-                        android:hint="Adhar Card"
+                        android:hint="@string/Aadhar_hint"
                         android:padding="10dp"
                         android:singleLine="true"
                         android:textColor="@color/colorBlack" />
