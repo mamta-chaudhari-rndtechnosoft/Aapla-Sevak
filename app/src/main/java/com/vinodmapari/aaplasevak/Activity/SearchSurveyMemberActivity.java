@@ -2,6 +2,7 @@ package com.vinodmapari.aaplasevak.Activity;
 
 import static com.vinodmapari.aaplasevak.ApiConfig.ApiHandler.getRetrofitInstance;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,6 +34,7 @@ import com.vinodmapari.aaplasevak.Model.VoterCountItem;
 import com.vinodmapari.aaplasevak.Model.VoterCountResponse;
 import com.vinodmapari.aaplasevak.R;
 import com.vinodmapari.aaplasevak.SearchSurveyMemberAdapter;
+import com.vinodmapari.aaplasevak.VoterSearchItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchSurveyMemberActivity extends AppCompatActivity {
+public class SearchSurveyMemberActivity extends AppCompatActivity implements SearchSurveyMemberAdapter.OnSelectionChangedListener {
 
 
     EditText etSearchFullName;
@@ -50,9 +52,10 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
     String fullName;
     MaterialToolbar toolbar;
     ArrayList<SearchItem> searchItemsList;
+    private ArrayList<String> selectedVoterId;
     LinearLayout layoutNoData;
-
-    Button btnCount;
+    int selectedItemCount;
+    Button btnCount, btnNext;
     //TextView tvVoterCount;
 
     @Override
@@ -66,6 +69,7 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarSearch);
         //tvVoterCount = findViewById(R.id.tvVoterCount);
         btnCount = findViewById(R.id.btnCount);
+        btnNext = findViewById(R.id.btnNext);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,12 +81,39 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
         rvSearch.setLayoutManager(new LinearLayoutManager(this));
 
         searchItemsList = new ArrayList<>();
+        selectedVoterId = new ArrayList<>();
 
         fullName = etSearchFullName.getText().toString();
 
-        adapter = new SearchSurveyMemberAdapter(SearchSurveyMemberActivity.this,searchItemsList);
+        adapter = new SearchSurveyMemberAdapter(SearchSurveyMemberActivity.this, searchItemsList, SearchSurveyMemberActivity.this);
         rvSearch.setAdapter(adapter);
 
+      /*  btnNext.setOnClickListener(v -> {
+            Intent intent = new Intent(SearchSurveyMemberActivity.this, UserSurveyActivity.class);
+            intent.putExtra("selectedItems", searchItemsList);
+            intent.putExtra("selectedItemCount",selectedItemCount);
+            startActivity(intent);
+        });*/
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // from here i need to send the selected product names in another class
+
+                selectedVoterId = adapter.getSelectedVoterId();
+
+                // Start the Weight class
+                if (selectedVoterId.isEmpty()) {
+                    Toast.makeText(SearchSurveyMemberActivity.this, "Please Select Product First", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SearchSurveyMemberActivity.this, "Dat: " + selectedVoterId.toString(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SearchSurveyMemberActivity.this, AddVoterSurveyFamilyActivity.class);
+                    intent.putStringArrayListExtra("selectedVoterId", selectedVoterId);
+                    startActivity(intent);
+                }
+
+            }
+        });
 
         getVoterSearchList();
         voterCount();
@@ -106,6 +137,7 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
         });
     }
 
+
     private void getVoterSearchList() {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
@@ -120,10 +152,10 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     SearchResponse searchVoterListResponse = response.body();
                     ArrayList<SearchItem> voterSearchList = searchVoterListResponse.getSEARCH();
-                     //searchItemsList = searchVoterListResponse.getSEARCH();
-                     searchItemsList.clear();
-                     searchItemsList.addAll(voterSearchList);
-                     adapter.notifyDataSetChanged();
+                    //searchItemsList = searchVoterListResponse.getSEARCH();
+                    searchItemsList.clear();
+                    searchItemsList.addAll(voterSearchList);
+                    adapter.notifyDataSetChanged();
 
                     if (voterSearchList.isEmpty()) {
                         rvSearch.setVisibility(View.GONE);
@@ -137,7 +169,6 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
                     Toast.makeText(SearchSurveyMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
                     Log.e("Tag", "Response Error..");
                 }
-
             }
 
             @Override
@@ -146,10 +177,9 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
                 Toast.makeText(SearchSurveyMemberActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    public void voterCount(){
+    public void voterCount() {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         Call<VoterCountResponse> call = apiInterface.voterCount();
@@ -157,15 +187,14 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
         call.enqueue(new Callback<VoterCountResponse>() {
             @Override
             public void onResponse(Call<VoterCountResponse> call, Response<VoterCountResponse> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     VoterCountResponse voterCountResponse = response.body();
                     List<VoterCountItem> items = voterCountResponse.getVoterCountItems();
 
                     String count = items.get(0).getVoterCount();
                     //tvVoterCount.setText("Total Data: " + count);
                     btnCount.setText("Voters " + count);
-                }
-                else{
+                } else {
                     Toast.makeText(SearchSurveyMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
                     Log.e("Api Response", "Response Error..");
                 }
@@ -177,5 +206,19 @@ public class SearchSurveyMemberActivity extends AppCompatActivity {
                 Toast.makeText(SearchSurveyMemberActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+
+  /*  @Override
+    public void onSelectionChanged(boolean hasSelection, ArrayList<SearchItem> selectedItems, int selectedItemCount) {
+        this.searchItemsList = selectedItems;
+        btnNext.setVisibility(hasSelection ? View.VISIBLE : View.GONE);
+        this.selectedItemCount = selectedItemCount;
+    }*/
+
+    @Override
+    public void onSelectionChanged(boolean hasSelection) {
+        btnNext.setVisibility(hasSelection ? View.VISIBLE : View.GONE);
     }
 }

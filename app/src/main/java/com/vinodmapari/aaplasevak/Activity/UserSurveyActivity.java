@@ -76,6 +76,7 @@ import com.vinodmapari.aaplasevak.Model.WaterSupplyResponse;
 import com.vinodmapari.aaplasevak.Model.ZoneItem;
 import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 import com.vinodmapari.aaplasevak.R;
+import com.vinodmapari.aaplasevak.VoterSearchItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -125,6 +126,8 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
     String calling_no,wp_no,House_no,user_name,user_middle_name,user_surname,mobile_no1,mobile_no2,user_dob,gender,
             voterId,user_adharcard,votingcenter,BoothNo,SerialNo,qulification,user_caste,apartment,flateNo;
 
+    int selectedItemCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,14 +176,14 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
             }
         });
 
-        // -------------------------------------------------------
+        //--------------------------------------------------------
 
         dob.setText("DOB");
 
         //isDataHave = false;
         //Here get the data
 
-        Intent intent = getIntent();
+       /* Intent intent = getIntent();
         if (intent != null) {
             isDataHave = intent.getBooleanExtra("isDataHave", true);
             if (isDataHave) {
@@ -245,10 +248,24 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                     }
                 }
             }
+        }*/
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("selectedItems") ) {
+            ArrayList<VoterSearchItem> selectedItems = intent.getParcelableArrayListExtra("selectedItems");
+            selectedItemCount = intent.getIntExtra("selectedItemCount",0);
+            if (selectedItems != null) {
+                // Handle the list of selected items
+                //displaySelectedItems(selectedItems);
+                Toast.makeText(this, "Data: " + selectedItems, Toast.LENGTH_SHORT).show();
+                Log.d("Api Response","Data: " + selectedItems);
+            } else {
+                Toast.makeText(this, "No selected items found", Toast.LENGTH_SHORT).show();
+            }
         }
 
 
-        //----------------------------------------------------
+        // -------------------------------------------------------------------
 
         surveyLists = new ArrayList<>();
         colonies = new ArrayList<>();
@@ -298,7 +315,7 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
             }
         });
 
-        //Toast.makeText(UserSurveyActivity.this, "Selected Radio Button is:" + gender , Toast.LENGTH_LONG).show();
+        // ---- Toast.makeText(UserSurveyActivity.this, "Selected Radio Button is:" + gender , Toast.LENGTH_LONG).show();
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -392,7 +409,6 @@ public class UserSurveyActivity extends AppCompatActivity implements SwipeRefres
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 dob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();

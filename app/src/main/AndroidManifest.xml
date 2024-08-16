@@ -35,6 +35,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AaplaSevak">
         <activity
+            android:name=".Activity.PrintOptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.AddVoterSurveyFamilyActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.SettingActivity"
             android:exported="false" />
         <activity

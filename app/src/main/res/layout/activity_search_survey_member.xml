@@ -26,12 +26,26 @@
         android:hint="Enter Name to Search"
         android:padding="10dp" />
 
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/orange_bjp"
+        android:elevation="10dp"
+        android:text="Next"
+        android:visibility="gone"
+        android:layout_below="@id/etSearchFullName"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+
     <View
         android:id="@+id/viewLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/etSearchFullName"
+        android:layout_below="@id/btnNext"
         android:background="#5C0E0D0D" />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
