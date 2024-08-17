@@ -317,7 +317,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/orange_bjp"
         android:elevation="10dp"
-        android:text="view more"
+        android:text="Print Details"
         android:textColor="@color/colorWhite"
         android:textStyle="bold" />
 

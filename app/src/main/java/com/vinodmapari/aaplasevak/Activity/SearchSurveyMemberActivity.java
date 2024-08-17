@@ -56,7 +56,7 @@ public class SearchSurveyMemberActivity extends AppCompatActivity implements Sea
     LinearLayout layoutNoData;
     int selectedItemCount;
     Button btnCount, btnNext;
-    //TextView tvVoterCount;
+    TextView tvVoterCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +67,8 @@ public class SearchSurveyMemberActivity extends AppCompatActivity implements Sea
         etSearchFullName = findViewById(R.id.etSearchFullName);
         layoutNoData = findViewById(R.id.layoutNoDataSearch);
         toolbar = findViewById(R.id.toolbarSearch);
-        //tvVoterCount = findViewById(R.id.tvVoterCount);
-        btnCount = findViewById(R.id.btnCount);
+        tvVoterCount = findViewById(R.id.tvVoterCount);
+        //btnCount = findViewById(R.id.btnCount);
         btnNext = findViewById(R.id.btnNext);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -104,7 +104,7 @@ public class SearchSurveyMemberActivity extends AppCompatActivity implements Sea
 
                 // Start the Weight class
                 if (selectedVoterId.isEmpty()) {
-                    Toast.makeText(SearchSurveyMemberActivity.this, "Please Select Product First", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchSurveyMemberActivity.this, "Please Select Voter First", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(SearchSurveyMemberActivity.this, "Dat: " + selectedVoterId.toString(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SearchSurveyMemberActivity.this, AddVoterSurveyFamilyActivity.class);
@@ -192,8 +192,8 @@ public class SearchSurveyMemberActivity extends AppCompatActivity implements Sea
                     List<VoterCountItem> items = voterCountResponse.getVoterCountItems();
 
                     String count = items.get(0).getVoterCount();
-                    //tvVoterCount.setText("Total Data: " + count);
-                    btnCount.setText("Voters " + count);
+                    tvVoterCount.setText("Voters " + count);
+                    //btnCount.setText("Voters " + count);
                 } else {
                     Toast.makeText(SearchSurveyMemberActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
                     Log.e("Api Response", "Response Error..");

@@ -3,10 +3,12 @@ package com.vinodmapari.aaplasevak.ApiConfig;
 import com.bumptech.glide.annotation.GlideType;
 import com.vinodmapari.aaplasevak.Model.AddMemberBody;
 import com.vinodmapari.aaplasevak.Model.AddMemberResponseData;
+import com.vinodmapari.aaplasevak.Model.AddMultipleSurveyBody;
 import com.vinodmapari.aaplasevak.Model.AddSurveyBody;
 import com.vinodmapari.aaplasevak.Model.AddSurveyResponseData;
 import com.vinodmapari.aaplasevak.Model.CasteResponse;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
+import com.vinodmapari.aaplasevak.Model.ColonyListResponseData;
 import com.vinodmapari.aaplasevak.Model.ColonyResponse;
 import com.vinodmapari.aaplasevak.Model.ConstituencyResponse;
 import com.vinodmapari.aaplasevak.Model.DeleteMemberResponseData;
@@ -22,6 +24,7 @@ import com.vinodmapari.aaplasevak.Model.QualificationsResponse;
 import com.vinodmapari.aaplasevak.Model.RowResponse;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
 import com.vinodmapari.aaplasevak.Model.SearchListBody;
+import com.vinodmapari.aaplasevak.Model.SearchListItem;
 import com.vinodmapari.aaplasevak.Model.SearchListResponseData;
 import com.vinodmapari.aaplasevak.Model.SearchResponse;
 import com.vinodmapari.aaplasevak.Model.SendSmsBody;
@@ -32,12 +35,14 @@ import com.vinodmapari.aaplasevak.Model.SurveyCountResponse;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
 import com.vinodmapari.aaplasevak.Model.VoterCountResponse;
+import com.vinodmapari.aaplasevak.Model.VoterSurveyByIdResponse;
 import com.vinodmapari.aaplasevak.Model.WaterSupplyResponse;
 import com.vinodmapari.aaplasevak.Model.WhatsAppApiBody;
 import com.vinodmapari.aaplasevak.Model.WhatsAppApiResponseData;
 import com.vinodmapari.aaplasevak.Model.WhatsAppNumberResponseData;
 import com.vinodmapari.aaplasevak.Model.ZoneResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -265,6 +270,13 @@ public interface ApiInterface {
 
     //http://aaplasevak.com/api.php?survey_detail&survey_id=1
     @GET("api.php?survey_detail")
-    Call<VoterCountResponse> getSurveyVoterById(@Query("survey_id") String surveyId);
+    Call<VoterSurveyByIdResponse> getSurveyVoterById(@Query("survey_id") String surveyId);
+
+    // response is common so take same response class as add survey
+    @POST("add_multiple_survey_api.php")
+    Call<AddSurveyResponseData> addMultipleSurvey(@Body AddMultipleSurveyBody addMultipleSurveyBody);
+
+    @GET("api.php?colony_list")
+    Call<ColonyListResponseData> colonyList();
 
 }

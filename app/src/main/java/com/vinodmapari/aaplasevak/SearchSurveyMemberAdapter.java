@@ -152,7 +152,7 @@ public class SearchSurveyMemberAdapter extends RecyclerView.Adapter<SearchSurvey
 
         public void selectedBg() {
             //itemView.setBackgroundResource(R.drawable.home_select_shape);
-            cardName.setCardBackgroundColor(Color.parseColor("#e3e3e3"));
+            cardName.setCardBackgroundColor(Color.parseColor("#cccccc"));
         }
     }
 }

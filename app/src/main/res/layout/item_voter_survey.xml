@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent"
+    android:layout_margin="18dp"
+    app:cardBackgroundColor="@color/colorgreyLight"
+    app:cardCornerRadius="8dp">
 
     <ScrollView
         android:id="@+id/main_scroll"
@@ -127,8 +130,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10ssp"
                 android:layout_marginRight="15dp"
-                android:elevation="8dp"
                 android:background="@drawable/border"
+                android:elevation="8dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:padding="10dp"
@@ -171,7 +174,6 @@
                     android:textSize="18sp" />
 
             </RadioGroup>
-
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -243,8 +245,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
-                android:elevation="8dp"
                 android:background="@drawable/border"
+                android:elevation="8dp"
                 android:fontFamily="@font/roboto_regular"
                 android:hint="@string/voterID">
 
@@ -263,8 +265,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
-                android:elevation="8dp"
                 android:background="@drawable/border"
+                android:elevation="8dp"
                 android:padding="15dp"
                 android:text="DOB"
                 android:textColor="@color/colorBlack" />
@@ -319,6 +321,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/border"
                 android:elevation="8dp"
                 android:fontFamily="@font/roboto_regular"
@@ -347,6 +350,7 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:rippleColor="@color/colorWhite" />
 
         </LinearLayout>

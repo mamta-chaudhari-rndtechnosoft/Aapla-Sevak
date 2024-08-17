@@ -35,11 +35,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AaplaSevak">
         <activity
+            android:name=".Activity.ColonyListPrintActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.PrintOptionActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.AddVoterSurveyFamilyActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.SettingActivity"
             android:exported="false" />
@@ -75,10 +79,9 @@
             android:exported="false" />
         <activity
             android:name=".Activity.SearchActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.DashBoardActivity"
-            android:exported="true" />
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Activity.DashBoardActivity" -->
+        <!-- android:exported="true" /> -->
         <activity
             android:name=".Activity.SubMemberActivity"
             android:exported="true" />

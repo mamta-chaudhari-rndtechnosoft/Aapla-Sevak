@@ -1,26 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context=".Activity.AddVoterSurveyFamilyActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/toolbar_gradient"
-        app:navigationIcon="@drawable/ic_back"
-        app:title="Add family"
-        app:titleCentered="true"
-        app:titleTextColor="@color/colorWhite" />
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:layout_above="@id/btnAddMultipleSurvey"
+        android:orientation="vertical">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvVoterSurvey"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/toolbar_gradient"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="Add family"
+            app:titleCentered="true"
+            app:titleTextColor="@color/colorWhite" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvVoterSurvey"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            tools:listitem="@layout/item_voter_survey"
+            android:focusableInTouchMode="false" />
+    </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loader"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_app.json"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/btnAddMultipleSurvey"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/orange_bjp"
+        android:elevation="10dp"
+        android:text="Add House"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+</RelativeLayout>

@@ -18,14 +18,13 @@
         android:paddingHorizontal="@dimen/_10sdp">
 
         <TextView
-            android:id="@+id/tvFullName"
+            android:id="@+id/tvColonyName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Full Name"
-            android:textSize="12sp"
+            android:text="@string/colony_name"
+            android:textSize="16sp"
             android:textColor="@color/colorBlack" />
 
     </LinearLayout>
-
 
 </com.google.android.material.card.MaterialCardView>

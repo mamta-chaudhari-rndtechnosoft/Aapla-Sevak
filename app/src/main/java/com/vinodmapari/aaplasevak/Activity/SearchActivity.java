@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -64,7 +65,6 @@ public class SearchActivity extends AppCompatActivity {
     String name, lname, mname, voterId, adharcard, fullName, houseNo, mobileNumber, mobileNumberTwo;
     Button btn;
     MaterialToolbar toolbar;
-
     LinearLayoutManager mLayoutManager;
     //private int positionSelect;
     //private int pageNo = 0;
@@ -88,6 +88,7 @@ public class SearchActivity extends AppCompatActivity {
         etMobileNumber = findViewById(R.id.et_number);
         etMobileNumberTwo = findViewById(R.id.et_number_two);
 
+
         tvSurveyCount = findViewById(R.id.tvCount);
         textView_empty = findViewById(R.id.tv_empty_search);
         textView_empty.setVisibility(View.VISIBLE);
@@ -104,6 +105,13 @@ public class SearchActivity extends AppCompatActivity {
       */
 
         btn = findViewById(R.id.btnview);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SearchActivity.this, PrintOptionActivity.class));
+                Toast.makeText(SearchActivity.this, "..........Test...........", Toast.LENGTH_SHORT).show();
+            }
+        });
         //pageNo = 0;
 
          toolbar.setNavigationOnClickListener(new View.OnClickListener() {
