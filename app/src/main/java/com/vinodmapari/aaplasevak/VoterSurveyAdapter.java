@@ -70,7 +70,6 @@ public class VoterSurveyAdapter extends RecyclerView.Adapter<VoterSurveyAdapter.
     public void onBindViewHolder(@NonNull VoterSurveyAdapter.ViewHolder holder, int position) {
         String voterId = voterIds.get(position);
         getSurveyDetail(voterId, holder);
-
     }
 
     @Override
@@ -206,7 +205,6 @@ public class VoterSurveyAdapter extends RecyclerView.Adapter<VoterSurveyAdapter.
 
                     // add data to list
                     surveyDetailItems.add(surveyDetail);
-
 
                 } else {
                     Toast.makeText(context, "Response not success", Toast.LENGTH_SHORT).show();

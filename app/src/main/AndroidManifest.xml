@@ -35,6 +35,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AaplaSevak">
         <activity
+            android:name=".Activity.FamilyListPrintActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.FamilyPrintActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ColonyListPrintActivity"
             android:exported="false" />
         <activity

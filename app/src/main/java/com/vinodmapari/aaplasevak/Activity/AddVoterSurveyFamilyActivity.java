@@ -65,8 +65,8 @@ public class AddVoterSurveyFamilyActivity extends AppCompatActivity {
         loader = findViewById(R.id.loader);
         btnAddAll = findViewById(R.id.btnAddMultipleSurvey);
         rvVoterSurvey = findViewById(R.id.rvVoterSurvey);
-        rvVoterSurvey.setLayoutManager(new LinearLayoutManager(this));
-        //rvVoterSurvey.setLayoutManager(new GridLayoutManager(this, 1, RecyclerView.HORIZONTAL, false));
+        //rvVoterSurvey.setLayoutManager(new LinearLayoutManager(this));
+        rvVoterSurvey.setLayoutManager(new GridLayoutManager(this, 1, RecyclerView.HORIZONTAL, false));
 
         adapter = new VoterSurveyAdapter(AddVoterSurveyFamilyActivity.this, selectedVoterId, rvVoterSurvey);
         rvVoterSurvey.setAdapter(adapter);

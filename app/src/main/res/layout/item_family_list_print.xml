@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    app:cardElevation="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Name"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvBoothNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="Booth No.: 101010"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tvSrNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="Sr No.: 202020"
+                android:textColor="@color/colorBlack" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvVoterId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            tools:text="Voter Id: 303030303030"
+            android:textColor="@color/colorBlack" />
+
+        <TextView
+            android:id="@+id/tvVotingCenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            tools:text="Voting Center: "
+            android:textColor="@color/colorBlack" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

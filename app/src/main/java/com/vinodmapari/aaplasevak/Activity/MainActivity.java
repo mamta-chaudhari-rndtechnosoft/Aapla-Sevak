@@ -134,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
         cdSms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, SendSmsActivity.class);
+                //Intent i = new Intent(MainActivity.this, SendSmsActivity.class);
+                Intent i = new Intent(MainActivity.this, PrintOptionActivity.class);
                 startActivity(i);
 
             }

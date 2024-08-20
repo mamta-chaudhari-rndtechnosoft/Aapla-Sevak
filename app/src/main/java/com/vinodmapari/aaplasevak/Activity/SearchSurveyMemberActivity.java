@@ -106,7 +106,7 @@ public class SearchSurveyMemberActivity extends AppCompatActivity implements Sea
                 if (selectedVoterId.isEmpty()) {
                     Toast.makeText(SearchSurveyMemberActivity.this, "Please Select Voter First", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(SearchSurveyMemberActivity.this, "Dat: " + selectedVoterId.toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SearchSurveyMemberActivity.this, "Dat: " + selectedVoterId.toString(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SearchSurveyMemberActivity.this, AddVoterSurveyFamilyActivity.class);
                     intent.putStringArrayListExtra("selectedVoterId", selectedVoterId);
                     startActivity(intent);
@@ -210,8 +210,8 @@ public class SearchSurveyMemberActivity extends AppCompatActivity implements Sea
 
 
 
-  /*  @Override
-    public void onSelectionChanged(boolean hasSelection, ArrayList<SearchItem> selectedItems, int selectedItemCount) {
+    /* @Override
+       public void onSelectionChanged(boolean hasSelection, ArrayList<SearchItem> selectedItems, int selectedItemCount) {
         this.searchItemsList = selectedItems;
         btnNext.setVisibility(hasSelection ? View.VISIBLE : View.GONE);
         this.selectedItemCount = selectedItemCount;

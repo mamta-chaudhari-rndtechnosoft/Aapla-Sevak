@@ -20,6 +20,7 @@ import com.vinodmapari.aaplasevak.Model.HomeSplashResponse;
 import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.HouseResponse;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
+import com.vinodmapari.aaplasevak.Model.PrintHouseDetailResponse;
 import com.vinodmapari.aaplasevak.Model.QualificationsResponse;
 import com.vinodmapari.aaplasevak.Model.RowResponse;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
@@ -268,7 +269,6 @@ public interface ApiInterface {
     @GET("api.php?voter_count")
     Call<VoterCountResponse> voterCount();
 
-    //http://aaplasevak.com/api.php?survey_detail&survey_id=1
     @GET("api.php?survey_detail")
     Call<VoterSurveyByIdResponse> getSurveyVoterById(@Query("survey_id") String surveyId);
 
@@ -278,5 +278,8 @@ public interface ApiInterface {
 
     @GET("api.php?colony_list")
     Call<ColonyListResponseData> colonyList();
+
+    @GET("api.php?print_survey_detail_by_house_no")
+    Call<PrintHouseDetailResponse> printHouseDetail(@Query("house_no") String houseNo);
 
 }
