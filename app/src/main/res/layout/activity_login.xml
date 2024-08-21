@@ -1,112 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
+    android:orientation="vertical"
     tools:context=".Activity.LoginActivity">
 
 
-    <View
-        android:id="@+id/view_search"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/header_bg">
-
-    </View>
-
-
-    <TextView
-        android:id="@+id/tv_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="60dp"
-        android:fontFamily="sans-serif"
-        android:gravity="end|center"
-        android:padding="20dp"
-        android:text="Login"
-        android:textColor="#ffffff"
-        android:textSize="44sp"
-        android:textStyle="bold"
-         />
-
-
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:background="@drawable/toolbar_gradient"
+        app:title="Login"
+        app:titleCentered="true"
+        app:titleTextColor="@color/colorWhite" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/tvusername"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_2sdp"
-            android:drawableLeft="@drawable/ic_user"
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/UserName"
-            android:padding="@dimen/_10sdp" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/tvpassword"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:drawableLeft="@drawable/ic_passlock"
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/Password"
-            android:inputType="textPassword"
-            android:padding="@dimen/_10sdp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_15sdp"
-            android:background="@drawable/login_button"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="Login"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/sevak_logoo" />
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@id/btnLogin"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/bottom"
-        tools:ignore="NotSibling">
+                <EditText
+                    android:id="@+id/etMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:background="@drawable/et_register_border"
+                    android:drawableLeft="@drawable/ic_phone"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:drawableTint="#666666"
+                    android:hint="Mobile Number"
+                    android:padding="@dimen/_10sdp" />
 
-    </View>
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:background="@drawable/et_register_border"
+                    android:drawableLeft="@drawable/ic_passlock"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:hint="@string/Password"
+                    android:inputType="textPassword"
+                    android:padding="@dimen/_10sdp" />
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/login_button"
+                    android:backgroundTint="@color/orange_bjp"
+                    android:text="Login"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold" />
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/progress_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Don't have account ?"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tvRegister"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Register"
+                        android:textAlignment="center"
+                        android:textColor="@color/orange_bjp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loader"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        app:indicatorColor="@color/colorAccent"
-        app:indicatorName="BallSpinFadeLoaderIndicator"
-        android:visibility="gone"/>
-</RelativeLayout>
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loader.json"
+        app:lottie_loop="true" />
+
+</LinearLayout>

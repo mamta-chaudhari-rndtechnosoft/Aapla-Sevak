@@ -27,6 +27,7 @@ import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.HomeSplashItem;
 import com.vinodmapari.aaplasevak.Model.HomeSplashResponse;
 import com.vinodmapari.aaplasevak.R;
+import com.vinodmapari.aaplasevak.Util.SaveSharedPreference;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -43,7 +44,6 @@ public class SplashActivity extends AppCompatActivity {
     AVLoadingIndicatorView progress_splash;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,71 +53,71 @@ public class SplashActivity extends AppCompatActivity {
         tvTitleSplash = findViewById(R.id.tvTitleSplash);
         progress_splash = findViewById(R.id.progress_splash);
 
-
         isInternetOn();
         fetchSplashData();
 
     }
+
     public final boolean isInternetOn() {
 
         // get Connectivity Manager object to check connection
         ConnectivityManager connec =
-                (ConnectivityManager)getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
+                (ConnectivityManager) getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
 
         // Check for network connections
-        if (     connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED ||
-                 connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTING ||
-                 connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING ||
-                connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTED ) {
+        if (connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED ||
+                connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTED) {
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
 
-                    SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefsUser" , Context.MODE_PRIVATE);
-                    String username = sharedPreferences1.getString("username","");
+                    //SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefsUser", Context.MODE_PRIVATE);
+                    //String username = sharedPreferences1.getString("username", "");
+                    String userId = SaveSharedPreference.getUserId(SplashActivity.this);
 
-                    if(username.equalsIgnoreCase("" )) {
-
-                        Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                    }else if(!username.equalsIgnoreCase("")){
-
-                        //Intent intent = new Intent(SplashActivity.this,DashBoardActivity.class);
-                        Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                    }else{
-
-                        Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+                    if (userId.equalsIgnoreCase("")) {
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }
-
+                    /*
+                    else if (!username.equalsIgnoreCase("")) {
+                        //Intent intent = new Intent(SplashActivity.this,DashBoardActivity.class);
+                        //MainActivity
+                        Intent intent = new Intent(SplashActivity.this, RegisterActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    */
+                    else {
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
-            },2000);
+            }, 2000);
 
             return true;
 
         } else if (
                 connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||
-                        connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED  ) {
+                        connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
 
             android.app.AlertDialog.Builder builderDialog = new android.app.AlertDialog.Builder(SplashActivity.this);
 
             builderDialog.setMessage("Internet connection not available check your internet connection").setCancelable(false)
                     .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                            finish();
-                            dialog.cancel();
+                                    finish();
+                                    dialog.cancel();
 
-                        }
-                    }
+                                }
+                            }
                     );
 
             android.app.AlertDialog alertDialog = builderDialog.create();
@@ -131,7 +131,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
-    private void fetchSplashData(){
+    private void fetchSplashData() {
 
         progress_splash.setVisibility(View.VISIBLE);
 
@@ -159,11 +159,7 @@ public class SplashActivity extends AppCompatActivity {
                                 Picasso.get().load(image).into(imgLogo);
                                 tvTitleSplash.setText(name);
 
-                                splashItems.add(new HomeSplashItem(id,image,name));
-
-
-
-
+                                splashItems.add(new HomeSplashItem(id, image, name));
                             }
 
                         } catch (JSONException e) {
@@ -179,14 +175,9 @@ public class SplashActivity extends AppCompatActivity {
                 progress_splash.setVisibility(View.GONE);
             }
         });
-
         // Add the request to the RequestQueue
         requestQueue.add(stringRequest);
     }
-
-
-
-
 
 
 }

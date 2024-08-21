@@ -140,7 +140,7 @@
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:layout_centerInParent="true"
-            app:lottie_fileName="loading_app.json"
+            app:lottie_fileName="loader.json"
             app:lottie_loop="true"
            />
 

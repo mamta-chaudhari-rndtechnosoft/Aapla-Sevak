@@ -35,6 +35,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AaplaSevak">
         <activity
+            android:name=".Activity.SurveyerMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.OtpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.FamilyListPrintActivity"
             android:exported="false" />
         <activity

@@ -295,7 +295,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             app:lottie_autoPlay="true"
-            app:lottie_fileName="loading_app.json"
+            app:lottie_fileName="loader.json"
             app:lottie_loop="true" />
 
         <com.airbnb.lottie.LottieAnimationView
@@ -310,7 +310,7 @@
 
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnview"
         android:layout_width="match_parent"
         android:layout_height="50dp"

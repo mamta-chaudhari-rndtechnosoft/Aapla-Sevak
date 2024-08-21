@@ -53,6 +53,7 @@ public class FamilyPrintActivity extends AppCompatActivity {
     String Details;
 
     Button btnPrint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +79,9 @@ public class FamilyPrintActivity extends AppCompatActivity {
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etHouseNo.getText().toString().isEmpty()){
+                if (etHouseNo.getText().toString().isEmpty()) {
                     Toast.makeText(FamilyPrintActivity.this, "Please Enter House No. ", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     getFamilyDetailsForPrint();
                     printFamilyDetails();
                 }
@@ -92,9 +93,9 @@ public class FamilyPrintActivity extends AppCompatActivity {
         btnPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etHouseNo.getText().toString().isEmpty()){
+                if (etHouseNo.getText().toString().isEmpty()) {
                     Toast.makeText(FamilyPrintActivity.this, "Please Enter House No. ", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     printFamilyDetails();
                     btnPrintFamily();
                 }
@@ -112,10 +113,10 @@ public class FamilyPrintActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<PrintHouseDetailResponse> call, Response<PrintHouseDetailResponse> response) {
                 if (response.isSuccessful()) {
-                       PrintHouseDetailResponse houseDetailResponse = response.body();
-                       familyDetailsItemArrayList = houseDetailResponse.getFamilyDetailsItems();
-                       adapter = new PrintFamilyListAdapter(FamilyPrintActivity.this,familyDetailsItemArrayList);
-                       rvFamilyList.setAdapter(adapter);
+                    PrintHouseDetailResponse houseDetailResponse = response.body();
+                    familyDetailsItemArrayList = houseDetailResponse.getFamilyDetailsItems();
+                    adapter = new PrintFamilyListAdapter(FamilyPrintActivity.this, familyDetailsItemArrayList);
+                    rvFamilyList.setAdapter(adapter);
 
                 } else {
                     Toast.makeText(FamilyPrintActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
@@ -132,7 +133,7 @@ public class FamilyPrintActivity extends AppCompatActivity {
 
     }
 
-    public void printFamilyDetails(){
+    public void printFamilyDetails() {
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         Call<PrintHouseDetailResponse> call = apiInterface.printHouseDetail(etHouseNo.getText().toString());
@@ -203,7 +204,7 @@ public class FamilyPrintActivity extends AppCompatActivity {
     }
 
 
-    public void btnPrintFamily(){
+    public void btnPrintFamily() {
 
         String headerBase64 = getBase64StringFromDrawable(R.drawable.header_demo);
         String footerBase64 = getBase64StringFromDrawable(R.drawable.footer_demo);
@@ -235,7 +236,6 @@ public class FamilyPrintActivity extends AppCompatActivity {
                 "</div>" +
                 "</body>" +
                 "</html>";*/
-
 
         /*String htmlContent = "<html>" +
                 "<body>" +
@@ -302,11 +302,10 @@ public class FamilyPrintActivity extends AppCompatActivity {
 
         WebView webView = new WebView(this);
         //webView.loadData(htmlContent,"text/html","UTF-8");
-        webView.loadDataWithBaseURL(null,htmlContent,"text/html","UTF-8",null);
+        webView.loadDataWithBaseURL(null, htmlContent, "text/html", "UTF-8", null);
 
         PrintManager printManager = (PrintManager) getSystemService(PRINT_SERVICE);
-        PrintDocumentAdapter printDocumentAdapter = webView.createPrintDocumentAdapter("TextView_PrintDemo");
-        printManager.print("TextView Print Test",printDocumentAdapter,new PrintAttributes.Builder().build());
+        PrintDocumentAdapter printDocumentAdapter = webView.createPrintDocumentAdapter("Aapla Sevak");
+        printManager.print("TextView Print Test", printDocumentAdapter, new PrintAttributes.Builder().build());
     }
-
 }

@@ -29,6 +29,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 import com.vinodmapari.aaplasevak.ApiConfig.ApiInterface;
 import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
@@ -63,7 +64,7 @@ public class SearchActivity extends AppCompatActivity {
     List<SearchListItem> searchLists;
     EditText etName, etLname, etMname, etVoterId, etAdharCard, etFullName, etHouseNumber, etMobileNumber, etMobileNumberTwo;
     String name, lname, mname, voterId, adharcard, fullName, houseNo, mobileNumber, mobileNumberTwo;
-    Button btn;
+    MaterialButton btn;
     MaterialToolbar toolbar;
     LinearLayoutManager mLayoutManager;
     //private int positionSelect;
@@ -108,8 +109,9 @@ public class SearchActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SearchActivity.this, PrintOptionActivity.class));
                 Toast.makeText(SearchActivity.this, "..........Test...........", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SearchActivity.this, PrintOptionActivity.class));
+                //Toast.makeText(SearchActivity.this, "..........Test...........", Toast.LENGTH_SHORT).show();
             }
         });
         //pageNo = 0;

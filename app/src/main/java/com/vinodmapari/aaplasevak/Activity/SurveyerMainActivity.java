@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,15 +20,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -58,7 +59,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class SurveyerMainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> permissionsRejected = new ArrayList<>();
     CardView cdSurvey, cdSearch, cdSms, cdWhatsApp,cd_msg_member;
     private SliderView slider_home;
-    SliderAdapter sliderAdapter;
+    MainActivity.SliderAdapter sliderAdapter;
     ArrayList<SliderModel> sliderModels;
     TextView tvSurvey,tvSearch, tvMsg, tv_whatsapp;
     ImageView imgSurvey, imgSearch, imgSms, imgWhatsApp;
@@ -79,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_surveyer_main);
         checkPer();
 
         SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefsUser" , Context.MODE_PRIVATE);
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         cdSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, UserSurveyActivity.class);
+                Intent i = new Intent(SurveyerMainActivity.this, UserSurveyActivity.class);
                 startActivity(i);
             }
         });
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         cdSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, SearchActivity.class);
+                Intent i = new Intent(SurveyerMainActivity.this, SearchActivity.class);
                 startActivity(i);
             }
         });
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Intent i = new Intent(MainActivity.this, SendSmsActivity.class);
-                Intent i = new Intent(MainActivity.this, PrintOptionActivity.class);
+                Intent i = new Intent(SurveyerMainActivity.this, PrintOptionActivity.class);
                 startActivity(i);
 
             }
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         cdWhatsApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, WhatsappActivity.class);
+                Intent i = new Intent(SurveyerMainActivity.this, WhatsappActivity.class);
                 startActivity(i);
             }
         });
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         cd_msg_member.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, SearchSurveyMemberActivity.class);
+                Intent i = new Intent(SurveyerMainActivity.this, SearchSurveyMemberActivity.class);
                 startActivity(i);
             }
         });
@@ -175,13 +175,13 @@ public class MainActivity extends AppCompatActivity {
                     //startActivity(this);
                 }
                 else if (id == R.id.contact_us){
-                        startActivity(new Intent(MainActivity.this, ContactActivity.class));
+                    startActivity(new Intent(SurveyerMainActivity.this, ContactActivity.class));
                 }
                 else if(id == R.id.settings){
-                    startActivity(new Intent(MainActivity.this, SettingActivity.class));
+                    startActivity(new Intent(SurveyerMainActivity.this, SettingActivity.class));
                 }
                 else if (id == R.id.logout) {
-                    AlertDialog alertbox = new AlertDialog.Builder(MainActivity.this)
+                    AlertDialog alertbox = new AlertDialog.Builder(SurveyerMainActivity.this)
                             .setTitle("Aapla Sevak")
                             .setMessage("Are you sure you want to Exit?")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
 
-                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                    Intent intent = new Intent(SurveyerMainActivity.this, LoginActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                     startActivity(intent);
                                     finish();
@@ -270,7 +270,8 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                             //sliderAdapter = new HomeFragment.SliderAdapter(this, sliderModels);
-                            sliderAdapter = new SliderAdapter(MainActivity.this,sliderModels);
+                            sliderAdapter = new SurveyerMainActivity.SliderAdapter(SurveyerMainActivity.this,sliderModels);
+                            //sliderAdapter = new MainActivity.SliderAdapter(MainActivity.this,sliderModels);
                             slider_home.setSliderAdapter(sliderAdapter);
                             slider_home.setIndicatorAnimation(IndicatorAnimationType.FILL);
                             slider_home.setIndicatorVisibility(false);
@@ -294,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         //creating a request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(SurveyerMainActivity.this);
         //adding the string request to request queue
         requestQueue.add(stringRequest);
 
@@ -311,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class SliderAdapter extends SliderViewAdapter<MainActivity.SliderAdapter.SliderAdapterVH> {
+    public class SliderAdapter extends SliderViewAdapter<SurveyerMainActivity.SliderAdapter.SliderAdapterVH> {
 
         private Context context;
         private List<SliderModel> mSliderItems;
@@ -345,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
 
             View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_slider_image, null);
             //return new HomeFragment.SliderAdapter.SliderAdapterVH(inflate);
-            return new MainActivity.SliderAdapter.SliderAdapterVH(inflate);
+            return new SurveyerMainActivity.SliderAdapter.SliderAdapterVH(inflate);
 
         }
 
@@ -378,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void homeOptions() {
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(SurveyerMainActivity.this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.homePageOptions,
                 new Response.Listener<String>() {
                     @Override
@@ -435,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MainActivity.this, "Error parsing JSON response.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SurveyerMainActivity.this, "Error parsing JSON response.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -443,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 //progressBar.setVisibility(View.GONE);
                 Log.e("Tag", "Error: " + error.getLocalizedMessage());
-                Toast.makeText(MainActivity.this, "Server taking too much time to load...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SurveyerMainActivity.this, "Server taking too much time to load...", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -536,14 +537,14 @@ public class MainActivity extends AppCompatActivity {
                     canUseExternalStorage = true;
                 }
                 if (!canUseExternalStorage) {
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.cannot_use_save_permission), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SurveyerMainActivity.this, getResources().getString(R.string.cannot_use_save_permission), Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(MainActivity.this)
+        new AlertDialog.Builder(SurveyerMainActivity.this)
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("cancel", null)

@@ -19,9 +19,13 @@ import com.vinodmapari.aaplasevak.Model.HomeSplashItem;
 import com.vinodmapari.aaplasevak.Model.HomeSplashResponse;
 import com.vinodmapari.aaplasevak.Model.HouseDetail;
 import com.vinodmapari.aaplasevak.Model.HouseResponse;
+import com.vinodmapari.aaplasevak.Model.LoginResponseData;
+import com.vinodmapari.aaplasevak.Model.OtpResponseData;
 import com.vinodmapari.aaplasevak.Model.PrabhagWardResponse;
 import com.vinodmapari.aaplasevak.Model.PrintHouseDetailResponse;
 import com.vinodmapari.aaplasevak.Model.QualificationsResponse;
+import com.vinodmapari.aaplasevak.Model.RegisterBody;
+import com.vinodmapari.aaplasevak.Model.RegisterResponseData;
 import com.vinodmapari.aaplasevak.Model.RowResponse;
 import com.vinodmapari.aaplasevak.Model.SearchBody;
 import com.vinodmapari.aaplasevak.Model.SearchListBody;
@@ -282,4 +286,13 @@ public interface ApiInterface {
     @GET("api.php?print_survey_detail_by_house_no")
     Call<PrintHouseDetailResponse> printHouseDetail(@Query("house_no") String houseNo);
 
+    @POST("register_survey_api.php")
+    Call<RegisterResponseData> registerUser(@Body RegisterBody registerBody);
+
+    //otp api call.....
+    @GET("api.php?check_otp")
+    Call<OtpResponseData> submitOtp(@Query("otp") String otp, @Query("id") int id);
+
+    @GET("api.php?login_user")
+    Call<LoginResponseData> loginUser(@Query("mobile") String mobile, @Query("password") String password);
 }

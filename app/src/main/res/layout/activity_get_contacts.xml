@@ -74,7 +74,7 @@
             android:layout_height="@dimen/_80sdp"
             android:layout_gravity="center"
             app:lottie_autoPlay="true"
-            app:lottie_fileName="loading_app.json"
+            app:lottie_fileName="loader.json"
             app:lottie_loop="true" />
 
         <com.airbnb.lottie.LottieAnimationView
