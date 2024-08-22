@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 
@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponseData> call, retrofit2.Response<LoginResponseData> response) {
                 if (response.isSuccessful()) {
 
-                    loader.setVisibility(View.GONE);
+                    //loader.setVisibility(View.GONE);
                     LoginResponseData loginResponseData = response.body();
                     LoggedInUser loggedInUser = loginResponseData.getLoggedInUser();
                     String role = loggedInUser.getRole();
@@ -183,13 +183,37 @@ public class LoginActivity extends AppCompatActivity {
                     String error = loggedInUser.getError();
 
                     SaveSharedPreference.setPrefUserId(LoginActivity.this, id);
-                    SaveSharedPreference.setPrefUserId(LoginActivity.this, role);
+                    SaveSharedPreference.setUserRole(LoginActivity.this, role);
 
-                    Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
+
+                    if (error.equalsIgnoreCase("true")) {
+                        loader.setVisibility(View.GONE);
+                        Toast.makeText(LoginActivity.this, "Incorrect Number or Password", Toast.LENGTH_SHORT).show();
+
+                    } else if (error.equalsIgnoreCase("false")) {
+
+                        if (role.equalsIgnoreCase("surveyor")) {
+                            loader.setVisibility(View.GONE);
+                            Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, SurveyerMainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            loader.setVisibility(View.GONE);
+                            Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                    /*Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    finish();
+                    finish();*/
 
                 } else {
                     loader.setVisibility(View.GONE);

@@ -77,22 +77,19 @@ public class SplashActivity extends AppCompatActivity {
                     //SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefsUser", Context.MODE_PRIVATE);
                     //String username = sharedPreferences1.getString("username", "");
                     String userId = SaveSharedPreference.getUserId(SplashActivity.this);
+                    String userRole = SaveSharedPreference.getUserRole(SplashActivity.this);
 
                     if (userId.equalsIgnoreCase("")) {
                         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
-                    }
-                    /*
-                    else if (!username.equalsIgnoreCase("")) {
+                    } else if (userRole.equalsIgnoreCase("surveyor")) {
                         //Intent intent = new Intent(SplashActivity.this,DashBoardActivity.class);
                         //MainActivity
-                        Intent intent = new Intent(SplashActivity.this, RegisterActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, SurveyerMainActivity.class);
                         startActivity(intent);
                         finish();
-                    }
-                    */
-                    else {
+                    } else {
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

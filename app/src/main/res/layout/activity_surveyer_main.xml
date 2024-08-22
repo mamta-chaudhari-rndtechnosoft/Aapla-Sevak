@@ -207,6 +207,7 @@
                             android:focusable="true"
                             app:cardCornerRadius="1dp"
                             app:cardElevation="3dp"
+                            android:visibility="gone"
                             app:cardBackgroundColor="#F4DE1C">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
@@ -267,6 +268,7 @@
                             android:focusable="true"
                             app:cardCornerRadius="1dp"
                             app:cardElevation="3dp"
+                            android:visibility="gone"
                             app:cardBackgroundColor="#FB7065">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
@@ -316,6 +318,7 @@
                             android:focusable="true"
                             app:cardCornerRadius="1dp"
                             app:cardElevation="3dp"
+                            android:visibility="gone"
                             app:cardBackgroundColor="#2F9D35">
 
                             <androidx.constraintlayout.widget.ConstraintLayout

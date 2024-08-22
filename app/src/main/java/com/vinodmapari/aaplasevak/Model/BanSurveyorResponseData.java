@@ -1,18 +1,9 @@
 package com.vinodmapari.aaplasevak.Model;
 
-public class DeleteMemberResponseData {
-
+public class BanSurveyorResponseData {
 
     String error;
     String message;
-
-    public DeleteMemberResponseData() {
-    }
-
-    public DeleteMemberResponseData(String error, String message) {
-        this.error = error;
-        this.message = message;
-    }
 
     public String getError() {
         return error;

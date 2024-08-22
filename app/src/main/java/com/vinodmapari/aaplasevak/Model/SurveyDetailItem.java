@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class SurveyDetailItem {
 
-    @SerializedName("id")
+    @SerializedName("surveyor_id")
     private int id;
 
     @SerializedName("name")
@@ -15,9 +15,6 @@ public class SurveyDetailItem {
 
     @SerializedName("surname")
     private String surname;
-
-    @SerializedName("fullname")
-    private String fullName;
 
     @SerializedName("booth_no")
     private String boothNo;
@@ -33,12 +30,6 @@ public class SurveyDetailItem {
 
     @SerializedName("epic_no")
     private String epicNo;
-
-    @SerializedName("dob")
-    private String dob;
-
-    @SerializedName("mobile1")
-    private String mobile1;
 
     @SerializedName("zone")
     private String zoneName;
@@ -56,30 +47,26 @@ public class SurveyDetailItem {
     public SurveyDetailItem() {
     }
 
-    public SurveyDetailItem(int id, String name, String middleName, String surname, String fullName,
-                            String boothNo, String serialNo, String votingCenter, String gender,
-                            String epicNo, String dob, String mobile1, String zoneName,
+
+    public SurveyDetailItem(int id, String name, String middleName, String surname,
+                            String boothNo, String serialNo, String votingCenter,
+                            String gender, String epicNo, String zoneName,
                             String cityVillageName, String constituencyName,
                             String prabhagWardName) {
         this.id = id;
         this.name = name;
         this.middleName = middleName;
         this.surname = surname;
-        this.fullName = fullName;
         this.boothNo = boothNo;
         this.serialNo = serialNo;
         this.votingCenter = votingCenter;
         this.gender = gender;
         this.epicNo = epicNo;
-        this.dob = dob;
-        this.mobile1 = mobile1;
         this.zoneName = zoneName;
         this.cityVillageName = cityVillageName;
         this.constituencyName = constituencyName;
         this.prabhagWardName = prabhagWardName;
     }
-
-
 
     public int getId() {
         return id;
@@ -113,13 +100,6 @@ public class SurveyDetailItem {
         this.surname = surname;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 
     public String getBoothNo() {
         return boothNo;
@@ -161,21 +141,6 @@ public class SurveyDetailItem {
         this.epicNo = epicNo;
     }
 
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
-    public String getMobile1() {
-        return mobile1;
-    }
-
-    public void setMobile1(String mobile1) {
-        this.mobile1 = mobile1;
-    }
 
     public String getZoneName() {
         return zoneName;
@@ -212,20 +177,19 @@ public class SurveyDetailItem {
     @Override
     public String toString() {
         return "SurveyDetailItem{" +
-                "gender='" + gender + '\'' +
-                ", name='" + name + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", surname='" + surname + '\'' +
-                ", mobile1='" + mobile1 + '\'' +
-                ", dob='" + dob + '\'' +
-                ", epicNo='" + epicNo + '\'' +
-                ", votingCenter='" + votingCenter + '\'' +
-                ", boothNo='" + boothNo + '\'' +
-                ", serialNo='" + serialNo + '\'' +
+                ", ID='" + id + '\'' +
                 ", constituencyName='" + constituencyName + '\'' +
                 ", cityVillageName='" + cityVillageName + '\'' +
                 ", zoneName='" + zoneName + '\'' +
                 ", prabhagWardName='" + prabhagWardName + '\'' +
+                "gender='" + gender + '\'' +
+                ", name='" + name + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", epicNo='" + epicNo + '\'' +
+                ", boothNo='" + boothNo + '\'' +
+                ", serialNo='" + serialNo + '\'' +
+                ", votingCenter='" + votingCenter + '\'' +
                 '}';
     }
 }

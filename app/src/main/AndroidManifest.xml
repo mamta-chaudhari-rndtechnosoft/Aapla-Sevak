@@ -35,6 +35,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AaplaSevak">
         <activity
+            android:name=".Activity.SurveyorMemberListActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.SurveyerMainActivity"
             android:exported="false" />
         <activity

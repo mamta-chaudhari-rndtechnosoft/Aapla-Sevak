@@ -33,6 +33,7 @@ import com.vinodmapari.aaplasevak.Model.VoterCountResponse;
 import com.vinodmapari.aaplasevak.Model.VoterSurveyByIdResponse;
 import com.vinodmapari.aaplasevak.Model.ZoneItem;
 import com.vinodmapari.aaplasevak.Model.ZoneResponse;
+import com.vinodmapari.aaplasevak.Util.SaveSharedPreference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,14 +50,17 @@ public class VoterSurveyAdapter extends RecyclerView.Adapter<VoterSurveyAdapter.
     private final Context context;
     private final RecyclerView recyclerView;
     private ArrayList<String> voterIds;
-    String series_id, status_id, colony_id, row_id, water_supply_id, constituency_id, city_id, zone_id, ward_id, qualification_id, caste_id;
-    private ArrayList<SurveyDetailItem> surveyDetailItems = new ArrayList<>();
+    String  constituency_id, city_id, zone_id, ward_id;
+    private ArrayList<SurveyDetailItem> surveyDetailItems;
+    private String surveyorId;
 
 
-    public VoterSurveyAdapter(Context context, ArrayList<String> voterIds, RecyclerView recyclerView) {
+    public VoterSurveyAdapter(Context context, ArrayList<String> voterIds, RecyclerView recyclerView, String surveyorId) {
         this.context = context;
         this.voterIds = voterIds;
         this.recyclerView = recyclerView;
+        this.surveyorId = surveyorId;
+        this.surveyDetailItems = new ArrayList<>();
     }
 
     @NonNull
@@ -76,6 +80,11 @@ public class VoterSurveyAdapter extends RecyclerView.Adapter<VoterSurveyAdapter.
     public int getItemCount() {
         return voterIds.size();
     }
+
+    public SurveyDetailItem getItem(int position) {
+        return surveyDetailItems.get(position);
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -107,7 +116,6 @@ public class VoterSurveyAdapter extends RecyclerView.Adapter<VoterSurveyAdapter.
 
     public void getSurveyDetail(String surveyId, ViewHolder holder) {
 
-
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
         Call<VoterSurveyByIdResponse> call = apiInterface.getSurveyVoterById(surveyId);
@@ -120,28 +128,6 @@ public class VoterSurveyAdapter extends RecyclerView.Adapter<VoterSurveyAdapter.
                     //surveyDetailItemArrayList = voterSurveyByIdResponse.getSurveyDetailItems();
                     SurveyDetailItem surveyDetail = voterSurveyByIdResponse.getSurveyDetailItems().get(0);
 
-
-                    /*String houseNo = surveyDetailItemArrayList.get(0).getHouseNo();
-                    String seriesName = surveyDetailItemArrayList.get(0).getSeriesName();
-                    String colonyName = surveyDetailItemArrayList.get(0).getColonyName();
-                    String rowName = surveyDetailItemArrayList.get(0).getRowName();
-                    String statusName = surveyDetailItemArrayList.get(0).getStatusName();
-                    String slotName = surveyDetailItemArrayList.get(0).getSlotName();
-                    String gender = surveyDetailItemArrayList.get(0).getGender();
-                    String name = surveyDetailItemArrayList.get(0).getName();
-                    String middleName = surveyDetailItemArrayList.get(0).getMiddleName();
-                    String surName = surveyDetailItemArrayList.get(0).getSurname();
-                    String dob = surveyDetailItemArrayList.get(0).getDob();
-                    String qualification = surveyDetailItemArrayList.get(0).getQualification();
-                    String caste = surveyDetailItemArrayList.get(0).getCaste();
-                    String relation = surveyDetailItemArrayList.get(0).getRelation();
-                    String event = surveyDetailItemArrayList.get(0).getEvent();
-                    String voterId = surveyDetailItemArrayList.get(0).getVoterId();
-                    String adharCard = surveyDetailItemArrayList.get(0).getAdharCard();
-                    String votingCenter = surveyDetailItemArrayList.get(0).getVotingCenter();
-                    String memberId = surveyDetailItemArrayList.get(0).getMemberId();
-                    String boothNo = surveyDetailItemArrayList.get(0).getBoothNo();
-                    String votingSrNo = surveyDetailItemArrayList.get(0).getVotingSrNo();*/
 
 
                     holder.etName.setText(surveyDetail.getName());
@@ -176,32 +162,6 @@ public class VoterSurveyAdapter extends RecyclerView.Adapter<VoterSurveyAdapter.
                         }
                     }
 
-                    if (surveyDetail.getDob() != null) {
-                        holder.tvDob.setText(surveyDetail.getDob());
-                    } else {
-                        holder.tvDob.setText("DOB");
-                    }
-
-                    holder.tvDob.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            final Calendar c = Calendar.getInstance();
-                            int mYear = c.get(Calendar.YEAR);
-                            int mMonth = c.get(Calendar.MONTH);
-                            int mDay = c.get(Calendar.DAY_OF_MONTH);
-
-                            DatePickerDialog datePickerDialog = new DatePickerDialog(context,
-                                    new DatePickerDialog.OnDateSetListener() {
-                                        @Override
-                                        public void onDateSet(DatePicker view, int year,
-                                                              int monthOfYear, int dayOfMonth) {
-                                            holder.tvDob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                        }
-                                    }, mYear, mMonth, mDay);
-                            datePickerDialog.show();
-                        }
-                    });
 
                     // add data to list
                     surveyDetailItems.add(surveyDetail);
@@ -220,20 +180,23 @@ public class VoterSurveyAdapter extends RecyclerView.Adapter<VoterSurveyAdapter.
 
 
   //----------- Collect all the item data in array to send in api ---------------------
-    public ArrayList<SurveyDetailItem> collectSurveyData() {
+   /* public ArrayList<SurveyDetailItem> collectSurveyData() {
         ArrayList<SurveyDetailItem> surveyDataList = new ArrayList<>();
         for (int i = 0; i < getItemCount(); i++) {
             ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
 
             if (holder != null) {
                 SurveyDetailItem surveyDetail = new SurveyDetailItem();
+                int id = Integer.parseInt(SaveSharedPreference.getUserId(context));
+
+                surveyDetail.setId(id);
                 surveyDetail.setGender(holder.radioGroup.getCheckedRadioButtonId() == R.id.radioButton ? "Male" :
                         holder.radioGroup.getCheckedRadioButtonId() == R.id.radioButton2 ? "Female" : "Others");
                 surveyDetail.setName(holder.etName.getText().toString());
                 surveyDetail.setMiddleName(holder.etMiddleName.getText().toString());
                 surveyDetail.setSurname(holder.etSurName.getText().toString());
-                surveyDetail.setMobile1(holder.etEpicNo.getText().toString());
-                surveyDetail.setDob(holder.tvDob.getText().toString());
+                //surveyDetail.setMobile1(holder.etEpicNo.getText().toString());
+                //surveyDetail.setDob(holder.tvDob.getText().toString());
                 surveyDetail.setEpicNo(holder.etEpicNo.getText().toString());
                 surveyDetail.setVotingCenter(holder.etVotingCenter.getText().toString());
                 surveyDetail.setBoothNo(holder.etBoothNo.getText().toString());
@@ -248,9 +211,12 @@ public class VoterSurveyAdapter extends RecyclerView.Adapter<VoterSurveyAdapter.
             }
         }
         return surveyDataList;
-    }
+    }*/
 
     public ArrayList<SurveyDetailItem> getSurveyDetailItems() {
+        for (SurveyDetailItem item : surveyDetailItems) {
+            item.setId(Integer.parseInt(surveyorId));
+        }
         return surveyDetailItems;
     }
 

@@ -257,6 +257,8 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+      <!--  DOB Visiblity Gone for now           -->
+
             <TextView
                 android:id="@+id/dob"
                 android:layout_width="match_parent"
@@ -266,6 +268,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/border"
+                android:visibility="gone"
                 android:elevation="8dp"
                 android:padding="15dp"
                 android:text="DOB"

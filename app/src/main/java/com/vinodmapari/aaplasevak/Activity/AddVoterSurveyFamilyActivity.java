@@ -31,9 +31,11 @@ import com.vinodmapari.aaplasevak.Model.AddSurveyResponseData;
 import com.vinodmapari.aaplasevak.Model.SearchItem;
 import com.vinodmapari.aaplasevak.Model.SurveyDetailItem;
 import com.vinodmapari.aaplasevak.R;
+import com.vinodmapari.aaplasevak.Util.SaveSharedPreference;
 import com.vinodmapari.aaplasevak.VoterSurveyAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,9 +48,10 @@ public class AddVoterSurveyFamilyActivity extends AppCompatActivity {
     VoterSurveyAdapter adapter;
     LottieAnimationView loader;
     MaterialToolbar toolbar;
-
     Button btnAddAll;
-    private boolean isKeyboardVisible = false;
+   // private boolean isKeyboardVisible = false;
+    String surveyorId;
+    private List<SurveyDetailItem> surveyDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class AddVoterSurveyFamilyActivity extends AppCompatActivity {
         Intent intent = getIntent();
         selectedVoterId = intent.getStringArrayListExtra("selectedVoterId");
 
+        surveyorId = SaveSharedPreference.getUserId(AddVoterSurveyFamilyActivity.this);
 
         toolbar = findViewById(R.id.toolbar);
         loader = findViewById(R.id.loader);
@@ -68,27 +72,38 @@ public class AddVoterSurveyFamilyActivity extends AppCompatActivity {
         //rvVoterSurvey.setLayoutManager(new LinearLayoutManager(this));
         rvVoterSurvey.setLayoutManager(new GridLayoutManager(this, 1, RecyclerView.HORIZONTAL, false));
 
-        adapter = new VoterSurveyAdapter(AddVoterSurveyFamilyActivity.this, selectedVoterId, rvVoterSurvey);
+        adapter = new VoterSurveyAdapter(AddVoterSurveyFamilyActivity.this, selectedVoterId, rvVoterSurvey,surveyorId);
         rvVoterSurvey.setAdapter(adapter);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         btnAddAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AddVoterSurveyFamilyActivity.this);
-                alertDialogBuilder.setTitle("Are you sure want to add the data?");
-                alertDialogBuilder.setMessage("Add Data");
+                alertDialogBuilder.setMessage("Are you sure want to add the data?");
+                alertDialogBuilder.setTitle("Add Data");
 
                 alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         finish();
-                        loader.setVisibility(View.VISIBLE);
-                        ArrayList<SurveyDetailItem> surveyDataList = adapter.getSurveyDetailItems();
-                        //Toast.makeText(AddVoterSurveyFamilyActivity.this, "Data: " + surveyDataList.toString(), Toast.LENGTH_SHORT).show();
-                        Log.d("Api Response","Data in btn: " + surveyDataList.toString());
-                        addMultipleSurveyList();
+                        if (adapter != null) {
+                            for (int i = 0; i < adapter.getItemCount(); i++) {
+                                SurveyDetailItem data = adapter.getItem(i);
+                                data.setId(Integer.parseInt(surveyorId));
+                                surveyDataList.add(data);
+                            }
+                        }
 
+                        loader.setVisibility(View.VISIBLE);
+                        addMultipleSurveyList(surveyDataList);
                     }
                 });
 
@@ -100,16 +115,12 @@ public class AddVoterSurveyFamilyActivity extends AppCompatActivity {
 
     }
 
-    public void addMultipleSurveyList() {
+    public void addMultipleSurveyList(List<SurveyDetailItem> surveyDataList) {
 
         ApiInterface apiInterface = getRetrofitInstance().create(ApiInterface.class);
 
-        //ArrayList<SurveyDetailItem> surveyDataList = adapter.collectSurveyData();
-        ArrayList<SurveyDetailItem> surveyDataList = adapter.getSurveyDetailItems();
 
-        AddMultipleSurveyBody addMultipleSurveyBody = new AddMultipleSurveyBody(surveyDataList);
-
-        Call<AddSurveyResponseData> call = apiInterface.addMultipleSurvey(addMultipleSurveyBody);
+        Call<AddSurveyResponseData> call = apiInterface.addMultipleSurvey(surveyDataList);
 
         call.enqueue(new Callback<AddSurveyResponseData>() {
             @Override
@@ -143,16 +154,16 @@ public class AddVoterSurveyFamilyActivity extends AppCompatActivity {
 
                 } else {
                     loader.setVisibility(View.GONE);
-                    Toast.makeText(AddVoterSurveyFamilyActivity.this, "Response Error..!!", Toast.LENGTH_SHORT).show();
-                    Log.e("Tag", "Response Error..");
+                    Toast.makeText(AddVoterSurveyFamilyActivity.this, "Response Error..!!" + response.code(), Toast.LENGTH_SHORT).show();
+                    Log.e("Api Response", "Response Error.." + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<AddSurveyResponseData> call, Throwable throwable) {
                 loader.setVisibility(View.GONE);
-                Log.e("Tag", "Error.." + throwable.getLocalizedMessage());
-                Toast.makeText(AddVoterSurveyFamilyActivity.this, "Error..", Toast.LENGTH_SHORT).show();
+                Log.e("Api Response", "Error.." + throwable.getLocalizedMessage());
+                Toast.makeText(AddVoterSurveyFamilyActivity.this, "Error.." + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

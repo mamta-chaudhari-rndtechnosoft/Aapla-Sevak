@@ -49,6 +49,7 @@ import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.HomeOptionsItem;
 import com.vinodmapari.aaplasevak.Model.SliderModel;
 import com.vinodmapari.aaplasevak.R;
+import com.vinodmapari.aaplasevak.Util.SaveSharedPreference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
     final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 101;
     public final static int ALL_PERMISSIONS_RESULT = 102;
     ArrayList<String> permissionsRejected = new ArrayList<>();
-    CardView cdSurvey, cdSearch, cdSms, cdWhatsApp,cd_msg_member;
+    CardView cdSurvey, cdSearch, cdSms, cdWhatsApp, cd_msg_member, cdSurveyorMember;
     private SliderView slider_home;
     SliderAdapter sliderAdapter;
     ArrayList<SliderModel> sliderModels;
-    TextView tvSurvey,tvSearch, tvMsg, tv_whatsapp;
+    TextView tvSurvey, tvSearch, tvMsg, tv_whatsapp;
     ImageView imgSurvey, imgSearch, imgSms, imgWhatsApp;
 
     @Override
@@ -83,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
         checkPer();
 
-        SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefsUser" , Context.MODE_PRIVATE);
-        name = sharedPreferences1.getString("username","");
+        SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefsUser", Context.MODE_PRIVATE);
+        name = sharedPreferences1.getString("username", "");
 
         drawerLayout = findViewById(R.id.drawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer);
@@ -108,7 +109,10 @@ public class MainActivity extends AppCompatActivity {
         imgSms = findViewById(R.id.iv_msg);
         imgWhatsApp = findViewById(R.id.iv_whatsapp);
 
+        cdSurveyorMember = findViewById(R.id.cdSurveyorMember);
+
         homeOptions();
+        //Toast.makeText(this, "Role: "+ SaveSharedPreference.getUserRole(MainActivity.this), Toast.LENGTH_SHORT).show();
 
         Slider();
         sliderModels = new ArrayList<>();
@@ -156,40 +160,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        cdSurveyorMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, SurveyorMemberListActivity.class);
+                startActivity(i);
+            }
+        });
+
 
         NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                if (item.isChecked()){
+                if (item.isChecked()) {
                     item.setChecked(false);
-                }
-                else {
+                } else {
                     item.setChecked(true);
                 }
                 drawerLayout.closeDrawers();
                 int id = item.getItemId();
 
-                if(id == R.id.home){
+                if (id == R.id.home) {
                     //startActivity(this);
-                }
-                else if (id == R.id.contact_us){
-                        startActivity(new Intent(MainActivity.this, ContactActivity.class));
-                }
-                else if(id == R.id.settings){
+                } else if (id == R.id.contact_us) {
+                    startActivity(new Intent(MainActivity.this, ContactActivity.class));
+                } else if (id == R.id.settings) {
                     startActivity(new Intent(MainActivity.this, SettingActivity.class));
-                }
-                else if (id == R.id.logout) {
+                } else if (id == R.id.logout) {
                     AlertDialog alertbox = new AlertDialog.Builder(MainActivity.this)
                             .setTitle("Aapla Sevak")
                             .setMessage("Are you sure you want to Exit?")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int arg1) {
 
-                                    final String deviceToken = "0";
+                                   /* final String deviceToken = "0";
                                     SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefsUser", Context.MODE_PRIVATE);
-                                    final String id = sharedPreferences1.getString("id", "");
+                                    final String id = sharedPreferences1.getString("id", "");*/
 
                                     try {
                                         androidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -197,15 +205,17 @@ public class MainActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
 
+                                    SaveSharedPreference.clearUserId(MainActivity.this);
+                                    SaveSharedPreference.clearUserRole(MainActivity.this);
                                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                     startActivity(intent);
                                     finish();
 
-                                    @SuppressLint("UseRequireInsteadOfGet") SharedPreferences sharedPreferences = Objects.requireNonNull(getSharedPreferences("MyPrefsUser", Context.MODE_PRIVATE));
+                                    /*@SuppressLint("UseRequireInsteadOfGet") SharedPreferences sharedPreferences = Objects.requireNonNull(getSharedPreferences("MyPrefsUser", Context.MODE_PRIVATE));
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("username", "");
-                                    editor.apply();
+                                    editor.apply();*/
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -270,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                             //sliderAdapter = new HomeFragment.SliderAdapter(this, sliderModels);
-                            sliderAdapter = new SliderAdapter(MainActivity.this,sliderModels);
+                            sliderAdapter = new SliderAdapter(MainActivity.this, sliderModels);
                             slider_home.setSliderAdapter(sliderAdapter);
                             slider_home.setIndicatorAnimation(IndicatorAnimationType.FILL);
                             slider_home.setIndicatorVisibility(false);
@@ -299,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
+
     private static void displayImageOriginal(Context context, ImageView img, List<SliderModel> items, int position) {
 
 
@@ -400,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
                                 //  Log.d("Api Response","ID: " + id + " " + "NAME: " + name1);
                                 //homeOptions.add(new HomeOption(id, name1, image));
 
-                                homeOptions.add(new HomeOptionsItem(id,image,name1));
+                                homeOptions.add(new HomeOptionsItem(id, image, name1));
                             }
 
                             if (!homeOptions.isEmpty()) {
@@ -428,9 +439,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
 
-
                             // Example: Display the first item (customize this part as needed)
-
 
 
                         } catch (JSONException e) {

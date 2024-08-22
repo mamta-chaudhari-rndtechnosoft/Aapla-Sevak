@@ -50,6 +50,7 @@ import com.vinodmapari.aaplasevak.Model.Constants;
 import com.vinodmapari.aaplasevak.Model.HomeOptionsItem;
 import com.vinodmapari.aaplasevak.Model.SliderModel;
 import com.vinodmapari.aaplasevak.R;
+import com.vinodmapari.aaplasevak.Util.SaveSharedPreference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,7 +73,7 @@ public class SurveyerMainActivity extends AppCompatActivity {
     ArrayList<String> permissionsRejected = new ArrayList<>();
     CardView cdSurvey, cdSearch, cdSms, cdWhatsApp,cd_msg_member;
     private SliderView slider_home;
-    MainActivity.SliderAdapter sliderAdapter;
+    SliderAdapter sliderAdapter;
     ArrayList<SliderModel> sliderModels;
     TextView tvSurvey,tvSearch, tvMsg, tv_whatsapp;
     ImageView imgSurvey, imgSearch, imgSms, imgWhatsApp;
@@ -109,6 +110,7 @@ public class SurveyerMainActivity extends AppCompatActivity {
         imgWhatsApp = findViewById(R.id.iv_whatsapp);
 
         homeOptions();
+        Toast.makeText(this, "Id: "+ SaveSharedPreference.getUserId(SurveyerMainActivity.this), Toast.LENGTH_SHORT).show();
 
         Slider();
         sliderModels = new ArrayList<>();

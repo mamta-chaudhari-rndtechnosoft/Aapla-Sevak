@@ -6,6 +6,7 @@ import com.vinodmapari.aaplasevak.Model.AddMemberResponseData;
 import com.vinodmapari.aaplasevak.Model.AddMultipleSurveyBody;
 import com.vinodmapari.aaplasevak.Model.AddSurveyBody;
 import com.vinodmapari.aaplasevak.Model.AddSurveyResponseData;
+import com.vinodmapari.aaplasevak.Model.BanSurveyorResponseData;
 import com.vinodmapari.aaplasevak.Model.CasteResponse;
 import com.vinodmapari.aaplasevak.Model.CityVillageResponse;
 import com.vinodmapari.aaplasevak.Model.ColonyListResponseData;
@@ -37,6 +38,8 @@ import com.vinodmapari.aaplasevak.Model.SendSmsResponseData;
 import com.vinodmapari.aaplasevak.Model.SeriesResponse;
 import com.vinodmapari.aaplasevak.Model.StatusResponse;
 import com.vinodmapari.aaplasevak.Model.SurveyCountResponse;
+import com.vinodmapari.aaplasevak.Model.SurveyDetailItem;
+import com.vinodmapari.aaplasevak.Model.SurveyorResponseData;
 import com.vinodmapari.aaplasevak.Model.TemplateResponse;
 import com.vinodmapari.aaplasevak.Model.UserDetailResponse;
 import com.vinodmapari.aaplasevak.Model.VoterCountResponse;
@@ -276,9 +279,6 @@ public interface ApiInterface {
     @GET("api.php?survey_detail")
     Call<VoterSurveyByIdResponse> getSurveyVoterById(@Query("survey_id") String surveyId);
 
-    // response is common so take same response class as add survey
-    @POST("add_multiple_survey_api.php")
-    Call<AddSurveyResponseData> addMultipleSurvey(@Body AddMultipleSurveyBody addMultipleSurveyBody);
 
     @GET("api.php?colony_list")
     Call<ColonyListResponseData> colonyList();
@@ -295,4 +295,24 @@ public interface ApiInterface {
 
     @GET("api.php?login_user")
     Call<LoginResponseData> loginUser(@Query("mobile") String mobile, @Query("password") String password);
+
+    @GET("api.php?surveyor_list")
+    Call<SurveyorResponseData> surveyorList();
+
+
+    // response is common so take same response class as add survey
+   /* @POST("add_multiple_survey_api.php")
+    Call<AddSurveyResponseData> addMultipleSurvey(@Body AddMultipleSurveyBody addMultipleSurveyBody);*/
+
+    @POST("add_multiple_survey_api.php")
+    Call<AddSurveyResponseData> addMultipleSurvey(@Body List<SurveyDetailItem> surveyDetailItem);
+
+    @GET("api.php?ban_surveyor")
+    Call<BanSurveyorResponseData> banSurveyor(@Query("id") String id,@Query("status") String status);
+
+    @GET("api.php?delete_surveyor")
+    Call<DeleteMemberResponseData> deleteSurveyor(@Query("id") String id);
+
+
+
 }
